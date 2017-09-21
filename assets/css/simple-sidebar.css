@@ -73,11 +73,22 @@ body {
     color: #999999;
 }
 
+.active {
+    outline:none;
+    border-color:#ffa853;
+    background-color:#FF6600;
+    box-shadow:0 0 10px #ffa853;
+}
+
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
 }
+
+
+
+
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
@@ -98,6 +109,9 @@ body {
     color: #fff;
     background: none;
 }
+
+
+
 
 @media(min-width:768px) {
     #wrapper {

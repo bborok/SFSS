@@ -21,6 +21,17 @@
         <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
+    
+    <style>
+    #side-container{
+       }
+    
+        #side-contact{
+            position: absolute;
+            bottom: 0;
+        }
+        
+    </style>
 
 <body>
 
@@ -32,7 +43,7 @@
                 <li class="sidebar-brand">
                     <p>SFU SFEP</p>
                 </li>
-                <li>
+                <li >
                     <a href="dashboard.html">Home</a>
                 </li>
                 <li>
@@ -51,20 +62,49 @@
                     <a href="log.html">Log</a>
                 </li>
                 <li>
-                    <a href="contacts.html">Contacts</a>
-                </li>
+                    <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
+                </li>                
             </ul>
+            <div id="side-container">
+            <div id="side-contact" style="text-align:center">
+                
+                <p style="text-align:center; font-size:20px">
+                    <a class="fa fa-sign-out fa-x" href="index.html">Sign Out</a>
+                </p>
+                <br>
+                <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
+                <p class="fa fa-phone "> (604)-666-6666</p>
+
+                <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
+                </div>
+            </div>
         </div>
         <!-- /#sidebar-wrapper -->
+        
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
+      <div class="modal-dialog" role="document" style="margin-top:100px">
+        <div class="modal-content" style="background-color:red">
+
+          <div class="modal-body" style="color:white">
+              <center>
+            <strong>ACCESS DENIED </strong>
+                  <p>No Authorization </p>
+              </center>
+          </div>
+        </div>
+      </div>
+    </div>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-
-                <h2 style="text-align:center">Profile</h2>
-                
-<!--                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>-->
+                <div class="col-sm-12 text">
+                    <div class="description">
+                        <img src="assets/img/logo_made/logo_2.png" class="img-responsive">
+                        <img src="assets/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12">
+                        </div>    
+                </div>
             </div>
         </div>
         <!-- /#page-content-wrapper -->

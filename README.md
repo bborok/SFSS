@@ -25,6 +25,37 @@ Scheduling
     -- Can be modified only by: Administrator | Supervisor | Team Lead
     -- Can be read by: Regular members
 
+    Types of Shifts
+
+    BURNABY LOCATION
+
+    -- Information and Lost&Found Kiosk
+    -- Speed Watch/Moving Traffic
+    -- Community Presence
+    -- Safety Screen
+    -- Theft Prevention
+    -- Auto Theft Prevention
+    -- Bike Presence
+    -- Special Events (peaceful protests, campus ceremonies, etc)
+    -- Smoking Checks
+    -- Pedestrian Safety
+
+
+SURREY LOCATION
+
+    -- Community Presence
+    -- Theft Prevention
+    -- Special Events (peaceful protests, campus ceremonies, etc)
+    -- Pedestrian Safety
+
+
+VANCOUVER LOCATION
+
+    -- Community Presence
+    -- Theft Prevention
+    -- Special Events (peaceful protests, campus ceremonies, etc)
+    -- Pedestrian Safety
+
 Statistics
 
     -- Record certain categories (will be provided by the slideshow presentation by customer)

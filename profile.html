@@ -276,6 +276,17 @@
     });
         
 
+        
+    $(function(){
+    $("table td").click(function(){
+        event.preventDefault();
+        $('table td').removeClass('current');
+        $(this).addClass("current");
+        var tab = $(this).parent().attr("data-tab");
+        $('.tab-content').hide();
+        $('#' + tab).fadeIn();
+        });
+    });
     </script>
 
 </body>

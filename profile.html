@@ -44,6 +44,9 @@
       height: 500px;
       position: absolute;
     }
+        .click a{
+            color: chocolate;
+        }
 
         
     </style>
@@ -112,49 +115,55 @@
 
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-                <div class="col-sm-12 text">
-                    <center>
-                    <div class="description">
-                        <img src="assets/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
-                        </div></center>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <center>
+                <div class="description">
+                    <img src="assets/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                    </div></center>
+                <br><br>
   
     <row>
-      <div class="col-sm-6" style="height:600px; text-align:center" >
+      <div class="col-sm-6" style="height:600px; text-align:center; border-style:solid" >
         <p>
           <b>Users</b>
         </p>
 
-        <table class="table table-striped" style="text-align:left">
+        <table class="table table-striped" style="text-align:left; ">
         <thead>
             <tr>
                 <th width="40%">Name</th>
                 <th width="30%">#</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="color:black">
+            <tr onclick="switchColors(this);" data-tab="one">
+                <td >Steven Lee</td>
+                <td>301250558</td>
+            </tr>
+            <tr onclick="switchColors(this);" data-tab="two">
+                <td>Steven Lee</td>
+                <td>301250558</td>
+            </tr>    
+            <tr data-tab="three">
+                <td>Steven Lee</td>
+                <td>301250558</td>
+            </tr>    
             <tr>
                 <td>Steven Lee</td>
                 <td>301250558</td>
-            </tr>
-                <tr>
+            </tr>    
+            <tr>
                 <td>Steven Lee</td>
                 <td>301250558</td>
-            </tr>    <tr>
+            </tr>    
+            <tr>
                 <td>Steven Lee</td>
                 <td>301250558</td>
-            </tr>    <tr>
-                <td>Steven Lee</td>
-                <td>301250558</td>
-            </tr>    <tr>
-                <td>Steven Lee</td>
-                <td>301250558</td>
-            </tr>    <tr>
-                <td>Steven Lee</td>
-                <td>301250558</td>
-            </tr>    <tr>
+            </tr>    
+            <tr>
                 <td>Steven Lee</td>
                 <td>301250558</td>
             </tr>    <tr>
@@ -189,17 +198,58 @@
         </table>
       </div>
         
-      <div class="col-sm-6" style="text-align:center">
-        <p>
-          <b>Profile</b>
-        </p>
+      <div class="sample col-sm-6" style="text-align:center; border-style:solid; height:600px" >
           
-        <center><img src="assets/img/etc/dog.jpg" class="img-responsive" height="300" width="300"></center>
-        <h3>Steven Lee</h3>
-        <h4>Volunteer</h4>
-        <p>mla189@sfu.ca</p>
-        <h5>Campus: Burnaby | Surrey</h5>
+            <div class="tab-content">
+            <p>
+              <b>Profile</b>
+            </p>
+            <center><img src="assets/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300"></center>
+            <h3>User Profile</h3>
+            <h5>Select User from the list</h5>
+          
+          </div>
+          
+          <div class="tab-content" id="one"  style="display: none;">
+            <p>
+              <b>Profile</b>
+            </p>
+            <center><img src="assets/img/etc/dog.jpg" class="img-responsive" height="300" width="300"></center>
+            <h3>Steven Lee</h3>
+            <h4>Volunteer</h4>
+            <p>mla189@sfu.ca</p>
+            <h5>Campus: Burnaby | Surrey</h5>
+          
+          </div>
+          
+            <div class="tab-content" id="two"  style="display: none;">
+            <p>
+              <b>Profile</b>
+            </p>
+            <center><img src="assets/img/etc/dog2.png" class="img-responsive" height="300" width="300"></center>
+            <h3>Steven Kim</h3>
+            <h4>Volunteer</h4>
+            <p>mla189@sfu.ca</p>
+            <h5>Campus: Burnaby | Surrey</h5>
+          
+          </div>
+          
+          <div class="tab-content" id="three"  style="display: none;">
+            <p>
+              <b>Profile</b>
+            </p>
+            <center><img src="assets/img/etc/dog.jpg" class="img-responsive" height="300" width="300"></center>
+            <h3>Steven Park</h3>
+            <h4>Volunteer</h4>
+            <p>mla189@sfu.ca</p>
+            <h5>Campus: Burnaby | Surrey</h5>
+          
+          </div>
+
       </div>
+        
+        
+        
         
     </row>
                     
@@ -224,6 +274,8 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+        
+
     </script>
 
 </body>

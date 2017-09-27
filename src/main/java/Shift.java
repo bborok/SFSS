@@ -50,12 +50,14 @@ public class Shift {
     }
 
     // Needs to be thoroughly tested to make sure setting worker to null doesn't set that user's data to null
-    public void removeShift(){
+    public void removeShift() {
         startTime = null;
         endTime = null;
         date = null;
         worker = null;
     }
 
-
+    public Role getWorkerRole() {
+        return worker.getRole();
+    }
 }

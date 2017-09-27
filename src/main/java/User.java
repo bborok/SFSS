@@ -13,6 +13,7 @@ public class User {
     private List<User> contacts = new ArrayList<User>();
     private Role role;
     private Campus preferredCampus;
+    private int accountCode;
 
     // Base constructor
     public User(String name, String email, int phoneNumber, int studentNumber) {
@@ -22,13 +23,15 @@ public class User {
         this.studentNumber = studentNumber;
     }
 
-    public User(String name, String email, int phoneNumber, int studentNumber, Role role, Campus preferredCampus) {
+    public User(String name, String email, int phoneNumber, int studentNumber, Role role, Campus preferredCampus,
+                int accountCode) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.studentNumber = studentNumber;
         this.role = role;
         this.preferredCampus = preferredCampus;
+        this.accountCode = accountCode;
     }
 
     public void setName(String name) {

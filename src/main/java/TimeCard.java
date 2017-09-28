@@ -11,14 +11,14 @@ public class TimeCard {
     private String notes;
     private Calendar startTime;
     private Calendar endTime;
-    private Campus location;
+    private Campus campus;
 
-    public TimeCard(List<Task> tasks, String notes, Calendar startTime, Calendar endTime, Campus location) {
+    public TimeCard(List<Task> tasks, String notes, Calendar startTime, Calendar endTime, Campus campus) {
         this.tasks = tasks;
         this.notes = notes;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = location;
+        this.campus = campus;
     }
 
     public List<Task> getTasks() {
@@ -53,11 +53,11 @@ public class TimeCard {
         this.endTime = endTime;
     }
 
-    public Campus getLocation() {
-        return location;
+    public Campus getCampus() {
+        return campus;
     }
 
-    public void setLocation(Campus location) {
-        this.location = location;
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }

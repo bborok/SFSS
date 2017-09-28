@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /*
@@ -30,6 +31,31 @@ public class Schedule {
 
         for (Shift shift : shifts) {
             if (shift.getWorkerRole() == role) {
+                list.add(shift);
+            }
+        }
+
+        return list;
+    }
+
+    public List<Shift> getShiftsByTask(Task task) {
+        List<Shift> list = new ArrayList<Shift>();
+
+        for (Shift shift : shifts) {
+            if (shift.getTask() == task) {
+                list.add(shift);
+            }
+        }
+
+        return list;
+    }
+
+    public List<Shift> getShiftsForPeriodOfTime(Calendar start, Calendar end) {
+        List<Shift> list = new ArrayList<Shift>();
+
+        // Thorough testing needed to make sure objects compare correctly
+        for (Shift shift : shifts) {
+            if (shift.getStartTime().equals(start) && shift.getEndTime().equals(end)) {
                 list.add(shift);
             }
         }

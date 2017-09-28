@@ -9,11 +9,15 @@ public class Shift {
     private Calendar endTime;
     private Calendar date;
     private User worker;
+    private Task task;
+    private Campus campus;
 
-    public Shift(Calendar startTime, Calendar endTime, Calendar date) {
+    public Shift(Calendar startTime, Calendar endTime, Calendar date, Task task, Campus campus) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
+        this.task = task;
+        this.campus = campus;
     }
 
     public Calendar getStartTime() {
@@ -38,6 +42,14 @@ public class Shift {
 
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public void addWorker(User worker) {

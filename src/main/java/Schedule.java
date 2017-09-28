@@ -42,7 +42,7 @@ public class Schedule {
         List<Shift> list = new ArrayList<Shift>();
 
         for (Shift shift : shifts) {
-            if (shift.getTask() == task) {
+            if (shift.getTask().isSameAsOtherTask(task)) {
                 list.add(shift);
             }
         }

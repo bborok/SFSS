@@ -1,11 +1,23 @@
 /*
- * Task enum contains the possible tasks available on a time card
+ * Task class is an object that has a string
  */
-public enum Task {
-    SmokePrevention,
-    TheftPrevention,
-    PublicContact,
-    SafeWalks,
-    Hazard_ServiceRequests,
-    AssistSecurity
+public class Task {
+
+    private String taskName;
+
+    public Task(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public Boolean isSameAsOtherTask(Task t) {
+        return taskName.equals(t.getTaskName());
+    }
 }

@@ -1,5 +1,7 @@
 package com.zeta.Controllers;
 
+import com.zeta.Models.Campus;
+import com.zeta.Models.Role;
 import com.zeta.Models.User;
 import com.zeta.Repositories.UserRepository;
 import com.zeta.Services.UserService;
@@ -19,21 +21,26 @@ public class UserController {
         this.service = service;
     }
 
-    //Tested with URL: localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca
+    //Tested with URL:
+    //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
     @PostMapping("/add")
     public String addUserToDatabase(
             @RequestParam("studentNumber") int studentNumber,
             @RequestParam("name") String name,
-            @RequestParam("email") String email /*,
+            @RequestParam("email") String email ,
             @RequestParam("phoneNumber") int phoneNumber,
             @RequestParam("role") String role,
             @RequestParam("campus") String campus,
-            @RequestParam("accountCode") int accountCode*/){
+            @RequestParam("accountCode") int accountCode){
 
         User u = new User(
                 studentNumber,
                 name,
-                email
+                email,
+                phoneNumber,
+                Role.valueOf(role.toUpperCase()),
+                Campus.valueOf(campus.toUpperCase()),
+                accountCode
             );
         service.addUser(u);
         return "redirect:" + "/user/" + u.getStudentNumber();

@@ -1,5 +1,7 @@
+package com.zeta.Models;
+
 /*
- * Task class is an object that has a string
+ * com.zeta.Models.Task class is an object that has a string
  */
 public class Task {
 

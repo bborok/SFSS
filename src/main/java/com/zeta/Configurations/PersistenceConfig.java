@@ -22,9 +22,9 @@ public class PersistenceConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         //TODO: Change the parameters in the functions calls below as appropriate.
-        dataSource.setUrl("jdbc:mysql://localhost:3306/testdb?createDatabaseIfNotExist=true");
-        dataSource.setUsername("testuser");
-        dataSource.setPassword("testtest");
+        dataSource.setUrl("jdbc:mysql://cmpt373-1177z.cmpt.sfu.ca:3306/testdb2");
+        dataSource.setUsername("testuser2".trim());
+        dataSource.setPassword("Testuser2".trim());
         return dataSource;
     }
 
@@ -54,10 +54,11 @@ public class PersistenceConfig {
     private Properties hibernateProperteies(){
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+//        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         hibernateProperties.setProperty("hibernate.show_sql","true");
         //TODO: Change this to create-update during production. Current this setting will create/drop tables every time the webapp starts.
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto","create-drop"); //Setting for generating DDL
-//        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update"); //Setting for generating DDL
+        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
         return hibernateProperties;
     }
 }

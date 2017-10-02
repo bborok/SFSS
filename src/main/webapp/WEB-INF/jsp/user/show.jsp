@@ -17,7 +17,7 @@ User Name: <span><c:out value="${user.name}"/></span>
 User Email: <span><c:out value="${user.email}"/></span>
 User PhoneNumber: <span><c:out value="${user.phoneNumber}"/></span>
 User Role: <span><c:out value="${user.role}"/></span>
-User Preferred Campus: <span><c:out value="${user.campus}"/></span>
+User Preferred Campus: <span><c:out value="${user.preferredCampus}"/></span>
 User Account Code: <span><c:out value="${user.accountCode}"/></span>
 
 </body>

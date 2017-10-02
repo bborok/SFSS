@@ -8,34 +8,34 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String sfuId;
 
-    @Column(nullable = true)
-    private long studentNumber;
+    @Column(nullable = true, unique = true)
+    private Long studentNumber;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = true)
-    private long phoneNumber;
+    private Long phoneNumber;
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Role role;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
-    private Campus campus;
+    private Campus preferredCampus;
 
     @Column(nullable = true)
-    private long accountCode;
+    private Long accountCode;
 
     public User() { } //Required by JPA
 
@@ -46,7 +46,7 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
-        this.campus = campus;
+        this.preferredCampus = campus;
         this.accountCode = accountCode;
     }
 
@@ -75,7 +75,8 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        //TODO: Maybe a good idea (Prob not)? Temp fix for rendering JSP's.
+        return email == null ? "" : email;
     }
 
     public void setEmail(String email) {
@@ -83,7 +84,8 @@ public class User {
     }
 
     public long getPhoneNumber() {
-        return phoneNumber;
+        //TODO: Not a good idea. Temp fix for rendering JSP's.
+        return phoneNumber == null ? 0 : phoneNumber;
     }
 
     public void setPhoneNumber(long phoneNumber) {
@@ -98,16 +100,17 @@ public class User {
         this.role = role;
     }
 
-    public Campus getCampus() {
-        return campus;
+    public Campus getPreferredCampus() {
+        return preferredCampus;
     }
 
-    public void setCampus(Campus campus) {
-        this.campus = campus;
+    public void setPreferredCampus(Campus preferredCampus) {
+        this.preferredCampus = preferredCampus;
     }
 
     public long getAccountCode() {
-        return accountCode;
+        //TODO: Not a good idea. Temp fix for rendering JSP's.
+        return accountCode == null ? 0 : accountCode;
     }
 
     public void setAccountCode(long accountCode) {

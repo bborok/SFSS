@@ -8,33 +8,33 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String sfuId;
 
-    @Column(nullable = true, unique = true)
+    @Column(name = "StudentNumber",nullable = true, unique = true)
     private Long studentNumber;
 
-    @Column(nullable = false)
+    @Column(name = "Name", nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = true)
+    @Column(name = "PhoneNumber", nullable = false)
     private Long phoneNumber;
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "Role", nullable = false)
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
+    @Column(name = "PreferredCampus", nullable = true)
     private Campus preferredCampus;
 
-    @Column(nullable = true)
+    @Column(name = "AccountCode", nullable = true)
     private Long accountCode;
 
     public User() { } //Required by JPA

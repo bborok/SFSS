@@ -57,6 +57,7 @@ public class PersistenceConfig {
         hibernateProperties.setProperty("hibernate.show_sql","true");
         //TODO: Change this to create-update during production. Current this setting will create/drop tables every time the webapp starts.
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto","create-drop"); //Setting for generating DDL
+//        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
         return hibernateProperties;
     }
 }

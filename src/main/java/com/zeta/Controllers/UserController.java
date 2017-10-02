@@ -25,6 +25,7 @@ public class UserController {
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
     @PostMapping("/add")
     public String addUserToDatabase(
+            @RequestParam("sfuid") String sfuId,
             @RequestParam("studentNumber") int studentNumber,
             @RequestParam("name") String name,
             @RequestParam("email") String email ,
@@ -34,6 +35,7 @@ public class UserController {
             @RequestParam("accountCode") int accountCode){
 
         User u = new User(
+                sfuId,
                 studentNumber,
                 name,
                 email,

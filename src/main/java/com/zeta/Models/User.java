@@ -7,27 +7,35 @@ import javax.persistence.*;
  */
 @Entity
 public class User {
-
     @Id
+    @Column(nullable = false)
+    private String sfu_id;
+
+    @Column(nullable = true)
     private long studentNumber;
 
+    @Column(nullable = true)
     private String name;
 
+    @Column(nullable = true)
     private String email;
 
-    private int phoneNumber;
-
+    @Column(nullable = true)
+    private long phoneNumber;
 
     //TODO: Uncomment and implement this
-//    private List<User> contacts = new ArrayList<User>();
+    //private List<User> contacts = new ArrayList<User>();
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Role role;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Campus campus;
 
-    private int accountCode;
+    @Column(nullable = true)
+    private long accountCode;
 
     public User() { } //Required by JPA
 
@@ -39,7 +47,8 @@ public class User {
         this.studentNumber = studentNumber;
     }
 
-    public User(int studentNumber, String name, String email, int phoneNumber, Role role, Campus campus, int accountCode) {
+    public User(String sfu_id, long studentNumber, String name, String email, int phoneNumber, Role role, Campus campus, int accountCode) {
+        this.sfu_id = sfu_id;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
@@ -47,12 +56,6 @@ public class User {
         this.role = role;
         this.campus = campus;
         this.accountCode = accountCode;
-    }
-
-    public User(int studentNumber, String name, String email) {
-        this.studentNumber = studentNumber;
-        this.name = name;
-        this.email = email;
     }
 
     public long getStudentNumber() {
@@ -79,11 +82,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -103,11 +106,23 @@ public class User {
         this.campus = campus;
     }
 
-    public int getAccountCode() {
+    public long getAccountCode() {
         return accountCode;
     }
 
-    public void setAccountCode(int accountCode) {
+    public void setAccountCode(long accountCode) {
         this.accountCode = accountCode;
+    }
+
+    public String getSfu_id() {
+        return sfu_id;
+    }
+
+    public void setSfu_id(String sfu_id) {
+        this.sfu_id = sfu_id;
+    }
+
+    public void setStudentNumber(long studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }

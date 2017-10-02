@@ -9,16 +9,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title><c:out value="${user.name}"/>'s Details</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${empty user}">
+                User Not Found
+            </c:when>
+            <c:otherwise>
+                <c:out value="${user.name}"/>'s Details
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 </head>
 <body>
-User Student Number: <span><c:out value="${user.studentNumber}"/></span>
-User Name: <span><c:out value="${user.name}"/></span>
-User Email: <span><c:out value="${user.email}"/></span>
-User PhoneNumber: <span><c:out value="${user.phoneNumber}"/></span>
-User Role: <span><c:out value="${user.role}"/></span>
-User Preferred Campus: <span><c:out value="${user.preferredCampus}"/></span>
-User Account Code: <span><c:out value="${user.accountCode}"/></span>
-
+<c:choose>
+    <c:when test="${empty user}">
+        User Not Found
+    </c:when>
+    <c:otherwise>
+        User Student Number: <c:out value="${user.studentNumber}"/>
+        User Name: <c:out value="${user.name}"/>
+        User Email: <c:out value="${user.email}"/>
+        User PhoneNumber: <c:out value="${user.phoneNumber}"/>
+        User Role: <c:out value="${user.role}"/>
+        User Preferred Campus: <c:out value="${user.preferredCampus}"/>
+        User Account Code: <c:out value="${user.accountCode}"/>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>

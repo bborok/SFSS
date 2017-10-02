@@ -11,9 +11,6 @@ $(document).ready(function() {
                 start: new Date(),
                 end: new Date(),
                 allDay: "false"
-                // id: 1,
-                // title: 'New event',
-                // start: new Date(2017, 5, 25),
             }
 
         ];

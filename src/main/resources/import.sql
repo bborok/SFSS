@@ -1,1 +1,1 @@
-INSERT INTO user (sfu_id, name, email, phoneNumber) VALUES ('admin1', 'derek', 'admin1@sfu.ca', 6044596586);
+INSERT INTO user (sfuId, name, email, phoneNumber) VALUES ('admin1', 'derek', 'admin1@sfu.ca', 6044596586);

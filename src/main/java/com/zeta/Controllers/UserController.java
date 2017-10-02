@@ -3,7 +3,6 @@ package com.zeta.Controllers;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
-import com.zeta.Repositories.UserRepository;
 import com.zeta.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +25,13 @@ public class UserController {
     @PostMapping("/add")
     public String addUserToDatabase(
             @RequestParam("sfuid") String sfuId,
-            @RequestParam("studentNumber") int studentNumber,
+            @RequestParam("studentNumber") long studentNumber,
             @RequestParam("name") String name,
             @RequestParam("email") String email ,
-            @RequestParam("phoneNumber") int phoneNumber,
+            @RequestParam("phoneNumber") long phoneNumber,
             @RequestParam("role") String role,
             @RequestParam("campus") String campus,
-            @RequestParam("accountCode") int accountCode){
+            @RequestParam("accountCode") long accountCode){
 
         User u = new User(
                 sfuId,
@@ -45,12 +44,12 @@ public class UserController {
                 accountCode
             );
         service.addUser(u);
-        return "redirect:" + "/user/" + u.getStudentNumber();
+        return "redirect:" + "/user/" + u.getSfuId().trim();
     }
 
-    @GetMapping("/{studentNumber}")
-    public String showUser(@PathVariable("studentNumber") long studentNumber, Model model){
-        User user = service.getUserFromStudentNumber(studentNumber);
+    @GetMapping("/{sfuid}")
+    public String showUser(@PathVariable("sfuid") String sfuid, Model model){
+        User user = service.getUserFromSFUId(sfuid);
         model.addAttribute("user", user);
         return "/user/show";
     }

@@ -19,6 +19,10 @@ public class UserService {
         this.repository = repository;
     }
 
+    public User getUserFromSFUId(String sfuid){
+        return repository.findBySfuId(sfuid);
+    }
+
     public User getUserFromStudentNumber(long studentNumber){
         return repository.findOne(studentNumber);
     }

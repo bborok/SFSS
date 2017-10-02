@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(nullable = false)
-    private String sfu_id;
+    private String sfuId;
 
     @Column(nullable = true)
     private long studentNumber;
@@ -39,16 +39,8 @@ public class User {
 
     public User() { } //Required by JPA
 
-    // Base constructor
-    public User(String name, String email, int phoneNumber, int studentNumber) {
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.studentNumber = studentNumber;
-    }
-
-    public User(String sfu_id, long studentNumber, String name, String email, int phoneNumber, Role role, Campus campus, int accountCode) {
-        this.sfu_id = sfu_id;
+    public User(String sfu_id, long studentNumber, String name, String email, long phoneNumber, Role role, Campus campus, long accountCode) {
+        this.sfuId = sfu_id;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
@@ -58,11 +50,19 @@ public class User {
         this.accountCode = accountCode;
     }
 
+    public String getSfuId() {
+        return sfuId;
+    }
+
+    public void setSfuId(String sfuId) {
+        this.sfuId = sfuId;
+    }
+
     public long getStudentNumber() {
         return studentNumber;
     }
 
-    public void setStudentNumber(int studentNumber) {
+    public void setStudentNumber(long studentNumber) {
         this.studentNumber = studentNumber;
     }
 
@@ -112,17 +112,5 @@ public class User {
 
     public void setAccountCode(long accountCode) {
         this.accountCode = accountCode;
-    }
-
-    public String getSfu_id() {
-        return sfu_id;
-    }
-
-    public void setSfu_id(String sfu_id) {
-        this.sfu_id = sfu_id;
-    }
-
-    public void setStudentNumber(long studentNumber) {
-        this.studentNumber = studentNumber;
     }
 }

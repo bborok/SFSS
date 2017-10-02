@@ -1,17 +1,21 @@
- $(document).ready(function() {
 
-            var date = new Date();
-            var day = date.getDate();
-            var month = date.getMonth();
-            var year = date.getFullYear();
+
+$(document).ready(function() {
+
 
             var events_array = [
             {
-                id: 1,
-                title: 'New event',
-                start: new Date(2017, 5, 25)
+                title: "Test 1",
+                allday: false,
+                description: "lol",
+                start: new Date(),
+                end: new Date(),
+                allDay: "false"
+                // id: 1,
+                // title: 'New event',
+                // start: new Date(2017, 5, 25),
             }
-                
+
         ];
 
         // page is now ready, initialize the calendar...
@@ -35,7 +39,7 @@
 
         $('#calendar').fullCalendar({
             // put your options and callbacks here
-
+            timezone: 'local',
             viewRender: function (view) {
                 var h;
                 if (view.name == "month") {
@@ -58,20 +62,31 @@
             eventRender: function(event, element) {
                 element.attr('title', event.tip);
             },
-            select: function (start, end, jsEvent, view) {
-                var abc = prompt('Enter Title');
-                var allDay = !start.hasTime && !end.hasTime;
-                var newEvent = new Object();
-                newEvent.title = abc;
-                newEvent.start = moment(start).format();
-                newEvent.allDay = false;
 
-                if (abc) { // if empty schedule, don't add
-                    $('#calendar').fullCalendar('renderEvent', newEvent);
-                }
-                
+            select: function (start, end, jsEvent, view) {
+
+                startTime = moment(start).format('MMM Do h:mm A');
+                endTime = moment(end).format('h:mm A');
+                var mywhen = startTime + ' - ' + endTime;
+
+                $('#createEventModal #apptStartTime').val(start);
+                $('#createEventModal #apptEndTime').val(end);
+
+                $('#createEventModal #when').text(mywhen);
+                $('#createEventModal').modal('show');
+
             },
-            
+
+            eventClick: function(event){
+                $('#modalTitle').html(event.title);
+                $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
+                $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
+                $('#modalBody').html(event.description);
+                $('#fullCalModal').modal();
+                // title: event.title;
+            },
+
+
             navLinks: true, // can click day/week names to navigate views
 
             weekNumbers: true,
@@ -80,5 +95,22 @@
 
             editable: true
         })
+        $('#submitButton').on('click', function(e){
+            // We don't want this to act as a link so cancel the link action
+            e.preventDefault();
 
+            doSubmit();
+        })
+        function doSubmit(){
+            $("#createEventModal").modal('hide');
+
+            $("#calendar").fullCalendar('renderEvent',
+                {
+                    title: $('#eventTitle').val(),
+                    start: new Date($('#apptStartTime').val()),
+                    end: new Date($('#apptEndTime').val()),
+                    allDay: ($('#apptAllDay').val() == "true"),
+                },
+                true);
+        }
     });

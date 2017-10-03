@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Allows user to interact with the database via a Repository.
- * UserController could access UserRepository directly, but the implementation
+ * UserController could access userDao directly, but the implementation
  * of this UserService may change if the say the application uses
  * SQL Queries instead of HibernateJPA.
  */
@@ -23,7 +23,6 @@ public class UserService {
     public User getUserFromSFUId(String sfuid){
         return userDAO.get(sfuid);
     }
-
 
     public void addUser(User user){
         userDAO.add(user);

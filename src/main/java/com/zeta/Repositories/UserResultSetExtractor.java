@@ -19,7 +19,7 @@ public class UserResultSetExtractor implements ResultSetExtractor<User> {
             user.setName(rs.getString("Name"));
             user.setEmail(rs.getString("Email"));
             user.setPhoneNumber(rs.getLong("PhoneNumber"));
-            user.setPreferredCampus(Campus.valueOf(rs.getString("PrefferedCampus")));
+            user.setPreferredCampus(Campus.valueOf(rs.getString("PreferredCampus")));
             user.setStudentNumber(rs.getLong("StdNum"));
             user.setRole(Role.valueOf(rs.getString("Role")));
             return user;

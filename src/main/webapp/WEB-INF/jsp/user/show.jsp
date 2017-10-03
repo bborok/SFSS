@@ -34,7 +34,6 @@
         User PhoneNumber: <c:out value="${user.phoneNumber}"/>
         User Role: <c:out value="${user.role}"/>
         User Preferred Campus: <c:out value="${user.preferredCampus}"/>
-        User Account Code: <c:out value="${user.accountCode}"/>
     </c:otherwise>
 </c:choose>
 </body>

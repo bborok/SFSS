@@ -22,7 +22,7 @@ public class UserController {
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
-    @PostMapping("/add")
+    @GetMapping("/add")
     public String addUserToDatabase(
             @RequestParam("sfuid") String sfuId,
             @RequestParam("studentNumber") long studentNumber,

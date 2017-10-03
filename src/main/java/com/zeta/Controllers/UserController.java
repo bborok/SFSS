@@ -48,8 +48,6 @@ public class UserController {
     @GetMapping("/{sfuid}")
     public String showUser(@PathVariable("sfuid") String sfuid, Model model){
         User user = service.getUserFromSFUId(sfuid);
-//        if (user == null || user.getSfuId().equals(""))
-//            user = null;
         model.addAttribute("user", user);
         return "/user/show";
     }

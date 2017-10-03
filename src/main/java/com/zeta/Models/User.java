@@ -5,31 +5,19 @@ import javax.persistence.*;
 /*
  * com.zeta.Models.User class
  */
-@Entity
-@Table(name = "User")
 public class User {
-    @Id
-    @Column(name = "SFU_ID")
     private String sfuId;
 
-    @Column(name = "Name")
     private String name;
 
-    @Column(name = "Email")
     private String email;
 
-    @Column(name = "PhoneNumber")
     private Long phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "PreferredCampus")
     private Campus preferredCampus;
 
-    @Column(name = "StdNum")
     private Long studentNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "Role")
     private Role role;
 
 

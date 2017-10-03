@@ -1,7 +1,7 @@
 package com.zeta.Services;
 
 import com.zeta.Models.User;
-import com.zeta.Repositories.UserRepository;
+import com.zeta.Repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +13,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
-    private UserRepository repository;
+    private UserDAO userDAO;
+
     @Autowired
-    public UserService(UserRepository repository) {
-        this.repository = repository;
+    public UserService(UserDAO repository) {
+        this.userDAO = repository;
     }
 
     public User getUserFromSFUId(String sfuid){
-        return repository.findBySfuId(sfuid);
+        return userDAO.get(sfuid);
     }
 
-    public User getUserFromStudentNumber(long studentNumber){
-        return repository.findOne(studentNumber);
-    }
-
-    public User getUserFromEmail(String email){
-        return repository.findByEmail(email);
-    }
 
     public void addUser(User user){
-        repository.save(user);
+        userDAO.add(user);
     }
 
 }

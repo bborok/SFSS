@@ -23,7 +23,7 @@ public class UserResultSetExtractor implements ResultSetExtractor<User> {
             if (rs.getString("PreferredCampus") == null){
                 user.setPreferredCampus(null);
             } else{
-                user.setPreferredCampus(Campus.valueOf(rs.getString("PreferredCampus")));
+                user.setPreferredCampus(Campus.valueOf(rs.getString("PreferredCampus").toUpperCase()));
             }
 
             user.setStudentNumber(rs.getLong("StdNum"));

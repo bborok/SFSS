@@ -8,8 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-//Configuration local database connection.
-//Currently configured to use HibernateJPA.
+//Configuration for local database connection.
 @Configuration
 public class PersistenceConfig {
     @Bean
@@ -17,9 +16,9 @@ public class PersistenceConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         //TODO: Change the parameters in the functions calls below as appropriate.
-        dataSource.setUrl("jdbc:mysql://cmpt373-1177z.cmpt.sfu.ca:3306/testdb2");
-        dataSource.setUsername("testuser2".trim());
-        dataSource.setPassword("Testuser2".trim());
+        dataSource.setUrl("jdbc:mysql://cmpt373-1177z.cmpt.sfu.ca:3306/testdb");
+        dataSource.setUsername("testuser".trim());
+        dataSource.setPassword("testtest".trim());
         return dataSource;
     }
 

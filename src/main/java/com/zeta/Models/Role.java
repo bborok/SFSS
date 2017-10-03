@@ -6,6 +6,6 @@ package com.zeta.Models;
 public enum Role {
     ADMIN,
     SUPERVISOR,
-    TEAM_LEAD,
-    TEAM_MEMBER
+    TEAM_LEADER,
+    MEMBER
 }

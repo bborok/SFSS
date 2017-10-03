@@ -5,6 +5,8 @@ import com.zeta.Repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Allows user to interact with the database via a Repository.
  * UserController could access userDao directly, but the implementation
@@ -16,8 +18,8 @@ public class UserService {
     private UserDAO userDAO;
 
     @Autowired
-    public UserService(UserDAO repository) {
-        this.userDAO = repository;
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     public User getUserFromSFUId(String sfuid){
@@ -28,4 +30,7 @@ public class UserService {
         userDAO.add(user);
     }
 
+    public List<User> getListOfUsers(){
+        return userDAO.list();
+    }
 }

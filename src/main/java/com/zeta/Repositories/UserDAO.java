@@ -13,5 +13,5 @@ public interface UserDAO {
 
     public User get(String sfuID);
 
-//    public List<User> list();
+    public List<User> list();
 }

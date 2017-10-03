@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -50,6 +52,13 @@ public class UserController {
         User user = service.getUserFromSFUId(sfuid);
         model.addAttribute("user", user);
         return "/user/show";
+    }
+
+    @GetMapping("/showAll")
+    public String allUsers(Model model){
+        List<User> userList = service.getListOfUsers();
+        model.addAttribute(userList);
+        return "/user/showAll";
     }
 
     @GetMapping("/test")

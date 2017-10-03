@@ -56,4 +56,11 @@ public class UserDAOImpl implements UserDAO {
         String sql = "SELECT * FROM User WHERE SFU_ID=\'" + sfuId + "\'";
         return jdbcTemplate.query(sql, new UserResultSetExtractor());
     }
+
+    @Override
+    public List<User> list() {
+        String sql = "SELECT * FROM User";
+        List<User> users = jdbcTemplate.query(sql, new UserRowMapper());
+        return users;
+    }
 }

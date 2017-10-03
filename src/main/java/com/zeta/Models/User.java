@@ -1,7 +1,5 @@
 package com.zeta.Models;
 
-import javax.persistence.*;
-
 /*
  * com.zeta.Models.User class
  */

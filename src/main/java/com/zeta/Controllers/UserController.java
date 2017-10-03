@@ -30,8 +30,7 @@ public class UserController {
             @RequestParam("email") String email ,
             @RequestParam("phoneNumber") long phoneNumber,
             @RequestParam("role") String role,
-            @RequestParam("campus") String campus,
-            @RequestParam("accountCode") long accountCode){
+            @RequestParam("campus") String campus){
 
         User u = new User(
                 sfuId,
@@ -40,8 +39,7 @@ public class UserController {
                 email,
                 phoneNumber,
                 Role.valueOf(role.toUpperCase()),
-                Campus.valueOf(campus.toUpperCase()),
-                accountCode
+                Campus.valueOf(campus.toUpperCase())
             );
         service.addUser(u);
         return "redirect:" + "/user/" + u.getSfuId().trim();

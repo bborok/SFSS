@@ -6,48 +6,56 @@ import javax.persistence.*;
  * com.zeta.Models.User class
  */
 @Entity
+@Table(name = "User")
 public class User {
     @Id
-    @Column(nullable = false, length = 30)
+    @Column(name = "SFU_ID")
     private String sfuId;
 
-    @Column(name = "StudentNumber",nullable = true, unique = true, length = 100)
-    private Long studentNumber;
-
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "Name")
     private String name;
 
-    @Column(name = "Email", nullable = false, unique = true, length = 100)
+    @Column(name = "Email")
     private String email;
 
-    @Column(name = "PhoneNumber", nullable = false)
+    @Column(name = "PhoneNumber")
     private Long phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PreferredCampus")
+    private Campus preferredCampus;
+
+    @Column(name = "StdNum")
+    private Long studentNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Role")
+    private Role role;
+
+
+
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "Role", nullable = false, length = 15)
-    private Role role;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "PreferredCampus", nullable = true, length = 15)
-    private Campus preferredCampus;
 
-    @Column(name = "AccountCode", nullable = true)
-    private Long accountCode;
 
-    public User() { } //Required by JPA
 
-    public User(String sfu_id, long studentNumber, String name, String email, long phoneNumber, Role role, Campus campus, long accountCode) {
-        this.sfuId = sfu_id;
+//    @Column(name = "AccountCode", nullable = true)
+//    private Long accountCode;
+
+    public User() {
+    } //Required by JPA
+
+    public User(String sfuId, Long studentNumber, String name, String email, Long phoneNumber, Role role, Campus preferredCampus) {
+        this.sfuId = sfuId;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
-        this.preferredCampus = campus;
-        this.accountCode = accountCode;
+        this.preferredCampus = preferredCampus;
     }
 
     public String getSfuId() {
@@ -106,14 +114,5 @@ public class User {
 
     public void setPreferredCampus(Campus preferredCampus) {
         this.preferredCampus = preferredCampus;
-    }
-
-    public long getAccountCode() {
-        //TODO: Not a good idea. Temp fix for rendering JSP's.
-        return accountCode == null ? 0 : accountCode;
-    }
-
-    public void setAccountCode(long accountCode) {
-        this.accountCode = accountCode;
     }
 }

@@ -1,1 +1,0 @@
-INSERT INTO User (sfuId, name, email, phoneNumber) VALUES ('admin1', 'derek', 'admin1@gmail.com', 6044596586);

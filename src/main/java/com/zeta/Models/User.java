@@ -8,16 +8,16 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String sfuId;
 
-    @Column(name = "StudentNumber",nullable = true, unique = true)
+    @Column(name = "StudentNumber",nullable = true, unique = true, length = 100)
     private Long studentNumber;
 
-    @Column(name = "Name", nullable = false)
+    @Column(name = "Name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "Email", nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(name = "PhoneNumber", nullable = false)
@@ -27,11 +27,11 @@ public class User {
     //private List<User> contacts = new ArrayList<User>();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Role", nullable = false)
+    @Column(name = "Role", nullable = false, length = 15)
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "PreferredCampus", nullable = true)
+    @Column(name = "PreferredCampus", nullable = true, length = 15)
     private Campus preferredCampus;
 
     @Column(name = "AccountCode", nullable = true)

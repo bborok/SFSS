@@ -149,17 +149,23 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputTitle">Volunteer:</label>
                                             <div class="controls">
-                                                <input type="text" name="eventTitle" id="eventTitle" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
+                                                <input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a volunteer."/>                                              <input type="hidden" id = apptID"/>
                                                 <input type="hidden" id="apptStartTime"/>
                                                 <input type="hidden" id="apptEndTime"/>
                                                 <input type="hidden" id="apptAllDay" />
                                             </div>
+                                            <label class="control-label" for="when">When:</label>
+                                            <div class="controls">
+                                                <div class="controls" id="when">
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="control-group">
-                                            <label class="control-label" for="when">When:</label>
-                                            <div class="controls controls-row" id="when" style="margin-top:5px;">
-                                            </div>
                                         </div>
+                                        <label class="control-label" for="inputDescription">Description:</label>s
+                                        <h3><input type="text" name="eventBody" id="eventBody" placeholder="Enter a brief description of this shift.">
+                                        </h3>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -181,7 +187,7 @@
                                 <div id="modalBody" class="modal-body"></div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button class="btn btn-primary">Remove</button>
+                                    <button class="btn btn-primary" id="btnDelete">Remove</button>
                                 </div>
                             </div>
                         </div>

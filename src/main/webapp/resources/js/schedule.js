@@ -1,11 +1,10 @@
-
-
 $(document).ready(function() {
 
 
             var events_array = [
             {
                 title: "Test 1",
+                id: 1,
                 allday: false,
                 description: "lol",
                 start: new Date(),
@@ -40,9 +39,9 @@ $(document).ready(function() {
             viewRender: function (view) {
                 var h;
                 if (view.name == "month") {
-                    h = 725;
+                    h = 700;
                 } else {
-                    h = 725;
+                    h = 700;
                 }
                 $('#calendar').fullCalendar('option', 'contentHeight', h);
             },
@@ -58,17 +57,19 @@ $(document).ready(function() {
 
             eventRender: function(event, element) {
                 element.attr('title', event.tip);
+
             },
 
-            select: function (start, end, jsEvent, view) {
+            select: function (start, end, id) {
 
                 startTime = moment(start).format('MMM Do h:mm A');
                 endTime = moment(end).format('h:mm A');
                 var mywhen = startTime + ' - ' + endTime;
-
+                event._id = event._id + 1;
                 $('#createEventModal #apptStartTime').val(start);
                 $('#createEventModal #apptEndTime').val(end);
-
+                $('#createEventModal #apptID').val(event._id);
+                $('#createEventModal #eventBody').val(event.description);
                 $('#createEventModal #when').text(mywhen);
                 $('#createEventModal').modal('show');
 
@@ -80,7 +81,12 @@ $(document).ready(function() {
                 $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
                 $('#modalBody').html(event.description);
                 $('#fullCalModal').modal();
-                // title: event.title;
+                $('#btnDelete').on('click', function(e) {
+                            e.preventDefault();
+
+                    $('#fullCalModal').modal('hide');
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                        })
             },
 
 
@@ -92,13 +98,16 @@ $(document).ready(function() {
 
             editable: true
         })
+
         $('#submitButton').on('click', function(e){
             // We don't want this to act as a link so cancel the link action
             e.preventDefault();
 
             doSubmit();
         })
+
         function doSubmit(){
+
             $("#createEventModal").modal('hide');
 
             $("#calendar").fullCalendar('renderEvent',
@@ -107,7 +116,16 @@ $(document).ready(function() {
                     start: new Date($('#apptStartTime').val()),
                     end: new Date($('#apptEndTime').val()),
                     allDay: ($('#apptAllDay').val() == "true"),
-                },
+                    description: $('#eventBody').val(),
+                    id: $('#apptID').val()
+
+        },
+
                 true);
+            console.log($('#apptID').val());
+
+            $("#eventTitle").attr("placeholder", "Enter a volunteer.").val("").focus().blur();
+            $("#eventBody").attr("placeholder", "Enter a brief description of this shift.").val("").focus().blur();
+
         }
     });

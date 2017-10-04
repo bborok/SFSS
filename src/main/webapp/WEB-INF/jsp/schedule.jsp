@@ -26,26 +26,26 @@
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
 
     <!-- FullCalendar Resources -->
-    <link rel='stylesheet' href='/resources/fullcalendar/fullcalendar.css' />
-    <script src='/resources/lib/jquery.min.js'></script>
-    <script src='/resources/lib/moment.min.js'></script>
-    <script src='/resources/fullcalendar/fullcalendar.js'></script>
+    <link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css' />
+    <script src='resources/lib/jquery.min.js'></script>
+    <script src='resources/lib/moment.min.js'></script>
+    <script src='resources/fullcalendar/fullcalendar.js'></script>
 
-    <script src= '/resources/js/schedule.js'></script>
+    <script src= 'resources/js/schedule.js'></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%--<link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />--%>
 
 
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/css/form-elements.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/css/form-elements.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 
 
 
@@ -133,9 +133,9 @@
             <div class="col-sm-12 text">
                 <div class="description">
                     <center>
-                        <img src="/resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                     </center>
-                    <!-- <img src="/resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12"> -->
+                    <!-- <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12"> -->
                     <div id='calendar'></div>
                     <div id = "createEventModal" class = "modal fade">
                         <div class="modal-dialog">
@@ -202,9 +202,9 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<!--     <script src="/resources/jquery/jquery.min.js"></script>
-    <script src="/resources/popper/popper.min.js"></script>
-    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<!--     <script src="resources/jquery/jquery.min.js"></script>
+    <script src="resources/popper/popper.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
  -->
 <!-- Menu Toggle Script -->
 <script>

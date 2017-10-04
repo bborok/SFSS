@@ -18,15 +18,15 @@
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/css/form-elements.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/css/form-elements.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 
 </head>
 
@@ -111,13 +111,13 @@
             <div class="col-sm-12 text">
                 <div class="description">
                     <center>
-                        <img src="/resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
-                        <img src="/resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive">
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive">
                     </center>
                 </div>
                 <div class="col-sm-6">
                     <center>
-                        <img src="/resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
+                        <img src="resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
                         <h3>Supervisor</h3>
                         <p>604-666-666</p>
                         <p>advisor@sfu.ca</p>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-sm-6">
                     <center>
-                        <img src="/resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
+                        <img src="resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
                         <h3>Manager</h3>
                         <p>778-777-777</p>
                         <p>manager@sfu.ca</p>
@@ -140,9 +140,9 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<script src="/resources/jquery/jquery.min.js"></script>
-<script src="/resources/popper/popper.min.js"></script>
-<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>

@@ -50,6 +50,18 @@ public class IndexController {
         return "statistics";
     }
 
+    @GetMapping("/statistics_info_lf")
+    public String statistics_info_lf(Model m) {
+        m.addAttribute("someAttribute", "someValue");
+        return "statistics_info_lf";
+    }
+
+    @GetMapping("/statistics_public_contact")
+    public String statistics_public_contact(Model m) {
+        m.addAttribute("someAttribute", "someValue");
+        return "statistics_public_contact";
+    }
+
     @GetMapping("/temp_schedule")
     public String temp_schedule(Model m) {
         m.addAttribute("someAttribute", "someValue");

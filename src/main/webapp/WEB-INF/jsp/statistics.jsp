@@ -106,12 +106,11 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-            <div class="col-sm-12 text">
-                <div class="description">
-                    <img src="resources/img/logo_made/logo_2.png" class="img-responsive">
-                    <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12">
-                </div>
+            <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
+            <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
+            <div class="col-xs-6 col-md-offset-3 column">
+                <a href="/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
+                <a href="/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
             </div>
         </div>
     </div>
@@ -124,14 +123,6 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
 
 </body>
 

@@ -45,6 +45,5 @@ target/
 *.zip
 *.tar.gz
 *.rar
-.idea/artifacts/*
 .idea/dbnavigator.xml
 .idea/sqldialects.xml

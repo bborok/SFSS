@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: PrivateAcc
+  model.User: PrivateAcc
   Date: 2017-09-29
   Time: 5:03 PM
   To change this template use File | Settings | File Templates.
@@ -55,7 +55,7 @@
                 <a href="${pageContext.request.contextPath}/dashboard">Home</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
+                <a href="${pageContext.request.contextPath}/schedule">model.Schedule</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
@@ -64,7 +64,7 @@
                 <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
+                <a href="${pageContext.request.contextPath}/payroll">model.Payroll</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/log">Log</a>
@@ -106,11 +106,11 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
+            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
             <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
             <div class="col-xs-6 col-md-offset-3 column">
-                <a href="/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
-                <a href="/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
+                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
             </div>
         </div>
     </div>

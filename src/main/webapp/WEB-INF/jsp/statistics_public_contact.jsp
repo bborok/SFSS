@@ -18,15 +18,15 @@
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/css/form-elements.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/css/form-elements.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 
 <style>
@@ -105,7 +105,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
+            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
             <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
             <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
                 <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
@@ -262,9 +262,9 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<script src="/resources/js/jquery-1.12.4.js"></script>
-<script src="/resources/bootstrap/js/bootstrap.js"></script>
-<script src="/resources/js/echarts.common.min.js"></script>
+<script src="resources/js/jquery-1.12.4.js"></script>
+<script src="resources/bootstrap/js/bootstrap.js"></script>
+<script src="resources/js/echarts.common.min.js"></script>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('chart1'));

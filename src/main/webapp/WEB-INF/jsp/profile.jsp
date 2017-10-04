@@ -18,15 +18,15 @@
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/css/form-elements.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/css/form-elements.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 
 </head>
 
@@ -130,7 +130,7 @@
             <div class="col-sm-12 text">
                 <center>
                     <div class="description">
-                        <img src="/resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                     </div></center>
                 <br><br>
 
@@ -223,7 +223,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="/resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
+                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
                             </center>
                             <h3>User Profile</h3>
                             <h5>Select User from the list</h5>
@@ -234,7 +234,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="/resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
+                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
                             </center>
                             <h3>--</h3>
                             <h5>This user has no profile yet</h5>
@@ -247,7 +247,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="/resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
+                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
                             </center>
                             <h3>Steven Lee</h3>
                             <h4>Volunteer</h4>
@@ -260,7 +260,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="/resources/img/etc/dog2.png" class="img-responsive" height="300" width="300">
+                                <img src="resources/img/etc/dog2.png" class="img-responsive" height="300" width="300">
                             </center>
                             <h3>Steven Kim</h3>
                             <h4>Volunteer</h4>
@@ -273,7 +273,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="/resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
+                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
                             </center>
                             <h3>Steven Park</h3>
                             <h4>Volunteer</h4>
@@ -289,9 +289,9 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<script src="/resources/jquery/jquery.min.js"></script>
-<script src="/resources/popper/popper.min.js"></script>
-<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>

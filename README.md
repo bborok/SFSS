@@ -1,5 +1,78 @@
 Title : Student Safety Engagement Program
 
+Intro:
+
+    -- This website is based on SFU's Student Safety Engagement Program that is already in action, but moves towards a digital approach, rather than a physical one.
+     As such, this project generally deals with handling a community of users that are assigned to specific shifts, then are required to input data in the Statistics page. 
+     These shifts in the Scheduling page are varying per campus. 
+     There are multiple levels of users (Administrator, Supervisor, Team Lead, Members (Paid or Volunteer), each having their own responsibilities. 
+     Generally, a higher level user is able to assign Members to certain shifts via the Scheduling page at a specific time, and records values into the Statistics page for data purposes.
+
+Directory Structure:
+
+    -- Our directory structure is laid out the way it is because of Maven's setup. Maven's environment requires directory structure to be exact, 
+    otherwise it may cause problems 
+    in our group due to incorrect pathing of certain files. It is possible to not conform to Maven's structure, 
+    but is probably good practice to conform with it. Many of our .css/.js files are located in our resources folder, 
+    whereas our .jsp files are located in the WEB-INF folder. 
+    --
+    -- Source: https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html
+
+    -- cmpt373-zeta
+    --      |
+    --      |
+    --      |-----src/main/webapp
+    --      |                |
+    --      |                |-----resources
+    --      |                |          |
+    --      |                |          |-----bootstrap
+    --      |                |          |-----css
+    --      |                |          |-----font-awesome
+    --      |                |          |-----FullCalendar
+    --      |                |          |-----img
+    --      |                |          |-----js
+    --      |                |          
+    --      |                |-----WEB-INF
+    --      |                |        |
+    --      |                |        |-----jsp
+    --      |                |        |      |
+    --      |                |        |      |-----(contains all jsp files)
+
+Build Directions & Dependencies:
+
+    -- Localhost
+        - Requires: IntelliJ Ultimate Edition & Tomcat 7+, the project itself, .war artifact (supplied when project is cloned), Spring
+        - Build directions: When in IntelliJ, when selecting Maven projects, one can click Clean, Compile, Package in order to build the .war file. 
+        One can click tomcat:deploy to deploy the actual .war to the VM's server (The .war artifact is necessary in order to run in on the VM provided by SFU.)
+
+    -- VM
+        - Requires: Access to web server's apache-tomcat manager login, .war artifact, maybe IntelliJ Ultimate Edition & Tomcat 7+ if doing by IntelliJ.
+
+
+Run Instructions:
+
+    -- Localhost
+        1.) Load cmpt373-zeta project via IntelliJ
+        2a.) Click Edit Configurations (near Run button)
+        2b.) Press Configure in tab Server where it says Application server
+        2c.) Locate locally installed Tomcat folder
+        2d.) Go to Deployment tab, click the "+" sign, and then click artifact (click on .war exploded artifact)
+        2e.) In Server tab, near "Before launch..." press the "+" sign to add "Build Artifacts". There should be "Build" and "Build Artifacts" in this tab.
+        2f.) Press ok.
+        3a.) Click File, Project Structure
+        3b.) In Artifacts tab, Output Layout, double click the elements on the right side table. Spring should be then added as a layout/element.
+        4.) Run server
+
+    -- VM
+        1.) Clone project and load via IntelliJ
+        2.) In the bottom left corner, hover over it and click Maven Projects. A sidebar on the right should appear.
+        3.) Double click Package in order to create a .war artifact.
+        4.) You can then either do 4a.), or 4b.), 4bi.), 4bii.)):
+        4a.) In Plugins (from Maven Projects), open tomcatX, and press tomcatX:deploy. This will deploy the .war file to the VM
+        4b.) Go to cmpt373-1177z.cmpt.sfu.ca:8080 and open Manager App.
+        4bi.) Locate .war file and press deploy.
+        4bii.) Press the newly made application and the website should be running.
+
 Features:
 
 Web based

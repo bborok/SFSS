@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("assets/img/stole_from_sfu/surrey.jpg");
+    $.backstretch("resources/img/stole_from_sfu/surrey.jpg");
     
     /*
         Form validation

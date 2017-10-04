@@ -25,3 +25,5 @@
 out/
 target/
 .idea/artifacts/*
+.idea/dbnavigator.xml
+.idea/sqldialects.xml

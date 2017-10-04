@@ -147,9 +147,9 @@
                                 <div class="modal-body">
                                     <form id="createAppointmentForm" class="form-horizontal">
                                         <div class="control-group">
-                                            <label class="control-label" for="inputTitle">Volunteer:</label>
+                                            <label class="control-label" for="inputTitle">Title:</label>
                                             <div class="controls">
-                                                <input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a volunteer."/>                                              <input type="hidden" id = apptID"/>
+                                                <input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a short description."/>                                              <input type="hidden" id = apptID"/>
                                                 <input type="hidden" id="apptStartTime"/>
                                                 <input type="hidden" id="apptEndTime"/>
                                                 <input type="hidden" id="apptAllDay" />
@@ -163,8 +163,8 @@
                                         </div>
                                         <div class="control-group">
                                         </div>
-                                        <label class="control-label" for="inputDescription">Description:</label>s
-                                        <h3><input type="text" name="eventBody" id="eventBody" placeholder="Enter a brief description of this shift.">
+                                        <label class="control-label" for="inputDescription">Volunteer:</label>
+                                        <h3><input type="text" name="eventMember" id="eventMember" placeholder="Enter a volunteer.">
                                         </h3>
                                     </form>
                                 </div>
@@ -180,11 +180,11 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
-                                    <h4 id="modalTitle" class="modal-title"></h4>
-                                </div>
+                                    Title: <span id = "modalTitle" class = "modal-title"></span>
+                                </div><br>
                                 Start: <span id = "modalStart"></span><br>
-                                End: <span id = "modalEnd"></span><br>
-                                <div id="modalBody" class="modal-body"></div>
+                                End: <span id = "modalEnd"></span><br><br>
+                                Volunteer: <span id = "modalMember"></span><br>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button class="btn btn-primary" id="btnDelete">Remove</button>

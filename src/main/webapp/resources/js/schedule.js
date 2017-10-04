@@ -1,15 +1,21 @@
 $(document).ready(function() {
 
-
-            var events_array = [
+            var events_array = [ //once we have database values, simple mysql is needed to connect values to these arrays
             {
-                title: "Test 1",
+                title: "Security",
                 id: 1,
                 allday: false,
-                description: "lol",
-                start: new Date(),
-                end: new Date(),
-                allDay: "false"
+                member: "Bobae",
+                start: '2017-10-04T15:00:00',
+                end: '2017-10-04T15:30:00'
+            },
+            {
+                title: "Poker",
+                id: 2,
+                allday: false,
+                member: "Steven",
+                start: '2017-10-06T13:00:00',
+                end: '2017-10-06T15:00:00'
             }
 
         ];
@@ -62,25 +68,30 @@ $(document).ready(function() {
 
             select: function (start, end, id) {
 
+                end = end.subtract('days', 1); // uses for first iteration, no connection
+                end = end.add('minutes', 30);
+
                 startTime = moment(start).format('MMM Do h:mm A');
                 endTime = moment(end).format('h:mm A');
                 var mywhen = startTime + ' - ' + endTime;
-                event._id = event._id + 1;
+
                 $('#createEventModal #apptStartTime').val(start);
                 $('#createEventModal #apptEndTime').val(end);
                 $('#createEventModal #apptID').val(event._id);
-                $('#createEventModal #eventBody').val(event.description);
+                $('#createEventModal #eventMember').val(event.member);
                 $('#createEventModal #when').text(mywhen);
                 $('#createEventModal').modal('show');
 
             },
 
             eventClick: function(event){
+
                 $('#modalTitle').html(event.title);
                 $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
                 $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-                $('#modalBody').html(event.description);
+                $('#modalMember').html(event.member);
                 $('#fullCalModal').modal();
+
                 $('#btnDelete').on('click', function(e) {
                             e.preventDefault();
 
@@ -88,7 +99,6 @@ $(document).ready(function() {
                             $('#calendar').fullCalendar('removeEvents', event._id);
                         })
             },
-
 
             navLinks: true, // can click day/week names to navigate views
 
@@ -116,16 +126,17 @@ $(document).ready(function() {
                     start: new Date($('#apptStartTime').val()),
                     end: new Date($('#apptEndTime').val()),
                     allDay: ($('#apptAllDay').val() == "true"),
-                    description: $('#eventBody').val(),
+                    member: $('#eventMember').val(),
                     id: $('#apptID').val()
 
         },
 
                 true);
-            console.log($('#apptID').val());
+            console.log($('#apptEndTime').val());
+            console.log($('#apptStartTime').val());
 
             $("#eventTitle").attr("placeholder", "Enter a volunteer.").val("").focus().blur();
-            $("#eventBody").attr("placeholder", "Enter a brief description of this shift.").val("").focus().blur();
+            $("#eventMember").attr("placeholder", "Enter a brief description of this shift.").val("").focus().blur();
 
         }
     });

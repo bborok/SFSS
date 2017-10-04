@@ -2,11 +2,19 @@ Title : Student Safety Engagement Program
 
 Intro:
 
-    -- This website is based on SFU's Student Safety Engagement Program that is already in action, but moves towards a digital approach, rather than a physical one. As such, this project generally deals with handling a community of users that are assigned to specific shifts, then are required to input data in the Statistics page. These shifts in the Scheduling page are varying per campus. There are multiple levels of users (Administrator, Supervisor, Team Lead, Members (Paid or Volunteer), each having their own responsibilities. Generally, a higher level user is able to assign Members to certain shifts via the Scheduling page at a specific time, and records values into the Statistics page for data purposes.
+    -- This website is based on SFU's Student Safety Engagement Program that is already in action, but moves towards a digital approach, rather than a physical one.
+     As such, this project generally deals with handling a community of users that are assigned to specific shifts, then are required to input data in the Statistics page. 
+     These shifts in the Scheduling page are varying per campus. 
+     There are multiple levels of users (Administrator, Supervisor, Team Lead, Members (Paid or Volunteer), each having their own responsibilities. 
+     Generally, a higher level user is able to assign Members to certain shifts via the Scheduling page at a specific time, and records values into the Statistics page for data purposes.
 
 Directory Structure:
 
-    -- Our directory structure is laid out the way it is because of Maven's setup. Maven's environment requires directory structure to be exact, otherwise it may cause problems in our group due to incorrect pathing of certain files. It is possible to not conform to Maven's structure, but is probably good practice to conform with it. Many of our .css/.js files are located in our resources folder, whereas our .jsp files are located in the WEB-INF folder. 
+    -- Our directory structure is laid out the way it is because of Maven's setup. Maven's environment requires directory structure to be exact, 
+    otherwise it may cause problems 
+    in our group due to incorrect pathing of certain files. It is possible to not conform to Maven's structure, 
+    but is probably good practice to conform with it. Many of our .css/.js files are located in our resources folder, 
+    whereas our .jsp files are located in the WEB-INF folder. 
     --
     -- Source: https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html
 
@@ -34,7 +42,8 @@ Build Directions & Dependencies:
 
     -- Localhost
         - Requires: IntelliJ Ultimate Edition & Tomcat 7+, the project itself, .war artifact (supplied when project is cloned), Spring
-        - Build directions: When in IntelliJ, when selecting Maven projects, one can click Clean, Compile, Package in order to build the .war file. One can click tomcat:deploy to deploy the actual .war to the VM's server (The .war artifact is necessary in order to run in on the VM provided by SFU.)
+        - Build directions: When in IntelliJ, when selecting Maven projects, one can click Clean, Compile, Package in order to build the .war file. 
+        One can click tomcat:deploy to deploy the actual .war to the VM's server (The .war artifact is necessary in order to run in on the VM provided by SFU.)
 
     -- VM
         - Requires: Access to web server's apache-tomcat manager login, .war artifact, maybe IntelliJ Ultimate Edition & Tomcat 7+ if doing by IntelliJ.

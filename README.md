@@ -1,6 +1,7 @@
 Title : Student Safety Engagement Program
 
 Intro:
+
     -- This website is based on SFU's Student Safety Engagement Program that is already in action, but moves towards a digital approach, rather than a physical one. As such, this project generally deals with handling a community of users that are assigned to specific shifts, then are required to input data in the Statistics page. These shifts in the Scheduling page are varying per campus. There are multiple levels of users (Administrator, Supervisor, Team Lead, Members (Paid or Volunteer), each having their own responsibilities. Generally, a higher level user is able to assign Members to certain shifts via the Scheduling page at a specific time, and records values into the Statistics page for data purposes.
 
 Directory Structure:

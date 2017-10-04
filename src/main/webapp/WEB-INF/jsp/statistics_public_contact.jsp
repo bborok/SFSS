@@ -107,7 +107,7 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
+            <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
             <div class="col-xs-6 col-md-offset-3 column">
                 <a href="/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
                 <a href="/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>

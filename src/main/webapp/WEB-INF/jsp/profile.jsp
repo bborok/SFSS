@@ -70,7 +70,7 @@
             <li class="sidebar-brand">
                 <p>SFU SFEP</p>
             </li>
-            <li class="active">
+            <li>
                 <a href="${pageContext.request.contextPath}/dashboard">Home</a>
             </li>
             <li>

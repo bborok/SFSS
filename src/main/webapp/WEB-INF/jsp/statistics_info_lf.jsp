@@ -262,7 +262,7 @@
             </div>
 
             <div class="col-xs-12">
-
+                <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>
     </div>
@@ -274,8 +274,91 @@
 <!-- Bootstrap core JavaScript -->
 <script src="/resources/js/jquery-1.12.4.js"></script>
 <script src="/resources/bootstrap/js/bootstrap.js"></script>
+<script src="/resources/js/echarts.common.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {});
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart1'));
+    myChart.title = "Number of Infomation Activities in 2017 by month";
+    var colors = ['#5793f3', '#d14a61', '#675bba', '#775bba', '#995bba'];
+    // 指定图表的配置项和数据
+    var option = {
+        color: colors,
+        tooltip: {
+            trigger: 'none',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        legend: {
+            data:['direction', 'payment', 'phone', 'key', 'others']
+        },
+        grid: {
+            top: 70,
+            bottom: 50
+        },
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine: {
+                    onZero: false,
+                    lineStyle: {
+                        color: colors[1]
+                    }
+                },
+                axisPointer: {
+                    label: {
+                        formatter: function (params) {
+                            return 'number  ' + params.value
+                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                        }
+                    }
+                },
+                data: ["DEC14", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name:'direction',
+                type:'line',
+                smooth: true,
+                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 11]
+            },
+            {
+                name:'payment',
+                type:'line',
+                smooth: true,
+                data: [70.7, 175.6, 2.6, 5.9, 9.0, 26.4, 28.7,  182.2, 48.7, 18.8, 6.0, 2.3, 11]
+            },
+            {
+                name:'phone',
+                type:'line',
+                smooth: true,
+                data: [182.2, 48.7, 18.8, 6.0, 2.3, 112.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 45]
+            },
+            {
+                name:'key',
+                type:'line',
+                smooth: true,
+                data: [5.9, 66, 26.4, 28.7, 70.7, 155, 89, 48.7, 18.8, 6.0, 2.3, 11, 23]
+            },
+            {
+                name:'others',
+                type:'line',
+                smooth: true,
+                data: [18.8, 6.0, 2.3, 11, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 </script>
 </body>
 </html>

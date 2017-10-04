@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/css/form-elements.css">
     <link rel="stylesheet" href="/resources/css/style.css">
-
 </head>
 
 <style>
@@ -108,9 +107,162 @@
         <div class="container-fluid">
             <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
             <div class="col-xs-6"><h3 class="text-center">STATISTICS INFO&LF</h3></div>
-            <div class="col-xs-6 col-md-offset-3 column">
-                <a href="/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
-                <a href="/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
+            <div class="col-xs-6 col-md-offset-6">
+                <div class="col-xs-4"><button type="button" class="btn btn-info btn-block">EXPORT</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-block">SAVE</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-block">EDIT</button></div>
+            </div>
+            <div class="col-xs-8">
+                <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>2017</th>
+                        <th>DEC'16</th>
+                        <th>JAN</th>
+                        <th>FEB</th>
+                        <th>MAR</th>
+                        <th>APR</th>
+                        <th>MAY</th>
+                        <th>JUN</th>
+                        <th>JUL</th>
+                        <th>AUG</th>
+                        <th>SEP</th>
+                        <th>OCT</th>
+                        <th>NOV</th>
+                        <th>DEV</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Directions</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Lost&Found</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Payments</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>PhoneService</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>KeyService</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Others</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-3 col-xs-offset-1">
+                <table id="table2" class="table table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Total</th>
+                        <th>%</th>
+                        <th>Num</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>333</th>
+                        <th>3%</th>
+                        <th>11</th>
+                    </tr>
+                    <tr>
+                        <th>333</th>
+                        <th>3%</th>
+                        <th>11</th>
+                    </tr>
+                    <tr>
+                        <th>333</th>
+                        <th>3%</th>
+                        <th>11</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-xs-12">
+
             </div>
         </div>
     </div>
@@ -120,10 +272,10 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<script src="/resources/jquery/jquery.min.js"></script>
-<script src="/resources/popper/popper.min.js"></script>
-<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="/resources/js/jquery-1.12.4.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {});
+</script>
 </body>
-
 </html>

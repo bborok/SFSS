@@ -1,8 +1,10 @@
+package com.zeta.Models;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /*
- * ListOfTasks class contains a list of all tasks possible on a time card
+ * com.zeta.Models.ListOfTasks class contains a list of all tasks possible on a time card
  * Only the admin or supervisor can add/edit/remove any tasks from this list
  */
 public class ListOfTasks {

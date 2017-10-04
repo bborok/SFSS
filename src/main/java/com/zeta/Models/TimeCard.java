@@ -1,9 +1,11 @@
+package com.zeta.Models;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 /*
- * TimeCard class
+ * com.zeta.Models.TimeCard class
  */
 public class TimeCard {
 

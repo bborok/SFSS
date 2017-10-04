@@ -1,4 +1,4 @@
-package Controllers;
+package com.zeta.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +48,18 @@ public class IndexController {
     public String statistics(Model m) {
         m.addAttribute("someAttribute", "someValue");
         return "statistics";
+    }
+
+    @GetMapping("/statistics_info_lf")
+    public String statistics_info_lf(Model m) {
+        m.addAttribute("someAttribute", "someValue");
+        return "statistics_info_lf";
+    }
+
+    @GetMapping("/statistics_public_contact")
+    public String statistics_public_contact(Model m) {
+        m.addAttribute("someAttribute", "someValue");
+        return "statistics_public_contact";
     }
 
     @GetMapping("/temp_schedule")

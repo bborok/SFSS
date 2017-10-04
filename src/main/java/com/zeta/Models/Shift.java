@@ -1,7 +1,9 @@
+package com.zeta.Models;
+
 import java.util.Calendar;
 
 /*
- * Shift class
+ * com.zeta.Models.Shift class
  */
 public class Shift {
 

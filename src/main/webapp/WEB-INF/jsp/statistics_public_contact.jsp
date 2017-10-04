@@ -107,12 +107,12 @@
         <div class="container-fluid">
             <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
             <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
-            <div class="col-xs-6 col-md-offset-6">
+            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
                 <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
                 <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SAVE</button></div>
                 <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">EDIT</button></div>
             </div>
-            <div class="col-xs-6 col-md-offset-6">
+            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
                 <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">BUR</button></div>
                 <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SUR</button></div>
                 <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">VAN</button></div>
@@ -242,12 +242,10 @@
                     <tr>
                         <th>333</th>
                         <th>3%</th>
-                        <th>11</th>
                     </tr>
                     <tr>
                         <th>333</th>
                         <th>3%</th>
-                        <th>11</th>
                     </tr>
                     </tbody>
                 </table>

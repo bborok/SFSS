@@ -55,7 +55,7 @@
                 <a href="${pageContext.request.contextPath}/dashboard">Home</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/schedule">model.Schedule</a>
+                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
@@ -64,7 +64,7 @@
                 <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/payroll">model.Payroll</a>
+                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/log">Log</a>

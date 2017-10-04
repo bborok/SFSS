@@ -55,7 +55,7 @@ $(document).ready(function() {
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay,listWeek'
+                right: 'month,agendaWeek,agendaDay'
             },
 
             selectable: true,
@@ -68,8 +68,8 @@ $(document).ready(function() {
 
             select: function (start, end, id) {
 
-                end = end.subtract('days', 1); // uses for first iteration, no connection
-                end = end.add('minutes', 30);
+                // end = end.subtract('days', 1); // uses for first iteration, no connection
+                // end = end.add('hours', 1);
 
                 startTime = moment(start).format('MMM Do h:mm A');
                 endTime = moment(end).format('h:mm A');

@@ -1,8 +1,10 @@
+package com.zeta.Models;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /*
- * Payroll class
+ * com.zeta.Models.Payroll class
  */
 public class Payroll {
 

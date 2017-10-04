@@ -1,9 +1,11 @@
+package com.zeta.Models;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 /*
- * Schedule class
+ * com.zeta.Models.Schedule class
  */
 public class Schedule {
 

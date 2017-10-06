@@ -26,7 +26,7 @@ public class UserController {
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
     @GetMapping("/add")
     public String addUserToDatabase(
-            @RequestParam("sfuid") String sfuId,
+            @RequestParam("username") String username,
             @RequestParam("studentNumber") long studentNumber,
             @RequestParam("name") String name,
             @RequestParam("email") String email ,
@@ -35,7 +35,7 @@ public class UserController {
             @RequestParam("campus") String campus){
 
         User u = new User(
-                sfuId,
+                username,
                 studentNumber,
                 name,
                 email,
@@ -44,12 +44,12 @@ public class UserController {
                 Campus.valueOf(campus.toUpperCase())
             );
         service.addUser(u);
-        return "redirect:" + "/user/" + u.getSfuId().trim();
+        return "redirect:" + "/user/" + u.getUsername().trim();
     }
 
-    @GetMapping("/{sfuid}")
-    public String showUser(@PathVariable("sfuid") String sfuid, Model model){
-        User user = service.getUserFromSFUId(sfuid);
+    @GetMapping("/{username}")
+    public String showUser(@PathVariable("username") String username, Model model){
+        User user = service.getUserFromUsername(username);
         model.addAttribute("user", user);
         return "/user/show";
     }

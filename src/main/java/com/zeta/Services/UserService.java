@@ -22,7 +22,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User getUserFromSFUId(String sfuid){
+    public User getUserFromUsername(String sfuid){
         return userDAO.get(sfuid);
     }
 

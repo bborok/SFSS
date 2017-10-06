@@ -44,7 +44,7 @@ public class User {
         this.preferredCampus = preferredCampus;
     }
 
-    public String getSfuId() {
+    public String getUsername() {
         return sfuId;
     }
 

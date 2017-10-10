@@ -25,7 +25,7 @@
         <c:forEach var="contact" items="${userList}" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
-                <td>${contact.sfuId}</td>
+                <td>${contact.username}</td>
                 <td>${contact.name}</td>
                 <td>${contact.email}</td>
                 <td>${contact.phoneNumber}</td>

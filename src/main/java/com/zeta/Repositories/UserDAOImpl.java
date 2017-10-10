@@ -1,9 +1,7 @@
 package com.zeta.Repositories;
 
 import com.zeta.Models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -19,9 +17,9 @@ public class UserDAOImpl implements UserDAO {
     public void add(User u) {
 
         // insert
-        String sql = "INSERT INTO User (SFU_ID, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role) " +
+        String sql = "INSERT INTO User (Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, u.getSfuId(), u.getName(),
+        jdbcTemplate.update(sql, u.getUsername(), u.getName(),
                 u.getEmail(), u.getPhoneNumber(), u.getPreferredCampus().toString(),
                 u.getStudentNumber(), u.getRole().toString());
 
@@ -30,30 +28,30 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User user) {
         String sql = "UPDATE User SET Name=?, Email=?, PhoneNumber=?, "
-                + "PreferredCampus=? , StdNum=?, Role=? WHERE SFU_ID=?";
+                + "PreferredCampus=? , StdNum=?, Role=? WHERE Username=?";
 
         jdbcTemplate.update(sql, user.getName(), user.getEmail(),
                 user.getPhoneNumber(), user.getPreferredCampus(), user.getStudentNumber(),
-                user.getRole(), user.getSfuId());
+                user.getRole(), user.getUsername());
 
     }
 
 
     @Override
-    public void delete(String sfuId) {
+    public void delete(String username) {
         // implementation details goes here...
     }
 
     /**
      * Returns a user based on the sfuID
      *
-     * @param sfuId sfuID of User
-     * @return User whose details match sfuId
+     * @param username sfuID of User
+     * @return User whose details match username
      */
     @Override
-    public User get(String sfuId) {
+    public User get(String username) {
         // implementation details goes here...
-        String sql = "SELECT * FROM User WHERE SFU_ID=\'" + sfuId + "\'";
+        String sql = "SELECT * FROM User WHERE Username=\'" + username + "\'";
         return jdbcTemplate.query(sql, new UserResultSetExtractor());
     }
 

@@ -42,6 +42,7 @@
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="resources/css/fullCalendarCSS.css">
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
@@ -136,6 +137,27 @@
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                     </center>
                     <!-- <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12"> -->
+                    <select id="campus">
+                        <option value="all">All</option>
+                        <option value="Burnaby">Burnaby</option>
+                        <option value="Surrey">Surrey</option>
+                        <option value="Vancouver">Vancouver</option>
+                    </select>
+
+                    <select id="shiftSelect">
+                        <option value="all">All</option>
+                        <option value="1">Information and Lost & Found Kiosk</option>
+                        <option value="2">Speed Watch / Moving Traffic</option>
+                        <option value="3">Community Presence</option>
+                        <option value="4">Safety Screen</option>
+                        <option value="5">Theft Prevention</option>
+                        <option value="6">Auto Theft Prevention</option>
+                        <option value="7">Bike Presence</option>
+                        <option value="8">Special Events</option>
+                        <option value="9">Smoking Checks</option>
+                        <option value="10">Pedestrian Safety</option>
+                    </select>
+                    <br>
                     <div id='calendar'></div>
                     <div id = "createEventModal" class = "modal fade">
                         <div class="modal-dialog">

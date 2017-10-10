@@ -83,7 +83,7 @@
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                     </center>
                     <!-- <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12"> -->
-                    <select id="campus">
+                    <select id="campusSelect">
                         <option value="all">All</option>
                         <option value="Burnaby">Burnaby</option>
                         <option value="Surrey">Surrey</option>
@@ -92,16 +92,16 @@
 
                     <select id="shiftSelect">
                         <option value="all">All</option>
-                        <option value="1">Information and Lost & Found Kiosk</option>
-                        <option value="2">Speed Watch / Moving Traffic</option>
-                        <option value="3">Community Presence</option>
-                        <option value="4">Safety Screen</option>
-                        <option value="5">Theft Prevention</option>
-                        <option value="6">Auto Theft Prevention</option>
-                        <option value="7">Bike Presence</option>
-                        <option value="8">Special Events</option>
-                        <option value="9">Smoking Checks</option>
-                        <option value="10">Pedestrian Safety</option>
+                        <option value="Information and Lost & Found Kiosk">Information and Lost & Found Kiosk</option>
+                        <option value="Speed Watch / Moving Traffic">Speed Watch / Moving Traffic</option>
+                        <option value="Community Presence">Community Presence</option>
+                        <option value="Safety Screen">Safety Screen</option>
+                        <option value="Theft Prevention">Theft Prevention</option>
+                        <option value="Auto Theft Prevention">Auto Theft Prevention</option>
+                        <option value="Bike Presence">Bike Presence</option>
+                        <option value="Special Events">Special Events</option>
+                        <option value="Smoking Checks">Smoking Checks</option>
+                        <option value="Pedestrian Safety">Pedestrian Safety</option>
                     </select>
                     <br>
                     <div id='calendar'></div>
@@ -117,7 +117,19 @@
                                         <div class="control-group">
                                             <label class="control-label" for="inputTitle">Title:</label>
                                             <div class="controls">
-                                                <input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a short description."/>                                              <input type="hidden" id = apptID"/>
+                                                <select id = "eventTitle" placeholder = "Select a shift.">
+                                                    <option value="Information and Lost & Found Kiosk">Information and Lost & Found Kiosk</option>
+                                                    <option value="Speed Watch / Moving Traffic">Speed Watch / Moving Traffic</option>
+                                                    <option value="Community Presence">Community Presence</option>
+                                                    <option value="Safety Screen">Safety Screen</option>
+                                                    <option value="Theft Prevention">Theft Prevention</option>
+                                                    <option value="Auto Theft Prevention">Auto Theft Prevention</option>
+                                                    <option value="Bike Presence">Bike Presence</option>
+                                                    <option value="Special Events">Special Events</option>
+                                                    <option value="Smoking Checks">Smoking Checks</option>
+                                                    <option value="Pedestrian Safety">Pedestrian Safety</option>
+                                                </select>
+                                                <%--<input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a short description."/>                                              <input type="hidden" id = apptID"/>--%>
                                                 <input type="hidden" id="apptStartTime"/>
                                                 <input type="hidden" id="apptEndTime"/>
                                                 <input type="hidden" id="apptAllDay" />

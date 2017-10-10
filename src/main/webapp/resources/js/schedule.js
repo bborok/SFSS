@@ -3,21 +3,30 @@ $(document).ready(function() {
             var events_array = [ //once we have database values, simple mysql is needed to connect values to these arrays
             {
                 title: "Information and Lost & Found Kiosk",
-                id: "1",
+                id: "Information and Lost & Found Kiosk",
                 allday: false,
                 member: "Bobae",
                 start: '2017-10-04T15:00:00',
                 end: '2017-10-04T15:30:00',
-                shift: 'Smoking Checks'
+                campus: 'Burnaby'
             },
             {
                 title: "Speed Watch / Moving Traffic",
-                id: "2",
+                id: "Speed Watch / Moving Traffic",
                 allday: false,
                 member: "Steven",
                 start: '2017-10-06T13:00:00',
                 end: '2017-10-06T15:00:00',
-                shift: 'Safety Screen'
+                campus: 'Surrey'
+            },
+            {
+                title: "Safety Screen",
+                id: "Safety Screen",
+                allday: false,
+                member: "Alex",
+                start: '2017-10-07T13:00:00',
+                end: '2017-10-07T15:00:00',
+                campus: 'Vancouver'
             }
 
         ];
@@ -67,14 +76,19 @@ $(document).ready(function() {
             events: events_array,
 
             eventRender: function eventRender( event, element, view ) {
-                console.log("lkol");
-                return ['all', event.id].indexOf($('#shiftSelect').val()) >= 0
+                return ['all', event.id].indexOf($('#shiftSelect').val()) >= 0 && ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
             },
+            // eventRender: function eventRender( event, element, view ) {
+            //     return ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
+            // },
 
             // eventRender: function(event, element) {
             //     element.attr('title', event.tip);
             //
-            // },
+            // }
+            eventAfterRender: function(event, element, view) {
+                $(element).css('width','80%');
+            },
 
             select: function (start, end, id) {
 
@@ -88,6 +102,7 @@ $(document).ready(function() {
                 $('#createEventModal #apptStartTime').val(start);
                 $('#createEventModal #apptEndTime').val(end);
                 $('#createEventModal #apptID').val(event._id);
+
                 $('#createEventModal #eventMember').val(event.member);
                 $('#createEventModal #when').text(mywhen);
                 $('#createEventModal').modal('show');
@@ -150,6 +165,9 @@ $(document).ready(function() {
 
         }
     $('#shiftSelect').on('change',function(){
+        $('#calendar').fullCalendar('rerenderEvents');
+    })
+    $('#campusSelect').on('change',function(){
         $('#calendar').fullCalendar('rerenderEvents');
     })
     });

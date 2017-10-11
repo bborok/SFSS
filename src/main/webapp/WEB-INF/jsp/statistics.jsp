@@ -89,23 +89,34 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+                    <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
+                </div>
+            </div>
             <div class="col-xs-6 col-md-offset-3 column">
                 <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
                 <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
             </div>
         </div>
     </div>
+
     <!-- /#page-content-wrapper -->
 
 </div>
-<!-- /#wrapper -->
-
-<!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 

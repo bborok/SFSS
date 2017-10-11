@@ -92,13 +92,14 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
-                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
-                    <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
                 </div>
             </div>
-            <div class="col-xs-6 col-md-offset-3 column">
-                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
-                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
+            <br>
+            <div class="col-sm-12">
+                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px" role="button">Info & Lost and Found</a>
+                <br><br>
+                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px" role="button">Public Contact</a>
             </div>
         </div>
     </div>

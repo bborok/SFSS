@@ -68,9 +68,6 @@
             <li>
                 <a href="${pageContext.request.contextPath}/log">Log</a>
             </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-            </li>
         </ul>
         <div id="side-container">
             <div id="side-contact" style="text-align:center">
@@ -87,20 +84,6 @@
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-        <div class="modal-dialog" role="document" style="margin-top:100px">
-            <div class="modal-content" style="background-color:red">
-
-                <div class="modal-body" style="color:white">
-                    <center>
-                        <strong>ACCESS DENIED </strong>
-                        <p>No Authorization </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

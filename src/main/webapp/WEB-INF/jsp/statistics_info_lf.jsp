@@ -95,13 +95,14 @@
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
                 </div>
             </div>
-            <br>
-            <div class="col-xs-6 col-md-offset-6">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-block">EXPORT</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-block">SAVE</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-block">EDIT</button></div>
+
+            <div align="right" class="row">
+                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
             </div>
-            <div class="col-xs-8">
+            <br><br>
+            <div class="col-sm-12">
                 <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>

@@ -88,8 +88,13 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
+                </div>
+            </div>
+            <br>
             <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
                 <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
                 <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SAVE</button></div>
@@ -332,6 +337,12 @@
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+</script>
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 </script>
 </body>
 </html>

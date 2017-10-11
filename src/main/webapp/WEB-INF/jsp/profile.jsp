@@ -114,7 +114,7 @@
             <div class="col-sm-12 text">
                 <center>
                     <div class="description">
-                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"><hr>
                     </div></center>
                 <br><br>
 

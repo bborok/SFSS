@@ -57,6 +57,7 @@
 
     #side-contact{
         position: absolute;
+        color: #ffffff;
         bottom: 0;
     }
 

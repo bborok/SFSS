@@ -36,6 +36,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
 </style>

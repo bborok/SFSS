@@ -71,7 +71,7 @@
             </li>
         </ul>
         <div id="side-container">
-            <div id="side-contact" style="text-align:center">
+            <div id="side-contact" style="text-align:center; margin-bottom:10px">
 
                 <p style="text-align:center; font-size:20px">
                     <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>

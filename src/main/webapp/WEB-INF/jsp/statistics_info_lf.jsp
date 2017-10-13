@@ -97,7 +97,19 @@
                 </div>
             </div>
 
-
+            <center>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                    </label>
+                </div>
+            </center>
 
             <div align="right" class="row">
                 <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>

@@ -95,7 +95,19 @@
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
                 </div>
             </div>
-
+            <center>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                    </label>
+                </div>
+            </center>
             <br>
             <div align="right" class="row">
                 <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>

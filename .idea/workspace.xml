@@ -6,9 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b45056c-a801-4b3d-8f70-3dd9103e2039" name="Default" comment="apply responsiveness changes to public contact page">
+    <list default="true" id="0b45056c-a801-4b3d-8f70-3dd9103e2039" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp" />
     </list>
@@ -62,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="statistics_info_lf.jsp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="statistics_info_lf.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+            <state relative-caret-position="364">
+              <caret line="113" column="43" lean-forward="true" selection-start-line="113" selection-start-column="43" selection-end-line="113" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -74,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="statistics_public_contact.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="statistics_public_contact.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="114" column="36" lean-forward="true" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+            <state relative-caret-position="296">
+              <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="109" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -115,8 +114,8 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/log.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/profile.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp" />
       </list>
     </option>
   </component>
@@ -584,11 +583,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507769284848</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="apply responsiveness changes to public contact page">
+      <created>1507890092811</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1507890092811</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16463000" />
+    <option name="totallyTimeSpent" value="16539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="567" y="14" width="1314" height="1048" extended-state="0" />
@@ -696,7 +702,8 @@
     <MESSAGE value="Apply responsiveness changes to lost&amp;found and public contact pages" />
     <MESSAGE value="replace buttons with font awesome icons and make fix-positions" />
     <MESSAGE value="Change css for new menu and text colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change css for new menu and text colors" />
+    <MESSAGE value="apply responsiveness changes to public contact page" />
+    <option name="LAST_COMMIT_MESSAGE" value="apply responsiveness changes to public contact page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -870,21 +877,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="99" column="0" lean-forward="true" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="296">
+          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="109" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_public_contact.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/statistics_info_lf.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="114" column="36" lean-forward="true" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="364">
+          <caret line="113" column="43" lean-forward="true" selection-start-line="113" selection-start-column="43" selection-end-line="113" selection-end-column="43" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

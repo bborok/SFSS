@@ -1,5 +1,6 @@
 package com.zeta.Repositories;
 
+import com.zeta.Models.Login;
 import com.zeta.Models.User;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface UserDAO {
     public void delete(String username);
 
     public User get(String sfuID);
+
+    public User get(Login login);
 
     public List<User> list();
 }

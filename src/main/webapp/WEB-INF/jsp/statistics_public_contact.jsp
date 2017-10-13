@@ -92,7 +92,16 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
-                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+                    <ul class="pagination">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/statistics_info_lf">Lost & Found</a>
+                        </li>
+                        <li class="active">
+                            <a href="#">Public Contact</a>
+                        </li>
+                    </ul>
+                    <hr>
                 </div>
             </div>
             <center>

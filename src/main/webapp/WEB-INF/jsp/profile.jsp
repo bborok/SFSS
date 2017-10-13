@@ -81,7 +81,7 @@
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/payroll">Payroll</a>

@@ -62,7 +62,7 @@
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
@@ -72,10 +72,10 @@
             </li>
         </ul>
         <div id="side-container">
-            <div id="side-contact" style="text-align:center; margin-bottom:10px">
+            <div id="side-contact" style="text-align:center; margin-bottom:10px;">
 
                 <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
+                    <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
                 </p>
                 <br>
                 <p style="font-weight: bold; text-decoration: underline;">Contact: </p>

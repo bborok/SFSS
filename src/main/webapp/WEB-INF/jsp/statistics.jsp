@@ -98,9 +98,9 @@
             </div>
             <br>
             <div class="col-sm-12">
-                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px" role="button">Info & Lost and Found</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px;padding-top:25px" role="button">Info & Lost and Found</a>
                 <br><br>
-                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px" role="button">Public Contact</a>
+                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px;padding-top:25px" role="button">Public Contact</a>
             </div>
         </div>
     </div>

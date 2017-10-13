@@ -97,6 +97,8 @@
                 </div>
             </div>
 
+
+
             <div align="right" class="row">
                 <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
                 <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
@@ -223,7 +225,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xs-3 col-xs-offset-1">
+            <hr>
+            <div class="col-sm-3">
                 <table id="table2" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -252,7 +255,7 @@
                 </table>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>

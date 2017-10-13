@@ -95,18 +95,15 @@
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
                 </div>
             </div>
+
             <br>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SAVE</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">EDIT</button></div>
+            <div align="right" class="row">
+                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
             </div>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">BUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">VAN</button></div>
-            </div>
-            <div class="col-xs-8">
+            <br><br>
+            <div class="col-sm-12">
                 <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -219,7 +216,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xs-3 col-xs-offset-1">
+            <div class="col-sm-3">
                 <table id="table2" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -240,7 +237,7 @@
                 </table>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>

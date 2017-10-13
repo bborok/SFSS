@@ -1,5 +1,6 @@
 package com.zeta.Services;
 
+import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import com.zeta.Repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class UserService {
     public User getUserFromUsername(String sfuid){
         return userDAO.get(sfuid);
     }
+
+    public User getUserFromLogin(Login login) { return userDAO.get(login); }
 
     public void addUser(User user){
         userDAO.add(user);

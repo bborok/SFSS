@@ -80,17 +80,31 @@ $(document).ready(function() {
                 // console.log(['all', event.campus].indexOf($('#campusSelect').val()));
                 // console.log($('#eventTitle').val());
                 // console.log($('#shiftSelect').find(":selected").attr('id'));
+                //
 
-                if (($('#shiftSelect').find(":selected").attr('id')) == "allShifts") {
-                    return ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
+                if (event.campus == 'Burnaby') {
+                    element.css('background-color', '#99FF99');
                 }
+                if (event.campus == "Surrey") {
+                    element.css('background-color', '#415eec');
+                }
+                if (event.campus == "Vancouver") {
+                    element.css('background-color', '#D7CDD5');
+                }
+                return filter(event);
 
 
-                // // console.log($('#eventTitle').find(":selected").attr('class'));
-                // console.log($('#eventCampus').find(":selected").attr('class'));
+                // if (($('#shiftSelect').find(":selected").attr('id')) == "allShifts") {
+                //     return ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
+                // }
+                //
+                //
+                // // // console.log($('#eventTitle').find(":selected").attr('class'));
+                // // console.log($('#eventCampus').find(":selected").attr('class'));
+                //
+                // return ['all', event.id].indexOf($('#shiftSelect').find(":selected").attr('class')) >= 0 &&
+                //     ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
 
-                return ['all', event.id].indexOf($('#shiftSelect').find(":selected").attr('class')) >= 0 &&
-                    ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
                     // &&
                     // (['all', event.id].indexOf($('#eventTitle').find(":selected").attr('class')) &&
                     // ['all', event.campus].indexOf($('#eventCampus').find(":selected").attr('class')) >= 0)
@@ -173,38 +187,67 @@ $(document).ready(function() {
                 },
 
                 true);
-            console.log($('#eventCampus').val());
-            //
-            // console.log($('#apptEndTime').val());
-            // console.log($('#apptStartTime').val());
-            //
-            // $("#eventTitle").attr("placeholder", "Enter a volunteer.").val("").focus().blur();
-            // $("#eventMember").attr("placeholder", "Enter a brief description of this shift.").val("").focus().blur();
 
         }
 
-    $('#shiftSelect').on('change',function(){
-        // console.log($('#campusSelect').val());
-        // console.log($('#shiftSelect').val());
+    function filter(calEvent) {
+        var vals = [];
+        $('input:checkbox.campusFilter:checked').each(function() {
+            vals.push($(this).val());
+        });
+        return vals.indexOf(calEvent.campus) !== -1;
+    }
+
+    $('input:checkbox.campusFilter').on('change', function() {
         $('#calendar').fullCalendar('rerenderEvents');
-        })
-
-    $('#campusSelect').on('change',function(){
-
-       var val = $(this).val();
-       var sub = $('#shiftSelect');
-       if (val == 'all') {
-           $('#shiftSelect').find('option').show();
-       } else {
-           sub.find('option').not(':first').hide();
-           $('option', sub).filter(function() {
-               if ($(this).attr('value')== val) {
-                   $(this).show();
-               }
-           });
-       }
-       sub.val('all');
-        $('#calendar').fullCalendar('rerenderEvents');
-    })
-
     });
+
+
+
+
+    $(function () {
+        var iBurnaby = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
+        var iSurrey = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+        var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+        $("input:checked").each(function () {
+            addItemsFromArray(eval("i" + this.id));
+        });
+        $("input:checkbox").change(function () {
+            $("select").html("");
+            $("input:checked").each(function () {
+                addItemsFromArray(eval("i" + this.id));
+            });
+        });
+        function addItemsFromArray (arr) {
+            $.each(arr, function (i, v) {
+                $("select").append('<option value="' + v + '">' + v + '</option>');
+            });
+        }
+    });
+
+});
+    // $('#shiftSelect').on('change',function(){
+    //     // console.log($('#campusSelect').val());
+    //     // console.log($('#shiftSelect').val());
+    //     $('#calendar').fullCalendar('rerenderEvents');
+    //     })
+    //
+    // $('#campusSelect').on('change',function(){
+    //
+    //    var val = $(this).val();
+    //    var sub = $('#shiftSelect');
+    //    if (val == 'all') {
+    //        $('#shiftSelect').find('option').show();
+    //    } else {
+    //        sub.find('option').not(':first').hide();
+    //        $('option', sub).filter(function() {
+    //            if ($(this).attr('value')== val) {
+    //                $(this).show();
+    //            }
+    //        });
+    //    }
+    //    sub.val('all');
+    //     $('#calendar').fullCalendar('rerenderEvents');
+    // })
+
+    // });

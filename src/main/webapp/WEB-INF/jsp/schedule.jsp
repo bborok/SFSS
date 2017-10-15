@@ -83,42 +83,54 @@
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                     </center>
                     <!-- <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive col-sm-12"> -->
-                    <select name = "campusSelect" id="campusSelect">
-                        <option value="all" id = "allCampus">All Campuses</option>
-                        <option value="Burnaby" class = "Burnaby">Burnaby</option>
-                        <option value="Surrey" class = "Surrey">Surrey</option>
-                        <option value="Vancouver" class = "Vancouver">Vancouver</option>
-                    </select>
+                    <%--<select name = "campusSelect" id="campusSelect">--%>
+                        <%--<option value="all" id = "allCampus">All Campuses</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby">Burnaby</option>--%>
+                        <%--<option value="Surrey" class = "Surrey">Surrey</option>--%>
+                        <%--<option value="Vancouver" class = "Vancouver">Vancouver</option>--%>
+                    <%--</select>--%>
+                    <div class="checkbox">
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="Burnaby" id = "Burnaby" checked>Burnaby</label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="Surrey" id = "Surrey">Surrey</label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="Vancouver" id = "Vancouver">Vancouver</label>
+                    </div>
+                    <select></select>
+                    <%--<select name = "shiftSelect" id="shiftSelect">--%>
+                        <%--<option value="all" id = "allShifts">All Shifts</option>--%>
 
-                    <select name = "shiftSelect" id="shiftSelect">
-                        <option value="all" id = "allShifts">All Shifts</option>
+                        <%--<option value="Burnaby">--Burnaby--</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Information and Lost & Found Kiosk">Information and Lost & Found Kiosk</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Speed Watch / Moving Traffic">Speed Watch / Moving Traffic</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Community Presence">Community Presence</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Safety Screen">Safety Screen</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Theft Prevention">Theft Prevention</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Auto Theft Prevention">Auto Theft Prevention</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Bike Presence">Bike Presence</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Special Events">Special Events</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Smoking Checks">Smoking Checks</option>--%>
+                        <%--<option value="Burnaby" class = "Burnaby Pedestrian Safety">Pedestrian Safety</option>--%>
 
-                        <option value="Burnaby">--Burnaby--</option>
-                        <option value="Burnaby" class = "Burnaby Information and Lost & Found Kiosk">Information and Lost & Found Kiosk</option>
-                        <option value="Burnaby" class = "Burnaby Speed Watch / Moving Traffic">Speed Watch / Moving Traffic</option>
-                        <option value="Burnaby" class = "Burnaby Community Presence">Community Presence</option>
-                        <option value="Burnaby" class = "Burnaby Safety Screen">Safety Screen</option>
-                        <option value="Burnaby" class = "Burnaby Theft Prevention">Theft Prevention</option>
-                        <option value="Burnaby" class = "Burnaby Auto Theft Prevention">Auto Theft Prevention</option>
-                        <option value="Burnaby" class = "Burnaby Bike Presence">Bike Presence</option>
-                        <option value="Burnaby" class = "Burnaby Special Events">Special Events</option>
-                        <option value="Burnaby" class = "Burnaby Smoking Checks">Smoking Checks</option>
-                        <option value="Burnaby" class = "Burnaby Pedestrian Safety">Pedestrian Safety</option>
+                        <%--<option value="Surrey">--Surrey--</option>--%>
+                        <%--<option value="Surrey" class = "Surrey Community Presence">Community Presence</option>--%>
+                        <%--<option value="Surrey" class = "Surrey Theft Prevention">Theft Prevention</option>--%>
+                        <%--<option value="Surrey" class = "Surrey Special Events">Special Events</option>--%>
+                        <%--<option value="Surrey" class = "Surrey Pedestrian Safety">Pedestrian Safety</option>--%>
 
-                        <option value="Surrey">--Surrey--</option>
-                        <option value="Surrey" class = "Surrey Community Presence">Community Presence</option>
-                        <option value="Surrey" class = "Surrey Theft Prevention">Theft Prevention</option>
-                        <option value="Surrey" class = "Surrey Special Events">Special Events</option>
-                        <option value="Surrey" class = "Surrey Pedestrian Safety">Pedestrian Safety</option>
-
-                        <option value="Vancouver">--Vancouver--</option>
-                        <option value="Vancouver" class = "Vancouver Community Presence">Community Presence</option>
-                        <option value="Vancouver" class = "Vancouver Theft Prevention">Theft Prevention</option>
-                        <option value="Vancouver" class = "Vancouver Special Events">Special Events</option>
-                        <option value="Vancouver" class = "Vancouver Pedestrian Safety">Pedestrian Safety</option>
+                        <%--<option value="Vancouver">--Vancouver--</option>--%>
+                        <%--<option value="Vancouver" class = "Vancouver Community Presence">Community Presence</option>--%>
+                        <%--<option value="Vancouver" class = "Vancouver Theft Prevention">Theft Prevention</option>--%>
+                        <%--<option value="Vancouver" class = "Vancouver Special Events">Special Events</option>--%>
+                        <%--<option value="Vancouver" class = "Vancouver Pedestrian Safety">Pedestrian Safety</option>--%>
 
 
-                    </select>
+                    <%--</select>--%>
                     <br>
                     <div id='calendar'></div>
                     <div id = "createEventModal" class = "modal fade">

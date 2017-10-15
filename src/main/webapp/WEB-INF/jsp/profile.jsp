@@ -1,3 +1,6 @@
+<%@ page import="com.zeta.Models.User" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: PrivateAcc
@@ -5,7 +8,7 @@
   Time: 5:03 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,7 +137,7 @@
                     </div></center>
                 <br><br>
 
-                <row>
+                <div class="row">
                     <div class="col-sm-6" style="height:600px; text-align:center; border-style:solid" >
                         <p>
                             <b>Users</b>
@@ -147,71 +150,14 @@
                                 <th width="30%">#</th>
                             </tr>
                             </thead>
+
                             <tbody style="color:black">
-                            <tr onclick="switchColors(this);" data-tab="one">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="two">
-                                <td>Steven Kim</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="three">
-                                <td>Steven Pak</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
+                                <c:forEach items="${users}" var="user">
+                                    <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
+                                        <td> <c:out value="${user.getName()}" /> </td>
+                                        <td> <c:out value="${user.getStudentNumber()}" /> </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -229,17 +175,20 @@
                             <h5>Select User from the list</h5>
                         </div>
 
-                        <div class="tab-content" id="none" style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>--</h3>
-                            <h5>This user has no profile yet</h5>
-                        </div>
-
+                        <c:forEach items="${users}" var="user">
+                            <div class="tab-content" id="${user.getUsername()}" style="display: none" >
+                                <p>
+                                    <b>Profile</b>
+                                </p>
+                                <center>
+                                    <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
+                                </center>
+                                <h3> <c:out value="${user.getName()}" /> </h3>
+                                <h4> <c:out value="${user.getRole()}" /> </h4>
+                                <p> <c:out value="${user.getEmail()}" /> </p>
+                                <h5> <c:out value="${user.getPreferredCampus()}" /> </h5>
+                            </div>
+                        </c:forEach>
 
 
                         <div class="tab-content" id="one"  style="display: none;">
@@ -254,34 +203,8 @@
                             <p>mla189@sfu.ca</p>
                             <h5>Campus: Burnaby | Surrey</h5>
                         </div>
-
-                        <div class="tab-content" id="two"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog2.png" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Kim</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
-
-                        <div class="tab-content" id="three"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Park</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
                     </div>
-                </row>
+                </divrow>
             </div>
         </div>
     </div>

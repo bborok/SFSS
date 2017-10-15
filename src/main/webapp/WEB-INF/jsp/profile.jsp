@@ -154,8 +154,8 @@
                             <tbody style="color:black">
                                 <c:forEach items="${users}" var="user">
                                     <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
-                                        <td> <c:out value="${user.getName()}" /> </td>
-                                        <td> <c:out value="${user.getStudentNumber()}" /> </td>
+                                        <td class="col-sm-6 col-xs-6"> <c:out value="${user.getName()}" /> </td>
+                                        <td class="col-sm-6" "> <c:out value="${user.getStudentNumber()}" /> </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

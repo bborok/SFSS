@@ -94,14 +94,24 @@
             <div class="col-sm-12 text">
                 <div class="description">
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
-                    <ul class="pagination">
-                        <li class="active">
-                            <a href="#">Lost & Found</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
-                        </li>
-                    </ul>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="pagination">
+                                <li class="active">
+                                    <a href="#">Lost & Found</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4" style="padding-top: 15px">
+                                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
+                        </div>
+                    </div>
                     <hr>
                 </div>
             </div>
@@ -121,11 +131,7 @@
             </center>
             <br>
 
-            <div align="right" class="row">
-                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
-            </div>
+
             <br><br>
             <div class="col-sm-12">
                 <table id="table1" class="table table-bordered" cellspacing="0" width="100%">

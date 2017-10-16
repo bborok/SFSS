@@ -1,3 +1,7 @@
+var iBurnaby = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
+var iSurrey = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+
 $(document).ready(function() {
 
             var events_array = [ //once we have database values, simple mysql is needed to connect values to these arrays
@@ -76,55 +80,24 @@ $(document).ready(function() {
             events: events_array,
 
             eventRender: function eventRender( event, element, view ) {
-                // console.log(['all', event.id].indexOf($('#shiftSelect').val()));
-                // console.log(['all', event.campus].indexOf($('#campusSelect').val()));
-                // console.log($('#eventTitle').val());
-                // console.log($('#shiftSelect').find(":selected").attr('id'));
-                //
 
                 if (event.campus == 'Burnaby') {
-                    element.css('background-color', '#99FF99');
+                    element.css('background-color', '#E8502F');
                 }
                 if (event.campus == "Surrey") {
-                    element.css('background-color', '#415eec');
+                    element.css('background-color', '#C5E744');
                 }
                 if (event.campus == "Vancouver") {
-                    element.css('background-color', '#D7CDD5');
+                    element.css('background-color', '#75C6E7');
                 }
                 return filter(event);
-
-
-                // if (($('#shiftSelect').find(":selected").attr('id')) == "allShifts") {
-                //     return ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
-                // }
-                //
-                //
-                // // // console.log($('#eventTitle').find(":selected").attr('class'));
-                // // console.log($('#eventCampus').find(":selected").attr('class'));
-                //
-                // return ['all', event.id].indexOf($('#shiftSelect').find(":selected").attr('class')) >= 0 &&
-                //     ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
-
-                    // &&
-                    // (['all', event.id].indexOf($('#eventTitle').find(":selected").attr('class')) &&
-                    // ['all', event.campus].indexOf($('#eventCampus').find(":selected").attr('class')) >= 0)
             },
-            // eventRender: function eventRender( event, element, view ) {
-            //     return ['all', event.campus].indexOf($('#campusSelect').val()) >= 0
-            // },
 
-            // eventRender: function(event, element) {
-            //     element.attr('title', event.tip);
-            //
-            // }
             eventAfterRender: function(event, element, view) {
                 $(element).css('width','80%');
             },
 
             select: function (start, end, id) {
-
-                // end = end.subtract('days', 1); // uses for first iteration, no connection
-                // end = end.add('hours', 1);
 
                 startTime = moment(start).format('MMM Do h:mm A');
                 endTime = moment(end).format('h:mm A');
@@ -137,7 +110,6 @@ $(document).ready(function() {
                 $('#createEventModal #eventMember').val(event.member);
                 $('#createEventModal #when').text(mywhen);
                 $('#createEventModal').modal('show');
-
             },
 
             eventClick: function(event){
@@ -187,67 +159,58 @@ $(document).ready(function() {
                 },
 
                 true);
-
         }
 
     function filter(calEvent) {
+
         var vals = [];
-        $('input:checkbox.campusFilter:checked').each(function() {
+
+        $('input:checkbox.campusFilter:checked').each(function () {
             vals.push($(this).val());
         });
-        return vals.indexOf(calEvent.campus) !== -1;
+
+        var vals2 = [];
+
+        $('#shiftSelect option:selected').each(function () {
+            vals2.push($(this).val());
+        });
+
+        if ($('#shiftSelect').val() == null) {
+            return vals.indexOf(calEvent.campus) !== -1;
+        }
+        if ($('#shiftSelect option:selected').val() == "all") {
+            return vals.indexOf(calEvent.campus) !== -1;
+        }
+
+        return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
     }
+
 
     $('input:checkbox.campusFilter').on('change', function() {
         $('#calendar').fullCalendar('rerenderEvents');
     });
 
-
-
+    $('#shiftSelect').on('change', function() {
+        $('#calendar').fullCalendar('rerenderEvents');
+    });
 
     $(function () {
-        var iBurnaby = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
-        var iSurrey = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-        var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
         $("input:checked").each(function () {
             addItemsFromArray(eval("i" + this.id));
         });
         $("input:checkbox").change(function () {
-            $("select").html("");
+
+            $("#shiftSelect").html("");
             $("input:checked").each(function () {
                 addItemsFromArray(eval("i" + this.id));
             });
         });
         function addItemsFromArray (arr) {
+            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
             $.each(arr, function (i, v) {
-                $("select").append('<option value="' + v + '">' + v + '</option>');
+                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
             });
         }
     });
 
 });
-    // $('#shiftSelect').on('change',function(){
-    //     // console.log($('#campusSelect').val());
-    //     // console.log($('#shiftSelect').val());
-    //     $('#calendar').fullCalendar('rerenderEvents');
-    //     })
-    //
-    // $('#campusSelect').on('change',function(){
-    //
-    //    var val = $(this).val();
-    //    var sub = $('#shiftSelect');
-    //    if (val == 'all') {
-    //        $('#shiftSelect').find('option').show();
-    //    } else {
-    //        sub.find('option').not(':first').hide();
-    //        $('option', sub).filter(function() {
-    //            if ($(this).attr('value')== val) {
-    //                $(this).show();
-    //            }
-    //        });
-    //    }
-    //    sub.val('all');
-    //     $('#calendar').fullCalendar('rerenderEvents');
-    // })
-
-    // });

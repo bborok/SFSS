@@ -36,6 +36,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
 </style>
@@ -60,7 +61,7 @@
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
             </li>
             <li class="active">
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
@@ -68,15 +69,12 @@
             <li>
                 <a href="${pageContext.request.contextPath}/log">Log</a>
             </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-            </li>
         </ul>
         <div id="side-container">
-            <div id="side-contact" style="text-align:center">
+            <div id="side-contact" style="text-align:center; margin-bottom:10px">
 
                 <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
+                    <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
                 </p>
                 <br>
                 <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
@@ -88,36 +86,45 @@
     </div>
     <!-- /#sidebar-wrapper -->
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-        <div class="modal-dialog" role="document" style="margin-top:100px">
-            <div class="modal-content" style="background-color:red">
-
-                <div class="modal-body" style="color:white">
-                    <center>
-                        <strong>ACCESS DENIED </strong>
-                        <p>No Authorization </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SAVE</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">EDIT</button></div>
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+                    <ul class="pagination">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/statistics_info_lf">Lost & Found</a>
+                        </li>
+                        <li class="active">
+                            <a href="#">Public Contact</a>
+                        </li>
+                    </ul>
+                    <hr>
+                </div>
             </div>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">BUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">VAN</button></div>
+            <center>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                    </label>
+                </div>
+            </center>
+            <br>
+            <div align="right" class="row">
+                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
             </div>
-            <div class="col-xs-8">
+            <br><br>
+            <div class="col-sm-12">
                 <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -230,7 +237,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xs-3 col-xs-offset-1">
+            <div class="col-sm-3">
                 <table id="table2" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -251,7 +258,7 @@
                 </table>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>
@@ -349,6 +356,12 @@
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+</script>
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 </script>
 </body>
 </html>

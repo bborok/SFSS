@@ -171,36 +171,35 @@
                                             <label class="control-label" for="inputTitle">Shift: </label>
                                             <div class="controls">
                                                 <select name = "eventCampus" id="eventCampus">
-                                                    <option value="Burnaby" class = "Burnaby" selected>Burnaby</option>
+                                                    <option value = 'all' id = 'allCampuses' disabled="true" selected>Select a campus.</option>
+                                                    <option value="Burnaby" class = "Burnaby">Burnaby</option>
                                                     <option value="Surrey" class = "Surrey">Surrey</option>
                                                     <option value="Vancouver" class = "Vancouver">Vancouver</option>
                                                 </select>
                                                 <select name = "eventTitle" id = "eventTitle">
-                                                    <option value="all">All Shifts</option>
+                                                    <option value="Surrey" disabled="true" selected="selected">Select a Surrey Shift</option>
+                                                    <option value="Surrey" class = "Community Presence">Community Presence</option>
+                                                    <option value="Surrey" class = "Theft Prevention">Theft Prevention</option>
+                                                    <option value="Surrey" class = "Special Events">Special Events</option>
+                                                    <option value="Surrey" class = "Pedestrian Safety">Pedestrian Safety</option>
 
-                                                    <option value="Burnaby">--Burnaby--</option>
+                                                    <option value="Vancouver" disabled="true" selected="selected">Select a Vancouver Shift</option>
+                                                    <option value="Vancouver" class = "Community Presence">Community Presence</option>
+                                                    <option value="Vancouver" class = "Theft Prevention">Theft Prevention</option>
+                                                    <option value="Vancouver" class = "Special Events">Special Events</option>
+                                                    <option value="Vancouver" class = "Pedestrian Safety">Pedestrian Safety</option>
+
+                                                    <option value="Burnaby" disabled="true" selected="selected">Select a Burnaby Shift</option>
                                                     <option value="Burnaby" class = "Information and Lost & Found Kiosk">Information and Lost & Found Kiosk</option>
-                                                    <option value="Burnaby">Speed Watch / Moving Traffic</option>
-                                                    <option value="Burnaby">Community Presence</option>
-                                                    <option value="Burnaby">Safety Screen</option>
-                                                    <option value="Burnaby">Theft Prevention</option>
-                                                    <option value="Burnaby">Auto Theft Prevention</option>
-                                                    <option value="Burnaby">Bike Presence</option>
-                                                    <option value="Burnaby">Special Events</option>
-                                                    <option value="Burnaby">Smoking Checks</option>
-                                                    <option value="Burnaby">Pedestrian Safety</option>
-
-                                                    <option value="Surrey">--Surrey--</option>
-                                                    <option value="Surrey">Community Presence</option>
-                                                    <option value="Surrey">Theft Prevention</option>
-                                                    <option value="Surrey">Special Events</option>
-                                                    <option value="Surrey">Pedestrian Safety</option>
-
-                                                    <option value="Vancouver">--Vancouver--</option>
-                                                    <option value="Vancouver">Community Presence</option>
-                                                    <option value="Vancouver">Theft Prevention</option>
-                                                    <option value="Vancouver">Special Events</option>
-                                                    <option value="Vancouver">Pedestrian Safety</option>
+                                                    <option value="Burnaby" class = "Speed Watch / Moving Traffic">Speed Watch / Moving Traffic</option>
+                                                    <option value="Burnaby" class = "Community Presence">Community Presence</option>
+                                                    <option value="Burnaby" class = "Safety Screen">Safety Screen</option>
+                                                    <option value="Burnaby" class = "Theft Prevention">Theft Prevention</option>
+                                                    <option value="Burnaby" class = "Auto Theft Prevention">Auto Theft Prevention</option>
+                                                    <option value="Burnaby" class = "Bike Presence">Bike Presence</option>
+                                                    <option value="Burnaby" class = "Special Events">Special Events</option>
+                                                    <option value="Burnaby" class = "Smoking Checks">Smoking Checks</option>
+                                                    <option value="Burnaby" class = "Pedestrian Safety">Pedestrian Safety</option>
 
                                                 </select>
                                                 <%--<input type="text" name="eventTitle" id="eventTitle" placeholder="Enter a short description."/><input type="hidden" id = apptID"/>--%>
@@ -238,6 +237,7 @@
                                 </div><br>
                                 Start: <span id = "modalStart"></span><br>
                                 End: <span id = "modalEnd"></span><br><br>
+                                Campus: <span id = "modalCampus"></span><br><br>
                                 Volunteer: <span id = "modalMember"></span><br>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

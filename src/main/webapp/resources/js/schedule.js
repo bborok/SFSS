@@ -1,24 +1,40 @@
+var iBurnaby = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
+var iSurrey = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+
 $(document).ready(function() {
 
             var events_array = [ //once we have database values, simple mysql is needed to connect values to these arrays
             {
-                title: "Security",
-                id: 1,
+                title: "Information and Lost & Found Kiosk",
+                id: "Burnaby Information and Lost & Found Kiosk",
                 allday: false,
                 member: "Bobae",
                 start: '2017-10-04T15:00:00',
-                end: '2017-10-04T15:30:00'
+                end: '2017-10-04T15:30:00',
+                campus: 'Burnaby'
             },
             {
-                title: "Poker",
-                id: 2,
+                title: "Community Presence",
+                id: "Surrey Community Presence",
                 allday: false,
                 member: "Steven",
                 start: '2017-10-06T13:00:00',
-                end: '2017-10-06T15:00:00'
+                end: '2017-10-06T15:00:00',
+                campus: 'Surrey'
+            },
+            {
+                title: "Pedestrian Safety",
+                id: "Vancouver Pedestrian Safety",
+                allday: false,
+                member: "Alex",
+                start: '2017-10-07T13:00:00',
+                end: '2017-10-07T15:00:00',
+                campus: 'Vancouver'
             }
 
         ];
+
 
         // page is now ready, initialize the calendar...
 
@@ -38,6 +54,8 @@ $(document).ready(function() {
             });
 
         });
+
+
 
         $('#calendar').fullCalendar({
             // put your options and callbacks here
@@ -61,15 +79,25 @@ $(document).ready(function() {
             selectable: true,
             events: events_array,
 
-            eventRender: function(event, element) {
-                element.attr('title', event.tip);
+            eventRender: function eventRender( event, element, view ) {
 
+                if (event.campus == 'Burnaby') {
+                    element.css('background-color', '#E8502F');
+                }
+                if (event.campus == "Surrey") {
+                    element.css('background-color', '#C5E744');
+                }
+                if (event.campus == "Vancouver") {
+                    element.css('background-color', '#75C6E7');
+                }
+                return filter(event);
+            },
+
+            eventAfterRender: function(event, element, view) {
+                $(element).css('width','80%');
             },
 
             select: function (start, end, id) {
-
-                // end = end.subtract('days', 1); // uses for first iteration, no connection
-                // end = end.add('hours', 1);
 
                 startTime = moment(start).format('MMM Do h:mm A');
                 endTime = moment(end).format('h:mm A');
@@ -77,11 +105,11 @@ $(document).ready(function() {
 
                 $('#createEventModal #apptStartTime').val(start);
                 $('#createEventModal #apptEndTime').val(end);
-                $('#createEventModal #apptID').val(event._id);
+                $('#createEventModal #apptID').val(event.id);
+                $('#createEventModal #eventCampus').val(event.campus);
                 $('#createEventModal #eventMember').val(event.member);
                 $('#createEventModal #when').text(mywhen);
                 $('#createEventModal').modal('show');
-
             },
 
             eventClick: function(event){
@@ -119,24 +147,70 @@ $(document).ready(function() {
         function doSubmit(){
 
             $("#createEventModal").modal('hide');
-
             $("#calendar").fullCalendar('renderEvent',
                 {
-                    title: $('#eventTitle').val(),
+                    title: $('#eventTitle').find(":selected").attr('class'),
                     start: new Date($('#apptStartTime').val()),
                     end: new Date($('#apptEndTime').val()),
                     allDay: ($('#apptAllDay').val() == "true"),
                     member: $('#eventMember').val(),
-                    id: $('#apptID').val()
-
-        },
+                    id: $('#eventTitle').val(),
+                    campus: $('#eventCampus').val()
+                },
 
                 true);
-            console.log($('#apptEndTime').val());
-            console.log($('#apptStartTime').val());
+        }
 
-            $("#eventTitle").attr("placeholder", "Enter a volunteer.").val("").focus().blur();
-            $("#eventMember").attr("placeholder", "Enter a brief description of this shift.").val("").focus().blur();
+    function filter(calEvent) {
 
+        var vals = [];
+
+        $('input:checkbox.campusFilter:checked').each(function () {
+            vals.push($(this).val());
+        });
+
+        var vals2 = [];
+
+        $('#shiftSelect option:selected').each(function () {
+            vals2.push($(this).val());
+        });
+
+        if ($('#shiftSelect').val() == null) {
+            return vals.indexOf(calEvent.campus) !== -1;
+        }
+        if ($('#shiftSelect option:selected').val() == "all") {
+            return vals.indexOf(calEvent.campus) !== -1;
+        }
+
+        return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+    }
+
+
+    $('input:checkbox.campusFilter').on('change', function() {
+        $('#calendar').fullCalendar('rerenderEvents');
+    });
+
+    $('#shiftSelect').on('change', function() {
+        $('#calendar').fullCalendar('rerenderEvents');
+    });
+
+    $(function () {
+        $("input:checked").each(function () {
+            addItemsFromArray(eval("i" + this.id));
+        });
+        $("input:checkbox").change(function () {
+
+            $("#shiftSelect").html("");
+            $("input:checked").each(function () {
+                addItemsFromArray(eval("i" + this.id));
+            });
+        });
+        function addItemsFromArray (arr) {
+            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+            $.each(arr, function (i, v) {
+                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
+            });
         }
     });
+
+});

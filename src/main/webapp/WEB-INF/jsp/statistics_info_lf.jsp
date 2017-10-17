@@ -18,15 +18,16 @@
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="resources/css/form-elements.css">
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/css/form-elements.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
+	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
 <style>
@@ -93,7 +94,7 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
-                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+                    <center><img src="../../resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
                     <ul class="pagination">
                         <li class="active">
                             <a href="#">Lost & Found</a>
@@ -123,158 +124,15 @@
 
             <div align="right" class="row">
                 <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
+                <button id="button_save" type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                <button id="button_edit" type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
             </div>
             <br><br>
-            <div class="col-sm-12">
-                <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th>2017</th>
-                        <th>DEC'16</th>
-                        <th>JAN</th>
-                        <th>FEB</th>
-                        <th>MAR</th>
-                        <th>APR</th>
-                        <th>MAY</th>
-                        <th>JUN</th>
-                        <th>JUL</th>
-                        <th>AUG</th>
-                        <th>SEP</th>
-                        <th>OCT</th>
-                        <th>NOV</th>
-                        <th>DEV</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Directions</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Lost&Found</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Payments</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>PhoneService</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>KeyService</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Others</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-sm-8">
+                <table id="table1" class="display" width="100%"></table>
             </div>
-            <hr>
-            <div class="col-sm-3">
-                <table id="table2" class="table table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th>Total</th>
-                        <th>%</th>
-                        <th>Num</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>333</th>
-                        <th>3%</th>
-                        <th>11</th>
-                    </tr>
-                    <tr>
-                        <th>333</th>
-                        <th>3%</th>
-                        <th>11</th>
-                    </tr>
-                    <tr>
-                        <th>333</th>
-                        <th>3%</th>
-                        <th>11</th>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-sm-4">
+                <table id="table2" class="display" width="100%"></table>
             </div>
 
             <div class="col-sm-12">
@@ -288,93 +146,274 @@
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
-<script src="resources/js/jquery-1.12.4.js"></script>
-<script src="resources/bootstrap/js/bootstrap.js"></script>
-<script src="resources/js/echarts.common.min.js"></script>
+<script src="/resources/datatables/js/jquery-1.12.4.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.js"></script>
+<script src="/resources/datatables/js/datatables.min.js"></script>
+<script src="/resources/js/echarts.common.min.js"></script>
+
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
+
+	//get chart element
     var myChart = echarts.init(document.getElementById('chart1'));
-    myChart.title = "Number of Infomation Activities in 2017 by month";
-    var colors = ['#5793f3', '#d14a61', '#675bba', '#775bba', '#995bba'];
-    // 指定图表的配置项和数据
-    var option = {
-        color: colors,
-        tooltip: {
-            trigger: 'none',
-            axisPointer: {
-                type: 'cross'
-            }
-        },
-        legend: {
-            data:['direction', 'payment', 'phone', 'key', 'others']
-        },
-        grid: {
-            top: 70,
-            bottom: 50
-        },
-        xAxis: [
-            {
-                type: 'category',
-                axisTick: {
-                    alignWithLabel: true
-                },
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: colors[1]
-                    }
-                },
-                axisPointer: {
-                    label: {
-                        formatter: function (params) {
-                            return 'number  ' + params.value
-                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                        }
-                    }
-                },
-                data: ["DEC14", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: [
-            {
-                name:'direction',
-                type:'line',
-                smooth: true,
-                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3, 11]
-            },
-            {
-                name:'payment',
-                type:'line',
-                smooth: true,
-                data: [70.7, 175.6, 2.6, 5.9, 9.0, 26.4, 28.7,  182.2, 48.7, 18.8, 6.0, 2.3, 11]
-            },
-            {
-                name:'phone',
-                type:'line',
-                smooth: true,
-                data: [182.2, 48.7, 18.8, 6.0, 2.3, 112.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 45]
-            },
-            {
-                name:'key',
-                type:'line',
-                smooth: true,
-                data: [5.9, 66, 26.4, 28.7, 70.7, 155, 89, 48.7, 18.8, 6.0, 2.3, 11, 23]
-            },
-            {
-                name:'others',
-                type:'line',
-                smooth: true,
-                data: [18.8, 6.0, 2.3, 11, 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7]
-            }
-        ]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+
+	var table_title = [
+		"2017", "DEC16", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" 
+	];
+	
+	var table1_data =  [
+		["Directions", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["Lost&Found", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["Payments", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["PhoneService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["KeyService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["Others", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+	];
+	
+	var table2_data = [
+		["0", "0%", "0"],
+		["0", "0%", "0"],
+		["0", "0%", "0"],
+		["0", "0%", "0"],
+		["0", "0%", "0"],
+		["0", "0%", "0"],
+		["0", "", "0"],
+	];
+	
+	var table1;
+	var table2;
+
+	$(document).ready(function() {
+		
+		table1 = $('#table1').DataTable({
+			data: table1_data,
+			columns: [
+				{title: table_title[0], width: "20px"}, 
+				{title: table_title[1], width: "20px"},
+				{title: table_title[2], width: "20px"},
+				{title: table_title[3], width: "20px"}, 
+				{title: table_title[4], width: "20px"},
+				{title: table_title[5], width: "20px"},
+				{title: table_title[6], width: "20px"},
+				{title: table_title[7], width: "20px"},
+				{title: table_title[8], width: "20px"},
+				{title: table_title[9], width: "20px"},
+				{title: table_title[10], width: "20px"},
+				{title: table_title[11], width: "20px"},
+				{title: table_title[12], width: "20px"},
+				{title: table_title[13], width: "20px"},
+				{defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
+			],
+			autoWidth: false,
+			ordering: false,
+			bPaginate: false,
+			bFilter: false,
+			scrollX: true
+		});
+		
+		table2 = $('#table2').DataTable({
+			data: table2_data,
+			columns: [
+				{title: "Total", width: "15px"}, 
+				{title: "%", width: "15px"},
+				{title: "Average", width: "15px"}
+			],
+			autoWidth: false,
+			ordering: false,
+			bPaginate: false,
+			bFilter: false,
+			scrollX: true
+		});
+		
+		$("#table1 tbody").on("click",".edit-btn",function(){
+           var tds=$(this).parents("tr").children();
+           $.each(tds, function(i,td){
+               var tmp=$(td);
+               if(i < 1 || tmp.has('button').length ){return true;}//skip first column and the invisible btn
+               var text=tmp.text();
+               var input=$("<input type='number' style='padding:1px 1px 1px 1px;width:100%;height:100%;'></input>");
+               input.val(text);
+               tmp.html(input);
+           });
+           $(this).toggleClass("edit-btn");
+           $(this).toggleClass("save-btn");
+       });
+ 
+       $("#table1 tbody").on("click",".save-btn",function(){
+           var tds=$(this).parents("tr").children();
+           $.each(tds, function(i,td){
+               var tmp=$(td);
+               //get input to text
+               if(i >= 1 || !tmp.has('button').length){
+                   var text=tmp.children("input").val();
+                   tmp.html(text);
+                   table1.cell(tmp).data(text);//modify the data of DataTables
+               }
+           });
+           $(this).toggleClass("edit-btn");
+           $(this).toggleClass("save-btn");
+       });
+		
+		$('#button_edit').click( function(){
+			$(".edit-btn").click();
+		});
+		$('#button_save').click( function(){
+			$(".save-btn").click();
+			setTimeout(300);
+			tmp_data = table1.rows().data();
+			showChart(tmp_data);
+		});
+		
+		showChart(table1_data);
+	});
+	
+	function showChart(tmp_data){
+		data_to_show = [];
+		total_sum = 0;
+		total_counter = 0;
+		for (var i = 0; i < tmp_data.length; i++) {
+			arr = [];
+			sum = 0;
+			counter = 0;
+			for (var j = 1; j < tmp_data[i].length; j++) {
+				num = 0;
+				if (tmp_data[i][j] == "") {
+					num = null;
+				} else {
+					num = parseInt(tmp_data[i][j]);
+					sum+= num;
+					counter++;
+				}
+				arr.push(num);
+			}
+			if (counter!=0) {
+				table2_data[i][0] = sum + "";
+				average = sum/counter
+				average = average.toFixed(2);
+				table2_data[i][2] = average + "";
+			}
+			total_sum += sum;
+			total_counter += counter;
+			data_to_show.push(arr);
+		}
+		for (var i = 0; i < tmp_data.length; i++) {
+			if (total_sum != 0) {
+				percent = table2_data[i][0]/total_sum*100;
+				percent = percent.toFixed(2);
+				table2_data[i][1] = percent + "%";
+			}
+			
+		}
+		table2_data[tmp_data.length][0] = total_sum + "";
+		table2_data[tmp_data.length][2] = (total_sum/total_counter).toFixed(2) + "";
+		table2.destroy();
+		table2 = $('#table2').DataTable({
+			data: table2_data,
+			columns: [
+				{title: "Total", width: "15px"}, 
+				{title: "%", width: "15px"},
+				{title: "Average", width: "15px"}
+			],
+			autoWidth: false,
+			ordering: false,
+			bPaginate: false,
+			bFilter: false,
+			scrollX: true
+		});
+		refreshChart(table_title, data_to_show);
+	}
+	
+	function refreshChart(ctitle, cdata) {
+		myChart.title = "Number of Infomation Activities in 2017 by month";
+		var colors = ['#5793f3', '#d14a61', '#675bba', '#775bba', '#995bba'];
+		// chart config and data
+		var option = {
+			color: colors,
+			tooltip: {
+				trigger: 'none',
+				axisPointer: {
+					type: 'cross'
+				}
+			},
+			legend: {
+				data:['direction', 'lost&found','payment', 'phone', 'key', 'others']
+			},
+			grid: {
+				top: 70,
+				bottom: 50
+			},
+			xAxis: [
+				{
+					type: 'category',
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLine: {
+						onZero: false,
+						lineStyle: {
+							color: colors[1]
+						}
+					},
+					axisPointer: {
+						label: {
+							formatter: function (params) {
+								return 'number  ' + params.value
+									+ (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+							}
+						}
+					},
+					data: ctitle.slice(1)
+				}
+			],
+			yAxis: [
+				{
+					type: 'value'
+				}
+			],
+			series: [
+				{
+					name:'direction',
+					type:'line',
+					smooth: true,
+					data: cdata[0]
+				},
+				{
+					name:'lost&found',
+					type:'line',
+					smooth: true,
+					data: cdata[1]
+				},
+				{
+					name:'payment',
+					type:'line',
+					smooth: true,
+					data: cdata[2]
+				},
+				{
+					name:'phone',
+					type:'line',
+					smooth: true,
+					data: cdata[3]
+				},
+				{
+					name:'key',
+					type:'line',
+					smooth: true,
+					data: cdata[4]
+				},
+				{
+					name:'others',
+					type:'line',
+					smooth: true,
+					data: cdata[5]
+				}
+			]
+		};
+		// show chart
+		myChart.setOption(option);
+	}
+	
+    
+    
 </script>
 
 <!-- Menu Toggle Script -->

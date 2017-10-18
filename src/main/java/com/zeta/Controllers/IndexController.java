@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -64,7 +61,7 @@ public class IndexController {
         return "payroll";
     }
 
-    @GetMapping(value = "/profile")
+    @GetMapping("/profile")
     public String profile(Model m) {
         List<User> users = userService.getListOfUsers();
         m.addAttribute("users", users);

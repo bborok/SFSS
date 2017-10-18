@@ -187,20 +187,6 @@
                                 <h5> <c:out value="${user.getPreferredCampus()}" /> </h5>
                             </div>
                         </c:forEach>
-
-
-                        <div class="tab-content" id="one"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Lee</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
                     </div>
                 </div>
             </div>

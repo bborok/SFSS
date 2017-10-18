@@ -36,6 +36,7 @@
 
     #side-contact{
         position: absolute;
+        color: #ffffff;
         bottom: 0;
     }
 
@@ -61,7 +62,7 @@
                 <a href="${pageContext.request.contextPath}/profile">Profile</a>
             </li>
             <li class="active">
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
+                <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
@@ -69,15 +70,12 @@
             <li>
                 <a href="${pageContext.request.contextPath}/log">Log</a>
             </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-            </li>
         </ul>
         <div id="side-container">
-            <div id="side-contact" style="text-align:center">
+            <div id="side-contact" style="text-align:center; margin-bottom:10px">
 
                 <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
+                    <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
                 </p>
                 <br>
                 <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
@@ -89,40 +87,38 @@
     </div>
     <!-- /#sidebar-wrapper -->
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-        <div class="modal-dialog" role="document" style="margin-top:100px">
-            <div class="modal-content" style="background-color:red">
-
-                <div class="modal-body" style="color:white">
-                    <center>
-                        <strong>ACCESS DENIED </strong>
-                        <p>No Authorization </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS</h3></div>
-            <div class="col-xs-6 col-md-offset-3 column">
-                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" role="button">INFO & LF</a>
-                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" role="button">Public Contact</a>
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center><hr>
+                </div>
+            </div>
+            <br>
+            <div class="col-sm-12">
+                <a href="${pageContext.request.contextPath}/statistics_info_lf" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px;padding-top:25px" role="button">Info & Lost and Found</a>
+                <br><br>
+                <a href="${pageContext.request.contextPath}/statistics_public_contact" class="btn btn-primary btn-lg btn-block" style="height:80px;font-size:20px;padding-top:25px" role="button">Public Contact</a>
             </div>
         </div>
     </div>
+
     <!-- /#page-content-wrapper -->
 
 </div>
-<!-- /#wrapper -->
-
-<!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 

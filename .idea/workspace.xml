@@ -325,6 +325,75 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="css" type="cbb8eebc:String" user="css" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="js" type="cbb8eebc:String" user="js" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="popper" type="cbb8eebc:String" user="popper" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="WEB-INF" type="cbb8eebc:String" user="WEB-INF" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="373Project" type="cbb8eebc:String" user="373Project" />
+              <item name="src/main" type="cbb8eebc:String" user="src/main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="WEB-INF" type="cbb8eebc:String" user="WEB-INF" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1287,6 +1356,9 @@
       <updated>1506223707186</updated>
       <workItem from="1506223710105" duration="90000" />
       <workItem from="1507107988178" duration="541000" />
+      <workItem from="1507696674682" duration="5850000" />
+      <workItem from="1507761374704" duration="3478000" />
+      <workItem from="1507794623608" duration="209000" />
     </task>
     <task id="LOCAL-00001" summary="remove outdated files&#10;&#10;Files were pushed and updated with commit&#10; 1e1a5a423821e33bfaf3f621b65f2eafa01d947f">
       <created>1507010778729</created>
@@ -1302,7 +1374,77 @@
       <option name="project" value="LOCAL" />
       <updated>1507011060058</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="remove outdated files&#10;&#10;Files were pushed and updated with commit &#10;1e1a5a423821e33bfaf3f621b65f2eafa01d947f">
+      <created>1507696772376</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1507696772376</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Remove 'no auth' menu for all pages">
+      <created>1507697007175</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1507697007175</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add menu-toggle, responsiveness, and adjust logo size for statistics page">
+      <created>1507697651869</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1507697651869</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Adjust bootstrap column for statistics">
+      <created>1507698866045</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1507698866045</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Apply responsiveness changes to lost&amp;found and public contact pages">
+      <created>1507699815439</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1507699815439</updated>
+    </task>
+    <task id="LOCAL-00008" summary="replace buttons with font awesome icons and make fix-positions">
+      <created>1507701790148</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1507701790148</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Change css for new menu and text colors">
+      <created>1507769284848</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1507769284848</updated>
+    </task>
+    <task id="LOCAL-00010" summary="apply responsiveness changes to public contact page">
+      <created>1507890092811</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1507890092811</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add radio button for each campus in statistics page">
+      <created>1507890252784</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1507890252784</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add pagination buttons for LF and public info for convenience">
+      <created>1507891603750</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1507891603750</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1408,10 +1550,21 @@
     <MESSAGE value="remove outdated files&#10;&#10;Files were pushed and updated with commit 1e1a5a423821e33bfaf3f621b65f2eafa01d947f" />
     <MESSAGE value="remove outdated files&#10;&#10;Files were pushed and updated with commit&#10; 1e1a5a423821e33bfaf3f621b65f2eafa01d947f" />
     <MESSAGE value="remove outdated files&#10;&#10;Files were pushed and updated with commit &#10;1e1a5a423821e33bfaf3f621b65f2eafa01d947f" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove outdated files&#10;&#10;Files were pushed and updated with commit &#10;1e1a5a423821e33bfaf3f621b65f2eafa01d947f" />
+    <MESSAGE value="Remove 'no auth' menu for all pages" />
+    <MESSAGE value="Add menu-toggle, responsiveness, and adjust logo size for statistics page" />
+    <MESSAGE value="Adjust bootstrap column for statistics" />
+    <MESSAGE value="Apply responsiveness changes to lost&amp;found and public contact pages" />
+    <MESSAGE value="replace buttons with font awesome icons and make fix-positions" />
+    <MESSAGE value="Change css for new menu and text colors" />
+    <MESSAGE value="apply responsiveness changes to public contact page" />
+    <MESSAGE value="Add radio button for each campus in statistics page" />
+    <MESSAGE value="Add pagination buttons for LF and public info for convenience" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add pagination buttons for LF and public info for convenience" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">

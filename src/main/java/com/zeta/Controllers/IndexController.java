@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 // Test function found in tutorial for setting up this project, can be discarded
@@ -24,32 +24,28 @@ public class IndexController {
     UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView getIndex() {
+    public String getIndex(Model m) {
         Login login = new Login();
-        ModelAndView mv = new ModelAndView("index");
+        m.addAttribute("login", login);
 
-        mv.addObject("login", login);
-        return mv;
+        return "index";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView loginUser(@ModelAttribute("login") Login login, BindingResult bindingResult) {
-        ModelAndView mv = new ModelAndView();
+    public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
         User user = userService.getUserFromLogin(login);
 
         if (user != null) {
-            mv.setViewName("dashboard");
-            mv.addObject("user", user);
-            return mv;
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            return "dashboard";
         }
 
-        mv.setViewName("index");
-        return mv;
+        return "index";
     }
 
     @GetMapping("/dashboard")
     public String dashboard(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "dashboard";
     }
 
@@ -67,7 +63,9 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model m) {
-        m.addAttribute("someAttribute", "someValue");
+        List<User> users = userService.getListOfUsers();
+        m.addAttribute("users", users);
+
         return "profile";
     }
 

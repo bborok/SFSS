@@ -1,5 +1,3 @@
-<%@ page import="com.zeta.Models.User" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
@@ -154,8 +152,8 @@
                             <tbody style="color:black">
                                 <c:forEach items="${users}" var="user">
                                     <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
-                                        <td class="col-sm-6 col-xs-6"> <c:out value="${user.getName()}" /> </td>
-                                        <td class="col-sm-6" "> <c:out value="${user.getStudentNumber()}" /> </td>
+                                        <td class="col-sm-6 col-xs-6"> <c:out value="${user.getName()}" />
+                                        <td class="col-sm-6"> <c:out value="${user.getStudentNumber()}" />
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -204,7 +202,7 @@
                             <h5>Campus: Burnaby | Surrey</h5>
                         </div>
                     </div>
-                </divrow>
+                </div>
             </div>
         </div>
     </div>

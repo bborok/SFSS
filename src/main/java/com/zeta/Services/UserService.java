@@ -2,7 +2,7 @@ package com.zeta.Services;
 
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
-import com.zeta.Repositories.UserDAO;
+import com.zeta.Data.UserDAO1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +16,24 @@ import java.util.List;
  */
 @Service
 public class UserService {
-    private UserDAO userDAO;
+    private UserDAO1 userDAO1;
 
     @Autowired
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService(UserDAO1 userDAO1) {
+        this.userDAO1 = userDAO1;
     }
 
     public User getUserFromUsername(String sfuid){
-        return userDAO.get(sfuid);
+        return userDAO1.get(sfuid);
     }
 
-    public User getUserFromLogin(Login login) { return userDAO.get(login); }
+    public User getUserFromLogin(Login login) { return userDAO1.get(login); }
 
     public void addUser(User user){
-        userDAO.add(user);
+        userDAO1.add(user);
     }
 
     public List<User> getListOfUsers(){
-        return userDAO.list();
+        return userDAO1.list();
     }
 }

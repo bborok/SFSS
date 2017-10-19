@@ -1,4 +1,4 @@
-package com.zeta.Repositories;
+package com.zeta.Data;
 
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl implements UserDAO1 {
     private JdbcTemplate jdbcTemplate;
 
     public UserDAOImpl(DataSource dataSource) {

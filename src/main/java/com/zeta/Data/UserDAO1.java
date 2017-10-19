@@ -1,11 +1,11 @@
-package com.zeta.Repositories;
+package com.zeta.Data;
 
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserDAO1 {
     public void add(User user);
 
     public void update(User user);

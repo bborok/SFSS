@@ -53,7 +53,7 @@ public class UserDao implements UserInterface{
 
     @Override
     public User getUserByLogin(Login login) {
-        return null;
+        return getUser(login.getUsername());
     }
 
     @Override

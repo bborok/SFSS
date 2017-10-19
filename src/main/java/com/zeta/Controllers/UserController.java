@@ -32,7 +32,9 @@ public class UserController {
             @RequestParam("email") String email ,
             @RequestParam("phoneNumber") long phoneNumber,
             @RequestParam("role") String role,
-            @RequestParam("campus") String campus){
+            @RequestParam("campus") String campus,
+            @RequestParam("callSign") String callSign,
+            @RequestParam("training") String training){
 
         User u = new User(
                 username,
@@ -41,7 +43,9 @@ public class UserController {
                 email,
                 phoneNumber,
                 Role.valueOf(role.toUpperCase()),
-                Campus.valueOf(campus.toUpperCase())
+                Campus.valueOf(campus.toUpperCase()),
+                callSign,
+                training
             );
         service.addUser(u);
         return "redirect:" + "/user/" + u.getUsername().trim();
@@ -56,7 +60,7 @@ public class UserController {
 
     @GetMapping("/showAll")
     public String allUsers(Model model){
-        List<User> userList = service.getListOfUsers();
+        List<User> userList = service.getListOfAllUsers();
         model.addAttribute(userList);
         return "/user/showAll";
     }

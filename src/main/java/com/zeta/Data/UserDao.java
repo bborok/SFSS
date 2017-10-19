@@ -1,12 +1,18 @@
 package com.zeta.Data;
 
+import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 public class UserDao implements UserInterface{
     private JdbcTemplate jdbcTemplate;
+
+    public UserDao(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
     @Override
     public void addUser(User user) {
@@ -42,6 +48,11 @@ public class UserDao implements UserInterface{
         jdbcTemplate.update(sql, username, username);
 
         // Extract data and set into object
+        return null;
+    }
+
+    @Override
+    public User getUserByLogin(Login login) {
         return null;
     }
 

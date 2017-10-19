@@ -1,5 +1,6 @@
 package com.zeta.Services;
 
+import com.zeta.Data.UserInterface;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import com.zeta.Data.UserDAO1;
@@ -16,24 +17,24 @@ import java.util.List;
  */
 @Service
 public class UserService {
-    private UserDAO1 userDAO1;
+    private UserInterface userInterface;
 
     @Autowired
-    public UserService(UserDAO1 userDAO1) {
-        this.userDAO1 = userDAO1;
+    public UserService(UserInterface userInterface) {
+        this.userInterface = userInterface;
     }
 
-    public User getUserFromUsername(String sfuid){
-        return userDAO1.get(sfuid);
+    public User getUserFromUsername(String username){
+        return userInterface.getUser(username);
     }
 
-    public User getUserFromLogin(Login login) { return userDAO1.get(login); }
+    public User getUserFromLogin(Login login) { return userInterface.getUserByLogin(login); }
 
     public void addUser(User user){
-        userDAO1.add(user);
+        userInterface.addUser(user);
     }
 
-    public List<User> getListOfUsers(){
-        return userDAO1.list();
+    public List<User> getListOfAllUsers(){
+        return userInterface.getAllUsers();
     }
 }

@@ -1,4 +1,4 @@
-package com.zeta.Repositories;
+package com.zeta.Data;
 
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
@@ -13,7 +13,7 @@ public class UserRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int i) throws SQLException {
         User user = new User();
-        user.setSfuId(rs.getString("Username"));
+        user.setUsername(rs.getString("Username"));
         user.setName(rs.getString("Name"));
         user.setEmail(rs.getString("Email"));
         user.setPhoneNumber(rs.getLong("PhoneNumber"));

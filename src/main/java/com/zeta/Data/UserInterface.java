@@ -1,5 +1,6 @@
 package com.zeta.Data;
 
+import com.zeta.Models.Login;
 import com.zeta.Models.User;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface UserInterface {
     // Returns user if username exists
     // Use this method for login
     public User getUser(String Username);
+
+    public User getUserByLogin(Login login);
 
     public List<User> getUsers(/* TODO: insert arguments here*/);
 

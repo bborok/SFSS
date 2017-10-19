@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface UserInterface {
 
-    // ** Every method may throw exception, need to have a try-catch around each one **
+    // Every method will return false/null if query fails.
 
     // Set argument to null if no data
-    public void addUser(User user);
+    public Boolean addUser(User user);
 
     // Set argument to null if no data
-    public void updateUser(User user);
+    public Boolean updateUser(User user);
 
-    public void removeUser(String username);
+    public Boolean removeUser(String username);
 
     // Returns user if username exists
     // Use this method for login
@@ -23,8 +23,7 @@ public interface UserInterface {
 
     public User getUserByLogin(Login login);
 
-    public List<User> getUsers(/* TODO: insert arguments here*/);
-
+    // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
 
     public List<User> getDeactivatedUsers();

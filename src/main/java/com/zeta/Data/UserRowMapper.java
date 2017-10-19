@@ -31,6 +31,10 @@ public class UserRowMapper implements RowMapper<User> {
         } else {
             user.setRole(Role.valueOf(rs.getString("Role")));
         }
+
+        user.setCallSign("CallSign");
+        user.setTraining("Training");
+
         return user;
     }
 }

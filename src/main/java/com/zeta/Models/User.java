@@ -101,7 +101,15 @@ public class User {
         return callSign;
     }
 
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
+    }
+
     public String getTraining() {
         return training;
+    }
+
+    public void setTraining(String training) {
+        this.training = training;
     }
 }

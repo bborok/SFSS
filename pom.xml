@@ -108,8 +108,9 @@
                 <configuration>
                     <url>http://cmpt373-1177z.cmpt.sfu.ca:8080/manager/text</url>
                     <server>cmpt373-zeta</server>
-                    <path>/main</path>
+                    <path>ROOT</path>
                     <update>true</update>
+                    <finalName>ROOT</finalName>
                 </configuration>
             </plugin>
             <plugin>

@@ -28,13 +28,14 @@
         User Not Found
     </c:when>
     <c:otherwise>
-        User Student Number: <c:out value="${user.studentNumber}"/>
-        User Name: <c:out value="${user.name}"/>
-        User Email: <c:out value="${user.email}"/>
-        User PhoneNumber: <c:out value="${user.phoneNumber}"/>
-        User Role: <c:out value="${user.role}"/>
-        User Preferred Campus: <c:out value="${user.preferredCampus}"/>
-        User CallSign: <c:out value="${user.callSign}"/>
+        User Username: <c:out value="${user.username}"/><br />
+        User Name: <c:out value="${user.name}"/><br />
+        User Email: <c:out value="${user.email}"/><br />
+        User PhoneNumber: <c:out value="${user.phoneNumber}"/><br />
+        User Preferred Campus: <c:out value="${user.preferredCampus}"/><br />
+        User Student Number: <c:out value="${user.studentNumber}"/><br />
+        User Role: <c:out value="${user.role}"/><br />
+        User CallSign: <c:out value="${user.callSign}"/><br />
     </c:otherwise>
 </c:choose>
 </body>

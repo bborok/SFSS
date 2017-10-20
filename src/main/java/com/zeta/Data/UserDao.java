@@ -63,9 +63,8 @@ public class UserDao implements UserInterface{
         User user;
         try {
                 String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                        "CallSign, Training from User where Username = ? and " +
+                        "CallSign from User where Username = ? and " +
                         "   (select 1 from User where Username = ?) and isDeactivated = 0";
-
                 user = jdbcTemplate.queryForObject(sql, new Object[] {username, username}, new UserRowMapper());
         } catch (Exception e) {
             return null;
@@ -83,7 +82,7 @@ public class UserDao implements UserInterface{
         List<User> users;
         try {
             String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, Training from User where isDeactivated = 0";
+                    "CallSign from User where isDeactivated = 0";
 
             users = jdbcTemplate.query(sql, new UserRowMapper());
         } catch (Exception e) {

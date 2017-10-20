@@ -29,11 +29,10 @@ public class UserRowMapper implements RowMapper<User> {
         if (rs.getString("Role") == null){
             user.setRole(null);
         } else {
-            user.setRole(Role.valueOf(rs.getString("Role")));
+            user.setRole(Role.valueOf(rs.getString("Role").toUpperCase()));
         }
 
-        user.setCallSign("CallSign");
-        user.setTraining("Training");
+        user.setCallSign(rs.getString("CallSign"));
 
         return user;
     }

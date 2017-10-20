@@ -34,6 +34,7 @@
         User PhoneNumber: <c:out value="${user.phoneNumber}"/>
         User Role: <c:out value="${user.role}"/>
         User Preferred Campus: <c:out value="${user.preferredCampus}"/>
+        User CallSign: <c:out value="${user.callSign}"/>
     </c:otherwise>
 </c:choose>
 </body>

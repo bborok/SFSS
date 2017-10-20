@@ -64,7 +64,6 @@ public class User {
     }
 
     public String getEmail() {
-        //TODO: Maybe a good idea (Prob not)? Temp fix for rendering JSP's.
         return email;
     }
 
@@ -73,8 +72,7 @@ public class User {
     }
 
     public long getPhoneNumber() {
-        //TODO: Not a good idea. Temp fix for rendering JSP's.
-        return phoneNumber == null ? 0 : phoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(long phoneNumber) {

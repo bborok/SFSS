@@ -21,6 +21,7 @@
         <th>Preferred Campus</th>
         <th>Student Number</th>
         <th>Role</th>
+        <th>Call Sign</th>
 
         <c:forEach var="contact" items="${userList}" varStatus="status">
             <tr>
@@ -32,6 +33,7 @@
                 <td>${contact.preferredCampus}</td>
                 <td>${contact.studentNumber}</td>
                 <td>${contact.role}</td>
+                <td>${contact.callSign}</td>
             </tr>
         </c:forEach>
     </table>

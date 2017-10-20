@@ -1,39 +1,37 @@
 package com.zeta.Services;
 
+import com.zeta.Data.UserInterface;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
-import com.zeta.Repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Allows user to interact with the database via a Repository.
- * UserController could access userDao directly, but the implementation
- * of this UserService may change if the say the application uses
- * SQL Queries instead of HibernateJPA.
+ * Allows user to interact with the data layer.
+ * UserController could access UserInterface directly.
  */
 @Service
 public class UserService {
-    private UserDAO userDAO;
+    private UserInterface userInterface;
 
     @Autowired
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService(UserInterface userInterface) {
+        this.userInterface = userInterface;
     }
 
-    public User getUserFromUsername(String sfuid){
-        return userDAO.get(sfuid);
+    public User getUserFromUsername(String username){
+        return userInterface.getUser(username);
     }
 
-    public User getUserFromLogin(Login login) { return userDAO.get(login); }
+    public User getUserFromLogin(Login login) { return userInterface.getUserByLogin(login); }
 
     public void addUser(User user){
-        userDAO.add(user);
+        userInterface.addUser(user);
     }
 
-    public List<User> getListOfUsers(){
-        return userDAO.list();
+    public List<User> getListOfAllUsers(){
+        return userInterface.getAllUsers();
     }
 }

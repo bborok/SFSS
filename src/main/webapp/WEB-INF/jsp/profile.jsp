@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: PrivateAcc
@@ -5,7 +6,7 @@
   Time: 5:03 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +38,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
     tr{
@@ -64,62 +66,7 @@
 
 <div id="wrapper" class="toggled">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <p>SFU SFEP</p>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/dashboard">Home</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
-            </li>
-            <li class="active">
-                <a href="${pageContext.request.contextPath}/profile">Profile</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/log">Log</a>
-            </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-                    <div class="modal-dialog" role="document" style="margin-top:100px">
-                        <div class="modal-content" style="background-color:red">
-
-                            <div class="modal-body" style="color:white">
-                                <center>
-                                    <strong>ACCESS DENIED </strong>
-                                    <p>No Authorization </p>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div id="side-container">
-            <div id="side-contact" style="text-align:center; margin-bottom:10px">
-
-                <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
-                </p>
-                <br>
-                <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-                <p class="fa fa-phone "> (604)-666-6666</p>
-
-                <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
-            </div>
-        </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
+    <jsp:include page="partfiles/sidebar.jsp"/>
 
 
 
@@ -130,11 +77,11 @@
             <div class="col-sm-12 text">
                 <center>
                     <div class="description">
-                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"><hr>
                     </div></center>
                 <br><br>
 
-                <row>
+                <div class="row">
                     <div class="col-sm-6" style="height:600px; text-align:center; border-style:solid" >
                         <p>
                             <b>Users</b>
@@ -147,71 +94,14 @@
                                 <th width="30%">#</th>
                             </tr>
                             </thead>
+
                             <tbody style="color:black">
-                            <tr onclick="switchColors(this);" data-tab="one">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="two">
-                                <td>Steven Kim</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="three">
-                                <td>Steven Pak</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
-                            <tr onclick="switchColors(this);" data-tab="none">
-                                <td>Steven Lee</td>
-                                <td>301250558</td>
-                            </tr>
+                                <c:forEach items="${users}" var="user">
+                                    <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
+                                        <td class="col-sm-6 col-xs-6"> <c:out value="${user.getName()}" />
+                                        <td class="col-sm-6"> <c:out value="${user.getStudentNumber()}" />
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -229,59 +119,22 @@
                             <h5>Select User from the list</h5>
                         </div>
 
-                        <div class="tab-content" id="none" style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>--</h3>
-                            <h5>This user has no profile yet</h5>
-                        </div>
-
-
-
-                        <div class="tab-content" id="one"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Lee</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
-
-                        <div class="tab-content" id="two"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog2.png" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Kim</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
-
-                        <div class="tab-content" id="three"  style="display: none;">
-                            <p>
-                                <b>Profile</b>
-                            </p>
-                            <center>
-                                <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
-                            </center>
-                            <h3>Steven Park</h3>
-                            <h4>Volunteer</h4>
-                            <p>mla189@sfu.ca</p>
-                            <h5>Campus: Burnaby | Surrey</h5>
-                        </div>
+                        <c:forEach items="${users}" var="user">
+                            <div class="tab-content" id="${user.getUsername()}" style="display: none" >
+                                <p>
+                                    <b>Profile</b>
+                                </p>
+                                <center>
+                                    <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300" width="300">
+                                </center>
+                                <h3> <c:out value="${user.getName()}" /> </h3>
+                                <h4> <c:out value="${user.getRole()}" /> </h4>
+                                <p> <c:out value="${user.getEmail()}" /> </p>
+                                <h5> <c:out value="${user.getPreferredCampus()}" /> </h5>
+                            </div>
+                        </c:forEach>
                     </div>
-                </row>
+                </div>
             </div>
         </div>
     </div>

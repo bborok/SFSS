@@ -57,6 +57,7 @@
 
     #side-contact{
         position: absolute;
+        color: #ffffff;
         bottom: 0;
     }
 
@@ -68,63 +69,7 @@
 
 <div id="wrapper" class="toggled">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <p>SFU SFEP</p>
-            </li>
-            <li >
-                <a href="${pageContext.request.contextPath}/dashboard">Home</a>
-            </li>
-            <li class="active">
-                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/profile">Profile</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/log">Log</a>
-            </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-            </li>
-        </ul>
-        <div id="side-container">
-            <div id="side-contact" style="text-align:center">
-
-                <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
-                </p>
-                <br>
-                <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-                <p class="fa fa-phone "> (604)-666-6666</p>
-
-                <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
-            </div>
-        </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-        <div class="modal-dialog" role="document" style="margin-top:100px">
-            <div class="modal-content" style="background-color:red">
-
-                <div class="modal-body" style="color:white">
-                    <center>
-                        <strong>ACCESS DENIED </strong>
-                        <p>No Authorization </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="partfiles/sidebar.jsp"/>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

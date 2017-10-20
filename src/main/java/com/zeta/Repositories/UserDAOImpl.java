@@ -1,5 +1,6 @@
 package com.zeta.Repositories;
 
+import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -53,6 +54,11 @@ public class UserDAOImpl implements UserDAO {
         // implementation details goes here...
         String sql = "SELECT * FROM User WHERE Username=\'" + username + "\'";
         return jdbcTemplate.query(sql, new UserResultSetExtractor());
+    }
+
+    @Override
+    public User get(Login login) {
+        return get(login.getUsername());
     }
 
     @Override

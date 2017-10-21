@@ -31,9 +31,9 @@
             </p>
             <br>
             <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-            <p class="fa fa-phone "> (604)-666-6666</p>
-
-            <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
+            <p class="fa fa-phone "> (778)-782-5425</p>
+            <p class="fa fa-envelope-o col-sm-12"> sfucsp@sfu.ca</p>
+            <%--https://www.sfu.ca/srs/security/contact-us.html--%>
         </div>
     </div>
 </div>

@@ -60,7 +60,10 @@
               <div class="form-group">
                 <form:input path="username" type="text" placeholder="Username..." cssClass="form-control" />
               </div>
-              <form:button type="submit" id="user" name="user" cssClass="btn">Sign in!</form:button>
+              <div class="form-group">
+                <form:password path="password" name="password" placeholder="Password..." cssClass="form-control" />
+              </div>
+              <form:button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</form:button>
             </form:form>
           </div>
         </div>

@@ -47,37 +47,160 @@
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-        <div class="modal-dialog" role="document" style="margin-top:100px">
-            <div class="modal-content" style="background-color:red">
-
-                <div class="modal-body" style="color:white">
-                    <center>
-                        <strong>ACCESS DENIED </strong>
-                        <p>No Authorization </p>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="col-xs-6"><img src="/resources/img/logo_made/logo_2.png" class="img-responsive"></div>
-            <div class="col-xs-6"><h3 class="text-center">STATISTICS PUBLIC CONTACT</h3></div>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">EXPORT</button></div>
-                <div class="col-xs-4"><button id="button_save" type="button" class="btn btn-warning btn-sm">SAVE</button></div>
-                <div class="col-xs-4"><button id="button_edit" type="button" class="btn btn-danger btn-sm">EDIT</button></div>
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="pagination">
+                                <li >
+                                    <a href="${pageContext.request.contextPath}/statistics_info_lf">Lost & Found</a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">Public Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4" style="padding-top: 15px">
+                            <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                            <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
             </div>
-            <div class="col-xs-6 col-md-offset-6" style="padding: 2px 2px 2px;">
-                <div class="col-xs-4"><button type="button" class="btn btn-info btn-sm">BUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-warning btn-sm">SUR</button></div>
-                <div class="col-xs-4"><button type="button" class="btn btn-danger btn-sm">VAN</button></div>
-            </div>
-            <div class="col-sm-9">
-                <table id="table1" class="display" width="100%"></table>
+            <center>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                    </label>
+                </div>
+            </center>
+            <br><br>
+            <div class="col-sm-12">
+                <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>2017</th>
+                        <th>JAN</th>
+                        <th>FEB</th>
+                        <th>MAR</th>
+                        <th>APR</th>
+                        <th>MAY</th>
+                        <th>JUN</th>
+                        <th>JUL</th>
+                        <th>AUG</th>
+                        <th>SEP</th>
+                        <th>OCT</th>
+                        <th>NOV</th>
+                        <th>DEV</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Smoking Prevention</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Theft Prevention</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Public Contact</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Safewalk</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Escort</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    <tr>
+                        <td>Assist Security</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                        <td>56</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-sm-3">
                 <table id="table2" class="display" width="100%"></table>

@@ -69,7 +69,6 @@
     <jsp:include page="partfiles/sidebar.jsp"/>
 
 
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">

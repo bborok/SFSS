@@ -89,12 +89,45 @@ public class UserDao implements UserInterface{
     }
 
     @Override
-    public Boolean getUserTraining(User user, String username) {
+    public Boolean getUserTraining(User user) {
         List<String> list;
         try {
                 String sql = "select Training from UserTraining where User = ?";
-                list = jdbcTemplate.queryForList(sql, String.class);
+                list = jdbcTemplate.queryForList(sql, new Object[] {user.getUsername()}, String.class);
                 user.setTraining(list);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean setUserTraining(String username, String training, String date) {
+        try {
+            String sql = "insert into UserTraining (User, Training, Date) values (?, ?, ?)";
+            jdbcTemplate.update(sql, username, training, date);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean updateUserTraining(String username, String training, String date) {
+        try {
+            String sql = "update UserTraining set Training = ?, Date = ? where User = ?";
+            jdbcTemplate.update(sql, training, date, username);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean removeTraining(String username, String training, String date) {
+        try {
+            String sql = "delete from UserTraining where User = ?, Training = ?, Date = ? limit 1";
+            jdbcTemplate.update(sql, username, training, date);
         } catch (Exception e) {
             return false;
         }

@@ -30,5 +30,15 @@ public interface UserInterface {
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
 
-    public Boolean getUserTraining(User user, String username);
+    public Boolean getUserTraining(User user);
+
+    // Date must be in the format YYYY-MM-DD
+    public Boolean setUserTraining(String username, String training, String date);
+
+    // Date must be in the format YYYY-MM-DD
+    public Boolean updateUserTraining(String username, String training, String date);
+
+    public Boolean removeTraining(String username, String training, String date);
+
+
 }

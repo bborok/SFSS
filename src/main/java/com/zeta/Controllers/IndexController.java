@@ -1,9 +1,10 @@
 package com.zeta.Controllers;
 
+import com.zeta.Configurations.PersistenceConfig;
+import com.zeta.Data.UserDao;
+import com.zeta.Data.UserInterface;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
-import com.zeta.Services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +21,8 @@ import java.util.List;
 // Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
-    @Autowired
-    UserService userService;
+
+    UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {
@@ -33,7 +34,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userService.getUserFromLogin(login);
+        User user = userInterface.getUserByLogin(login);
 
         if (user != null) {
             HttpSession session = request.getSession();
@@ -63,7 +64,7 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model m) {
-        List<User> users = userService.getListOfAllUsers();
+        List<User> users = userInterface.getAllUsers();
         m.addAttribute("users", users);
 
         return "profile";

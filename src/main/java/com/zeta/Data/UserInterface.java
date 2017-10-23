@@ -20,12 +20,11 @@ public interface UserInterface {
     public Boolean activateDeactivatedUser(String username);
 
     public List<User> getDeactivatedUsers();
-    // Returns user if username exists
-
-    // Use this method for login
-    public User getUser(String Username);
 
     public User getUserByLogin(Login login);
+
+    // Returns user if username exists
+    public User getUser(String Username);
 
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();

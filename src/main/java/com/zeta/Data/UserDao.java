@@ -70,6 +70,24 @@ public class UserDao implements UserInterface{
     }
 
     @Override
+    public List<User> getDeactivatedUsers() {
+        List<User> users;
+        try {
+            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
+                    "CallSign, isDeactivated from User where isDeactivated = 1";
+
+            users = jdbcTemplate.query(sql, new UserRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
+        return users;    }
+
+    @Override
+    public User getUserByLogin(Login login) {
+        return getUser(login.getUsername());
+    }
+
+    @Override
     public User getUser(String username) {
         User user;
         try {
@@ -84,8 +102,17 @@ public class UserDao implements UserInterface{
     }
 
     @Override
-    public User getUserByLogin(Login login) {
-        return getUser(login.getUsername());
+    public List<User> getAllUsers() {
+        List<User> users;
+        try {
+            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
+                    "CallSign, isDeactivated from User where isDeactivated = 0";
+
+            users = jdbcTemplate.query(sql, new UserRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
+        return users;
     }
 
     @Override
@@ -133,31 +160,4 @@ public class UserDao implements UserInterface{
         }
         return true;
     }
-
-    @Override
-    public List<User> getAllUsers() {
-        List<User> users;
-        try {
-            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, isDeactivated from User where isDeactivated = 0";
-
-            users = jdbcTemplate.query(sql, new UserRowMapper());
-        } catch (Exception e) {
-            return null;
-        }
-        return users;
-    }
-
-    @Override
-    public List<User> getDeactivatedUsers() {
-        List<User> users;
-        try {
-            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, isDeactivated from User where isDeactivated = 1";
-
-            users = jdbcTemplate.query(sql, new UserRowMapper());
-        } catch (Exception e) {
-            return null;
-        }
-        return users;    }
 }

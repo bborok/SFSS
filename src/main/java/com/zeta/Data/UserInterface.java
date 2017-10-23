@@ -17,7 +17,11 @@ public interface UserInterface {
 
     public Boolean removeUser(String username);
 
+    public Boolean activateDeactivatedUser(String username);
+
+    public List<User> getDeactivatedUsers();
     // Returns user if username exists
+
     // Use this method for login
     public User getUser(String Username);
 
@@ -26,5 +30,5 @@ public interface UserInterface {
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
 
-    public List<User> getDeactivatedUsers();
+    public Boolean getUserTraining(User user, String username);
 }

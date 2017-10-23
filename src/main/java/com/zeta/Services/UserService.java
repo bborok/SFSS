@@ -28,7 +28,9 @@ public class UserService {
     public User getUserFromLogin(Login login) { return userInterface.getUserByLogin(login); }
 
     public void addUser(User user){
-        userInterface.addUser(user);
+        if (!userInterface.addUser(user)) {
+            // TODO: Error handle this
+        }
     }
 
     public List<User> getListOfAllUsers(){

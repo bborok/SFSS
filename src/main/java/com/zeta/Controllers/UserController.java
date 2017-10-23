@@ -34,7 +34,8 @@ public class UserController {
             @RequestParam("role") String role,
             @RequestParam("campus") String campus,
             @RequestParam("callSign") String callSign,
-            @RequestParam("training") String training){
+            @RequestParam("training") List<String> training,
+            @RequestParam("isDeactivated") Boolean isDeactivated){
 
         User u = new User(
                 username,
@@ -45,8 +46,8 @@ public class UserController {
                 Role.valueOf(role.toUpperCase()),
                 Campus.valueOf(campus.toUpperCase()),
                 callSign,
-                training
-            );
+                training,
+                isDeactivated);
         service.addUser(u);
         return "redirect:" + "/user/" + u.getUsername().trim();
     }

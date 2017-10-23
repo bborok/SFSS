@@ -1,5 +1,7 @@
 package com.zeta.Models;
 
+import java.util.List;
+
 /*
  * com.zeta.Models.User class
  */
@@ -13,7 +15,8 @@ public class User {
     private Long studentNumber;
     private Role role;
     private String callSign;
-    private String training;
+    private List<String> training;
+    private Boolean isDeactivated;
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
@@ -27,7 +30,7 @@ public class User {
     } //Required by JPA
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
-                Campus preferredCampus, String callSign, String training) {
+                Campus preferredCampus, String callSign, List<String> training, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -37,6 +40,7 @@ public class User {
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
         this.training = training;
+        this.isDeactivated = isDeactivated;
     }
 
     public String getUsername() {
@@ -103,11 +107,19 @@ public class User {
         this.callSign = callSign;
     }
 
-    public String getTraining() {
+    public List<String> getTraining() {
         return training;
     }
 
-    public void setTraining(String training) {
+    public void setTraining(List<String> training) {
         this.training = training;
+    }
+
+    public void setIsDeactivated(Boolean isDeactivated) {
+        this.isDeactivated = isDeactivated;
+    }
+
+    public Boolean getIsDeactivated() {
+        return isDeactivated;
     }
 }

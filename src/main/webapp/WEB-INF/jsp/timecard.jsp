@@ -81,11 +81,11 @@
                                 </div>
                                 <div class="col-md-6 ">
                                     <label > Date : </label>
-                                    <input  class="form-control" type="input" id="date" value=""/>
+                                    <form:input path="date" class="form-control" type="input" id="date" value=""/>
                                 </div>
                                 <div class="col-md-6 ">
                                     <label > Location : </label>
-                                    <input  class="form-control" type="input" id="location" value=""/>
+                                    <form:input path="location" class="form-control" type="input" id="location" value=""/>
                                 </div>
                                 <div class="col-md-6 " style="margin-bottom: 2em;">
                                     <label > Start Time : </label>
@@ -113,7 +113,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="SPTotal" value="0" /></td>
+                                                        <td><form:input path="SPTotal" type="input" class="form-control" id="SPTotal" value="0" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Theft Prevention</td>
@@ -121,7 +121,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="TPTotal" value="0"/></td>
+                                                        <td><form:input path="TPTotal" type="input" class="form-control" id="TPTotal" value="0"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Public Contact</td>
@@ -129,7 +129,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="PCTotal" value="0"/></td>
+                                                        <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="0"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Safe Walks</td>
@@ -137,7 +137,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="SWTotal" value="0"/></td>
+                                                        <td><form:input path="SWTotal" type="input" class="form-control" id="SWTotal" value="0"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Hazards/Service Request</td>
@@ -145,7 +145,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="HSRTotal" value="0"/></td>
+                                                        <td><form:input path="HSRTotal" type="input" class="form-control" id="HSRTotal" value="0"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Assist Security</td>
@@ -153,7 +153,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><input type="input" class="form-control" name="totalInput" id="ASTotal" value="0"/></td>
+                                                        <td><form:input path="ASTotal" type="input" class="form-control" id="ASTotal" value="0"/></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -164,7 +164,7 @@
 
                                 <div class="col-md-12 ">
                                     <label > Notes : </label>
-                                    <input class="form-control" type="input" id="notes" value=""/>
+                                    <form:input path="notes" class="form-control" type="input" id="notes" value=""/>
                                 </div>
 
                                 <div class="pull-right">

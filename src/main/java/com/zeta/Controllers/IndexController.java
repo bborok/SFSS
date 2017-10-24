@@ -2,7 +2,7 @@ package com.zeta.Controllers;
 
 import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    UserData userData = new UserDao(new PersistenceConfig().dataSource());
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {
@@ -34,7 +34,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userInterface.getUserByLogin(login);
+        User user = userData.getUserByLogin(login);
 
         if (user != null) {
             HttpSession session = request.getSession();
@@ -64,7 +64,7 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model m) {
-        List<User> users = userInterface.getAllUsers();
+        List<User> users = userData.getAllUsers();
         m.addAttribute("users", users);
 
         return "profile";

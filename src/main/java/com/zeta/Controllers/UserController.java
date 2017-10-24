@@ -2,7 +2,7 @@ package com.zeta.Controllers;
 
 import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    private UserData userData = new UserDao(new PersistenceConfig().dataSource());
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
@@ -45,7 +45,7 @@ public class UserController {
                 training,
                 isDeactivated);
 
-        if (!userInterface.addUser(u))
+        if (!userData.addUser(u))
         {
             // TODO: Error handle this
         }
@@ -54,14 +54,14 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String showUser(@PathVariable("username") String username, Model model){
-        User user = userInterface.getUser(username);
+        User user = userData.getUser(username);
         model.addAttribute("user", user);
         return "/user/show";
     }
 
     @GetMapping("/showAll")
     public String allUsers(Model model){
-        List<User> userList = userInterface.getAllUsers();
+        List<User> userList = userData.getAllUsers();
         model.addAttribute(userList);
         return "/user/showAll";
     }

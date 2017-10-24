@@ -5,9 +5,8 @@ import com.zeta.Models.User;
 
 import java.util.List;
 
-public interface UserInterface {
-
-    // Every method will return false/null if query fails.
+// Every method will return false/null if query fails.
+public interface UserData {
 
     // Set argument to null if no data
     public Boolean addUser(User user);

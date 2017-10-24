@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class UserDao implements UserInterface{
+public class UserDao implements UserData {
     private JdbcTemplate jdbcTemplate;
 
     public UserDao(DataSource dataSource) {

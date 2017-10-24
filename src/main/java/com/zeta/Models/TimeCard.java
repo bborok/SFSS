@@ -1,6 +1,5 @@
 package com.zeta.Models;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,26 +8,55 @@ import java.util.List;
  */
 public class TimeCard {
 
-    private List<Task> tasks = new ArrayList<Task>();
-    private String notes;
-    private Calendar startTime;
-    private Calendar endTime;
+    private String user;
+    private long shiftId;
     private Campus campus;
+    private String location;
+    private String notes;
+    private List<Task> tasks;
 
-    public TimeCard(List<Task> tasks, String notes, Calendar startTime, Calendar endTime, Campus campus) {
-        this.tasks = tasks;
+    // there are probably more private fields that time card needs
+
+
+    public TimeCard(String user, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
+        this.user = user;
+        this.shiftId = shiftId;
+        this.campus = campus;
+        this.location = location;
         this.notes = notes;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.tasks = tasks;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public long getShiftId() {
+        return shiftId;
+    }
+
+    public void setShiftId(long shiftId) {
+        this.shiftId = shiftId;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
         this.campus = campus;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public String getLocation() {
+        return location;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getNotes() {
@@ -39,27 +67,11 @@ public class TimeCard {
         this.notes = notes;
     }
 
-    public Calendar getStartTime() {
-        return startTime;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
-    }
-
-    public Calendar getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Calendar endTime) {
-        this.endTime = endTime;
-    }
-
-    public Campus getCampus() {
-        return campus;
-    }
-
-    public void setCampus(Campus campus) {
-        this.campus = campus;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

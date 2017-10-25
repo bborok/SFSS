@@ -2,13 +2,12 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.ShiftInterface;
 import com.zeta.Models.Shift;
+import com.zeta.Models.ShiftRaw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.POST;
 import java.util.List;
 
 @RequestMapping("/eventsAPI")
@@ -29,5 +28,11 @@ public class ShiftsController {
     @GetMapping("/shifts")
     public List<Shift> shifts(){
         return shiftInterface.getShifts();
+    }
+
+    @PostMapping("/shifts")
+    public Shift saveShift(ShiftRaw jsonString){
+
+
     }
 }

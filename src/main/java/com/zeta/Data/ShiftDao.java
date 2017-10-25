@@ -6,7 +6,6 @@ import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -15,10 +14,12 @@ import java.util.List;
 @Repository
 public class ShiftDao implements ShiftInterface {
     private JdbcTemplate jdbcTemplate;
+    private UserInterface userInterface;
 
     @Autowired
-    public ShiftDao(DataSource dataSource) {
+    public ShiftDao(DataSource dataSource, UserInterface userInterface) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.userInterface = userInterface;
     }
 
     @Override
@@ -30,10 +31,7 @@ public class ShiftDao implements ShiftInterface {
         shiftRaws = jdbcTemplate.query(shiftRawQuery, new ShiftRawRowMapper());
 
         //Get all Users
-        List<User> users;
-        String userseQuery = "SELECT Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                "CallSign, isDeactivated FROM User WHERE isDeactivated = 0";
-        users = jdbcTemplate.query(userseQuery, new UserRowMapper());
+        List<User> users = userInterface.getAllUsers();
 
         //Join these two together
         //TODO: Alternate method. Query the User for each string username in ShiftRaw
@@ -42,13 +40,38 @@ public class ShiftDao implements ShiftInterface {
             for (User u : users)
                 if (sr.getUsername().equals(u.getUsername()))
                     shifts.add(new Shift(
-                            sr.getStartTime(),
-                            sr.getEndTime(),
                             sr.getTitle(),
-                            u,
-                            sr.getCampus()
+                            sr.getStart(),
+                            sr.getEnd(),
+                            sr.getCampus(),
+                            u
                     ));
 
         return shifts;
+    }
+
+    @Override
+    public Shift saveShift(ShiftRaw shiftRaw) {
+        String sql = "INSERT INTO Shift(Title, Start, End, User, Campus) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, shiftRaw.getTitle(), shiftRaw.getStart(),
+                shiftRaw.getEnd(), shiftRaw.getUsername(), shiftRaw.getCampus());
+        //TODO: GET ID OF ROW YOU Just Inserted
+//        ShiftRaw querySr =
+        User u = userInterface.getUser(shiftRaw.getUsername());
+        return new Shift(shiftRaw.getTitle(), shiftRaw.getStart(), shiftRaw.getEnd(), shiftRaw.getCampus(), u);
+    }
+
+    @Override
+    public Shift getShift(long id) {
+        String sql = "SELECT * FROM Shift WHERE ID=?";
+        ShiftRaw shiftRaw = jdbcTemplate.queryForObject(sql, new ShiftRawRowMapper(), id);
+        User u = userInterface.getUser(shiftRaw.getUsername());
+        return new Shift(shiftRaw.getTitle(), shiftRaw.getStart(), shiftRaw.getEnd(), shiftRaw.getCampus(), u);
+    }
+
+    @Override
+    public Shift deleteShift(long id) {
+        return null;
     }
 }

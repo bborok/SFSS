@@ -112,7 +112,7 @@ $(document).ready(function () {
         },
 
         //Selecting an empty area
-        select: function (start, end, id) {
+        select: function (start, end) {
 
             startTime = moment(start).format('MMM Do h:mm A');
             endTime = moment(end).format('MMM Do h:mm A');
@@ -122,7 +122,6 @@ $(document).ready(function () {
 
             $('#createEventModal #apptStartTime').val(start);
             $('#createEventModal #apptEndTime').val(end);
-            $('#createEventModal #apptID').val(event.id);
             $('#createEventModal #eventCampus').val(event.campus);
             $('#createEventModal #eventMember').val(event.member);
             $('#createEventModal #when').text(mywhen);
@@ -168,18 +167,20 @@ $(document).ready(function () {
         $("#createEventModal").modal('hide');
         $("#calendar").fullCalendar('renderEvent',
             {
+                id: $('#eventTitle').val(),
                 title: $('#eventTitle').find(":selected").attr('class'),
                 // title: $('#eventTitle').val(),
                 start: new Date($('#apptStartTime').val()),
                 end: new Date($('#apptEndTime').val()),
                 allDay: ($('#apptAllDay').val() == "true"),
                 member: $('#eventMember').val(),
-                id: $('#eventTitle').val(),
                 campus: $('#eventCampus').val()
             },
 
             true);
         console.log($('#eventTitle').val());
+
+        //AJAX Request Here
     }
 
     function filter(calEvent) {

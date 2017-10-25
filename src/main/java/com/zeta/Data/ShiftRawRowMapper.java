@@ -11,9 +11,10 @@ public class ShiftRawRowMapper implements RowMapper<ShiftRaw> {
     @Override
     public ShiftRaw mapRow(ResultSet rs, int i) throws SQLException {
         ShiftRaw sr = new ShiftRaw();
+        sr.setId(rs.getLong("ID"));
         sr.setUsername(rs.getString("User"));
-        sr.setStartTime(rs.getTimestamp("Start"));
-        sr.setEndTime(rs.getTimestamp("End"));
+        sr.setStart(rs.getTimestamp("Start"));
+        sr.setEnd(rs.getTimestamp("End"));
         sr.setCampus(Campus.valueOf(rs.getString("Campus").toUpperCase()));
         sr.setTitle(rs.getString("Title"));
         return sr;

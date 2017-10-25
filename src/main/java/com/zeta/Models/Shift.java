@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  */
 public class Shift {
 
+    private Long id;
     private String title;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Timestamp start;
@@ -22,13 +23,21 @@ public class Shift {
     public Shift() {
     }
 
-
-    public Shift(Timestamp startTime, Timestamp endTime, String title, User user, Campus campus) {
+    public Shift(Long id, String title, Timestamp start, Timestamp end, Campus campus, User user) {
+        this.id = id;
         this.title = title;
-        this.start = startTime;
-        this.end = endTime;
+        this.start = start;
+        this.end = end;
         this.campus = campus;
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

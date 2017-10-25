@@ -198,7 +198,7 @@
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
-                            <%--AJAX Request--%>
+                            <%--AJAX Request to POST to ShiftController--%>
                             <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
                         </div>
                     </div>

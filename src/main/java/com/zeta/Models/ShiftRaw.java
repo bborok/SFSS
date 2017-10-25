@@ -3,21 +3,31 @@ package com.zeta.Models;
 import java.sql.Timestamp;
 
 public class ShiftRaw {
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Long id;
     private String title;
-    private String username;
+    private Timestamp start;
+    private Timestamp end;
     private Campus campus;
+    private String username;
 
     public ShiftRaw() {
     }
 
-    public ShiftRaw(Timestamp startTime, Timestamp endTime, String title, String username, Campus campus) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public ShiftRaw(Long id, String title, Timestamp start, Timestamp end, Campus campus, String username) {
+        this.id = id;
         this.title = title;
-        this.username = username;
+        this.start = start;
+        this.end = end;
         this.campus = campus;
+        this.username = username;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -28,20 +38,20 @@ public class ShiftRaw {
         this.title = title;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public Timestamp getStart() {
+        return start;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
+    public void setStart(Timestamp start) {
+        this.start = start;
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
+    public Timestamp getEnd() {
+        return end;
     }
 
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
+    public void setEnd(Timestamp end) {
+        this.end = end;
     }
 
     public String getUsername() {

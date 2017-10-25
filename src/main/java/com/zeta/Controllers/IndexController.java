@@ -4,6 +4,7 @@ import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Data.UserDao;
 import com.zeta.Data.UserInterface;
 import com.zeta.Models.Login;
+import com.zeta.Models.Role;
 import com.zeta.Models.User;
 import com.zeta.Models.TimeCard;
 import com.zeta.Services.UserService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 // Test function found in tutorial for setting up this project, can be discarded
@@ -44,7 +46,6 @@ public class IndexController {
             session.setAttribute("user", user);
             return "dashboard";
         }
-
         return "index";
     }
 
@@ -70,51 +71,62 @@ public class IndexController {
 
     @GetMapping("/log")
     public String log(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "log";
     }
 
     @GetMapping("/payroll")
     public String payroll(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "payroll";
     }
 
     @GetMapping("/profile")
     public String profile(Model m) {
-        List<User> users = userInterface.getAllUsers();
-        m.addAttribute("users", users);
-
         return "profile";
     }
 
     @GetMapping("/schedule")
     public String schedule(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "schedule";
     }
 
     @GetMapping("/statistics")
     public String statistics(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "statistics";
     }
 
     @GetMapping("/statistics_info_lf")
     public String statistics_info_lf(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "statistics_info_lf";
     }
 
     @GetMapping("/statistics_public_contact")
     public String statistics_public_contact(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "statistics_public_contact";
     }
 
     @GetMapping("/temp_schedule")
     public String temp_schedule(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "temp_schedule";
+    }
+
+    @GetMapping("/users")
+    public String users(HttpServletRequest request, Model m) {
+        List<User> users;
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return "users"; //Exit the request if user info can't get fetched
+        //Filter the list users depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+//            //Filter the users based on the team leaders preferred campus.
+            users = userInterface.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else {
+            users = userInterface.getAllUsers();
+        }
+
+        m.addAttribute("users", users);
+        return "users";
     }
 }

@@ -21,6 +21,11 @@ public class ShiftsController {
         this.shiftInterface = shiftInterface;
     }
 
+    /**
+     * TODO: change this mapping to handle two query string parameters: start and end
+     * which are dates in the format of YYYY-mm-dd
+     */
+
     @GetMapping("/shifts")
     public List<Shift> shifts(){
         return shiftInterface.getShifts();

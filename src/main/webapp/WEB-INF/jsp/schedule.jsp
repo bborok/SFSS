@@ -79,17 +79,17 @@
         <div class="description">
             <div class="checkbox">
                 <label>
-                    <input class='campusFilter' type="checkbox" value="Burnaby" id="Burnaby"
-                           checked>Burnaby</label>
+                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY"
+                           checked>BURNABY</label>
             </div>
             <div class="checkbox">
                 <label>
-                    <input class='campusFilter' type="checkbox" value="Surrey" id="Surrey">Surrey</label>
+                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY</label>
             </div>
             <div class="checkbox">
                 <label>
-                    <input class='campusFilter' type="checkbox" value="Vancouver"
-                           id="Vancouver">Vancouver</label>
+                    <input class='campusFilter' type="checkbox" value="VANCOUVER"
+                           id="VANCOUVER">VANCOUVER</label>
             </div>
             <select id="shiftSelect"></select>
             <br>
@@ -117,63 +117,63 @@
                                             <option value='all' id='allCampuses' disabled="true" selected>Select
                                                 a campus.
                                             </option>
-                                            <option value="Burnaby" class="Burnaby">Burnaby</option>
-                                            <option value="Surrey" class="Surrey">Surrey</option>
-                                            <option value="Vancouver" class="Vancouver">Vancouver</option>
+                                            <option value="BURNABY" class="BURNABY">BURNABY</option>
+                                            <option value="SURREY" class="SURREY">SURREY</option>
+                                            <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
                                         </select>
                                         <select name="eventTitle" id="eventTitle">
-                                            <option value="Surrey" disabled="true" selected="selected">Select a
-                                                Surrey Shift
+                                            <option value="SURREY" disabled="true" selected="selected">Select a
+                                                SURREY Shift
                                             </option>
-                                            <option value="Surrey" class="Community Presence">Community
+                                            <option value="SURREY" class="Community Presence">Community
                                                 Presence
                                             </option>
-                                            <option value="Surrey" class="Theft Prevention">Theft Prevention
+                                            <option value="SURREY" class="Theft Prevention">Theft Prevention
                                             </option>
-                                            <option value="Surrey" class="Special Events">Special Events
+                                            <option value="SURREY" class="Special Events">Special Events
                                             </option>
-                                            <option value="Surrey" class="Pedestrian Safety">Pedestrian Safety
+                                            <option value="SURREY" class="Pedestrian Safety">Pedestrian Safety
                                             </option>
 
-                                            <option value="Vancouver" disabled="true" selected="selected">Select
-                                                a Vancouver Shift
+                                            <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                a VANCOUVER Shift
                                             </option>
-                                            <option value="Vancouver" class="Community Presence">Community
+                                            <option value="VANCOUVER" class="Community Presence">Community
                                                 Presence
                                             </option>
-                                            <option value="Vancouver" class="Theft Prevention">Theft
+                                            <option value="VANCOUVER" class="Theft Prevention">Theft
                                                 Prevention
                                             </option>
-                                            <option value="Vancouver" class="Special Events">Special Events
+                                            <option value="VANCOUVER" class="Special Events">Special Events
                                             </option>
-                                            <option value="Vancouver" class="Pedestrian Safety">Pedestrian
+                                            <option value="VANCOUVER" class="Pedestrian Safety">Pedestrian
                                                 Safety
                                             </option>
 
-                                            <option value="Burnaby" disabled="true" selected="selected">Select a
-                                                Burnaby Shift
+                                            <option value="BURNABY" disabled="true" selected="selected">Select a
+                                                BURNABY Shift
                                             </option>
-                                            <option value="Burnaby" class="Information and Lost & Found Kiosk">
+                                            <option value="BURNABY" class="Information and Lost & Found Kiosk">
                                                 Information and Lost & Found Kiosk
                                             </option>
-                                            <option value="Burnaby" class="Speed Watch / Moving Traffic">Speed
+                                            <option value="BURNABY" class="Speed Watch / Moving Traffic">Speed
                                                 Watch / Moving Traffic
                                             </option>
-                                            <option value="Burnaby" class="Community Presence">Community
+                                            <option value="BURNABY" class="Community Presence">Community
                                                 Presence
                                             </option>
-                                            <option value="Burnaby" class="Safety Screen">Safety Screen</option>
-                                            <option value="Burnaby" class="Theft Prevention">Theft Prevention
+                                            <option value="BURNABY" class="Safety Screen">Safety Screen</option>
+                                            <option value="BURNABY" class="Theft Prevention">Theft Prevention
                                             </option>
-                                            <option value="Burnaby" class="Auto Theft Prevention">Auto Theft
+                                            <option value="BURNABY" class="Auto Theft Prevention">Auto Theft
                                                 Prevention
                                             </option>
-                                            <option value="Burnaby" class="Bike Presence">Bike Presence</option>
-                                            <option value="Burnaby" class="Special Events">Special Events
+                                            <option value="BURNABY" class="Bike Presence">Bike Presence</option>
+                                            <option value="BURNABY" class="Special Events">Special Events
                                             </option>
-                                            <option value="Burnaby" class="Smoking Checks">Smoking Checks
+                                            <option value="BURNABY" class="Smoking Checks">Smoking Checks
                                             </option>
-                                            <option value="Burnaby" class="Pedestrian Safety">Pedestrian
+                                            <option value="BURNABY" class="Pedestrian Safety">Pedestrian
                                                 Safety
                                             </option>
 

@@ -1,19 +1,19 @@
-var iBurnaby = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
-var iSurrey = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
+var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 
 $(document).ready(function () {
 
     $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) {
         console.log(data);
     }).fail(function () {
-        alert("fuck")
+        alert("fail")
     });
 
     $.getJSON('http://localhost:8080/ROOT/eventsAPI/shifts', function (data) {
         console.log(data);
     }).fail(function () {
-        alert("fuck")
+        alert("fail")
     });
 
 
@@ -22,36 +22,35 @@ $(document).ready(function () {
     var events_array = [
         {
             title: "Information and Lost & Found Kiosk",
-            id: "Burnaby Information and Lost & Found Kiosk",
+            id: "BURNABY Information and Lost & Found Kiosk",
             allday: false,
             member: "Bobae",
             start: '2017-10-04T15:00:00',
             end: '2017-10-04T15:30:00',
-            campus: 'Burnaby'
+            campus: 'BURNABY'
         },
         {
             title: "Community Presence",
-            id: "Surrey Community Presence",
+            id: "SURREY Community Presence",
             allday: false,
             member: "Steven",
             start: '2017-10-06T13:00:00',
             end: '2017-10-06T15:00:00',
-            campus: 'Surrey'
+            campus: 'SURREY'
         },
         {
             title: "Pedestrian Safety",
-            id: "Vancouver Pedestrian Safety",
+            id: "VANCOUVER Pedestrian Safety",
             allday: false,
             member: "Alex",
             start: '2017-10-07T13:00:00',
             end: '2017-10-07T15:00:00',
-            campus: 'Vancouver'
+            campus: 'VANCOUVER'
         }
     ];
 
 
     // page is now ready, initialize the calendar...
-
     $('#external-events .fc-event').each(function () {
 
         // store data so the calendar knows to render an event upon drop
@@ -96,13 +95,13 @@ $(document).ready(function () {
 
         eventRender: function eventRender(event, element, view) {
 
-            if (event.campus == 'Burnaby') {
+            if (event.campus === 'BURNABY') {
                 element.css('background-color', '#E8502F');
             }
-            if (event.campus == "Surrey") {
+            if (event.campus === "SURREY") {
                 element.css('background-color', '#C5E744');
             }
-            if (event.campus == "Vancouver") {
+            if (event.campus === "VANCOUVER") {
                 element.css('background-color', '#75C6E7');
             }
             return filter(event);

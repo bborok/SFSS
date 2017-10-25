@@ -4,6 +4,20 @@ var iVancouver = ["Community Presence", "Theft Prevention", "Special Events", "P
 
 $(document).ready(function () {
 
+    $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) {
+        console.log(data);
+    }).fail(function () {
+        alert("fuck")
+    });
+
+    $.getJSON('http://localhost:8080/ROOT/eventsAPI/shifts', function (data) {
+        console.log(data);
+    }).fail(function () {
+        alert("fuck")
+    });
+
+
+
     //Need to populate array via jaxCall
     var events_array = [
         {
@@ -33,7 +47,6 @@ $(document).ready(function () {
             end: '2017-10-07T15:00:00',
             campus: 'Vancouver'
         }
-
     ];
 
 
@@ -57,6 +70,10 @@ $(document).ready(function () {
 
 
     $('#calendar').fullCalendar({
+        eventSources:[
+            'http://localhost:8080/ROOT/eventsAPI/shifts',
+            events_array
+        ],
         // put your options and callbacks here
         timezone: 'local',
         viewRender: function (view) {
@@ -76,7 +93,6 @@ $(document).ready(function () {
         },
 
         selectable: true,
-        events: events_array,
 
         eventRender: function eventRender(event, element, view) {
 

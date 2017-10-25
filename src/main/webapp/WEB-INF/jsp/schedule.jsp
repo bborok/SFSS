@@ -27,9 +27,9 @@
 
     <!-- FullCalendar Resources -->
     <link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>
-    <script src='resources/lib/jquery.min.js'></script>
-    <script src='resources/lib/moment.min.js'></script>
-    <script src='resources/fullcalendar/fullcalendar.js'></script>
+    <%--<script src='resources/lib/jquery.min.js'></script>--%>
+    <%--<script src='resources/lib/moment.min.js'></script>--%>
+    <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
 
     <script src='resources/js/schedule.js'></script>
 

@@ -1,77 +1,73 @@
 package com.zeta.Models;
 
-import java.util.Calendar;
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.sql.Timestamp;
 
 /*
  * com.zeta.Models.Shift class
  */
 public class Shift {
 
-    private Calendar startTime;
-    private Calendar endTime;
-    private Calendar date;
-    private User worker;
-    private Task task;
+    private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    private Timestamp start;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    private Timestamp end;
     private Campus campus;
+    private User user;
 
-    public Shift(Calendar startTime, Calendar endTime, Calendar date, Task task, Campus campus) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-        this.task = task;
+    public Shift() {
+    }
+
+
+    public Shift(Timestamp startTime, Timestamp endTime, String title, User user, Campus campus) {
+        this.title = title;
+        this.start = startTime;
+        this.end = endTime;
         this.campus = campus;
+        this.user = user;
     }
 
-    public Calendar getStartTime() {
-        return startTime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Calendar getEndTime() {
-        return endTime;
+    public Timestamp getStart() {
+        return start;
     }
 
-    public void setEndTime(Calendar endTime) {
-        this.endTime = endTime;
+    public void setStart(Timestamp start) {
+        this.start = start;
     }
 
-    public Calendar getDate() {
-        return date;
+    public Timestamp getEnd() {
+        return end;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setEnd(Timestamp end) {
+        this.end = end;
     }
 
-    public Task getTask() {
-        return task;
+    public User getUser() {
+        return user;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void addWorker(User worker) {
-        this.worker = worker;
+    public Campus getCampus() {
+        return campus;
     }
 
-    // Won't need to clear a worker because without someone to take their place it should be removed
-    public void replaceWorker(User worker) {
-        this.worker = worker;
-    }
-
-    // Needs to be thoroughly tested to make sure setting worker to null doesn't set that user's data to null
-    public void removeShift() {
-        startTime = null;
-        endTime = null;
-        date = null;
-        worker = null;
-    }
-
-    public Role getWorkerRole() {
-        return worker.getRole();
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }

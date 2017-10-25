@@ -1,17 +1,14 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
 import com.zeta.Data.UserInterface;
-import com.zeta.Models.Login;
 import com.zeta.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,28 +19,37 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    @Autowired
+    UserInterface userInterface;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getIndex(Model m) {
-        Login login = new Login();
-        m.addAttribute("login", login);
+    @RequestMapping(value = "/")
+    public String getIndex(HttpServletRequest request, Authentication authentication, Model m) {
 
-        return "index";
-    }
+        if (authentication != null && StringUtils.hasText(authentication.getName())) {
+            User user = userInterface.getUser(authentication.getName());
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userInterface.getUserByLogin(login);
-
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            return "dashboard";
+            if (user != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                return "dashboard";
+            }
         }
 
         return "index";
     }
+
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
+//        User user = userInterface.getUserByLogin(login);
+//
+//        if (user != null) {
+//            HttpSession session = request.getSession();
+//            session.setAttribute("user", user);
+//            return "dashboard";
+//        }
+//
+//        return "index";
+//    }
 
     @GetMapping("/dashboard")
     public String dashboard(Model m) {
@@ -98,5 +104,11 @@ public class IndexController {
     public String temp_schedule(Model m) {
         m.addAttribute("someAttribute", "someValue");
         return "temp_schedule";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        String casLogout = "https://cas.sfu.ca/cas/logout";
+        return "redirect:" + casLogout;
     }
 }

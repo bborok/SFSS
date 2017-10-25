@@ -22,6 +22,9 @@
         <li>
             <a href="${pageContext.request.contextPath}/log">Log</a>
         </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
+        </li>
     </ul>
     <div id="side-container">
         <div id="side-contact" style="text-align:center; margin-bottom:10px;">

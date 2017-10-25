@@ -5,6 +5,9 @@ import com.zeta.Data.UserDao;
 import com.zeta.Data.UserInterface;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
+import com.zeta.Models.TimeCard;
+import com.zeta.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +46,21 @@ public class IndexController {
         }
 
         return "index";
+    }
+
+    @RequestMapping(value = "/timecard", method = RequestMethod.GET)
+    public String getTimeCard(Model m) {
+        TimeCard timeCard = new TimeCard();
+
+        m.addAttribute("timeCard", timeCard);
+        return "timecard";
+    }
+
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST)
+    public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
+        m.addAttribute("timeCard", timeCard);
+
+        return "timecard";
     }
 
     @GetMapping("/dashboard")

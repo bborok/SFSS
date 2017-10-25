@@ -37,6 +37,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
 </style>
@@ -45,64 +46,8 @@
 
 <div id="wrapper" class="toggled">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <p>SFU SFEP</p>
-            </li>
-            <li class="active">
-                <a href="${pageContext.request.contextPath}/dashboard">Home</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/profile">Profile</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/statistics">Statistics</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/log">Log</a>
-            </li>
-            <li>
-                <a type="button" data-toggle="modal" data-target="#myModal">IF NO AUTH</a>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top:100px">
-                    <div class="modal-dialog" role="document" style="margin-top:100px">
-                        <div class="modal-content" style="background-color:red">
 
-                            <div class="modal-body" style="color:white">
-                                <center>
-                                    <strong>ACCESS DENIED </strong>
-                                    <p>No Authorization </p>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div id="side-container">
-            <div id="side-contact" style="text-align:center; margin-bottom:10px">
-
-                <p style="text-align:center; font-size:20px">
-                    <a class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
-                </p>
-                <br>
-                <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-                <p class="fa fa-phone "> (604)-666-6666</p>
-
-                <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
-            </div>
-        </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-
+    <jsp:include page="partfiles/sidebar.jsp"/>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -115,20 +60,38 @@
                         <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive">
                     </center>
                 </div>
-                <div class="col-sm-6">
+                <hr><br>
+                <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
-                        <h3>Supervisor</h3>
-                        <p>604-666-666</p>
-                        <p>advisor@sfu.ca</p>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
+                        <h3><b>Cidric Butac</b></h3>
+                        <h4>Supervisor</h4>
+                        <p>sfucsp@sfu.ca</p>
+                        <p>778-782-5425</p>
                     </center>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/etc/dog.jpg" class="img-circle" height="200px" width="200px">
-                        <h3>Manager</h3>
-                        <p>778-777-777</p>
-                        <p>manager@sfu.ca</p>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <h4>Burnaby Team Lead</h4>
+                        <p>ssepbur@sfu.ca</p>
+                    </center>
+                </div>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Kitty Lo</b></h3>
+                        <h4>Surrey Team Lead</h4>
+                        <p>ssepsur@sfu.ca</p>
+                    </center>
+                </div>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Satpal Samra</b></h3>
+                        <h4>Vancouver Team Lead</h4>
+                        <p>ssepvan@sfu.ca</p>
                     </center>
                 </div>
             </div>

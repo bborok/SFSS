@@ -1,30 +1,25 @@
 package com.zeta.Models;
 
+import java.util.List;
+
 /*
  * com.zeta.Models.User class
  */
 public class User {
-    private String sfuId;
 
+    private String username;
     private String name;
-
     private String email;
-
     private Long phoneNumber;
-
     private Campus preferredCampus;
-
     private Long studentNumber;
-
     private Role role;
-
-
-
+    private String callSign;
+    private List<String> training;
+    private Boolean isDeactivated;
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
-
-
 
 
 
@@ -34,22 +29,26 @@ public class User {
     public User() {
     } //Required by JPA
 
-    public User(String sfuId, Long studentNumber, String name, String email, Long phoneNumber, Role role, Campus preferredCampus) {
-        this.sfuId = sfuId;
+    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
+                Campus preferredCampus, String callSign, List<String> training, Boolean isDeactivated) {
+        this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.preferredCampus = preferredCampus;
+        this.callSign = callSign;
+        this.training = training;
+        this.isDeactivated = isDeactivated;
     }
 
     public String getUsername() {
-        return sfuId;
+        return username;
     }
 
-    public void setSfuId(String sfuId) {
-        this.sfuId = sfuId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public long getStudentNumber() {
@@ -69,8 +68,7 @@ public class User {
     }
 
     public String getEmail() {
-        //TODO: Maybe a good idea (Prob not)? Temp fix for rendering JSP's.
-        return email == null ? "" : email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -78,8 +76,7 @@ public class User {
     }
 
     public long getPhoneNumber() {
-        //TODO: Not a good idea. Temp fix for rendering JSP's.
-        return phoneNumber == null ? 0 : phoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(long phoneNumber) {
@@ -100,5 +97,29 @@ public class User {
 
     public void setPreferredCampus(Campus preferredCampus) {
         this.preferredCampus = preferredCampus;
+    }
+
+    public String getCallSign() {
+        return callSign;
+    }
+
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
+    }
+
+    public List<String> getTraining() {
+        return training;
+    }
+
+    public void setTraining(List<String> training) {
+        this.training = training;
+    }
+
+    public void setIsDeactivated(Boolean isDeactivated) {
+        this.isDeactivated = isDeactivated;
+    }
+
+    public Boolean getIsDeactivated() {
+        return isDeactivated;
     }
 }

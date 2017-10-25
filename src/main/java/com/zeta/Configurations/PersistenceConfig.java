@@ -1,7 +1,7 @@
 package com.zeta.Configurations;
 
-import com.zeta.Repositories.UserDAO;
-import com.zeta.Repositories.UserDAOImpl;
+import com.zeta.Data.UserDao;
+import com.zeta.Data.UserInterface;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -23,7 +23,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public UserDAO getUserDao(){
-        return new UserDAOImpl(dataSource());
+    public UserInterface getUserInterface() {
+        return new UserDao(dataSource());
     }
 }

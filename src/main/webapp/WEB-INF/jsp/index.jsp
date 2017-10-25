@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,18 +56,12 @@
             </div>
           </div>
           <div class="form-bottom">
-            <form role="form" action="" method="post" class="login-form">
+            <form:form modelAttribute="login" method="post">
               <div class="form-group">
-                <label class="sr-only" for="form-username">Username</label>
-                <input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+                <form:input path="username" type="text" placeholder="Username..." cssClass="form-control" />
               </div>
-              <div class="form-group">
-                <label class="sr-only" for="form-password">Password</label>
-                <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
-              </div>
-
-              <button type="submit" class="btn">Sign in!</button>
-            </form>
+              <form:button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</form:button>
+            </form:form>
           </div>
         </div>
       </div>

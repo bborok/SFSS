@@ -118,6 +118,7 @@ $(document).ready(function() {
                 $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
                 $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
                 $('#modalMember').html(event.member);
+                $('#modalCampus').html(event.campus);
                 $('#fullCalModal').modal();
 
                 $('#btnDelete').on('click', function(e) {
@@ -150,6 +151,7 @@ $(document).ready(function() {
             $("#calendar").fullCalendar('renderEvent',
                 {
                     title: $('#eventTitle').find(":selected").attr('class'),
+                    // title: $('#eventTitle').val(),
                     start: new Date($('#apptStartTime').val()),
                     end: new Date($('#apptEndTime').val()),
                     allDay: ($('#apptAllDay').val() == "true"),
@@ -159,6 +161,7 @@ $(document).ready(function() {
                 },
 
                 true);
+            console.log($('#eventTitle').val());
         }
 
     function filter(calEvent) {
@@ -212,5 +215,16 @@ $(document).ready(function() {
             });
         }
     });
+
+    $("#eventCampus").change(function() {
+        if ($(this).data('options') === undefined) {
+            /*Taking an array of all options-2 and kind of embedding it on the select1*/
+            $(this).data('options', $('#eventTitle option').clone());
+        }
+        var id = $(this).val();
+        var options = $(this).data('options').filter('[value=' + id + ']');
+        $('#eventTitle').html(options);
+    });
+
 
 });

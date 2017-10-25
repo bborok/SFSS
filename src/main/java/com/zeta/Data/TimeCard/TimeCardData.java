@@ -1,4 +1,4 @@
-package com.zeta.Data;
+package com.zeta.Data.TimeCard;
 
 import com.zeta.Models.TimeCard;
 import com.zeta.Models.User;

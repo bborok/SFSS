@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class TimeCard {
 
-    private String user;
+    private String username;
     private long shiftId;
     private Campus campus;
     private String location;
@@ -18,8 +18,8 @@ public class TimeCard {
     // there are probably more private fields that time card needs
 
 
-    public TimeCard(String user, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
-        this.user = user;
+    public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
+        this.username = username;
         this.shiftId = shiftId;
         this.campus = campus;
         this.location = location;
@@ -27,12 +27,12 @@ public class TimeCard {
         this.tasks = tasks;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public long getShiftId() {

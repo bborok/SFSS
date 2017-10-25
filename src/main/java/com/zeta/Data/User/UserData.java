@@ -1,4 +1,4 @@
-package com.zeta.Data;
+package com.zeta.Data.User;
 
 import com.zeta.Models.Login;
 import com.zeta.Models.User;

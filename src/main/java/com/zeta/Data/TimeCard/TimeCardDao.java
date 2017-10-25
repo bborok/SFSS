@@ -1,23 +1,24 @@
-package com.zeta.Data;
+package com.zeta.Data.TimeCard;
 
+import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import com.zeta.Models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.List;
 
 public class TimeCardDao implements TimeCardData {
 
     private JdbcTemplate jdbcTemplate;
     private Connection con;
 
-    public TimeCardDao(DataSource dataSource, Connection con) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.con = con;
+    public TimeCardDao() {
+        PersistenceConfig config = new PersistenceConfig();
+
+        this.jdbcTemplate = new JdbcTemplate(config.dataSource());
+        this.con = config.getConnection();
     }
 
     @Override
@@ -29,13 +30,13 @@ public class TimeCardDao implements TimeCardData {
             con.setAutoCommit(false);
 
             PreparedStatement updateShift = con.prepareStatement(shiftSQL,
-                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUser()});
+                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUsername()});
 
             updateShift.execute();
 
             for (Task task : timeCard.getTasks()) {
                 PreparedStatement insertUserTask = con.prepareStatement(userTaskSQL,
-                        (String[]) new Object[]{timeCard.getUser(), timeCard.getShiftId(), task.getTaskName(), task.getCount()});
+                        (String[]) new Object[]{timeCard.getUsername(), timeCard.getShiftId(), task.getTaskName(), task.getCount()});
 
                 insertUserTask.execute();
             }
@@ -58,14 +59,14 @@ public class TimeCardDao implements TimeCardData {
             con.setAutoCommit(false);
 
             PreparedStatement updateShift = con.prepareStatement(shiftSQL,
-                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUser()});
+                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUsername()});
 
             updateShift.execute();
 
             for (Task task : timeCard.getTasks()) {
                 PreparedStatement updateUserTask = con.prepareStatement(userTaskSQL,
                         (String[]) new Object[]{
-                        task.getTaskName(), task.getCount(), timeCard.getUser(), timeCard.getShiftId()});
+                        task.getTaskName(), task.getCount(), timeCard.getUsername(), timeCard.getShiftId()});
 
                 updateUserTask.execute();
             }

@@ -1,8 +1,7 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserData;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserData userData = new UserDao(new PersistenceConfig().dataSource());
+    private UserData userData = new UserDao();
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654

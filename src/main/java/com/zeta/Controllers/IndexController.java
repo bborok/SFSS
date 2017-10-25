@@ -1,8 +1,7 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserData;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    UserData userData = new UserDao(new PersistenceConfig().dataSource());
+    UserData userData = new UserDao();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {

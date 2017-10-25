@@ -17,6 +17,9 @@ public class TimeCard {
 
     // there are probably more private fields that time card needs
 
+    public TimeCard() {
+
+    }
 
     public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
         this.username = username;

@@ -221,6 +221,7 @@
                         Start: <span id="modalStart"></span><br>
                         End: <span id="modalEnd"></span><br><br>
                         Campus: <span id="modalCampus"></span><br><br>
+                        ID: <span id="modalID"></span><br><br>
                         Volunteer: <span id="modalMember"></span><br>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

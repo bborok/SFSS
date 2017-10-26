@@ -30,9 +30,9 @@ public class ShiftsController {
         return shiftInterface.getShifts();
     }
 
-    @PostMapping("/shifts")
-    public Shift saveShift(ShiftRaw jsonString){
-
-
-    }
+//    @PostMapping("/shifts")
+//    public Shift saveShift(ShiftRaw jsonString){
+//
+//
+//    }
 }

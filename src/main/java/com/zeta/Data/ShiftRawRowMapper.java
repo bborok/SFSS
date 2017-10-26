@@ -12,11 +12,11 @@ public class ShiftRawRowMapper implements RowMapper<ShiftRaw> {
     public ShiftRaw mapRow(ResultSet rs, int i) throws SQLException {
         ShiftRaw sr = new ShiftRaw();
         sr.setId(rs.getLong("ID"));
-        sr.setUsername(rs.getString("User"));
+        sr.setTitle(rs.getString("Title"));
         sr.setStart(rs.getTimestamp("Start"));
         sr.setEnd(rs.getTimestamp("End"));
         sr.setCampus(Campus.valueOf(rs.getString("Campus").toUpperCase()));
-        sr.setTitle(rs.getString("Title"));
+        sr.setUsername(rs.getString("Username"));
         return sr;
     }
 }

@@ -7,48 +7,14 @@ $(document).ready(function () {
     $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) {
         console.log(data);
     }).fail(function () {
-        alert("fail")
+        alert("fail jsonplaceholder.typicode.com/posts/1");
     });
 
     $.getJSON('http://localhost:8080/ROOT/eventsAPI/shifts', function (data) {
         console.log(data);
     }).fail(function () {
-        alert("fail")
+        alert("fail shifts API");
     });
-
-
-
-    //Need to populate array via jaxCall
-    var events_array = [
-        {
-            title: "Information and Lost & Found Kiosk",
-            id: "BURNABY Information and Lost & Found Kiosk",
-            allday: false,
-            member: "Bobae",
-            start: '2017-10-04T15:00:00',
-            end: '2017-10-04T15:30:00',
-            campus: 'BURNABY'
-        },
-        {
-            title: "Community Presence",
-            id: "SURREY Community Presence",
-            allday: false,
-            member: "Steven",
-            start: '2017-10-06T13:00:00',
-            end: '2017-10-06T15:00:00',
-            campus: 'SURREY'
-        },
-        {
-            title: "Pedestrian Safety",
-            id: "VANCOUVER Pedestrian Safety",
-            allday: false,
-            member: "Alex",
-            start: '2017-10-07T13:00:00',
-            end: '2017-10-07T15:00:00',
-            campus: 'VANCOUVER'
-        }
-    ];
-
 
     // page is now ready, initialize the calendar...
     $('#external-events .fc-event').each(function () {
@@ -70,8 +36,7 @@ $(document).ready(function () {
 
     $('#calendar').fullCalendar({
         eventSources:[
-            'http://localhost:8080/ROOT/eventsAPI/shifts',
-            events_array
+            'http://localhost:8080/ROOT/eventsAPI/shifts'
         ],
         // put your options and callbacks here
         timezone: 'local',
@@ -131,11 +96,14 @@ $(document).ready(function () {
         //Selecting a scheduled event
         eventClick: function (event) {
 
+            console.log(event); //TODO: delete
+
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
             $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.member);
+            $('#modalMember').html(event.user.name);
             $('#modalCampus').html(event.campus);
+            $('#modalID').html(event.id);
             $('#fullCalModal').modal();
 
             $('#btnDelete').on('click', function (e) {

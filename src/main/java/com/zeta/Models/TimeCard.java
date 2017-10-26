@@ -1,9 +1,6 @@
 package com.zeta.Models;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /*
@@ -26,8 +23,6 @@ public class TimeCard {
     private String SWTotal;
     private String HSRTotal;
     private String ASTotal;
-
-    // there are probably more private fields that time card needs
 
     public TimeCard() {
     }
@@ -76,12 +71,12 @@ public class TimeCard {
         this.shiftId = shiftId;
     }
 
-    public void setCampus(Campus campus) {
-        this.campus = campus;
-    }
-
     public Campus getCampus() {
         return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 
     public String getLocation() {
@@ -99,6 +94,7 @@ public class TimeCard {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
     public List<Task> getTasks() {
         return tasks;
     }
@@ -159,7 +155,7 @@ public class TimeCard {
         return SWTotal;
     }
 
-    public void SWTotal(String SWTotal) {
+    public void setSWTotal(String SWTotal) {
         this.SWTotal = SWTotal;
     }
 
@@ -167,7 +163,7 @@ public class TimeCard {
         return HSRTotal;
     }
 
-    public void HSRTotal(String HSRTotal) {
+    public void setHSRTotal(String HSRTotal) {
         this.HSRTotal = HSRTotal;
     }
 
@@ -175,7 +171,7 @@ public class TimeCard {
         return ASTotal;
     }
 
-    public void ASTotal(String ASTotal) {
+    public void setASTotal(String ASTotal) {
         this.ASTotal = ASTotal;
     }
 }

@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/eventsAPI")
+
+/**
+ * Handles API requests for Shift's and ShiftRaw's
+ */
+@RequestMapping("/api")
 @RestController
 public class ShiftsController {
     private ShiftInterface shiftInterface;
@@ -21,16 +25,24 @@ public class ShiftsController {
         this.shiftInterface = shiftInterface;
     }
 
-    /**
-     * TODO: change this mapping to handle two query string parameters: start and end
-     * which are dates in the format of YYYY-mm-dd
-     */
 
+    /**
+     * Use this to get a list of Shifts in the database as a Shift object.
+     *
+     * @return List<Shift>
+     */
     @GetMapping("/shifts")
     public ResponseEntity<List<Shift>> shifts() {
+        // TODO: change this mapping to handle two query string parameters: start and end
         return new ResponseEntity<>(shiftInterface.getShifts(), HttpStatus.OK);
     }
 
+    /**
+     * Use this to get a Shift as a Shift object.
+     *
+     * @param id id of Shift to get
+     * @return Shift
+     */
     @GetMapping("/shifts/{id}")
     public ResponseEntity<Shift> shift(@PathVariable("id") long id) {
         try {
@@ -41,13 +53,39 @@ public class ShiftsController {
     }
 
 
+    /**
+     * Use this when needing to add a new row to the Shift table by passing in a ShiftRaw
+     *
+     * @param shiftRaw 'stringified' ShiftRaw JSON object
+     * @return Status code 200 if successful, 400 if not
+     */
     @PostMapping("/shifts/save")
-    public ResponseEntity<Shift> saveShift(@RequestBody ShiftRaw shiftRaw) {
-        Shift shift = shiftInterface.saveShift(shiftRaw);
-        return new ResponseEntity<>(shift, HttpStatus.OK);
-
+    public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
+        System.out.println(shiftRaw.toString());
+        if (shiftInterface.saveShift(shiftRaw)) return ResponseEntity.ok().build();
+        else return ResponseEntity.badRequest().build();
     }
 
-    //TODO: Delete shift by ID
+    /**
+     * Use this to get a list of all Shifts in the database as a ShiftRaw object.
+     *
+     * @return List<ShiftRaw>
+     */
+    @GetMapping("/shiftraws")
+    public ResponseEntity<List<ShiftRaw>> shiftRaws() {
+        return new ResponseEntity<>(shiftInterface.getShiftRaws(), HttpStatus.OK);
+    }
+
+    /**
+     * Use this to delete a Shift from the database.
+     *
+     * @param id id of Shift to delete
+     * @return Status code 200 if successful, 400 if not
+     */
+    @DeleteMapping("/shifts/delete/{id}")
+    public ResponseEntity<Object> deleteShift(@PathVariable long id) {
+        if (shiftInterface.deleteShift(id)) return ResponseEntity.ok().build();
+        else return ResponseEntity.badRequest().build();
+    }
 
 }

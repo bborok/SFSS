@@ -64,4 +64,15 @@ public abstract class AbstractShift {
     public void setCampus(Campus campus) {
         this.campus = campus;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractShift{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", campus=" + campus +
+                '}';
+    }
 }

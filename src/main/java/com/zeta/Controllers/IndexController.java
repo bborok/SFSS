@@ -18,12 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-
-// Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
-    UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    private UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {

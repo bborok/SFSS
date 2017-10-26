@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Filter for enabling CORS support.
+ * Filter for enabling CORS support. Needed for AJAX Requests.
  */
 @Component
 public class CorsFilter extends OncePerRequestFilter {

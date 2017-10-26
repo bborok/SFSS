@@ -28,6 +28,12 @@ public class ShiftDao implements ShiftInterface {
         this.userInterface = userInterface;
     }
 
+    //Shift Methods
+
+    /**
+     * Gets a List of Shift objects from the Database
+     * @return List<Shift>
+     */
     @Override
     public List<Shift> getShifts() {
         //TODO: Optimize this. Currently runs O(n^2)
@@ -39,7 +45,7 @@ public class ShiftDao implements ShiftInterface {
         //Get all Users
         List<User> users = userInterface.getAllUsers();
 
-        //Join these two together
+        //Join ShiftRaw's with Users to generate Shift's
         //TODO: Alternate method. Query the User for each string username in ShiftRaw
         List<Shift> shifts = new ArrayList<>();
         for (ShiftRaw sR : shiftRaws)
@@ -57,28 +63,11 @@ public class ShiftDao implements ShiftInterface {
         return shifts;
     }
 
-    @Override
-    public Shift saveShift(ShiftRaw sR) {
-        String sql = "INSERT INTO Shift(Title, Start, End, Username, Campus) " +
-                "VALUES (?, ?, ?, ?, ?)";
-        GeneratedKeyHolder holder = new GeneratedKeyHolder();
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, sR.getTitle());
-                statement.setTimestamp(2, sR.getStart());
-                statement.setTimestamp(3, sR.getEnd());
-                statement.setString(4, sR.getUsername());
-                statement.setString(5, sR.getCampus().toString());
-                return statement;
-            }
-        }, holder);
-        Long pK = holder.getKey().longValue();
-        User u = userInterface.getUser(sR.getUsername());
-        return new Shift(pK, sR.getTitle(), sR.getStart(), sR.getEnd(), sR.getCampus(), u);
-    }
-
+    /**
+     * Gets a Shift object from the Shift table
+     * @param id id of Shift to get
+     * @return Shift object
+     */
     @Override
     public Shift getShift(long id) {
         String sql = "SELECT * FROM Shift WHERE ID=?";
@@ -87,8 +76,49 @@ public class ShiftDao implements ShiftInterface {
         return new Shift(sR.getId(), sR.getTitle(), sR.getStart(), sR.getEnd(), sR.getCampus(), u);
     }
 
+    //ShiftRaw Methods
+
+    /**
+     * Returns a list of ShiftRaw objects.
+     * @return List<ShiftRaw>
+     */
     @Override
-    public Shift deleteShift(long id) {
-        return null;
+    public List<ShiftRaw> getShiftRaws() {
+        String shiftRawQuery = "SELECT * FROM Shift";
+        return jdbcTemplate.query(shiftRawQuery, new ShiftRawRowMapper());
+    }
+
+    /**
+     * Adds a new row to the Shift table.
+     * @param shiftRaw ShiftRaw object to save
+     * @return True if successful, false otherwise
+     */
+    @Override
+    public boolean saveShift(ShiftRaw shiftRaw) {
+        try {
+            String sql = "INSERT INTO Shift(Title, Start, End, Username, Campus) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            jdbcTemplate.update(sql, shiftRaw.getTitle(), shiftRaw.getStart(), shiftRaw.getEnd(), shiftRaw.getUsername(), shiftRaw.getCampus().toString());
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
+    }
+
+    /**
+     * Deletes a row from the Shift table
+     * @param id id of Shift to delete
+     * @return True if successful, false other wise
+     */
+    @Override
+    public boolean deleteShift(long id) {
+        try {
+            String sql = "DELETE FROM Shift WHERE ID=?";
+            jdbcTemplate.update(sql, id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

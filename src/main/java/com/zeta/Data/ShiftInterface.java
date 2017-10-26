@@ -6,9 +6,14 @@ import com.zeta.Models.ShiftRaw;
 import java.util.List;
 
 public interface ShiftInterface {
-    public List<Shift> getShifts();
-    public Shift saveShift(ShiftRaw shiftRaw);
-//    public Shift updateShift(ShiftRaw shiftRaw);
-    public Shift getShift(long id);
-    public Shift deleteShift(long id);
+    //Functions when working with Shift's
+    List<Shift> getShifts();
+    Shift getShift(long id);
+    //Functions when working with ShiftRaw's
+
+    List<ShiftRaw> getShiftRaws();
+    boolean saveShift(ShiftRaw shiftRaw);
+
+    //Type agnostic methods
+    boolean deleteShift(long id);
 }

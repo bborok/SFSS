@@ -1,22 +1,8 @@
 var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
 var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-var shiftsAPI = 'http://localhost:8080/ROOT/eventsAPI/shifts';
+var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
-
-    //TODO: DELETE all these ajax requests when fully tested
-    $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) {
-        console.log(data);
-    }).fail(function () {
-        alert("fail jsonplaceholder.typicode.com/posts/1");
-    });
-
-    $.getJSON(shiftsAPI, function (data) {
-        console.log(data);
-    }).fail(function () {
-        alert("fail shifts API");
-    });
-
     // page is now ready, initialize the calendar...
     $('#external-events .fc-event').each(function () {
 
@@ -37,7 +23,7 @@ $(document).ready(function () {
 
     $('#calendar').fullCalendar({
         eventSources: [
-            shiftsAPI
+            api + '/shiftraws'
         ],
         // put your options and callbacks here
         timezone: 'local',
@@ -82,8 +68,6 @@ $(document).ready(function () {
 
             var startTime = moment(start).format('MMM Do h:mm A');
             var endTime = moment(end).format('MMM Do h:mm A');
-
-            console.log(startTime + ',' + endTime);
             var mywhen = startTime + ' - ' + endTime;
 
             $('#createEventModal #apptStartTime').val(start);
@@ -96,20 +80,27 @@ $(document).ready(function () {
 
         //Selecting a scheduled event
         eventClick: function (event) {
-
-            console.log(event); //TODO: delete this line when deploying
-
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
             $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.user.name);
+            $('#modalMember').html(event.username);
             $('#modalCampus').html(event.campus);
             $('#modalID').html(event.id);
             $('#fullCalModal').modal();
 
             $('#btnDelete').on('click', function (e) {
                 e.preventDefault();
-
+                //AJAX DELETE REQUEST
+                $.ajax({
+                    type: 'DELETE',
+                    url: api + '/shifts/delete/' + event.id,
+                    success: function (data) {
+                        location.reload(); //reload the page to refresh data (shouldn't really be need, but is used just in case)
+                    },
+                    fail: function () {
+                        alert('Error delete shift in DB');
+                    }
+                });
                 $('#fullCalModal').modal('hide');
                 $('#calendar').fullCalendar('removeEvents', event._id);
             })
@@ -132,7 +123,6 @@ $(document).ready(function () {
     });
 
     function doSubmit() {
-
         var eventTitleElement = $('#eventTitle');
         $("#createEventModal").modal('hide');
         $("#calendar").fullCalendar('renderEvent',
@@ -145,34 +135,35 @@ $(document).ready(function () {
             }, true);
         console.log(eventTitleElement.val());
 
+        //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
+        //This date format is what the AbstractSfhit's are currently programmed to accept.
         var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
         var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
 
-        //AJAX POST Request Here
+        //AJAX POST Request Here to Save to Database
         var shiftRaw = {
             title: eventTitleElement.find(":selected").attr('class'),
-            //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
             start: start,
             end: end,
             campus: $('#eventCampus').val(),
             username: $('#eventMember').val()
         };
 
-        console.log("ShiftRaw: ");
         console.log(shiftRaw);
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/ROOT/eventsAPI/shifts/save',
+            url: api + '/shifts/save',
             data: JSON.stringify(shiftRaw),
-            success: function(data) { location.reload(); },
+            success: function (data) {
+                location.reload(); //reload the page to refresh data (shouldn't really be need, but is used just in case)
+            },
             fail: function () {
-              alert('Error saving shift to DB');
+                alert('Error saving shift to DB');
             },
             contentType: "application/json",
             dataType: 'json'
         });
-
     }
 
     function filter(calEvent) {
@@ -237,6 +228,4 @@ $(document).ready(function () {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
-
-
 });

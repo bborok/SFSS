@@ -17,23 +17,6 @@ $(document).ready(function () {
         alert("fail shifts API");
     });
 
-    console.log(JSON.stringify({
-        id: 5,
-        title: "Information and Lost & Found Kiosk",
-        username: "Bobae",
-        start: "2017-10-04T15:00:00",
-        end: "2017-10-04T15:30:00",
-        campus: "Burnaby"
-
-    }));
-
-
-    $.post('', function (data) {
-        console.log(data);
-    }).fail(function () {
-        alert('Post failed.');
-    });
-
     // page is now ready, initialize the calendar...
     $('#external-events .fc-event').each(function () {
 
@@ -157,12 +140,38 @@ $(document).ready(function () {
                 title: eventTitleElement.find(":selected").attr('class'),
                 start: new Date($('#apptStartTime').val()),
                 end: new Date($('#apptEndTime').val()),
-                member: $('#eventMember').val(),
+                username: $('#eventMember').val(),
                 campus: $('#eventCampus').val()
             }, true);
         console.log(eventTitleElement.val());
 
-        //AJAX Request Here
+        var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
+        var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
+
+        //AJAX POST Request Here
+        var shiftRaw = {
+            title: eventTitleElement.find(":selected").attr('class'),
+            //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
+            start: start,
+            end: end,
+            campus: $('#eventCampus').val(),
+            username: $('#eventMember').val()
+        };
+
+        console.log("ShiftRaw: ");
+        console.log(shiftRaw);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/ROOT/eventsAPI/shifts/save',
+            data: JSON.stringify(shiftRaw),
+            success: function(data) { location.reload(); },
+            fail: function () {
+              alert('Error saving shift to DB');
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
 
     }
 

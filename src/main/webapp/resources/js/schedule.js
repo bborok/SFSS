@@ -1,19 +1,37 @@
 var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
 var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-
+var shiftsAPI = 'http://localhost:8080/ROOT/eventsAPI/shifts';
 $(document).ready(function () {
 
+    //TODO: DELETE all these ajax requests when fully tested
     $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) {
         console.log(data);
     }).fail(function () {
         alert("fail jsonplaceholder.typicode.com/posts/1");
     });
 
-    $.getJSON('http://localhost:8080/ROOT/eventsAPI/shifts', function (data) {
+    $.getJSON(shiftsAPI, function (data) {
         console.log(data);
     }).fail(function () {
         alert("fail shifts API");
+    });
+
+    console.log(JSON.stringify({
+        id: 5,
+        title: "Information and Lost & Found Kiosk",
+        username: "Bobae",
+        start: "2017-10-04T15:00:00",
+        end: "2017-10-04T15:30:00",
+        campus: "Burnaby"
+
+    }));
+
+
+    $.post('', function (data) {
+        console.log(data);
+    }).fail(function () {
+        alert('Post failed.');
     });
 
     // page is now ready, initialize the calendar...
@@ -35,8 +53,8 @@ $(document).ready(function () {
 
 
     $('#calendar').fullCalendar({
-        eventSources:[
-            'http://localhost:8080/ROOT/eventsAPI/shifts'
+        eventSources: [
+            shiftsAPI
         ],
         // put your options and callbacks here
         timezone: 'local',
@@ -79,16 +97,16 @@ $(document).ready(function () {
         //Selecting an empty area
         select: function (start, end) {
 
-            startTime = moment(start).format('MMM Do h:mm A');
-            endTime = moment(end).format('MMM Do h:mm A');
+            var startTime = moment(start).format('MMM Do h:mm A');
+            var endTime = moment(end).format('MMM Do h:mm A');
 
-            console.log(startTime +',' + endTime);
+            console.log(startTime + ',' + endTime);
             var mywhen = startTime + ' - ' + endTime;
 
             $('#createEventModal #apptStartTime').val(start);
             $('#createEventModal #apptEndTime').val(end);
-            $('#createEventModal #eventCampus').val(event.campus);
-            $('#createEventModal #eventMember').val(event.member);
+            // $('#createEventModal #eventCampus').val(event.campus);
+            // $('#createEventModal #eventMember').val(event.member);
             $('#createEventModal #when').text(mywhen);
             $('#createEventModal').modal('show'); //popup modal
         },
@@ -96,7 +114,7 @@ $(document).ready(function () {
         //Selecting a scheduled event
         eventClick: function (event) {
 
-            console.log(event); //TODO: delete
+            console.log(event); //TODO: delete this line when deploying
 
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
@@ -132,23 +150,20 @@ $(document).ready(function () {
 
     function doSubmit() {
 
+        var eventTitleElement = $('#eventTitle');
         $("#createEventModal").modal('hide');
         $("#calendar").fullCalendar('renderEvent',
             {
-                id: $('#eventTitle').val(),
-                title: $('#eventTitle').find(":selected").attr('class'),
-                // title: $('#eventTitle').val(),
+                title: eventTitleElement.find(":selected").attr('class'),
                 start: new Date($('#apptStartTime').val()),
                 end: new Date($('#apptEndTime').val()),
-                allDay: ($('#apptAllDay').val() == "true"),
                 member: $('#eventMember').val(),
                 campus: $('#eventCampus').val()
-            },
-
-            true);
-        console.log($('#eventTitle').val());
+            }, true);
+        console.log(eventTitleElement.val());
 
         //AJAX Request Here
+
     }
 
     function filter(calEvent) {

@@ -1,14 +1,18 @@
 package com.zeta.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
 
 public class ShiftRaw {
     private Long id;
     private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Timestamp start;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Timestamp end;
     private Campus campus;
     private String username;
+
 
     public ShiftRaw() {
     }

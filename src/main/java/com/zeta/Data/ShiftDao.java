@@ -59,7 +59,7 @@ public class ShiftDao implements ShiftInterface {
 
     @Override
     public Shift saveShift(ShiftRaw sR) {
-        String sql = "INSERT INTO Shift(Title, Start, End, User, Campus) " +
+        String sql = "INSERT INTO Shift(Title, Start, End, Username, Campus) " +
                 "VALUES (?, ?, ?, ?, ?)";
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {

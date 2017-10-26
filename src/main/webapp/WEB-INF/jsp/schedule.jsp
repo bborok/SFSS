@@ -191,7 +191,7 @@
                                 <%--Ajax request--%>
                                 <h3>
                                     <input type="text" name="eventMember" id="eventMember"
-                                           placeholder="Enter a volunteer.">
+                                           placeholder="Enter a volunteer's username.">
                                 </h3>
                             </form>
                         </div>

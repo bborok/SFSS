@@ -56,12 +56,12 @@
             </div>
           </div>
           <div class="form-bottom">
-            <form:form modelAttribute="login" method="post">
+            <form method="post">
               <div class="form-group">
-                <form:input path="username" type="text" placeholder="Username..." cssClass="form-control" />
+                <input path="username" type="text" placeholder="Username..." cssClass="form-control" />
               </div>
-              <form:button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</form:button>
-            </form:form>
+              <button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</button>
+            </form>
           </div>
         </div>
       </div>

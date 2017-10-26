@@ -33,7 +33,7 @@
     </bean>
     <bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
         <!-- Change with your own host name -->
-        <property name="service" value="https://cmpt373-1177z.cmpt.sfu.ca/dashboard" />
+        <property name="service" value="https://cmpt373-1177z.cmpt.sfu.ca/login" />
     </bean>
 
     <sec:authentication-manager alias="authenticationManager">

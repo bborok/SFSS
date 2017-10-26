@@ -1,8 +1,7 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 @Controller
 public class IndexController {
 
-    UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    UserData userData = new UserDao();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {
@@ -37,7 +36,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userInterface.getUserByLogin(login);
+        User user = userData.getUserByLogin(login);
 
         if (user != null) {
             HttpSession session = request.getSession();
@@ -69,41 +68,51 @@ public class IndexController {
 
     @GetMapping("/log")
     public String log(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "log";
     }
 
     @GetMapping("/payroll")
     public String payroll(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "payroll";
     }
 
     @GetMapping("/profile")
     public String profile(Model m) {
+        List<User> users = userData.getAllUsers();
+        m.addAttribute("users", users);
+
         return "profile";
     }
 
     @GetMapping("/schedule")
     public String schedule(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "schedule";
     }
 
     @GetMapping("/statistics")
     public String statistics(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "statistics";
     }
 
     @GetMapping("/statistics_info_lf")
     public String statistics_info_lf(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "statistics_info_lf";
     }
 
     @GetMapping("/statistics_public_contact")
     public String statistics_public_contact(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "statistics_public_contact";
     }
 
     @GetMapping("/temp_schedule")
     public String temp_schedule(Model m) {
+        m.addAttribute("someAttribute", "someValue");
         return "temp_schedule";
     }
 
@@ -116,12 +125,12 @@ public class IndexController {
         //Filter the list users depending on the currently logged in users role.
         if (u.getRole() == Role.TEAM_LEADER) {
 //            //Filter the users based on the team leaders preferred campus.
-            users = userInterface.getAllUsers().stream()
+            users = userData.getAllUsers().stream()
                     .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
                     .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
                     .collect(Collectors.toList());
         } else {
-            users = userInterface.getAllUsers();
+            users = userData.getAllUsers();
         }
 
         m.addAttribute("users", users);

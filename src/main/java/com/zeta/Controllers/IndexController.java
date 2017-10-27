@@ -1,9 +1,9 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
+import com.zeta.Models.Role;
 import com.zeta.Models.User;
 import com.zeta.Models.TimeCard;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
+
+// Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
-    private UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    UserData userData = new UserDao();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {
@@ -33,14 +36,13 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userInterface.getUserByLogin(login);
+        User user = userData.getUserByLogin(login);
 
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             return "dashboard";
         }
-
         return "index";
     }
 
@@ -78,7 +80,7 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model m) {
-        List<User> users = userInterface.getAllUsers();
+        List<User> users = userData.getAllUsers();
         m.addAttribute("users", users);
 
         return "profile";
@@ -112,5 +114,26 @@ public class IndexController {
     public String temp_schedule(Model m) {
         m.addAttribute("someAttribute", "someValue");
         return "temp_schedule";
+    }
+
+    @GetMapping("/users")
+    public String users(HttpServletRequest request, Model m) {
+        List<User> users;
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return "users"; //Exit the request if user info can't get fetched
+        //Filter the list users depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+//            //Filter the users based on the team leaders preferred campus.
+            users = userData.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else {
+            users = userData.getAllUsers();
+        }
+
+        m.addAttribute("users", users);
+        return "users";
     }
 }

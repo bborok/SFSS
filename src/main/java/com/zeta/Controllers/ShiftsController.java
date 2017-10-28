@@ -1,6 +1,6 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.Shift.ShiftInterface;
+import com.zeta.Data.Shift.ShiftData;
 import com.zeta.Models.ShiftRaw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 public class ShiftsController {
-    private ShiftInterface shiftInterface;
+    private ShiftData shiftData;
 
     @Autowired
-    public ShiftsController(ShiftInterface shiftInterface) {
-        this.shiftInterface = shiftInterface;
+    public ShiftsController(ShiftData shiftData) {
+        this.shiftData = shiftData;
     }
 
     /**
@@ -32,7 +32,7 @@ public class ShiftsController {
     @PostMapping("/shifts/save")
     public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
         System.out.println(shiftRaw.toString());
-        if (shiftInterface.saveShiftRaw(shiftRaw)) return ResponseEntity.ok().build();
+        if (shiftData.saveShiftRaw(shiftRaw)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
 
@@ -43,7 +43,7 @@ public class ShiftsController {
      */
     @GetMapping("/shiftraws")
     public ResponseEntity<List<ShiftRaw>> shiftRaws() {
-        return new ResponseEntity<>(shiftInterface.getShiftRaws(), HttpStatus.OK);
+        return new ResponseEntity<>(shiftData.getShiftRaws(), HttpStatus.OK);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ShiftsController {
      */
     @GetMapping("/shiftraws/{id}")
     public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id){
-        ShiftRaw shiftRaw = shiftInterface.getShiftRaw(id);
+        ShiftRaw shiftRaw = shiftData.getShiftRaw(id);
         if (shiftRaw==null) return ResponseEntity.notFound().build();
         return new ResponseEntity<>(shiftRaw, HttpStatus.OK);
     }
@@ -66,7 +66,7 @@ public class ShiftsController {
      */
     @DeleteMapping("/shifts/delete/{id}")
     public ResponseEntity<Object> deleteShift(@PathVariable long id) {
-        if (shiftInterface.deleteShift(id)) return ResponseEntity.ok().build();
+        if (shiftData.deleteShift(id)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
 

@@ -3,22 +3,17 @@ package com.zeta.Data.Shift;
 import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
-import com.zeta.Models.Shift;
 import com.zeta.Models.ShiftRaw;
-import com.zeta.Models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Concrete implementation of the ShiftInterface class.
  */
 @Repository
-public class ShiftDao implements ShiftInterface {
+public class ShiftDao implements ShiftData {
     private JdbcTemplate jdbcTemplate = new JdbcTemplate(new PersistenceConfig().dataSource());
     private UserData userData = new UserDao();
 

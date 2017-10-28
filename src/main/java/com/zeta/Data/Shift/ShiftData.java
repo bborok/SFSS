@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Interface to save Shift and ShiftRaw's to the database
  */
-public interface ShiftInterface {
+public interface ShiftData {
     //Functions when working with ShiftRaw's
     List<ShiftRaw> getShiftRaws();
     ShiftRaw getShiftRaw(long id);

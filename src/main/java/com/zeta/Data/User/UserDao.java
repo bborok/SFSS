@@ -1,17 +1,21 @@
 package com.zeta.Data.User;
 
-import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Models.Login;
 import com.zeta.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
+@Repository
 public class UserDao implements UserData {
     private JdbcTemplate jdbcTemplate;
 
-    public UserDao() {
-        this.jdbcTemplate = new JdbcTemplate(new PersistenceConfig().dataSource());
+    @Autowired
+    public UserDao(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override

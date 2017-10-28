@@ -5,6 +5,7 @@ import com.zeta.Data.User.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private UserData userData;
 
-    private UserData userData = new UserDao();
+    @Autowired
+    public UserController(UserData userData) {
+        this.userData = userData;
+    }
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654

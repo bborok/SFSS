@@ -134,15 +134,7 @@ $(document).ready(function () {
     function doSubmit() {
         var eventTitleElement = $('#eventTitle');
         $("#createEventModal").modal('hide');
-        $("#calendar").fullCalendar('renderEvent',
-            {
-                title: eventTitleElement.find(":selected").attr('class'),
-                start: new Date($('#apptStartTime').val()),
-                end: new Date($('#apptEndTime').val()),
-                username: $('#eventMember').val(),
-                campus: $('#eventCampus').val()
-            }, true);
-        console.log(eventTitleElement.val());
+
 
         //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
         //This date format is what the AbstractShift class is currently programmed to accept.
@@ -177,9 +169,16 @@ $(document).ready(function () {
             url: api + '/shifts/save',
             data: JSON.stringify(shiftRaw),
             success: function (data) {
-                location.reload(); //reload the page to refresh data (shouldn't really be need, but is used just in case)
+                $("#calendar").fullCalendar('renderEvent',
+                    {
+                        title: eventTitleElement.find(":selected").attr('class'),
+                        start: new Date($('#apptStartTime').val()),
+                        end: new Date($('#apptEndTime').val()),
+                        username: $('#eventMember').val(),
+                        campus: $('#eventCampus').val()
+                    }, true);
             },
-            fail: function () {
+            error: function () {
                 alert('Error saving shift to DB');
             },
             contentType: "application/json",

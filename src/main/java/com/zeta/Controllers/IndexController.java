@@ -1,11 +1,11 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
 import com.zeta.Models.TimeCard;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,12 @@ import java.util.stream.Collectors;
 @Controller
 public class IndexController {
 
-    UserData userData = new UserDao();
+    private UserData userData;
+
+    @Autowired
+    public IndexController(UserData userData) {
+        this.userData = userData;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getIndex(Model m) {
@@ -124,7 +129,7 @@ public class IndexController {
         if (u == null) return "users"; //Exit the request if user info can't get fetched
         //Filter the list users depending on the currently logged in users role.
         if (u.getRole() == Role.TEAM_LEADER) {
-//            //Filter the users based on the team leaders preferred campus.
+            //Filter the users based on the team leaders preferred campus.
             users = userData.getAllUsers().stream()
                     .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
                     .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))

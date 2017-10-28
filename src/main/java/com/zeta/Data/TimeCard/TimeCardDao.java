@@ -1,25 +1,33 @@
 package com.zeta.Data.TimeCard;
 
-import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import com.zeta.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class TimeCardDao implements TimeCardData {
 
     private JdbcTemplate jdbcTemplate;
     private Connection con;
 
-    public TimeCardDao() {
-        PersistenceConfig config = new PersistenceConfig();
-
-        this.jdbcTemplate = new JdbcTemplate(config.dataSource());
-        this.con = config.getConnection();
+    @Autowired
+    public TimeCardDao(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        try {
+            this.con = dataSource.getConnection();
+        } catch (SQLException e){
+            //If this error throws then this means that the database can't be connected to at all
+            System.out.println(e.getErrorCode());
+        }
     }
 
     @Override

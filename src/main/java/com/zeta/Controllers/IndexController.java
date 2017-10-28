@@ -2,11 +2,15 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.UserInterface;
 import com.zeta.Models.User;
+import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,19 +27,13 @@ public class IndexController {
     UserInterface userInterface;
 
     @RequestMapping(value = "/")
-    public String getIndex(HttpServletRequest request, Authentication authentication, Model m) {
-
-        if (authentication != null && StringUtils.hasText(authentication.getName())) {
-            User user = userInterface.getUser(authentication.getName());
-
-            if (user != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                return "dashboard";
-            }
-        }
-
+    public String getIndex(Model m) {
         return "index";
+    }
+
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "dashboard";
     }
 
 //    @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -52,7 +50,17 @@ public class IndexController {
 //    }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model m) {
+    public String dashboard(HttpServletRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        HttpSession session = request.getSession();
+
+        if (principal instanceof UserDetails) {
+            if (session.getAttribute("user") == null) {
+                User user = userInterface.getUser(((UserDetails) principal).getUsername());
+                session.setAttribute("user", user);
+            }
+        }
+
         return "dashboard";
     }
 

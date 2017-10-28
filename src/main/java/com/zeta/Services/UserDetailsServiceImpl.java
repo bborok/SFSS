@@ -1,9 +1,10 @@
 package com.zeta.Services;
 
 import com.zeta.Data.UserInterface;
-import com.zeta.Models.MyUserPrinciple;
+import com.zeta.Models.MyUserDetails;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,11 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userInterface.getUser(username);
-
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(username + " not found");
         }
 
-        return new MyUserPrinciple(user);
+        return new MyUserDetails(user);
     }
 }

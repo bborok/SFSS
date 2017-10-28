@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class MyUserPrinciple implements UserDetails{
+public class MyUserDetails implements UserDetails{
 
     private User user;
 
-    public MyUserPrinciple(User user) {
+    public MyUserDetails(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> auths = new ArrayList<>();
-        auths.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        List<SimpleGrantedAuthority> auths = new ArrayList<SimpleGrantedAuthority>();
+        auths.add(new SimpleGrantedAuthority("ROLE_USER"));
         return auths;
     }
 
@@ -35,21 +35,21 @@ public class MyUserPrinciple implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return user.getIsDeactivated();
+        return !user.getIsDeactivated();
     }
 }

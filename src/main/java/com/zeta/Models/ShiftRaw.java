@@ -8,7 +8,10 @@ import java.sql.Timestamp;
  * The reason why this class was created
  * was because the typical Shift class has field of type User. However, to populate
  * the Shift's User field would require joining the Shift table and User table.
+ *
  * Thus I (Patrick) created this class just as a representation of a single row on the Shift table.
+ *
+ * TLDR; ShiftRaw has a String username field, Shift has a User field
  */
 public class ShiftRaw extends AbstractShift {
     private String username;

@@ -12,7 +12,6 @@ public abstract class AbstractShift {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Timestamp end;
     private Campus campus;
-//    private User user;
 
     public AbstractShift() {
     }

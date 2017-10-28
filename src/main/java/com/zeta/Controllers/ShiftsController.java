@@ -1,10 +1,8 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.ShiftInterface;
-import com.zeta.Models.Shift;
+import com.zeta.Data.Shift.ShiftInterface;
 import com.zeta.Models.ShiftRaw;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,34 +23,6 @@ public class ShiftsController {
         this.shiftInterface = shiftInterface;
     }
 
-
-    /**
-     * Use this to get a list of Shifts in the database as a Shift object.
-     *
-     * @return List<Shift>
-     */
-    @GetMapping("/shifts")
-    public ResponseEntity<List<Shift>> shifts() {
-        // TODO: change this mapping to handle two query string parameters: start and end
-        return new ResponseEntity<>(shiftInterface.getShifts(), HttpStatus.OK);
-    }
-
-    /**
-     * Use this to get a Shift as a Shift object.
-     *
-     * @param id id of Shift to get
-     * @return Shift
-     */
-    @GetMapping("/shifts/{id}")
-    public ResponseEntity<Shift> shift(@PathVariable("id") long id) {
-        try {
-            return new ResponseEntity<>(shiftInterface.getShift(id), HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-
     /**
      * Use this when needing to add a new row to the Shift table by passing in a ShiftRaw
      *
@@ -62,7 +32,7 @@ public class ShiftsController {
     @PostMapping("/shifts/save")
     public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
         System.out.println(shiftRaw.toString());
-        if (shiftInterface.saveShift(shiftRaw)) return ResponseEntity.ok().build();
+        if (shiftInterface.saveShiftRaw(shiftRaw)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
 
@@ -74,6 +44,18 @@ public class ShiftsController {
     @GetMapping("/shiftraws")
     public ResponseEntity<List<ShiftRaw>> shiftRaws() {
         return new ResponseEntity<>(shiftInterface.getShiftRaws(), HttpStatus.OK);
+    }
+
+    /**
+     * Use this to get a ShiftRaw object based on the id
+     * @param id id of Shift
+     * @return ShiftRaw object
+     */
+    @GetMapping("/shiftraws/{id}")
+    public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id){
+        ShiftRaw shiftRaw = shiftInterface.getShiftRaw(id);
+        if (shiftRaw==null) return ResponseEntity.notFound().build();
+        return new ResponseEntity<>(shiftRaw, HttpStatus.OK);
     }
 
     /**

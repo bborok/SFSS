@@ -1,4 +1,4 @@
-package com.zeta.Data;
+package com.zeta.Data.Shift;
 
 import com.zeta.Models.Campus;
 import com.zeta.Models.ShiftRaw;

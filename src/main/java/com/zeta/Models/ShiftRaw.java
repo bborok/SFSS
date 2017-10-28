@@ -1,5 +1,6 @@
 package com.zeta.Models;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -19,8 +20,8 @@ public class ShiftRaw extends AbstractShift {
     public ShiftRaw() {
     }
 
-    public ShiftRaw(Long id, String title, Timestamp start, Timestamp end, Campus campus, String username) {
-        super(id, title, start, end, campus);
+    public ShiftRaw(Long id, String title, Timestamp start, Timestamp end, Campus campus, Date date, String location, String notes, String requiredTraining, String username) {
+        super(id, title, start, end, campus, date, location, notes, requiredTraining);
         this.username = username;
     }
 

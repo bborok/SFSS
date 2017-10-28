@@ -49,7 +49,6 @@
     <link rel="stylesheet" href="resources/css/style.css">
 
 
-
 </head>
 
 <style>
@@ -63,7 +62,6 @@
     }
 
 </style>
-
 
 
 <body>
@@ -185,14 +183,22 @@
                                     <label class="control-label">When:</label>
                                     <label id="when"></label>
                                 </div>
-                                <div class="control-group">
+                                <div class="form-group">
+                                    <label class="control-label">Member:</label>
+                                    <input type="text" name="eventMember" id="eventMember" placeholder="Enter a member's username.">
                                 </div>
-                                <label class="control-label">Volunteer:</label>
-                                <%--Ajax request--%>
-                                <h3>
-                                    <input type="text" name="eventMember" id="eventMember"
-                                           placeholder="Enter a volunteer's username.">
-                                </h3>
+                                <div class="form-group">
+                                    <label class="control-label">Location: </label>
+                                    <input type="text" name="eventMember" id="eventLocation" placeholder="Enter the Location">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Required Training: </label>
+                                    <input type="text" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Location">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Notes: </label>
+                                    <textarea rows="4" cols="50" id="eventNotes"></textarea>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -222,7 +228,12 @@
                         End: <span id="modalEnd"></span><br><br>
                         Campus: <span id="modalCampus"></span><br><br>
                         ID: <span id="modalID"></span><br><br>
-                        Volunteer: <span id="modalMember"></span><br>
+                        Member: <span id="modalMember"></span><br>
+                        Date: <span id="modalDate"></span><br>
+                        Location: <span id="modalLocation"></span><br>
+                        Notes: <span id="modalNotes"></span><br>
+                        Required Training: <span id="modalTraining"></span><br>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button class="btn btn-primary" id="btnDelete">Remove</button>

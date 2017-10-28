@@ -4,9 +4,11 @@ import com.zeta.Configurations.PersistenceConfig;
 import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.ShiftRaw;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -14,10 +16,11 @@ import java.util.List;
  */
 @Repository
 public class ShiftDao implements ShiftData {
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate(new PersistenceConfig().dataSource());
-    private UserData userData = new UserDao();
+    private JdbcTemplate jdbcTemplate;
 
-    public ShiftDao() {
+    @Autowired
+    public ShiftDao(DataSource dataSource) {
+            this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     //ShiftRaw Methods
@@ -51,9 +54,18 @@ public class ShiftDao implements ShiftData {
     @Override
     public boolean saveShiftRaw(ShiftRaw shiftRaw) {
         try {
-            String sql = "INSERT INTO Shift(Title, Start, End, Username, Campus) " +
-                    "VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql, shiftRaw.getTitle(), shiftRaw.getStart(), shiftRaw.getEnd(), shiftRaw.getUsername(), shiftRaw.getCampus().toString());
+            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            jdbcTemplate.update(sql,
+                    shiftRaw.getTitle(),
+                    shiftRaw.getStart(),
+                    shiftRaw.getEnd(),
+                    shiftRaw.getUsername(),
+                    shiftRaw.getCampus().toString(),
+                    shiftRaw.getLocation(),
+                    shiftRaw.getNotes(),
+                    shiftRaw.getDate(),
+                    shiftRaw.getRequiredTraining());
             return true;
         } catch (Exception e){
             return false;

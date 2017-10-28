@@ -1,6 +1,7 @@
 var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
 var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+//TODO: change this to 'https://cmpt373-1177z.cmpt.sfu.ca/events/api' during when deployed to server
 var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
     // page is now ready, initialize the calendar...
@@ -75,17 +76,25 @@ $(document).ready(function () {
             // $('#createEventModal #eventCampus').val(event.campus);
             // $('#createEventModal #eventMember').val(event.member);
             $('#createEventModal #when').text(mywhen);
+
             $('#createEventModal').modal('show'); //popup modal
         },
 
         //Selecting a scheduled event
         eventClick: function (event) {
+            console.log(event);
+            //The field after 'event' matches up with the field name in the AbstractShift and ShiftRaw classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
             $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
             $('#modalMember').html(event.username);
             $('#modalCampus').html(event.campus);
             $('#modalID').html(event.id);
+            $('#modalDate').html(event.date);
+            $('#modalLocation').html(event.location);
+            $('#modalNotes').html(event.notes);
+            $('#modalTraining').html(event.requiredTraining);
+
             $('#fullCalModal').modal();
 
             $('#btnDelete').on('click', function (e) {
@@ -136,17 +145,29 @@ $(document).ready(function () {
         console.log(eventTitleElement.val());
 
         //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
-        //This date format is what the AbstractSfhit's are currently programmed to accept.
+        //This date format is what the AbstractShift class is currently programmed to accept.
         var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
         var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
 
         //AJAX POST Request Here to Save to Database
+
+        //TODO: Read Comments Underneath
+        //PROBLEM: If the specified username and requiredTraining do not exist in the database,
+        //this shift will not be saved to the database
+        //POTENTIAL SOLUTION: Dropdown/Selection/Autocorrect Menus would ensure that the user
+        // cannot accidentally input an invalid value
+
+        //The fields in the 'shiftRaw' variable matches up with the field name
+        //in the AbstractShift and ShiftRaw classes
         var shiftRaw = {
             title: eventTitleElement.find(":selected").attr('class'),
             start: start,
             end: end,
             campus: $('#eventCampus').val(),
-            username: $('#eventMember').val()
+            username: $('#eventMember').val(),
+            location: $('#eventLocation').val(),
+            notes: $('#eventNotes').val(),
+            requiredTraining: $('#eventRequiredTraining').val()
         };
 
         console.log(shiftRaw);

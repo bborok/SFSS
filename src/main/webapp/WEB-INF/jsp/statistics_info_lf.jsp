@@ -46,46 +46,7 @@
 
 <div id="wrapper" class="toggled">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <p>SFU SFEP</p>
-            </li>
-            <li >
-                <a href="${pageContext.request.contextPath}/dashboard">Home</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/profile">Profile</a>
-            </li>
-            <li class="active">
-                <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/log">Log</a>
-            </li>
-        </ul>
-        <div id="side-container">
-            <div id="side-contact" style="text-align:center; margin-bottom:10px">
-
-                <p style="text-align:center; font-size:20px">
-                    <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
-                </p>
-                <br>
-                <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-                <p class="fa fa-phone "> (604)-666-6666</p>
-
-                <p class="fa fa-envelope-o"> admin_sfep@sfu.ca</p>
-            </div>
-        </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
+    <jsp:include page="partfiles/sidebar.jsp"/>
 
     <!-- Page Content -->
 
@@ -94,15 +55,25 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
-                    <center><img src="../../resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
-                    <ul class="pagination">
-                        <li class="active">
-                            <a href="#">Lost & Found</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
-                        </li>
-                    </ul>
+                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="pagination">
+                                <li class="active">
+                                    <a href="#">Lost & Found</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4" style="padding-top: 15px">
+                                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
+                        </div>
+                    </div>
                     <hr>
                 </div>
             </div>
@@ -122,11 +93,6 @@
             </center>
             <br>
 
-            <div align="right" class="row">
-                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                <button id="button_save" type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
-                <button id="button_edit" type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
-            </div>
             <br><br>
             <div class="col-sm-8">
                 <table id="table1" class="display" width="100%"></table>

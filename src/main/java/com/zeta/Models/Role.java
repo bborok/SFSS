@@ -7,5 +7,6 @@ public enum Role {
     ADMIN,
     SUPERVISOR,
     TEAM_LEADER,
-    MEMBER
+    MEMBER,
+    VOLUNTEER
 }

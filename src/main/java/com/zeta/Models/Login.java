@@ -1,22 +1,14 @@
 package com.zeta.Models;
 
+// Login class gets username from user's input and passes it along to database to check if that user is allowed in.
 public class Login {
     private String username;
-    private String password;
 
     public String getUsername() {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

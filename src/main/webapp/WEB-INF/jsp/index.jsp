@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,8 +31,6 @@
 
 <body>
 
-
-
 <!-- Top content -->
 <div class="top-content">
 
@@ -60,10 +59,7 @@
               <div class="form-group">
                 <form:input path="username" type="text" placeholder="Username..." cssClass="form-control" />
               </div>
-              <div class="form-group">
-                <form:password path="password" name="password" placeholder="Password..." cssClass="form-control" />
-              </div>
-              <form:button type="submit" id="user" name="user" cssClass="btn">Sign in!</form:button>
+              <form:button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</form:button>
             </form:form>
           </div>
         </div>

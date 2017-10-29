@@ -78,129 +78,19 @@
             <center>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                        <input type="radio"  name="option1" id="option1" autocomplete="off"> Burnaby
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                        <input type="radio"  name="option2" id="option2" autocomplete="off"> Surrey
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                        <input type="radio"  name="option3" id="option3" autocomplete="off"> Vancouver
                     </label>
                 </div>
             </center>
             <br><br>
-            <div class="col-sm-12">
-                <table id="table1" class="table table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th>2017</th>
-                        <th>JAN</th>
-                        <th>FEB</th>
-                        <th>MAR</th>
-                        <th>APR</th>
-                        <th>MAY</th>
-                        <th>JUN</th>
-                        <th>JUL</th>
-                        <th>AUG</th>
-                        <th>SEP</th>
-                        <th>OCT</th>
-                        <th>NOV</th>
-                        <th>DEV</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Smoking Prevention</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Theft Prevention</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Public Contact</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Safewalk</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Escort</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    <tr>
-                        <td>Assist Security</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                        <td>56</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-sm-9">
+                <table id="table1" class="display" width="100%"></table>
             </div>
             <div class="col-sm-3">
                 <table id="table2" class="display" width="100%"></table>
@@ -222,6 +112,7 @@
 <script src="/resources/datatables/js/datatables.min.js"></script>
 <script src="/resources/js/echarts.common.min.js"></script>
 <script type="text/javascript">
+    var CAMPUS = "Burnaby";
     //get chart element
     var myChart = echarts.init(document.getElementById('chart1'));
 
@@ -235,12 +126,10 @@
 		["PublicContact", "", "", "", "", "", "", "", "", "", "", "", ""],
 		["SafeWalk", "", "", "", "", "", "", "", "", "", "", "", ""],
 		["ServiceReq", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Escort", "", "", "", "", "", "", "", "", "", "", "", ""],
 		["AssistSecurity", "", "", "", "", "", "", "", "", "", "", "", ""]
 	];
 	
 	var table2_data = [
-		["0", "0%"],
 		["0", "0%"],
 		["0", "0%"],
 		["0", "0%"],
@@ -254,7 +143,6 @@
 	var table2;
 
 	$(document).ready(function() {
-		
 		table1 = $('#table1').DataTable({
 			data: table1_data,
 			columns: [
@@ -331,9 +219,81 @@
 			tmp_data = table1.rows().data();
 			showChart(tmp_data);
 		});
-		
+
+        $("input:radio").change(function(){
+            if ($("#option1").is(":checked")) {
+                CAMPUS = "Burnaby";
+                getData();
+            }
+            if ($("#option2").is(":checked")) {
+                CAMPUS = "Surrey";
+                getData();
+            }
+            if ($("#option3").is(":checked")) {
+                CAMPUS = "Vancouver";
+                getData();
+            }
+        });
+
+//		$("#option1").click( function() {
+//            CAMPUS = "Burnaby";
+//            getData();
+//        });
+//        $("#option2").click( function() {
+//            CAMPUS = "Surrey";
+//            getData();
+//        });
+//        $("#option3").click( function() {
+//            CAMPUS = "Vancouver";
+//            getData();
+//        });
 		showChart(table1_data);
+
+		getData();
+
 	});
+
+	function getData() {
+        $.get("/statistic/data?campus=" + CAMPUS,
+        function(data,status){
+            table_title = data.title;
+            strs = ["Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"];
+            for(var i = 0; i < 12; i++) {
+                table1_data[0][i+1] = "" + data[strs[0]][i];
+                table1_data[1][i+1] = "" + data[strs[1]][i];
+                table1_data[2][i+1] = "" + data[strs[2]][i];
+                table1_data[3][i+1] = "" + data[strs[3]][i];
+                table1_data[4][i+1] = "" + data[strs[4]][i];
+                table1_data[5][i+1] = "" + data[strs[5]][i];
+            }
+            table1.destroy();
+            table1 = $('#table1').DataTable({
+                data: table1_data,
+                columns: [
+                    {title: table_title[0], width: "20px"},
+                    {title: table_title[1], width: "20px"},
+                    {title: table_title[2], width: "20px"},
+                    {title: table_title[3], width: "20px"},
+                    {title: table_title[4], width: "20px"},
+                    {title: table_title[5], width: "20px"},
+                    {title: table_title[6], width: "20px"},
+                    {title: table_title[7], width: "20px"},
+                    {title: table_title[8], width: "20px"},
+                    {title: table_title[9], width: "20px"},
+                    {title: table_title[10], width: "20px"},
+                    {title: table_title[11], width: "20px"},
+                    {title: table_title[12], width: "20px"},
+                    {defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
+                ],
+                autoWidth: false,
+                ordering: false,
+                bPaginate: false,
+                bFilter: false,
+                scrollX: true
+            });
+            showChart(table1_data);
+        });
+    }
 	
 	function showChart(tmp_data){
 		data_to_show = [];
@@ -385,7 +345,7 @@
 	
 	function refreshChart(ctitle, cdata) {
 		myChart.title = "Number of General Duty Activities in 2017 by month";
-		var colors = ['#5793f3', '#d14a61', '#675bba', '#775bba', '#995bba'];
+		var colors = ['#5793f3', '#d14a61', '#675bba', '#775bba', '#995bba', '#898989'];
 		// chart config and data
 		var option = {
 			color: colors,
@@ -396,7 +356,7 @@
 				}
 			},
 			legend: {
-				data:['SmokePre', 'TheftPre', 'PublicContact', 'SafeWalk', 'ServiceReq', 'Escort', 'AssistSecurity']
+				data:['SmokePre', 'TheftPre', 'PublicContact', 'SafeWalk', 'ServiceReq', 'AssistSecurity']
 			},
 			grid: {
 				top: 70,
@@ -462,16 +422,10 @@
                 data: cdata[4]
             },
 			{
-                name:'Escort',
-                type:'line',
-                smooth: true,
-                data: cdata[5]
-            },
-			{
                 name:'AssistSecurity',
                 type:'line',
                 smooth: true,
-                data: cdata[6]
+                data: cdata[5]
             },
 			]
 		};

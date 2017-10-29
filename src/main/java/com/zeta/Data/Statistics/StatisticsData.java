@@ -8,15 +8,16 @@ import java.util.List;
 
 public interface StatisticsData {
 
-    public int getTaskCountMonth(String taskName, Calendar month);
+    public int getTaskCountYear(String taskName, String area, Calendar year);
 
-    public int getTaskCountRange(String taskName, Calendar startDate, Calendar endDate);
+    public int getTaskCountMonth(String taskName, String area, Calendar month);
 
-    public int getTaskCountDay(String taskName, Calendar date);
+    public int getTaskCountRange(String taskName, String area, Calendar startDate, Calendar endDate);
+
+    public int getTaskCountDay(String taskName, String area, Calendar date);
 
 
     public List<String> getListOfAllTasksWithoutCounts();
-
 
     public List<Task> getListOfAllTasksMonth(Calendar month);
 
@@ -24,9 +25,7 @@ public interface StatisticsData {
 
     public List<Task> getListOfAllTasksDate(Calendar date);
 
-
     public List<Task> getTasksByCampus(Campus campus);
-
 
     public List<Task> getTasksByUserMonth(String username, Calendar month);
 }

@@ -22,6 +22,8 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons-core:1.4.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.11.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.json:javax.json-api:1.0" />
+          <element id="library" level="project" name="Maven: org.glassfish:javax.json:1.0.4" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
         </element>
       </element>

@@ -2,7 +2,6 @@ package com.zeta.Data.TimeCard;
 
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
-import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,6 +24,7 @@ public class TimeCardDao implements TimeCardData {
         try {
             this.con = dataSource.getConnection();
         } catch (SQLException e){
+            // TODO: implement proper error handling
             //If this error throws then this means that the database can't be connected to at all
             System.out.println(e.getErrorCode());
         }
@@ -89,12 +89,12 @@ public class TimeCardDao implements TimeCardData {
     }
 
     @Override
-    public TimeCard getTimeCard(User username, long shiftId) {
+    public TimeCard getTimeCard(String username, long shiftId) {
         TimeCard timeCard = null;
         try {
             String shiftSQL = "select Campus, Location, Notes from Shift where User = ? and ID = ?";
             String taskSQL = "select Name from Task where isDeactivated = 0 order by Name asc";
-            String userTaskSQL = "select Task, Count from UserTask where User = 'user1' and Shift = 1 order by Task asc";
+            String userTaskSQL = "select Task, Count from UserTask where User = ? and Shift = ? order by Task asc";
 
             // Create time card and set campus, location, notes
             timeCard = jdbcTemplate.queryForObject(shiftSQL, new Object[] {username, shiftId}, new TimeCardRowMapper());
@@ -115,6 +115,8 @@ public class TimeCardDao implements TimeCardData {
                 }
             }
 
+            timeCard.setUsername(username);
+            timeCard.setShiftId(shiftId);
             timeCard.setTasks(allTasks);
 
         } catch (Exception e) {

@@ -1,7 +1,6 @@
 package com.zeta.Data.TimeCard;
 
 import com.zeta.Models.TimeCard;
-import com.zeta.Models.User;
 
 // Every method returns null or false if operation failed
 public interface TimeCardData {
@@ -13,5 +12,5 @@ public interface TimeCardData {
     public Boolean updateTimeCard(TimeCard timeCard);
 
     // Required data: user's username and the shift's id value
-    public TimeCard getTimeCard(User username, long shiftId);
+    public TimeCard getTimeCard(String username, long shiftId);
 }

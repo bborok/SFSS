@@ -28,9 +28,12 @@ public class IndexController {
 
     private UserData userData;
 
+    private TimeCardData timeCardData;
+
     @Autowired
-    public IndexController(UserData userData) {
+    public IndexController(UserData userData, TimeCardData timeCardData) {
         this.userData = userData;
+        this.timeCardData = timeCardData;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -39,6 +42,16 @@ public class IndexController {
         m.addAttribute("login", login);
 
         return "index";
+    }
+
+    @RequestMapping(value = "/timecard", method = RequestMethod.GET)
+    public String getTimeCard(Model m, String username, Long shiftId) {
+        username = "user1";
+        shiftId = (long)1;
+        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
+
+        m.addAttribute("timeCard", timeCard);
+        return "timecard";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

@@ -1,23 +1,15 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.TimeCard.TimeCardData;
-import com.zeta.Data.User.UserData;
-
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
+import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
-@Controller
 
 public class TimeCardController {
 
@@ -29,8 +21,8 @@ public class TimeCardController {
     }
 
     @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m) {
-        TimeCard timeCard = new TimeCard();
+    public String getTimeCard(Model m, String username, long shiftId) {
+        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
         m.addAttribute("timeCard", timeCard);
         return "timecard";

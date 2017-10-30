@@ -71,6 +71,9 @@
     <jsp:include page="partfiles/sidebar.jsp"/>
 
 
+
+
+    <%--modify the orders of checkists/radiobutton/calendar buttons--%>
     <!-- Page Content -->
 
     <div class="col-sm-12 text">

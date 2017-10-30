@@ -1,5 +1,6 @@
 package com.zeta.Models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,7 @@ public class TimeCard {
     private String ASTotal;
 
     public TimeCard() {
+        tasks = new ArrayList<Task>(10);
     }
 
     public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
@@ -104,6 +106,10 @@ public class TimeCard {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addToTasks(Task input){
+        tasks.add(input);
     }
 
     public Calendar getDate() {

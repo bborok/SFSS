@@ -4,6 +4,7 @@ import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
+import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,31 @@ public class IndexController {
 
     @RequestMapping(value = "/timecard", method = RequestMethod.POST)
     public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
+        Task SPTotal = new Task("SPTotal");
+        SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
+        timeCard.addToTasks(SPTotal);
+        Task TPTotal = new Task("TPTotal");
+        TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
+        timeCard.addToTasks(TPTotal);
+
+        Task PCTotal = new Task("PCTotal");
+        PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
+        timeCard.addToTasks(PCTotal);
+
+        Task SWTotal = new Task("SWTotal");
+        SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
+        timeCard.addToTasks(SWTotal);
+
+        Task HSRTotal = new Task("HSRTotal");
+        HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
+        timeCard.addToTasks(HSRTotal);
+
+        Task ASTotal = new Task("ASTotal");
+        ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
+        timeCard.addToTasks(ASTotal);
+
+        System.out.println(timeCard.getTasks());
+
         m.addAttribute("timeCard", timeCard);
 
         return "timecard";

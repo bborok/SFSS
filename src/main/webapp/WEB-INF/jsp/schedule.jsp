@@ -70,182 +70,193 @@
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+                    <div class="col-sm-12 text">
 
-
-
-    <%--modify the orders of checkists/radiobutton/calendar buttons--%>
-    <!-- Page Content -->
-
-    <div class="col-sm-12 text">
-        <div class="description">
-            <div class="checkbox">
-                <label>
-                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY"
-                           checked>BURNABY</label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY</label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input class='campusFilter' type="checkbox" value="VANCOUVER"
-                           id="VANCOUVER">VANCOUVER</label>
-            </div>
-            <select id="shiftSelect"></select>
-            <br>
-            <div id='calendar'></div>
-
-            <%--Create Event Modal--%>
-            <div id="createEventModal" class="modal fade">
-                <div class="modal-dialog">
-                    <%--Modal Content--%>
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x
-                            </button>
-                            <h3 id="myModalLabel1">Assign a shift</h3>
+                        <div class="description">
+                            <center>
+                            <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
+                                 style="height:100px;width:500px">
+                            </center>
+                            <hr>
                         </div>
 
-                        <%--Modal Body--%>
-                        <div class="modal-body">
-                            <form id="createAppointmentForm" class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label">Shift: </label>
-                                    <div class="controls">
-                                        <select name="eventCampus" id="eventCampus">
-                                            <option value='all' id='allCampuses' disabled="true" selected>Select
-                                                a campus.
-                                            </option>
-                                            <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                            <option value="SURREY" class="SURREY">SURREY</option>
-                                            <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
-                                        </select>
-                                        <select name="eventTitle" id="eventTitle">
-                                            <option value="SURREY" disabled="true" selected="selected">Select a
-                                                SURREY Shift
-                                            </option>
-                                            <option value="SURREY" class="Community Presence">Community
-                                                Presence
-                                            </option>
-                                            <option value="SURREY" class="Theft Prevention">Theft Prevention
-                                            </option>
-                                            <option value="SURREY" class="Special Events">Special Events
-                                            </option>
-                                            <option value="SURREY" class="Pedestrian Safety">Pedestrian Safety
-                                            </option>
 
-                                            <option value="VANCOUVER" disabled="true" selected="selected">Select
-                                                a VANCOUVER Shift
-                                            </option>
-                                            <option value="VANCOUVER" class="Community Presence">Community
-                                                Presence
-                                            </option>
-                                            <option value="VANCOUVER" class="Theft Prevention">Theft
-                                                Prevention
-                                            </option>
-                                            <option value="VANCOUVER" class="Special Events">Special Events
-                                            </option>
-                                            <option value="VANCOUVER" class="Pedestrian Safety">Pedestrian
-                                                Safety
-                                            </option>
 
-                                            <option value="BURNABY" disabled="true" selected="selected">Select a
-                                                BURNABY Shift
-                                            </option>
-                                            <option value="BURNABY" class="Information and Lost & Found Kiosk">
-                                                Information and Lost & Found Kiosk
-                                            </option>
-                                            <option value="BURNABY" class="Speed Watch / Moving Traffic">Speed
-                                                Watch / Moving Traffic
-                                            </option>
-                                            <option value="BURNABY" class="Community Presence">Community
-                                                Presence
-                                            </option>
-                                            <option value="BURNABY" class="Safety Screen">Safety Screen</option>
-                                            <option value="BURNABY" class="Theft Prevention">Theft Prevention
-                                            </option>
-                                            <option value="BURNABY" class="Auto Theft Prevention">Auto Theft
-                                                Prevention
-                                            </option>
-                                            <option value="BURNABY" class="Bike Presence">Bike Presence</option>
-                                            <option value="BURNABY" class="Special Events">Special Events
-                                            </option>
-                                            <option value="BURNABY" class="Smoking Checks">Smoking Checks
-                                            </option>
-                                            <option value="BURNABY" class="Pedestrian Safety">Pedestrian
-                                                Safety
-                                            </option>
+                        <div class="checkbox">
+                            <label>
+                                <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY"
+                                       checked>BURNABY
+                            </label>
+                            <br>
+                            <label>
+                                <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
+                            </label>
+                            <br>
+                            <label>
+                                <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
+                            </label>
 
-                                        </select>
-                                        <input type="hidden" id="apptStartTime"/>
-                                        <input type="hidden" id="apptEndTime"/>
-                                        <input type="hidden" id="apptAllDay"/>
-                                    </div>
-                                    <label class="control-label">When:</label>
-                                    <label id="when"></label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Member:</label>
-                                    <input type="text" name="eventMember" id="eventMember" placeholder="Enter a member's username.">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Location: </label>
-                                    <input type="text" name="eventMember" id="eventLocation" placeholder="Enter the Location">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Required Training: </label>
-                                    <input type="text" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Location">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Notes: </label>
-                                    <textarea rows="4" cols="50" id="eventNotes"></textarea>
-                                </div>
-                            </form>
+                            <select id="shiftSelect"></select>
+
+
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
-                            <%--AJAX Request to POST to ShiftController--%>
-                            <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div id="fullCalModal" class="modal fade">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span
-                                    aria-hidden="true">&times;</span>
-                                <span class="sr-only">close</span></button>
-                            Title: <span id="modalTitle" class="modal-title"></span>
-                        </div>
                         <br>
-                        Start: <span id="modalStart"></span><br>
-                        End: <span id="modalEnd"></span><br><br>
-                        Campus: <span id="modalCampus"></span><br><br>
-                        ID: <span id="modalID"></span><br><br>
-                        Member: <span id="modalMember"></span><br>
-                        Date: <span id="modalDate"></span><br>
-                        Location: <span id="modalLocation"></span><br>
-                        Notes: <span id="modalNotes"></span><br>
-                        Required Training: <span id="modalTraining"></span><br>
+                        <div id='calendar'></div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" id="btnDelete">Remove</button>
+                            <%--Create Event Modal--%>
+                            <div id="createEventModal" class="modal fade">
+                                <div class="modal-dialog">
+                                    <%--Modal Content--%>
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x
+                                            </button>
+                                            <h3 id="myModalLabel1">Assign a shift</h3>
+                                        </div>
+
+                                        <%--Modal Body--%>
+                                        <div class="modal-body">
+                                            <form id="createAppointmentForm" class="form-horizontal">
+                                                <div class="control-group">
+                                                    <label class="control-label">Shift: </label>
+                                                    <div class="controls">
+                                                        <select name="eventCampus" id="eventCampus">
+                                                            <option value='all' id='allCampuses' disabled="true" selected>Select
+                                                                a campus.
+                                                            </option>
+                                                            <option value="BURNABY" class="BURNABY">BURNABY</option>
+                                                            <option value="SURREY" class="SURREY">SURREY</option>
+                                                            <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                        </select>
+                                                        <select name="eventTitle" id="eventTitle">
+                                                            <option value="SURREY" disabled="true" selected="selected">Select a
+                                                                SURREY Shift
+                                                            </option>
+                                                            <option value="SURREY" class="Community Presence">Community
+                                                                Presence
+                                                            </option>
+                                                            <option value="SURREY" class="Theft Prevention">Theft Prevention
+                                                            </option>
+                                                            <option value="SURREY" class="Special Events">Special Events
+                                                            </option>
+                                                            <option value="SURREY" class="Pedestrian Safety">Pedestrian Safety
+                                                            </option>
+
+                                                            <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                                a VANCOUVER Shift
+                                                            </option>
+                                                            <option value="VANCOUVER" class="Community Presence">Community
+                                                                Presence
+                                                            </option>
+                                                            <option value="VANCOUVER" class="Theft Prevention">Theft
+                                                                Prevention
+                                                            </option>
+                                                            <option value="VANCOUVER" class="Special Events">Special Events
+                                                            </option>
+                                                            <option value="VANCOUVER" class="Pedestrian Safety">Pedestrian
+                                                                Safety
+                                                            </option>
+
+                                                            <option value="BURNABY" disabled="true" selected="selected">Select a
+                                                                BURNABY Shift
+                                                            </option>
+                                                            <option value="BURNABY" class="Information and Lost & Found Kiosk">
+                                                                Information and Lost & Found Kiosk
+                                                            </option>
+                                                            <option value="BURNABY" class="Speed Watch / Moving Traffic">Speed
+                                                                Watch / Moving Traffic
+                                                            </option>
+                                                            <option value="BURNABY" class="Community Presence">Community
+                                                                Presence
+                                                            </option>
+                                                            <option value="BURNABY" class="Safety Screen">Safety Screen</option>
+                                                            <option value="BURNABY" class="Theft Prevention">Theft Prevention
+                                                            </option>
+                                                            <option value="BURNABY" class="Auto Theft Prevention">Auto Theft
+                                                                Prevention
+                                                            </option>
+                                                            <option value="BURNABY" class="Bike Presence">Bike Presence</option>
+                                                            <option value="BURNABY" class="Special Events">Special Events
+                                                            </option>
+                                                            <option value="BURNABY" class="Smoking Checks">Smoking Checks
+                                                            </option>
+                                                            <option value="BURNABY" class="Pedestrian Safety">Pedestrian
+                                                                Safety
+                                                            </option>
+
+                                                        </select>
+                                                        <input type="hidden" id="apptStartTime"/>
+                                                        <input type="hidden" id="apptEndTime"/>
+                                                        <input type="hidden" id="apptAllDay"/>
+                                                    </div>
+                                                    <label class="control-label">When:</label>
+                                                    <label id="when"></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Member:</label>
+                                                    <input type="text" name="eventMember" id="eventMember" placeholder="Enter a member's username.">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Location: </label>
+                                                    <input type="text" name="eventMember" id="eventLocation" placeholder="Enter the Location">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Required Training: </label>
+                                                    <input type="text" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Location">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Notes: </label>
+                                                    <textarea rows="4" cols="50" id="eventNotes"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                            <%--AJAX Request to POST to ShiftController--%>
+                                            <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div id="fullCalModal" class="modal fade">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span>
+                                                <span class="sr-only">close</span></button>
+                                            Title: <span id="modalTitle" class="modal-title"></span>
+                                        </div>
+                                        <br>
+                                        Start: <span id="modalStart"></span><br>
+                                        End: <span id="modalEnd"></span><br><br>
+                                        Campus: <span id="modalCampus"></span><br><br>
+                                        ID: <span id="modalID"></span><br><br>
+                                        Member: <span id="modalMember"></span><br>
+                                        Date: <span id="modalDate"></span><br>
+                                        Location: <span id="modalLocation"></span><br>
+                                        Notes: <span id="modalNotes"></span><br>
+                                        Required Training: <span id="modalTraining"></span><br>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- /#page-content-wrapper -->
 
 </div>

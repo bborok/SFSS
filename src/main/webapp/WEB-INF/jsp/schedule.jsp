@@ -83,28 +83,25 @@
                             <hr>
                         </div>
 
-
-
-                        <div class="checkbox">
-                            <label>
-                                <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY"
-                                       checked>BURNABY
-                            </label>
-                            <br>
-                            <label>
-                                <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
-                            </label>
-                            <br>
-                            <label>
-                                <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
-                            </label>
-
-                            <select id="shiftSelect"></select>
-
-
+                        <div class="col-sm-12">
+                            <div class="radio">
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" checked>BURNABY
+                                </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
+                                </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
+                                </label>
+                            </div>
+                            <%--<select id="shiftSelect"></select>--%>
+                            <select class="form-control" id="shiftSelect"></select>
                         </div>
+                        <br><br><hr>
 
-                        <br>
                         <div id='calendar'></div>
 
                             <%--Create Event Modal--%>

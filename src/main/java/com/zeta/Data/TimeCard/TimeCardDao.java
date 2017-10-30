@@ -38,14 +38,19 @@ public class TimeCardDao implements TimeCardData {
 
             con.setAutoCommit(false);
 
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL,
-                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUsername()});
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getLocation());
+            updateShift.setString(2, timeCard.getNotes());
+            updateShift.setString(3, timeCard.getUsername());
 
             updateShift.execute();
 
             for (Task task : timeCard.getTasks()) {
-                PreparedStatement insertUserTask = con.prepareStatement(userTaskSQL,
-                        (String[]) new Object[]{timeCard.getUsername(), timeCard.getShiftId(), task.getTaskName(), task.getCount()});
+                PreparedStatement insertUserTask = con.prepareStatement(userTaskSQL);
+                insertUserTask.setString(1, timeCard.getUsername());
+                insertUserTask.setLong(2, timeCard.getShiftId());
+                insertUserTask.setString(3, task.getTaskName());
+                insertUserTask.setInt(4, task.getCount());
 
                 insertUserTask.execute();
             }

@@ -58,8 +58,8 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-        timeCard.setUsername("charlie");
-        timeCard.setShiftId(28334);
+        timeCard.setUsername("user2");
+        timeCard.setShiftId(10);
 
 
         if(!timeCardData.addTimeCard(timeCard)){

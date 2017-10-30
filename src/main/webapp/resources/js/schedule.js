@@ -1,6 +1,13 @@
 var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
 var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+
+var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety",
+    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety",
+    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
+
+var iNOCAMPUSES = [];
+
 //TODO: change this to 'https://cmpt373-1177z.cmpt.sfu.ca/events/api' during when deployed to server
 var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
@@ -198,7 +205,17 @@ $(document).ready(function () {
 
         $('#shiftSelect option:selected').each(function () {
             vals2.push($(this).val());
-        });
+        })
+
+        $('.allOrNone').on('click',function() { //
+            if ($('.allOrNone').is(':checked')) {
+                $('.campusFilter').prop("checked", true)
+
+            } else {
+                $('.campusFilter').prop("checked", false);
+            }
+        })
+
 
         if ($('#shiftSelect').val() == null) {
             return vals.indexOf(calEvent.campus) !== -1;
@@ -209,6 +226,12 @@ $(document).ready(function () {
 
         return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
     }
+
+    $('.campusFilter').prop("checked", true) // everything is checked
+    
+    $('input:checkbox.allOrNone').on('change', function() {
+        $('#calendar').fullCalendar('rerenderEvents');
+    })
 
 
     $('input:checkbox.campusFilter').on('change', function () {
@@ -239,7 +262,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#eventCampus").change(function () {
+    $("#eventCampus").on('change',function () {
         if ($(this).data('options') === undefined) {
             /*Taking an array of all options-2 and kind of embedding it on the select1*/
             $(this).data('options', $('#eventTitle option').clone());

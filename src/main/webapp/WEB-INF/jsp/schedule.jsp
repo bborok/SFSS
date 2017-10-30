@@ -63,8 +63,15 @@
 
 </style>
 
-
 <body>
+
+<%--mla189
+TODO:
+Adjustable Time
+Resolve error assigning shift but getting error on db
+cancel button functionalities
+"required training"?
+--%>
 
 <div id="wrapper" class="toggled">
 
@@ -106,127 +113,127 @@
                         <div id='calendar'></div>
 
                             <%--Create Event Modal--%>
-                            <div id="createEventModal" class="modal fade">
-                                <div class="modal-dialog">
-                                    <%--Modal Content--%>
+                        <div id="createEventModal" class="modal fade">
+                            <div class="modal-dialog">
+                                <%--Modal Content--%>
 
-                                    <div class="modal-content">
+                                <div class="modal-content">
 
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
-                                            </button>
-                                            <h4 id="myModalLabel1"><b>Assign a shift</b></h4>
-                                        </div>
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                        </button>
+                                        <h4 id="myModalLabel1"><b>Assign a shift</b></h4>
+                                    </div>
 
-                                        <%--Modal Body--%>
-                                        <div class="modal-body">
-                                            <form id="createAppointmentForm" class="form-horizontal">
-                                                <div class="control-group">
-                                                    <label class="control-label"><u>Shift:</u> </label>
-                                                    <div class="controls">
-                                                        <select class="form-control" name="eventCampus" id="eventCampus">
-                                                            <option value='all' id='allCampuses' disabled="true" selected>Select Campus
-                                                            </option>
-                                                            <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                                            <option value="SURREY" class="SURREY">SURREY</option>
-                                                            <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
-                                                        </select>
+                                    <%--Modal Body--%>
+                                    <div class="modal-body">
+                                        <form id="createAppointmentForm" class="form-horizontal">
+                                            <div class="control-group">
+                                                <label class="control-label"><u>Shift:</u> </label>
+                                                <div class="controls">
+                                                    <select class="form-control" name="eventCampus" id="eventCampus">
+                                                        <option value='all' id='allCampuses' disabled="true" selected>Select Campus
+                                                        </option>
+                                                        <option value="BURNABY" class="BURNABY">BURNABY</option>
+                                                        <option value="SURREY" class="SURREY">SURREY</option>
+                                                        <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                    </select>
 
-                                                        <select class="form-control" name="eventTitle" id="eventTitle">
+                                                    <select class="form-control" name="eventTitle" id="eventTitle">
 
-                                                            <option value="SURREY" disabled="true" selected="selected">Select Surrey Shift
-                                                            </option>
-                                                            <option value="SURREY" class="Community Presence">Community
-                                                                Presence
-                                                            </option>
-                                                            <option value="SURREY" class="Theft Prevention">Theft Prevention
-                                                            </option>
-                                                            <option value="SURREY" class="Special Events">Special Events
-                                                            </option>
-                                                            <option value="SURREY" class="Pedestrian Safety">Pedestrian Safety
-                                                            </option>
+                                                        <option value="SURREY" disabled="true" selected="selected">Select Surrey Shift
+                                                        </option>
+                                                        <option value="SURREY" class="Community Presence">Community
+                                                            Presence
+                                                        </option>
+                                                        <option value="SURREY" class="Theft Prevention">Theft Prevention
+                                                        </option>
+                                                        <option value="SURREY" class="Special Events">Special Events
+                                                        </option>
+                                                        <option value="SURREY" class="Pedestrian Safety">Pedestrian Safety
+                                                        </option>
 
-                                                            <option value="VANCOUVER" disabled="true" selected="selected">Select Vancouver Shift
-                                                            </option>
-                                                            <option value="VANCOUVER" class="Community Presence">Community
-                                                                Presence
-                                                            </option>
-                                                            <option value="VANCOUVER" class="Theft Prevention">Theft
-                                                                Prevention
-                                                            </option>
-                                                            <option value="VANCOUVER" class="Special Events">Special Events
-                                                            </option>
-                                                            <option value="VANCOUVER" class="Pedestrian Safety">Pedestrian
-                                                                Safety
-                                                            </option>
+                                                        <option value="VANCOUVER" disabled="true" selected="selected">Select Vancouver Shift
+                                                        </option>
+                                                        <option value="VANCOUVER" class="Community Presence">Community
+                                                            Presence
+                                                        </option>
+                                                        <option value="VANCOUVER" class="Theft Prevention">Theft
+                                                            Prevention
+                                                        </option>
+                                                        <option value="VANCOUVER" class="Special Events">Special Events
+                                                        </option>
+                                                        <option value="VANCOUVER" class="Pedestrian Safety">Pedestrian
+                                                            Safety
+                                                        </option>
 
-                                                            <option value="BURNABY" disabled="true" selected="selected">Select Burnaby Shift
-                                                            </option>
-                                                            <option value="BURNABY" class="Information and Lost & Found Kiosk">
-                                                                Information and Lost & Found Kiosk
-                                                            </option>
-                                                            <option value="BURNABY" class="Speed Watch / Moving Traffic">Speed
-                                                                Watch / Moving Traffic
-                                                            </option>
-                                                            <option value="BURNABY" class="Community Presence">Community
-                                                                Presence
-                                                            </option>
-                                                            <option value="BURNABY" class="Safety Screen">Safety Screen</option>
-                                                            <option value="BURNABY" class="Theft Prevention">Theft Prevention
-                                                            </option>
-                                                            <option value="BURNABY" class="Auto Theft Prevention">Auto Theft
-                                                                Prevention
-                                                            </option>
-                                                            <option value="BURNABY" class="Bike Presence">Bike Presence</option>
-                                                            <option value="BURNABY" class="Special Events">Special Events
-                                                            </option>
-                                                            <option value="BURNABY" class="Smoking Checks">Smoking Checks
-                                                            </option>
-                                                            <option value="BURNABY" class="Pedestrian Safety">Pedestrian
-                                                                Safety
-                                                            </option>
+                                                        <option value="BURNABY" disabled="true" selected="selected">Select Burnaby Shift
+                                                        </option>
+                                                        <option value="BURNABY" class="Information and Lost & Found Kiosk">
+                                                            Information and Lost & Found Kiosk
+                                                        </option>
+                                                        <option value="BURNABY" class="Speed Watch / Moving Traffic">Speed
+                                                            Watch / Moving Traffic
+                                                        </option>
+                                                        <option value="BURNABY" class="Community Presence">Community
+                                                            Presence
+                                                        </option>
+                                                        <option value="BURNABY" class="Safety Screen">Safety Screen</option>
+                                                        <option value="BURNABY" class="Theft Prevention">Theft Prevention
+                                                        </option>
+                                                        <option value="BURNABY" class="Auto Theft Prevention">Auto Theft
+                                                            Prevention
+                                                        </option>
+                                                        <option value="BURNABY" class="Bike Presence">Bike Presence</option>
+                                                        <option value="BURNABY" class="Special Events">Special Events
+                                                        </option>
+                                                        <option value="BURNABY" class="Smoking Checks">Smoking Checks
+                                                        </option>
+                                                        <option value="BURNABY" class="Pedestrian Safety">Pedestrian
+                                                            Safety
+                                                        </option>
 
-                                                        </select>
+                                                    </select>
 
-                                                        <input type="hidden" id="apptStartTime"/>
-                                                        <input type="hidden" id="apptEndTime"/>
-                                                        <input type="hidden" id="apptAllDay"/>
-                                                    </div>
-
-                                                    <label class="control-label"><u>Date:</u></label>
-                                                    <label id="when"></label>
-
-                                                </div>
-                                                <div style="padding-left: 15px;padding-right: 15px">
-                                                    <div class="form-group">
-                                                        <label class="control-label"><u>Member:</u></label>
-                                                        <input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember" placeholder="Enter member's username.">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label"><u>Location:</u></label>
-                                                        <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventLocation" placeholder="Enter the Location">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label"><u>Required Training:</u></label>
-                                                        <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Requirements">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">Notes: </label>
-                                                        <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes"></textarea>
-                                                    </div>
+                                                    <input type="hidden" id="apptStartTime"/>
+                                                    <input type="hidden" id="apptEndTime"/>
+                                                    <input type="hidden" id="apptAllDay"/>
                                                 </div>
 
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                                <label class="control-label"><u>Date:</u></label>
+                                                <label id="when"></label>
 
-                                            <%--AJAX Request to POST to ShiftController--%>
-                                            <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-                                        </div>
+                                            </div>
+                                            <div style="padding-left: 15px;padding-right: 15px">
+                                                <div class="form-group">
+                                                    <label class="control-label"><u>Member:</u></label>
+                                                    <input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember" placeholder="Enter member's username.">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label"><u>Location:</u></label>
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventLocation" placeholder="Enter the Location">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label"><u>Required Training:</u></label>
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Requirements">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Notes: </label>
+                                                    <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                        <%--AJAX Request to POST to ShiftController--%>
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
                             <!-- Modal -->
                             <div id="fullCalModal" class="modal fade">
@@ -269,6 +276,11 @@
     $("#menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
+    });
+
+    $('#createEventModal').on('hidden.bs.modal', function () {
+        $(this).find("input,textarea,select").val('').end();
+
     });
 </script>
 

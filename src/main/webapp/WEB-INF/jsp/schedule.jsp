@@ -124,7 +124,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label"><u>Shift:</u> </label>
                                                     <div class="controls">
-                                                        <select name="eventCampus" id="eventCampus">
+                                                        <select class="form-control" name="eventCampus" id="eventCampus">
                                                             <option value='all' id='allCampuses' disabled="true" selected>Select Campus
                                                             </option>
                                                             <option value="BURNABY" class="BURNABY">BURNABY</option>
@@ -132,7 +132,7 @@
                                                             <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
                                                         </select>
 
-                                                        <select name="eventTitle" id="eventTitle">
+                                                        <select class="form-control" name="eventTitle" id="eventTitle">
 
                                                             <option value="SURREY" disabled="true" selected="selected">Select Surrey Shift
                                                             </option>
@@ -199,20 +199,20 @@
                                                 </div>
                                                 <div style="padding-left: 15px;padding-right: 15px">
                                                     <div class="form-group">
-                                                        <label class="control-label">Member:</label>
-                                                        <input style="border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember" placeholder="Enter member's username.">
+                                                        <label class="control-label"><u>Member:</u></label>
+                                                        <input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember" placeholder="Enter member's username.">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="control-label">Location: </label>
-                                                        <input type="text" style="border-color: #a9b7d1" class="form-control" name="eventMember" id="eventLocation" placeholder="Enter the Location">
+                                                        <label class="control-label"><u>Location:</u></label>
+                                                        <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventLocation" placeholder="Enter the Location">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="control-label">Required Training: </label>
-                                                        <input type="text" style="border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Location">
+                                                        <label class="control-label"><u>Required Training:</u></label>
+                                                        <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Requirements">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label">Notes: </label>
-                                                        <textarea rows="4" cols="50" id="eventNotes"></textarea>
+                                                        <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes"></textarea>
                                                     </div>
                                                 </div>
 

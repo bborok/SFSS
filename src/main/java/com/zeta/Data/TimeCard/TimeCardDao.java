@@ -23,7 +23,7 @@ public class TimeCardDao implements TimeCardData {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         try {
             this.con = dataSource.getConnection();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             // TODO: implement proper error handling
             //If this error throws then this means that the database can't be connected to at all
             System.out.println(e.getErrorCode());
@@ -45,7 +45,8 @@ public class TimeCardDao implements TimeCardData {
 
             for (Task task : timeCard.getTasks()) {
                 PreparedStatement insertUserTask = con.prepareStatement(userTaskSQL,
-                        (String[]) new Object[]{timeCard.getUsername(), timeCard.getShiftId(), task.getTaskName(), task.getCount()});
+                        (String[]) new Object[]{
+                        timeCard.getUsername(), timeCard.getShiftId(), task.getTaskName(), task.getCount()});
 
                 insertUserTask.execute();
             }
@@ -75,7 +76,7 @@ public class TimeCardDao implements TimeCardData {
             for (Task task : timeCard.getTasks()) {
                 PreparedStatement updateUserTask = con.prepareStatement(userTaskSQL,
                         (String[]) new Object[]{
-                        task.getTaskName(), task.getCount(), timeCard.getUsername(), timeCard.getShiftId()});
+                                task.getTaskName(), task.getCount(), timeCard.getUsername(), timeCard.getShiftId()});
 
                 updateUserTask.execute();
             }
@@ -97,7 +98,7 @@ public class TimeCardDao implements TimeCardData {
             String userTaskSQL = "select Task, Count from UserTask where User = ? and Shift = ? order by Task asc";
 
             // Create time card and set campus, location, notes
-            timeCard = jdbcTemplate.queryForObject(shiftSQL, new Object[] {username, shiftId}, new TimeCardRowMapper());
+            timeCard = jdbcTemplate.queryForObject(shiftSQL, new Object[]{username, shiftId}, new TimeCardRowMapper());
 
             // Get list of all tasks
             List<Task> allTasks = jdbcTemplate.query(taskSQL, new TaskMapper());

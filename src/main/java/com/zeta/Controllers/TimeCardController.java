@@ -26,13 +26,14 @@ public class TimeCardController {
 
         // To be removed, only for testing
         username = "user1";
-        shiftId = (long)1;
+        shiftId = (long) 1;
 
         TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
         m.addAttribute("timeCard", timeCard);
         return "timecard";
     }
+
     @RequestMapping(value = "/timecard", method = RequestMethod.POST)
     public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
         Task SPTotal = new Task("SPTotal");
@@ -59,13 +60,12 @@ public class TimeCardController {
         timeCard.addToTasks(ASTotal);
 
         timeCard.setUsername("charlie");
-        timeCard.setShiftId(28334);
 
+        // TODO: get shift id from session and add that to timecard. DO NOT MAKE UP YOUR OWN SHIFT ID!
 
-        if(!timeCardData.addTimeCard(timeCard)){
+        if (!timeCardData.addTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
-
 
         m.addAttribute("timeCard", timeCard);
 

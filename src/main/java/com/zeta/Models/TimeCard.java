@@ -3,7 +3,9 @@ package com.zeta.Models;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
 /*
  * com.zeta.Models.TimeCard class
  */
@@ -43,7 +45,7 @@ public class TimeCard {
 
     public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
                     Calendar startTime, Calendar endTime, String SPTotal, String TPTotal, String PCTotal,
-                    String SWTotal,String HSRTotal, String ASTotal) {
+                    String SWTotal, String HSRTotal, String ASTotal) {
 
         this.campus = campus;
         this.location = location;
@@ -108,8 +110,8 @@ public class TimeCard {
         this.tasks = tasks;
     }
 
-    public void addToTasks(Task input){
-        tasks.add(input);
+    public void addToTasks(Task task) {
+        tasks.add(task);
     }
 
     public Calendar getDate() {

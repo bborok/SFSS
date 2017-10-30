@@ -1,9 +1,8 @@
 var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
 var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
 var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-//TODO: change this to 'https://cmpt373-1177z.cmpt.sfu.ca/events/api' during when deployed to server
-var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
+    console.log(api);  //this api variable is declared on schedule.jsp
     // page is now ready, initialize the calendar...
     $('#external-events .fc-event').each(function () {
 
@@ -127,14 +126,12 @@ $(document).ready(function () {
     $('#submitButton').on('click', function (e) {
         // We don't want this to act as a link so cancel the link action
         e.preventDefault();
-
         doSubmit();
     });
 
     function doSubmit() {
         var eventTitleElement = $('#eventTitle');
         $("#createEventModal").modal('hide');
-
 
         //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
         //This date format is what the AbstractShift class is currently programmed to accept.

@@ -29,7 +29,7 @@ public class TimeCard {
     private String ASTotal;
 
     public TimeCard() {
-        tasks = new ArrayList<Task>(10);
+        tasks = new ArrayList<Task>();
     }
 
     public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {

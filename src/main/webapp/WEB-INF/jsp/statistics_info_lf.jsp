@@ -69,9 +69,9 @@
                             </ul>
                         </div>
                         <div class="col-md-4" style="padding-top: 15px">
-                                <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                                <button type="button" class="btn"><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="btn"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
+                            <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>

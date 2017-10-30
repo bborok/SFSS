@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
 
@@ -83,17 +84,9 @@
                                     <label > Date : </label>
                                     <form:input path="date" class="form-control" type="date" id="date" value=""/>
                                 </div>
-                                <div class="col-md-6 ">
+                                <div class="col-md-6" style="margin-bottom: 1em;">
                                     <label > Location : </label>
                                     <form:input path="location" class="form-control" type="input" id="location" value=""/>
-                                </div>
-                                <div class="col-md-6 " style="margin-bottom: 2em;">
-                                    <label > Start Time : </label>
-                                    <form:input path="startTime" class="form-control" type="input" id="startTime" value=""/>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <label > End Time : </label>
-                                    <form:input path="endTime" class="form-control" type="input" id="endTime" value=""/>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel panel-info">

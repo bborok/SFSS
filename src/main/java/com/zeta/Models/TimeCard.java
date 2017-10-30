@@ -19,10 +19,6 @@ public class TimeCard {
     private List<Task> tasks;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar startTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar endTime;
     private String SPTotal;
     private String TPTotal;
     private String PCTotal;
@@ -44,7 +40,7 @@ public class TimeCard {
     }
 
     public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
-                    Calendar startTime, Calendar endTime, String SPTotal, String TPTotal, String PCTotal,
+                    String SPTotal, String TPTotal, String PCTotal,
                     String SWTotal, String HSRTotal, String ASTotal) {
 
         this.campus = campus;
@@ -52,8 +48,6 @@ public class TimeCard {
         this.notes = notes;
         this.tasks = tasks;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.SPTotal = SPTotal;
         this.TPTotal = TPTotal;
         this.PCTotal = PCTotal;
@@ -120,22 +114,6 @@ public class TimeCard {
 
     public void setDate(Calendar date) {
         this.date = date;
-    }
-
-    public Calendar getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
-    }
-
-    public Calendar getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Calendar endTime) {
-        this.endTime = endTime;
     }
 
     public String getSPTotal() {

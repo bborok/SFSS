@@ -83,7 +83,7 @@
                             <hr>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 row">
                             <div class="radio">
                                 <label>
                                     <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" checked>BURNABY
@@ -99,8 +99,9 @@
                             </div>
                             <%--<select id="shiftSelect"></select>--%>
                             <select class="form-control" id="shiftSelect"></select>
+                            <br>
                         </div>
-                        <br><br><hr>
+                        <hr><br>
 
                         <div id='calendar'></div>
 

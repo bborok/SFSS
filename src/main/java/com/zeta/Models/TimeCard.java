@@ -2,7 +2,7 @@ package com.zeta.Models;
 
 import java.util.Calendar;
 import java.util.List;
-
+import org.springframework.format.annotation.DateTimeFormat;
 /*
  * com.zeta.Models.TimeCard class
  */
@@ -14,8 +14,11 @@ public class TimeCard {
     private String location;
     private String notes;
     private List<Task> tasks;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar endTime;
     private String SPTotal;
     private String TPTotal;

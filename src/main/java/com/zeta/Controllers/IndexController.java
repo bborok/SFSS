@@ -1,12 +1,9 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.TimeCard.TimeCardData;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
-import com.zeta.Models.Task;
-import com.zeta.Models.TimeCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +25,9 @@ public class IndexController {
 
     private UserData userData;
 
-    private TimeCardData timeCardData;
-
     @Autowired
-    public IndexController(UserData userData, TimeCardData timeCardData) {
+    public IndexController(UserData userData) {
         this.userData = userData;
-        this.timeCardData = timeCardData;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -42,16 +36,6 @@ public class IndexController {
         m.addAttribute("login", login);
 
         return "index";
-    }
-
-    @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m, String username, Long shiftId) {
-        username = "user1";
-        shiftId = (long)1;
-        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
-
-        m.addAttribute("timeCard", timeCard);
-        return "timecard";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

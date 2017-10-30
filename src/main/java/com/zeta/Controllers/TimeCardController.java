@@ -3,14 +3,15 @@ package com.zeta.Controllers;
 import com.zeta.Data.TimeCard.TimeCardData;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
-import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@Controller
 public class TimeCardController {
 
     TimeCardData timeCardData;
@@ -21,13 +22,17 @@ public class TimeCardController {
     }
 
     @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m, String username, long shiftId) {
+    public String getTimeCard(Model m, String username, Long shiftId) {
+
+        // To be removed, only for testing
+        username = "user1";
+        shiftId = (long)1;
+
         TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
         m.addAttribute("timeCard", timeCard);
         return "timecard";
     }
-
     @RequestMapping(value = "/timecard", method = RequestMethod.POST)
     public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
         Task SPTotal = new Task("SPTotal");

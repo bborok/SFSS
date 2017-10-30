@@ -29,38 +29,38 @@ public class TimeCardController {
         shiftId = (long) 1;
 
         TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
-
+        //TimeCard timeCard = new TimeCard();
         m.addAttribute("timeCard", timeCard);
         return "timecard";
     }
 
     @RequestMapping(value = "/timecard", method = RequestMethod.POST)
     public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
-        Task SPTotal = new Task("SPTotal");
+        Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
         timeCard.addToTasks(SPTotal);
-        Task TPTotal = new Task("TPTotal");
+        Task TPTotal = new Task("Theft Prevention");
         TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
         timeCard.addToTasks(TPTotal);
 
-        Task PCTotal = new Task("PCTotal");
+        Task PCTotal = new Task("Public Contact");
         PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
         timeCard.addToTasks(PCTotal);
 
-        Task SWTotal = new Task("SWTotal");
+        Task SWTotal = new Task("Safe Walk");
         SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
         timeCard.addToTasks(SWTotal);
 
-        Task HSRTotal = new Task("HSRTotal");
+        Task HSRTotal = new Task("Hazard/Service Request");
         HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
         timeCard.addToTasks(HSRTotal);
 
-        Task ASTotal = new Task("ASTotal");
+        Task ASTotal = new Task("Assist Security");
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-        timeCard.setUsername("charlie");
-
+        timeCard.setUsername("user1");
+        timeCard.setShiftId(1);
         // TODO: get shift id from session and add that to timecard. DO NOT MAKE UP YOUR OWN SHIFT ID!
 
         if (!timeCardData.addTimeCard(timeCard)) {

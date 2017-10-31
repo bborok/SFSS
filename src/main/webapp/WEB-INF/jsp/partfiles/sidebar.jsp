@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
@@ -22,6 +23,14 @@
         <li>
             <a href="${pageContext.request.contextPath}/log">Log</a>
         </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
+        </li>
+        <c:if test="${sessionScope.user.role != 'MEMBER'}">
+            <li>
+                <a href="${pageContext.request.contextPath}/users">Users</a>
+            </li>
+        </c:if>
     </ul>
     <div id="side-container">
         <div id="side-contact" style="text-align:center; margin-bottom:10px;">

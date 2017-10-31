@@ -1,11 +1,11 @@
 package com.zeta.Controllers;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +15,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private UserData userData;
 
-    private UserInterface userInterface = new UserDao(new PersistenceConfig().dataSource());
+    @Autowired
+    public UserController(UserData userData) {
+        this.userData = userData;
+    }
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
@@ -45,7 +49,7 @@ public class UserController {
                 training,
                 isDeactivated);
 
-        if (!userInterface.addUser(u))
+        if (!userData.addUser(u))
         {
             // TODO: Error handle this
         }
@@ -54,14 +58,14 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String showUser(@PathVariable("username") String username, Model model){
-        User user = userInterface.getUser(username);
+        User user = userData.getUser(username);
         model.addAttribute("user", user);
         return "/user/show";
     }
 
     @GetMapping("/showAll")
     public String allUsers(Model model){
-        List<User> userList = userInterface.getAllUsers();
+        List<User> userList = userData.getAllUsers();
         model.addAttribute(userList);
         return "/user/showAll";
     }

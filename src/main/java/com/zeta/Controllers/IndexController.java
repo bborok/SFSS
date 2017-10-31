@@ -2,11 +2,7 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.UserInterface;
 import com.zeta.Models.User;
-import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.cas.authentication.CasAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,30 +22,12 @@ public class IndexController {
     @Autowired
     UserInterface userInterface;
 
-    @RequestMapping(value = "/")
-    public String getIndex(Model m) {
+    @RequestMapping(value = "/login")
+    public String login() {
         return "index";
     }
 
-    @RequestMapping(value = "/login")
-    public String login() {
-        return "dashboard";
-    }
-
-//    @RequestMapping(value = "/", method = RequestMethod.POST)
-//    public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-//        User user = userInterface.getUserByLogin(login);
-//
-//        if (user != null) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("user", user);
-//            return "dashboard";
-//        }
-//
-//        return "index";
-//    }
-
-    @GetMapping("/dashboard")
+    @GetMapping("/")
     public String dashboard(HttpServletRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
@@ -61,7 +39,7 @@ public class IndexController {
             }
         }
 
-        return "dashboard";
+        return "index";
     }
 
     @GetMapping("/log")
@@ -116,7 +94,6 @@ public class IndexController {
 
     @GetMapping("/logout")
     public String logout() {
-        String casLogout = "https://cas.sfu.ca/cas/logout";
-        return "redirect:" + casLogout;
+        return "logout";
     }
 }

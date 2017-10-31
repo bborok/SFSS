@@ -1,88 +1,119 @@
+<%--
+  Created by IntelliJ IDEA.
+  model.User: PrivateAcc
+  Date: 2017-09-29
+  Time: 5:02 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SFU</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-  <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="resources/css/form-elements.css">
-  <link rel="stylesheet" href="resources/css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SFU</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/css/form-elements.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+
 </head>
 
 <style>
+    #side-container{
+    }
 
-  body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    color: #888;
-    line-height: 30px;
-    text-align: center;
-  }
+    #side-contact{
+        position: absolute;
+        bottom: 0;
+        color: #ffffff;
+    }
+
 </style>
 
 <body>
 
-<!-- Top content -->
-<div class="top-content">
+<div id="wrapper" class="toggled">
 
-  <div class="inner-bg">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 text">
-          <div class="description">
-            <img src="resources/img/logo_made/logo_2.png" class="img-responsive">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 col-sm-offset-3 form-box">
-          <div class="form-top">
-            <div class="form-top-left">
-              <h3>Student Safety Engagement Program</h3>
-              <p>Enter your SFU ID and Password</p>
-            </div>
-            <div class="form-top-right">
-              <i class="fa fa-lock"></i>
-            </div>
-          </div>
-          <div class="form-bottom">
-            <form:form modelAttribute="login" method="post">
-              <div class="form-group">
-                <form:input path="username" type="text" placeholder="Username..." cssClass="form-control" />
-              </div>
-              <form:button type="submit" id="user" name="user" class="btn btn-primary btn-lg">Sign in!</form:button>
-            </form:form>
-          </div>
-        </div>
-      </div>
 
+    <jsp:include page="partfiles/sidebar.jsp"/>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+            <div class="col-sm-12 text">
+                <div class="description">
+                    <center>
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive">
+                    </center>
+                </div>
+                <hr><br>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
+                        <h3><b>Cidric Butac</b></h3>
+                        <h4>Supervisor</h4>
+                        <p>sfucsp@sfu.ca</p>
+                        <p>778-782-5425</p>
+                    </center>
+                </div>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <h4>Burnaby Team Lead</h4>
+                        <p>ssepbur@sfu.ca</p>
+                    </center>
+                </div>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Kitty Lo</b></h3>
+                        <h4>Surrey Team Lead</h4>
+                        <p>ssepsur@sfu.ca</p>
+                    </center>
+                </div>
+                <div class="col-sm-3">
+                    <center>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="200px" width="200px">
+                        <h3><b>Satpal Samra</b></h3>
+                        <h4>Vancouver Team Lead</h4>
+                        <p>ssepvan@sfu.ca</p>
+                    </center>
+                </div>
+            </div>
+        </div>
     </div>
-    <br><br> <P style="font-size:30px;color:white">TEMP Log-in with no Auth</P>
-    <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-primary btn-lg" style="margin-top:3px">Sign In</a>
-
-  </div>
+    <!-- /#page-content-wrapper -->
 
 </div>
+<!-- /#wrapper -->
 
-
-<!-- Javascript -->
-<script src="resources/js/jquery-1.11.1.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/js/jquery.backstretch.min.js"></script>
-<script src="resources/js/scripts.js"></script>
 
-<!--[if lt IE 10]>
-<script src="resources/js/placeholder.js"></script>
-<![endif]-->
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 

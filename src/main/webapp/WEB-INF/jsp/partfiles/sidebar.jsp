@@ -2,7 +2,6 @@
 
 <!-- jQuery Resources -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src= 'resources/js/timecard.js'></script>
 
@@ -57,11 +56,12 @@
 <!-- /#sidebar-wrapper -->
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var links = $('li.sidebar-item').children();
-        $.each(links, function(key, value) {
-            if (value.href == document.URL) {
-                $(this).parent().addClass('active');
+    $sbJQ = jQuery.noConflict(false);
+    $sbJQ(document).ready(function() {
+        var links = $sbJQ('li.sidebar-item').children();
+        $sbJQ.each(links, function(key, value) {
+            if (value.href === document.URL) {
+                $sbJQ(this).parent().addClass('active');
             }
         })
     });

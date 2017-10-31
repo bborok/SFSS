@@ -9,46 +9,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>SFU</title>
-
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
-
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
-
 </head>
-
 <style>
     #side-container{
     }
-
     #side-contact{
         position: absolute;
         bottom: 0;
         color: #ffffff;
     }
-
 </style>
-
 <body>
-
 <div id="wrapper" class="toggled">
-
-
     <jsp:include page="partfiles/sidebar.jsp"/>
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
@@ -98,15 +84,12 @@
         </div>
     </div>
     <!-- /#page-content-wrapper -->
-
 </div>
 <!-- /#wrapper -->
-
 <!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-
 <!-- Menu Toggle Script -->
 <script>
     $("#menu-toggle").click(function(e) {
@@ -114,7 +97,5 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
-
 </body>
-
 </html>

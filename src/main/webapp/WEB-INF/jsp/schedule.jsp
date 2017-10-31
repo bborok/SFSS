@@ -267,17 +267,16 @@ cancel button functionalities
                                             </div>
                                             <div style="padding-left: 15px;padding-right: 15px">
                                                 <div class="form-group">
-                                                    <label class="control-label"><u>Member:</u>
+                                                    <label class="control-label"><u>Member:</u></label>
+                                                    <div class="controls">
                                                         <select class = "form-control" name="eventMember" id = "eventMember" data-tab = "${user.getUsername()}">
                                                             <c:forEach items="${users}" var = "user">
                                                                 <option value = "${user.getUsername()}" >
-                                                                    ${user.getUsername()}
+                                                                        ${user.getUsername()}
                                                                 </option>
                                                             </c:forEach>
                                                         </select>
-                                                    </label>
-
-                                                    <%--<input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember">--%>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Location:</u></label>
@@ -285,7 +284,7 @@ cancel button functionalities
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Required Training:</u></label>
-                                                    <div class="container">
+                                                    <div class="container" style="padding-left: 0px">
                                                         <select id="eventRequiredTraining" multiple="multiple">
                                                             <option value="cpr">CPR</option>
                                                             <option value="javascript">Taser Gun</option>

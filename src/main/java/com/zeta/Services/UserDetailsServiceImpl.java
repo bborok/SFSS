@@ -1,6 +1,6 @@
 package com.zeta.Services;
 
-import com.zeta.Data.UserInterface;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.MyUserDetails;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;

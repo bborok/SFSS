@@ -189,7 +189,7 @@ $(document).ready(function () {
                 alert('Error saving shift to DB');
             },
             contentType: "application/json",
-            dataType: 'json'
+            // dataType: 'json'
         });
     }
 

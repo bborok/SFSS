@@ -99,12 +99,6 @@ public class IndexController {
         return "schedule";
     }
 
-    @GetMapping("/statistics")
-    public String statistics(Model m) {
-        m.addAttribute("someAttribute", "someValue");
-        return "statistics";
-    }
-
     @GetMapping("/statistics_info_lf")
     public String statistics_info_lf(Model m) {
         m.addAttribute("someAttribute", "someValue");

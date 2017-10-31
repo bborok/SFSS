@@ -228,7 +228,7 @@ $(document).ready(function () {
     }
 
     $('.campusFilter').prop("checked", true) // everything is checked
-    
+
     $('input:checkbox.allOrNone').on('change', function() {
         $('#calendar').fullCalendar('rerenderEvents');
     })

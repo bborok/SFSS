@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,16 +95,24 @@ cancel button functionalities
                         <div class="col-sm-12 row">
                             <div class="radio">
                                 <label>
-                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" checked>BURNABY
+                                    <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
                                 </label>
                                 <br>
                                 <label>
-                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
+                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
                                 </label>
                                 <br>
                                 <label>
-                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
+                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
                                 </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
+                                </label>
+                                <br>
+                                <%--<label>--%>
+                                    <%--<input class='campusFilter' type="checkbox" value="NOCAMPUSES" id="NOCAMPUS" class = "others">NONE--%>
+                                <%--</label>--%>
                             </div>
                             <%--<select id="shiftSelect"></select>--%>
                             <select class="form-control" id="shiftSelect"></select>
@@ -207,7 +217,15 @@ cancel button functionalities
                                             <div style="padding-left: 15px;padding-right: 15px">
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Member:</u></label>
-                                                    <input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember" placeholder="Enter member's username.">
+                                                    <select class = "form-control" data-tab = "${user.getUsername}">
+                                                        <c:forEach items="${users}" var = "user">
+                                                            <option id = "eventMember" value = "${user.getUsername()}"/>
+                                                            <c:out value = "${user.getUsername()}"/>
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+
+                                                    <%--<input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember">--%>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Location:</u></label>

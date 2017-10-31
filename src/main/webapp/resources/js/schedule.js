@@ -8,6 +8,8 @@ var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Tr
 
 var iNOCAMPUSES = [];
 
+var addButtonBool = false;
+
 //TODO: change this to 'https://cmpt373-1177z.cmpt.sfu.ca/events/api' during when deployed to server
 var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
@@ -34,6 +36,31 @@ $(document).ready(function () {
             api + '/shiftraws'
         ],
         // put your options and callbacks here
+        customButtons: {
+            add_event: {
+                text: 'Add a Shift',
+                click: function(start, end) {
+                    addButtonBool = true;
+                    $('#addShiftTime').show();
+                    $('#apptStartTime').hide();
+                    $('#apptEndTime').hide();
+                    $('#when').hide();
+                    $('#hideDate').hide();
+
+                    var startTime = moment(start).format('MMM Do h:mm A');
+                    var endTime = moment(end).format('MMM Do h:mm A');
+                    var mywhen = startTime + ' - ' + endTime;
+
+                    $('#createEventModal #startTime').val(start);
+                    $('#createEventModal #endTime').val(end);
+                    // $('#createEventModal #eventCampus').val(event.campus);
+                    // $('#createEventModal #eventMember').val(event.member);
+                    $('#createEventModal #when').text(mywhen);
+
+                    $('#createEventModal').modal('show'); //popup modal
+                }
+            }
+        },
         timezone: 'local',
         viewRender: function (view) {
             var h;
@@ -46,7 +73,7 @@ $(document).ready(function () {
         },
 
         header: {
-            left: 'prev,next today',
+            left: 'prev,next today, add_event',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
@@ -73,7 +100,12 @@ $(document).ready(function () {
 
         //Selecting an empty area
         select: function (start, end) {
-
+            addButtonBool = false;
+            $('#addShiftTime').hide();
+            $('#apptStartTime').show();
+            $('#apptEndTime').show();
+            $('#when').show();
+            $('#hideDate').show();
             var startTime = moment(start).format('MMM Do h:mm A');
             var endTime = moment(end).format('MMM Do h:mm A');
             var mywhen = startTime + ' - ' + endTime;
@@ -142,55 +174,94 @@ $(document).ready(function () {
         var eventTitleElement = $('#eventTitle');
         $("#createEventModal").modal('hide');
 
-
         //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
         //This date format is what the AbstractShift class is currently programmed to accept.
         var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
         var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
 
-        //AJAX POST Request Here to Save to Database
+        if (addButtonBool == true) {
+            var start = moment(new Date($('#startTime').val())).format('YYYY-MM-DDTHH:mm:ss');
+            var end = moment(new Date($('#endTime').val())).format('YYYY-MM-DDTHH:mm:ss');
 
-        //TODO: Read Comments Underneath
-        //PROBLEM: If the specified username and requiredTraining do not exist in the database,
-        //this shift will not be saved to the database
-        //POTENTIAL SOLUTION: Dropdown/Selection/Autocorrect Menus would ensure that the user
-        // cannot accidentally input an invalid value
+            var shiftRaw2 = {
+                title: eventTitleElement.find(":selected").attr('class'),
+                start: start,
+                end: end,
+                campus: $('#eventCampus').val(),
+                username: $('#eventMember').val(),
+                location: $('#eventLocation').val(),
+                notes: $('#eventNotes').val(),
+                requiredTraining: $('#eventRequiredTraining').val()
+            };
 
-        //The fields in the 'shiftRaw' variable matches up with the field name
-        //in the AbstractShift and ShiftRaw classes
-        var shiftRaw = {
-            title: eventTitleElement.find(":selected").attr('class'),
-            start: start,
-            end: end,
-            campus: $('#eventCampus').val(),
-            username: $('#eventMember').val(),
-            location: $('#eventLocation').val(),
-            notes: $('#eventNotes').val(),
-            requiredTraining: $('#eventRequiredTraining').val()
-        };
+            console.log(shiftRaw2);
 
-        console.log(shiftRaw);
+            $.ajax({
+                type: 'POST',
+                url: api + '/shifts/save',
+                data: JSON.stringify(shiftRaw2),
+                success: function (data) {
+                    $("#calendar").fullCalendar('renderEvent',
+                        {
+                            title: eventTitleElement.find(":selected").attr('class'),
+                            start: new Date($('#startTime').val()),
+                            end: new Date($('#endTime').val()),
+                            username: $('#eventMember').val(),
+                            campus: $('#eventCampus').val()
+                        }, true);
+                },
+                error: function () {
+                    alert('Error saving shift to DB');
+                },
+                contentType: "application/json",
+                // dataType: 'json'
+            });
+        } else {
+            //AJAX POST Request Here to Save to Database
 
-        $.ajax({
-            type: 'POST',
-            url: api + '/shifts/save',
-            data: JSON.stringify(shiftRaw),
-            success: function (data) {
-                $("#calendar").fullCalendar('renderEvent',
-                    {
-                        title: eventTitleElement.find(":selected").attr('class'),
-                        start: new Date($('#apptStartTime').val()),
-                        end: new Date($('#apptEndTime').val()),
-                        username: $('#eventMember').val(),
-                        campus: $('#eventCampus').val()
-                    }, true);
-            },
-            error: function () {
-                alert('Error saving shift to DB');
-            },
-            contentType: "application/json",
-            // dataType: 'json'
-        });
+            //TODO: Read Comments Underneath
+            //PROBLEM: If the specified username and requiredTraining do not exist in the database,
+            //this shift will not be saved to the database
+            //POTENTIAL SOLUTION: Dropdown/Selection/Autocorrect Menus would ensure that the user
+            // cannot accidentally input an invalid value
+
+            //The fields in the 'shiftRaw' variable matches up with the field name
+            //in the AbstractShift and ShiftRaw classes
+            var shiftRaw = {
+                title: eventTitleElement.find(":selected").attr('class'),
+                start: start,
+                end: end,
+                campus: $('#eventCampus').val(),
+                username: $('#eventMember').val(),
+                location: $('#eventLocation').val(),
+                notes: $('#eventNotes').val(),
+                requiredTraining: $('#eventRequiredTraining').val()
+            };
+
+            console.log(shiftRaw);
+
+            $.ajax({
+                type: 'POST',
+                url: api + '/shifts/save',
+                data: JSON.stringify(shiftRaw),
+                success: function (data) {
+                    $("#calendar").fullCalendar('renderEvent',
+                        {
+                            title: eventTitleElement.find(":selected").attr('class'),
+                            start: new Date($('#apptStartTime').val()),
+                            end: new Date($('#apptEndTime').val()),
+                            username: $('#eventMember').val(),
+                            campus: $('#eventCampus').val()
+                        }, true);
+                },
+                error: function () {
+                    alert('Error saving shift to DB');
+                },
+                contentType: "application/json",
+                // dataType: 'json'
+            });
+        }
+
     }
 
     function filter(calEvent) {
@@ -271,4 +342,7 @@ $(document).ready(function () {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
+
+    $('#addShiftTime').hide();
+
 });

@@ -260,8 +260,12 @@ cancel button functionalities
                                                     <input type="hidden" id="apptEndTime"/>
                                                     <input type="hidden" id="apptAllDay"/>
                                                 </div>
+                                                <label class="control-label" id = "hideDate"><u>Date:</u></label>
+                                                <label class="control-label" id = "addShiftTime"><u>Date:</u><br>
+                                                    Start: <input type="datetime-local" id="startTime" name = "evtStart"/><br>
+                                                    End: <input type="datetime-local" id="endTime" name = "evtEnd"/>
 
-                                                <label class="control-label"><u>Date:</u></label>
+                                                </label>
                                                 <label id="when"></label>
 
                                             </div>
@@ -284,17 +288,6 @@ cancel button functionalities
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Required Training:</u></label>
-                                                    <div class="container" style="padding-left: 0px">
-                                                        <select id="eventRequiredTraining" multiple="multiple">
-                                                            <option value="cpr">CPR</option>
-                                                            <option value="javascript">Taser Gun</option>
-                                                            <option value="something">Something</option>
-                                                            <option value="What">What</option>
-                                                            <option value="is">Is</option>
-                                                            <option value="this">This</option>
-                                                        </select>
-                                                    </div>
-                                                    <br>
                                                     <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Requirements">
                                                 </div>
 
@@ -365,9 +358,9 @@ cancel button functionalities
 
     });
 
-    $(document).ready(function() {
-        $('#eventRequiredTraining').multiselect();
-    });
+//    $(document).ready(function() {
+//        $('#eventRequiredTraining').multiselect();
+//    });
 
 
 

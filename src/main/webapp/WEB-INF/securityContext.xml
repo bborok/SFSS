@@ -11,15 +11,12 @@
     <!--https://github.com/casinthecloud/java-spring-security-cas-client-demo-->
 
     <sec:http use-expressions="true" entry-point-ref="casEntryPoint">
-        <sec:intercept-url pattern="/" access="permitAll()" />
         <sec:intercept-url pattern="/login" access="permitAll()" />
         <sec:intercept-url pattern="/logout" access="permitAll()" />
-        <sec:intercept-url pattern="/resources/**" access="permitAll()" />
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        <sec:logout invalidate-session="true" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
-        <!-- Handle CAS logout request from the browser (on /j_spring_security_logout): -->
-        <sec:logout />
-        <!-- Handle CAS logout directly from the CAS server: -->
+        <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
         <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
     </sec:http>
 
@@ -30,6 +27,14 @@
     </bean>
 
     <bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+
+    <bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="https://cas.sfu.ca/cas/logout"/>
+        <constructor-arg>
+            <bean class= "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+        </constructor-arg>
+        <property name="filterProcessesUrl" value="/logout"/>
+    </bean>
 
     <bean id="casEntryPoint"
           class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">

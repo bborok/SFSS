@@ -1,7 +1,10 @@
 package com.zeta.Models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /*
  * com.zeta.Models.TimeCard class
@@ -14,9 +17,8 @@ public class TimeCard {
     private String location;
     private String notes;
     private List<Task> tasks;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
-    private Calendar startTime;
-    private Calendar endTime;
     private String SPTotal;
     private String TPTotal;
     private String PCTotal;
@@ -25,6 +27,7 @@ public class TimeCard {
     private String ASTotal;
 
     public TimeCard() {
+        tasks = new ArrayList<>();
     }
 
     public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
@@ -37,16 +40,14 @@ public class TimeCard {
     }
 
     public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
-                    Calendar startTime, Calendar endTime, String SPTotal, String TPTotal, String PCTotal,
-                    String SWTotal,String HSRTotal, String ASTotal) {
+                    String SPTotal, String TPTotal, String PCTotal,
+                    String SWTotal, String HSRTotal, String ASTotal) {
 
         this.campus = campus;
         this.location = location;
         this.notes = notes;
         this.tasks = tasks;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.SPTotal = SPTotal;
         this.TPTotal = TPTotal;
         this.PCTotal = PCTotal;
@@ -103,28 +104,16 @@ public class TimeCard {
         this.tasks = tasks;
     }
 
+    public void addToTasks(Task task) {
+        tasks.add(task);
+    }
+
     public Calendar getDate() {
         return date;
     }
 
     public void setDate(Calendar date) {
         this.date = date;
-    }
-
-    public Calendar getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
-    }
-
-    public Calendar getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Calendar endTime) {
-        this.endTime = endTime;
     }
 
     public String getSPTotal() {

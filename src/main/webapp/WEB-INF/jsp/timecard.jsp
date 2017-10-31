@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
 
@@ -72,29 +73,21 @@
                         <form:form modelAttribute="timeCard" method="post">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <label><form:radiobutton path="campus" name="campus" id="vancouver" value="vancouver"/> Vancouver </label>
+                                    <label><form:radiobutton path="campus" name="campus" id="vancouver" value="VANCOUVER"/> Vancouver </label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label><form:radiobutton path="campus" name="campus" id="burnaby" value="burnaby"/> Burnaby </label>
+                                    <label><form:radiobutton path="campus" name="campus" id="burnaby" value="BURNABY"/> Burnaby </label>
                                 </div>
                                 <div class="col-md-4">
-                                    <label><form:radiobutton path="campus" name="campus" id="surrey" value="surrey"/> Surrey </label>
+                                    <label><form:radiobutton path="campus" name="campus" id="surrey" value="SURREY"/> Surrey </label>
                                 </div>
                                 <div class="col-md-6 ">
                                     <label > Date : </label>
-                                    <form:input path="date" class="form-control" type="input" id="date" value=""/>
+                                    <form:input path="date" class="form-control" type="date" id="date" value=""/>
                                 </div>
-                                <div class="col-md-6 ">
+                                <div class="col-md-6" style="margin-bottom: 1em;">
                                     <label > Location : </label>
                                     <form:input path="location" class="form-control" type="input" id="location" value=""/>
-                                </div>
-                                <div class="col-md-6 " style="margin-bottom: 2em;">
-                                    <label > Start Time : </label>
-                                    <form:input path="startTime" class="form-control" type="input" id="startTime" value=""/>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <label > End Time : </label>
-                                    <form:input path="endTime" class="form-control" type="input" id="endTime" value=""/>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel panel-info">

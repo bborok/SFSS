@@ -1,5 +1,7 @@
 package com.zeta.Controllers;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
 import com.zeta.Data.Statistics.StatisticsData;
 import com.zeta.Data.User.UserDao;
@@ -7,7 +9,7 @@ import com.zeta.Data.User.UserData;
 import com.zeta.Models.Login;
 import com.zeta.Models.Role;
 import com.zeta.Models.User;
-import com.zeta.Models.TimeCard;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,47 +27,32 @@ import java.util.stream.Collectors;
 @Controller
 public class IndexController {
 
-    UserData userData = new UserDao();
+    private UserData userData;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getIndex(Model m) {
-        Login login = new Login();
-        m.addAttribute("login", login);
+    @Autowired
+    public IndexController(UserData userData) {
+        this.userData = userData;
+    }
 
+    @RequestMapping(value = "/login")
+    public String login() {
         return "index";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String loginUser(HttpServletRequest request, @ModelAttribute("login") Login login, BindingResult bindingResult) {
-        User user = userData.getUserByLogin(login);
+    @GetMapping("/")
+    public String dashboard(HttpServletRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        HttpSession session = request.getSession();
 
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            return "dashboard";
+        if (principal instanceof UserDetails) {
+            if (session.getAttribute("user") == null) {
+                User user = userData.getUser(((UserDetails) principal).getUsername());
+                session.setAttribute("user", user);
+            }
         }
         return "index";
     }
 
-    @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m) {
-        TimeCard timeCard = new TimeCard();
-
-        m.addAttribute("timeCard", timeCard);
-        return "timecard";
-    }
-
-    @RequestMapping(value = "/timecard", method = RequestMethod.POST)
-    public String timeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
-        m.addAttribute("timeCard", timeCard);
-
-        return "timecard";
-    }
-
-    @GetMapping("/dashboard")
-    public String dashboard(Model m) {
-        return "dashboard";
-    }
 
     @GetMapping("/log")
     public String log(Model m) {
@@ -89,7 +76,9 @@ public class IndexController {
 
     @GetMapping("/schedule")
     public String schedule(Model m) {
-        m.addAttribute("someAttribute", "someValue");
+        List<User> users = userData.getAllUsers();
+        // m.addAttribute ("someAttribute", "someValue");
+        m.addAttribute("users", users);
         return "schedule";
     }
 
@@ -183,23 +172,29 @@ public class IndexController {
         return "temp_schedule";
     }
 
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
+
     @GetMapping("/users")
     public String users(HttpServletRequest request, Model m) {
         List<User> users;
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if (u == null) return "users"; //Exit the request if user info can't get fetched
-        //Filter the list users depending on the currently logged in users role.
-        if (u.getRole() == Role.TEAM_LEADER) {
+//        if (u == null) return "users"; //Exit the request if user info can't get fetched
+//        //Filter the list users depending on the currently logged in users role.
+//        if (u.getRole() == Role.TEAM_LEADER) {
 //            //Filter the users based on the team leaders preferred campus.
-            users = userData.getAllUsers().stream()
-                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
-                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
-                    .collect(Collectors.toList());
-        } else {
-            users = userData.getAllUsers();
-        }
-
+//            users = userData.getAllUsers().stream()
+//                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+//                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+//                    .collect(Collectors.toList());
+//        } else {
+//            users = userData.getAllUsers();
+//        }
+        users = userData.getAllUsers();
         m.addAttribute("users", users);
         return "users";
     }

@@ -19,7 +19,7 @@ public class MyUserDetails implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> auths = new ArrayList<SimpleGrantedAuthority>();
-        auths.add(new SimpleGrantedAuthority("ROLE_USER"));
+        auths.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().toString());
         return auths;
     }
 

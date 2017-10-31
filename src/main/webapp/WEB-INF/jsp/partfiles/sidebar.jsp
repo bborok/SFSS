@@ -5,7 +5,7 @@
             <p>SFU SFEP</p>
         </li>
         <li class="active">
-            <a href="${pageContext.request.contextPath}/dashboard">Home</a>
+            <a href="${pageContext.request.contextPath}/">Home</a>
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
@@ -27,7 +27,7 @@
         <div id="side-contact" style="text-align:center; margin-bottom:10px;">
 
             <p style="text-align:center; font-size:20px">
-                <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
+                <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/logout">Sign Out</a>
             </p>
             <br>
             <p style="font-weight: bold; text-decoration: underline;">Contact: </p>

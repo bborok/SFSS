@@ -8,19 +8,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class StatisticsDao implements StatisticsData{
 
     private JdbcTemplate jdbcTemplate;
-    private Connection con;
+
     public StatisticsDao() {
         PersistenceConfig config = new PersistenceConfig();
         this.jdbcTemplate = new JdbcTemplate(new PersistenceConfig().dataSource());
-        con = config.getConnection();
     }
 
     @Override

@@ -9,10 +9,8 @@ var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Tr
 var iNOCAMPUSES = [];
 
 var addButtonBool = false;
-
-//TODO: change this to 'https://cmpt373-1177z.cmpt.sfu.ca/events/api' during when deployed to server
-var api = 'http://localhost:8080/ROOT/api';
 $(document).ready(function () {
+    console.log(api);  //this api variable is declared on schedule.jsp
     // page is now ready, initialize the calendar...
     $('#external-events .fc-event').each(function () {
 

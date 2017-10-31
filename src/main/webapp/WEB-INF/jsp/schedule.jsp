@@ -33,6 +33,9 @@
     <%--<script src='resources/lib/moment.min.js'></script>--%>
     <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
 
+    <script>
+        var api = '${pageContext.request.contextPath}/api';
+    </script>
     <script src='resources/js/schedule.js'></script>
 
     <!-- Bootstrap core CSS -->

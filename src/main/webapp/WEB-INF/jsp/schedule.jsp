@@ -51,6 +51,12 @@
     <link rel="stylesheet" href="resources/css/style.css">
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+
+
+
+
 </head>
 
 <style>
@@ -279,8 +285,20 @@ cancel button functionalities
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label"><u>Required Training:</u></label>
+                                                    <div class="container">
+                                                        <select id="eventRequiredTraining" multiple="multiple">
+                                                            <option value="cpr">CPR</option>
+                                                            <option value="javascript">Taser Gun</option>
+                                                            <option value="something">Something</option>
+                                                            <option value="What">What</option>
+                                                            <option value="is">Is</option>
+                                                            <option value="this">This</option>
+                                                        </select>
+                                                    </div>
+                                                    <br>
                                                     <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="eventMember" id="eventRequiredTraining" placeholder="Enter the Requirements">
                                                 </div>
+
                                                 <div class="form-group">
                                                     <label class="control-label">Notes: </label>
                                                     <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes"></textarea>
@@ -347,6 +365,10 @@ cancel button functionalities
         $(this).find("input,textarea,select").val('').end();
 
     });
+
+
+
+
 </script>
 
 </body>

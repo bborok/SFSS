@@ -47,19 +47,7 @@ public class TimeCardDao implements TimeCardData {
 
             updateShift.execute();
 
-            for (Task task : timeCard.getTasks()) {
-                if (task.getCount() == 0) {
-                    continue;
-                }
-
-                PreparedStatement insertUserTask = con.prepareStatement(userTaskSQL);
-                insertUserTask.setString(1, timeCard.getUsername());
-                insertUserTask.setLong(2, timeCard.getShiftId());
-                insertUserTask.setString(3, task.getTaskName());
-                insertUserTask.setInt(4, task.getCount());
-
-                insertUserTask.execute();
-            }
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
 
             con.commit();
 
@@ -73,23 +61,23 @@ public class TimeCardDao implements TimeCardData {
     public Boolean updateTimeCard(TimeCard timeCard) {
         try {
 
-            String shiftSQL = "update Shift set Location = ?, Notes = ? where User = ?";
-            String userTaskSQL = "update UserTask set Task = ?, Count = ? where User = ? and Shift = ?";
+            String shiftSQL = "update Shift set Location = ?, Notes = ? where User = ? and ID = ?";
+            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
 
             con.setAutoCommit(false);
 
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL,
-                    (String[]) new Object[]{timeCard.getLocation(), timeCard.getNotes(), timeCard.getUsername()});
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getLocation());
+            updateShift.setString(2, timeCard.getNotes());
+            updateShift.setString(3, timeCard.getUsername());
+            updateShift.setLong(4, timeCard.getShiftId());
 
             updateShift.execute();
 
-            for (Task task : timeCard.getTasks()) {
-                PreparedStatement updateUserTask = con.prepareStatement(userTaskSQL,
-                        (String[]) new Object[]{
-                                task.getTaskName(), task.getCount(), timeCard.getUsername(), timeCard.getShiftId()});
+            // Remove data for that specific user and shift
+            clearRecords(timeCard.getUsername(), timeCard.getShiftId());
 
-                updateUserTask.execute();
-            }
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
 
             con.commit();
 
@@ -134,5 +122,34 @@ public class TimeCardDao implements TimeCardData {
             return null;
         }
         return timeCard;
+    }
+
+    private void clearRecords(String username, long shiftId) throws SQLException {
+
+        String sql = "delete from UserTask where User = ? and Shift = ?";
+
+        PreparedStatement removeRecords = con.prepareStatement(sql);
+        removeRecords.setString(1, username);
+        removeRecords.setLong(2, shiftId);
+
+        removeRecords.execute();
+    }
+
+    // For each task update count and set if count is not 0
+    private void insertTasksIntoUserTask(TimeCard timeCard, String sql) throws SQLException {
+
+        for (Task task : timeCard.getTasks()) {
+            if (task.getCount() == 0) {
+                continue;
+            }
+
+            PreparedStatement insertUserTask = con.prepareStatement(sql);
+            insertUserTask.setString(1, timeCard.getUsername());
+            insertUserTask.setLong(2, timeCard.getShiftId());
+            insertUserTask.setString(3, task.getTaskName());
+            insertUserTask.setInt(4, task.getCount());
+
+            insertUserTask.execute();
+        }
     }
 }

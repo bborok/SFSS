@@ -366,6 +366,10 @@ cancel button functionalities
 
     });
 
+    $(document).ready(function() {
+        $('#eventRequiredTraining').multiselect();
+    });
+
 
 
 

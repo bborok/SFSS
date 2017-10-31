@@ -1,33 +1,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- jQuery Resources -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src= 'resources/js/timecard.js'></script>
+
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
             <p>SFU SFEP</p>
         </li>
-        <li class="active">
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/">Home</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/profile">Profile</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/log">Log</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
         </li>
         <c:if test="${sessionScope.user.role != 'MEMBER'}">
-            <li>
+            <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/users">Users</a>
             </li>
         </c:if>
@@ -46,4 +53,16 @@
         </div>
     </div>
 </div>
+
 <!-- /#sidebar-wrapper -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var links = $('li.sidebar-item').children();
+        $.each(links, function(key, value) {
+            if (value.href == document.URL) {
+                $(this).parent().addClass('active');
+            }
+        })
+    });
+</script>

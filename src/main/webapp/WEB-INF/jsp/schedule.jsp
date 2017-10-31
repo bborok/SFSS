@@ -261,14 +261,15 @@ cancel button functionalities
                                             </div>
                                             <div style="padding-left: 15px;padding-right: 15px">
                                                 <div class="form-group">
-                                                    <label class="control-label"><u>Member:</u></label>
-                                                    <select class = "form-control" data-tab = "${user.getUsername}">
-                                                        <c:forEach items="${users}" var = "user">
-                                                            <option id = "eventMember" value = "${user.getUsername()}"/>
-                                                            <c:out value = "${user.getUsername()}"/>
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
+                                                    <label class="control-label"><u>Member:</u>
+                                                        <select class = "form-control" name="eventMember" id = "eventMember" data-tab = "${user.getUsername()}">
+                                                            <c:forEach items="${users}" var = "user">
+                                                                <option value = "${user.getUsername()}" >
+                                                                    ${user.getUsername()}
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </label>
 
                                                     <%--<input style="border-width:1px; border-color: #a9b7d1" type="text" class="form-control" name="eventMember" id="eventMember">--%>
                                                 </div>
@@ -330,6 +331,7 @@ cancel button functionalities
                             </div>
                         </div>
                     </div>
+        </div>
     <!-- /#page-content-wrapper -->
 
 </div>

@@ -17,7 +17,7 @@
         <sec:logout invalidate-session="true" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
         <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
-        <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
+        <sec:custom-filter before="LOGOUT_FILTER" ref="requestSingleLogoutFilter" />
     </sec:http>
 
     <bean id="casFilter"

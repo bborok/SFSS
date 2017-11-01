@@ -180,12 +180,12 @@ $(document).ready(function () {
 
         //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
         //This date format is what the AbstractShift class is currently programmed to accept.
-        var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-        var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
+        var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DD HH:mm:ss');
+        var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DD HH:mm:ss');
 
         if (addButtonBool == true) {
-            var start = moment(new Date($('#startTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-            var end = moment(new Date($('#endTime').val())).format('YYYY-MM-DDTHH:mm:ss');
+            var start = moment(new Date($('#startTime').val())).format('YYYY-MM-DD HH:mm:ss');
+            var end = moment(new Date($('#endTime').val())).format('YYYY-MM-DD HH:mm:ss');
 
             var shiftRaw2 = {
                 title: eventTitleElement.find(":selected").attr('class'),

@@ -1,6 +1,10 @@
 package com.zeta.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.CustomTimestampDeserializer;
+import com.zeta.Configurations.CustomTimestampSerializer;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -8,10 +12,15 @@ import java.sql.Timestamp;
 public abstract class AbstractShift {
     private Long id;
     private String title;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
+
+    @JsonSerialize(using = CustomTimestampSerializer.class)
+    @JsonDeserialize(using = CustomTimestampDeserializer.class)
     private Timestamp start;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
+
+    @JsonSerialize(using = CustomTimestampSerializer.class)
+    @JsonDeserialize(using = CustomTimestampDeserializer.class)
     private Timestamp end;
+
     private Campus campus;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;

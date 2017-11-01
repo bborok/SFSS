@@ -32,8 +32,11 @@ public class ShiftsController {
     @PostMapping("/shifts/save")
     public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
         System.out.println(shiftRaw.toString());
-        if (shiftData.saveShiftRaw(shiftRaw)) return ResponseEntity.ok().build();
-        else return ResponseEntity.badRequest().build();
+        if (shiftData.saveShiftRaw(shiftRaw))
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.badRequest().build();
+
     }
 
     /**
@@ -43,18 +46,20 @@ public class ShiftsController {
      */
     @GetMapping("/shiftraws")
     public ResponseEntity<List<ShiftRaw>> shiftRaws() {
-        return new ResponseEntity<>(shiftData.getShiftRaws(), HttpStatus.OK);
+        List<ShiftRaw> shiftRaws = shiftData.getShiftRaws();
+        return new ResponseEntity<>(shiftRaws, HttpStatus.OK);
     }
 
     /**
      * Use this to get a ShiftRaw object based on the id
+     *
      * @param id id of Shift
      * @return ShiftRaw object
      */
     @GetMapping("/shiftraws/{id}")
-    public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id){
+    public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id) {
         ShiftRaw shiftRaw = shiftData.getShiftRaw(id);
-        if (shiftRaw==null) return ResponseEntity.notFound().build();
+        if (shiftRaw == null) return ResponseEntity.notFound().build();
         return new ResponseEntity<>(shiftRaw, HttpStatus.OK);
     }
 

@@ -17,6 +17,12 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 
+.idea/compiler.xml
+.idea/misc.xml
+.idea/vcs.xml
+Scripts/SQL Scripts/testdb_User.sql
+
+
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries

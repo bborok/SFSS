@@ -1,8 +1,9 @@
 <%--
-  Page that displays the currently logged in users information.
+  Page that displays the users. Users displayed will be based on the
+  List<User> found in the users function of the IndexController
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,8 +56,6 @@
     .click a {
         color: chocolate;
     }
-
-
 </style>
 
 <body>
@@ -65,14 +64,13 @@
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-
             <div class="col-sm-12 text">
                 <center>
-                    <%--SFU LOGO--%>
                     <div class="description">
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
                              style="height:100px;width:500px">
@@ -80,43 +78,65 @@
                     </div>
                 </center>
                 <br><br>
-                <center>
-                    <div>
-                        <div>
-                            <h1>
-                                <b><c:out value="${sessionScope.user.name}"/>'s Profile</b>
-                            </h1>
+
+                <div class="row">
+                    <div class="col-sm-6" style="height:600px; text-align:center; border-style:solid">
+                        <p>
+                            <b>Users</b>
+                        </p>
+
+                        <table class="table table-striped" style="text-align:left; ">
+                            <thead>
+                            <tr>
+                                <th width="40%">Name</th>
+                                <th width="30%">#</th>
+                            </tr>
+                            </thead>
+
+                            <tbody style="color:black">
+                            <c:forEach items="${users}" var="user">
+                                <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
+                                    <td class="col-sm-6 col-xs-6">
+                                            <c:out value="${user.getName()}"/>
+                                    <td class="col-sm-6">
+                                            <c:out value="${user.getStudentNumber()}"/>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="sample col-sm-6" style="text-align:center; border-style:solid; height:600px">
+
+                        <div class="tab-content">
+                            <p>
+                                <b>Profile</b>
+                            </p>
                             <center>
                                 <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
                                      width="300">
                             </center>
+                            <h3>User Profile</h3>
+                            <h5>Select User from the list</h5>
+                        </div>
 
-                        </div>
-                        <div>
-                            <h3>Role: ${sessionScope.user.role}</h3>
-                            <h3>Student Number: ${sessionScope.user.studentNumber}</h3>
-                            <h3>Username: ${sessionScope.user.username}</h3>
-                            <%--Info to display if role is MEMBER --%>
-                            <c:if test="${sessionScope.user.role eq 'MEMBER'}">
-                                <h3>Campus: ${sessionScope.user.preferredCampus}</h3>
-                                <h3>Training:</h3>
-                                <c:choose>
-                                    <c:when test="${empty sessionScope.user.training}">
-                                        Current not trained for any task
-                                    </c:when>
-                                    <c:otherwise>
-                                        <ul>
-                                            <c:forEach var="training" items="${sessionScope.user.training}"
-                                                       varStatus="status">
-                                                <li>training</li>
-                                            </c:forEach>
-                                        </ul>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
-                        </div>
+                        <c:forEach items="${users}" var="user">
+                            <div class="tab-content" id="${user.getUsername()}" style="display: none">
+                                <p>
+                                    <b>Profile</b>
+                                </p>
+                                <center>
+                                    <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300"
+                                         width="300">
+                                </center>
+                                <h3><c:out value="${user.getName()}"/></h3>
+                                <h4><c:out value="${user.getRole()}"/></h4>
+                                <p><c:out value="${user.getEmail()}"/></p>
+                                <h5><c:out value="${user.getPreferredCampus()}"/></h5>
+                            </div>
+                        </c:forEach>
                     </div>
-                </center>
+                </div>
             </div>
         </div>
     </div>

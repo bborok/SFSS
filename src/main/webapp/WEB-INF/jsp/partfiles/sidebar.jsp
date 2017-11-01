@@ -1,36 +1,48 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- jQuery Resources -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src= 'resources/js/timecard.js'></script>
+
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
             <p>SFU SFEP</p>
         </li>
-        <li class="active">
-            <a href="${pageContext.request.contextPath}/dashboard">Home</a>
+        <li class="sidebar-item">
+            <a href="${pageContext.request.contextPath}/">Home</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/profile">Profile</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/log">Log</a>
         </li>
-        <li>
+        <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
         </li>
+        <c:if test="${sessionScope.user.role != 'MEMBER'}">
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/users">Users</a>
+            </li>
+        </c:if>
     </ul>
     <div id="side-container">
         <div id="side-contact" style="text-align:center; margin-bottom:10px;">
 
             <p style="text-align:center; font-size:20px">
-                <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/">Sign Out</a>
+                <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/logout">Sign Out</a>
             </p>
             <br>
             <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
@@ -40,4 +52,18 @@
         </div>
     </div>
 </div>
+
 <!-- /#sidebar-wrapper -->
+
+<script type="text/javascript">
+    $sbJQ = jQuery.noConflict(false);
+    $sbJQ(document).ready(function() {
+        var links = $sbJQ('li.sidebar-item').children();
+        $sbJQ.each(links, function(key, value) {
+            if (value.href === document.URL) {
+                $sbJQ(this).parent().addClass('active');
+            }
+        })
+    });
+</script>
+

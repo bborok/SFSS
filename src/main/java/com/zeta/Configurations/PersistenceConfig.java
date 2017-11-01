@@ -1,7 +1,5 @@
 package com.zeta.Configurations;
 
-import com.zeta.Data.UserDao;
-import com.zeta.Data.UserInterface;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,10 +18,5 @@ public class PersistenceConfig {
         dataSource.setUsername("testuser".trim());
         dataSource.setPassword("testtest".trim());
         return dataSource;
-    }
-
-    @Bean
-    public UserInterface getUserInterface() {
-        return new UserDao(dataSource());
     }
 }

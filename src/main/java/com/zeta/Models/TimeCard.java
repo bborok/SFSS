@@ -2,21 +2,23 @@ package com.zeta.Models;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /*
  * com.zeta.Models.TimeCard class
  */
 public class TimeCard {
 
-    private List<Task> tasks = new ArrayList<Task>();
-    private String notes;
-    private Calendar startTime;
-    private Calendar endTime;
+    private String username;
+    private long shiftId;
     private Campus campus;
-    private Date date;
     private String location;
+    private String notes;
+    private List<Task> tasks;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Calendar date;
     private String SPTotal;
     private String TPTotal;
     private String PCTotal;
@@ -24,17 +26,28 @@ public class TimeCard {
     private String HSRTotal;
     private String ASTotal;
 
-    public TimeCard(){}
-    public TimeCard(List<Task> tasks, String notes, Calendar startTime, Calendar endTime, Campus campus,
-                    Date date, String location, String SPTotal, String TPTotal, String PCTotal,
-                    String SWTotal,String HSRTotal, String ASTotal) {
-        this.tasks = tasks;
-        this.notes = notes;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public TimeCard() {
+        tasks = new ArrayList<>();
+    }
+
+    public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
+        this.username = username;
+        this.shiftId = shiftId;
         this.campus = campus;
-        this.date = date;
         this.location = location;
+        this.notes = notes;
+        this.tasks = tasks;
+    }
+
+    public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
+                    String SPTotal, String TPTotal, String PCTotal,
+                    String SWTotal, String HSRTotal, String ASTotal) {
+
+        this.campus = campus;
+        this.location = location;
+        this.notes = notes;
+        this.tasks = tasks;
+        this.date = date;
         this.SPTotal = SPTotal;
         this.TPTotal = TPTotal;
         this.PCTotal = PCTotal;
@@ -43,36 +56,20 @@ public class TimeCard {
         this.ASTotal = ASTotal;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getNotes() {
-        return notes;
+    public long getShiftId() {
+        return shiftId;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Calendar getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
-    }
-
-    public Calendar getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Calendar endTime) {
-        this.endTime = endTime;
+    public void setShiftId(long shiftId) {
+        this.shiftId = shiftId;
     }
 
     public Campus getCampus() {
@@ -83,16 +80,40 @@ public class TimeCard {
         this.campus = campus;
     }
 
-    public Date getDate(){return date;}
-
-    public void setDate(Date date){this.date = date;}
-
     public String getLocation() {
         return location;
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public void addToTasks(Task task) {
+        tasks.add(task);
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
     }
 
     public String getSPTotal() {
@@ -123,7 +144,7 @@ public class TimeCard {
         return SWTotal;
     }
 
-    public void SWTotal(String SWTotal) {
+    public void setSWTotal(String SWTotal) {
         this.SWTotal = SWTotal;
     }
 
@@ -131,7 +152,7 @@ public class TimeCard {
         return HSRTotal;
     }
 
-    public void HSRTotal(String HSRTotal) {
+    public void setHSRTotal(String HSRTotal) {
         this.HSRTotal = HSRTotal;
     }
 
@@ -139,7 +160,7 @@ public class TimeCard {
         return ASTotal;
     }
 
-    public void ASTotal(String ASTotal) {
+    public void setASTotal(String ASTotal) {
         this.ASTotal = ASTotal;
     }
 }

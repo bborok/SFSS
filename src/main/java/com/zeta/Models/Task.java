@@ -6,6 +6,7 @@ package com.zeta.Models;
 public class Task {
 
     private String taskName;
+    private int count;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -21,5 +22,13 @@ public class Task {
 
     public Boolean isSameAsOtherTask(Task t) {
         return taskName.equals(t.getTaskName());
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

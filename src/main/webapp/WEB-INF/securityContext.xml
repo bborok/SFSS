@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.zeta" />
+    <context:annotation-config />
+
+    <!--https://github.com/casinthecloud/java-spring-security-cas-client-demo-->
+
+    <sec:http use-expressions="true" entry-point-ref="casEntryPoint">
+        <sec:intercept-url pattern="/login" access="permitAll()" />
+        <sec:intercept-url pattern="/logout" access="permitAll()" />
+        <sec:intercept-url pattern="/api/*" access="permitAll()" />
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        <sec:logout invalidate-session="true" />
+        <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
+        <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
+        <sec:custom-filter before="LOGOUT_FILTER" ref="requestSingleLogoutFilter" />
+    </sec:http>
+
+    <bean id="casFilter"
+          class="org.springframework.security.cas.web.CasAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="filterProcessesUrl" value="/login" />
+    </bean>
+
+    <bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+
+    <bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg value="https://cas.sfu.ca/cas/logout"/>
+        <constructor-arg>
+            <bean class= "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+        </constructor-arg>
+        <property name="filterProcessesUrl" value="/logout"/>
+    </bean>
+
+    <bean id="casEntryPoint"
+          class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+        <!-- Change with your own CAS server -->
+        <property name="loginUrl" value="https://cas.sfu.ca/cas/login" />
+        <property name="serviceProperties" ref="serviceProperties" />
+    </bean>
+
+    <bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
+        <!-- Change with your own host name -->
+        <property name="service" value="https://cmpt373-1177z.cmpt.sfu.ca/login" />
+        <property name="sendRenew" value="false" />
+    </bean>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="casAuthenticationProvider" />
+    </sec:authentication-manager>
+
+    <bean id="casAuthenticationProvider" class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="serviceProperties" ref="serviceProperties" />
+        <property name="ticketValidator">
+            <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+                <!-- Change with your own CAS server -->
+                <constructor-arg index="0" value="https://cas.sfu.ca/cas" />
+            </bean>
+        </property>
+        <property name="key" value="SFU" />
+    </bean>
+
+    <bean id="userDetailsService" class="com.zeta.Services.UserDetailsServiceImpl" autowire-candidate="true" />
+
+</beans>

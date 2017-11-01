@@ -12,6 +12,8 @@ var addButtonBool = false;
 $(document).ready(function () {
     console.log(api);  //this api variable is declared on schedule.jsp
     // page is now ready, initialize the calendar...
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
     $('#external-events .fc-event').each(function () {
 
         // store data so the calendar knows to render an event upon drop
@@ -135,10 +137,14 @@ $(document).ready(function () {
             $('#fullCalModal').modal();
 
             $('#btnDelete').on('click', function (e) {
+
                 e.preventDefault();
                 //AJAX DELETE REQUEST
                 $.ajax({
                     type: 'DELETE',
+                    beforeSend: function(request) {
+                        request.setRequestHeader(header, token);
+                    },
                     url: api + '/shifts/delete/' + event.id,
                     success: function (data) {
                         location.reload(); //reload the page to refresh data (shouldn't really be need, but is used just in case)
@@ -196,6 +202,9 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);
+                },
                 url: api + '/shifts/save',
                 data: JSON.stringify(shiftRaw2),
                 success: function (data) {
@@ -240,6 +249,9 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);
+                },
                 url: api + '/shifts/save',
                 data: JSON.stringify(shiftRaw),
                 success: function (data) {

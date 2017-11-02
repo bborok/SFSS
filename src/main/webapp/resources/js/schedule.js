@@ -9,7 +9,7 @@ var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Tr
 var iNOCAMPUSES = [];
 
 var addButtonBool = false;
-var dateFormat = "YYYY-MM-DDTHH:mm:ss";
+var dateFormat = "YYYY-MM-DD HH:mm:ss";
 var token;
 var header;
 var calendar;
@@ -45,7 +45,7 @@ $(document).ready(function () {
         customButtons: {
             add_event: {
                 text: 'Add a Shift',
-                click: function(start, end) {
+                click: function (start, end) {
                     addButtonBool = true;
                     $('#addShiftTime').show();
                     $('#apptStartTime').hide();
@@ -118,8 +118,6 @@ $(document).ready(function () {
 
             $('#createEventModal #apptStartTime').val(start);
             $('#createEventModal #apptEndTime').val(end);
-            // $('#createEventModal #eventCampus').val(event.campus);
-            // $('#createEventModal #eventMember').val(event.member);
             $('#createEventModal #when').text(mywhen);
 
             $('#createEventModal').modal('show'); //popup modal
@@ -148,7 +146,7 @@ $(document).ready(function () {
                 //AJAX DELETE REQUEST
                 $.ajax({
                     type: 'DELETE',
-                    beforeSend: function(request) {
+                    beforeSend: function (request) {
                         request.setRequestHeader(header, token);
                     },
                     url: api + '/shifts/delete/' + event.id,
@@ -180,7 +178,6 @@ $(document).ready(function () {
     });
 
 
-
     function filter(calEvent) {
 
         var vals = [];
@@ -195,7 +192,7 @@ $(document).ready(function () {
             vals2.push($(this).val());
         });
 
-        $('.allOrNone').on('click',function() { //
+        $('.allOrNone').on('click', function () { //
             if ($('.allOrNone').is(':checked')) {
                 $('.campusFilter').prop("checked", true)
 
@@ -215,9 +212,9 @@ $(document).ready(function () {
         return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
     }
 
-    $('.campusFilter').prop("checked", true) ;// everything is checked
+    $('.campusFilter').prop("checked", true);// everything is checked
 
-    $('input:checkbox.allOrNone').on('change', function() {
+    $('input:checkbox.allOrNone').on('change', function () {
         calendar.fullCalendar('rerenderEvents');
     });
 
@@ -250,7 +247,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#eventCampus").on('change',function () {
+    $("#eventCampus").on('change', function () {
         if ($(this).data('options') === undefined) {
             /*Taking an array of all options-2 and kind of embedding it on the select1*/
             $(this).data('options', $('#eventTitle option').clone());
@@ -295,12 +292,12 @@ var saveShift = function (shiftRaw) {
     console.log(shiftRaw);
     $.ajax({
         type: 'POST',
-        beforeSend: function(request) {
+        beforeSend: function (request) {
             request.setRequestHeader(header, token);
         },
         url: api + '/shifts/save',
         data: JSON.stringify(shiftRaw),
-        success: function(data) {
+        success: function (data) {
             $("#calendar").fullCalendar('renderEvent', {
                 title: shiftRaw.title,
                 start: shiftRaw.start,
@@ -309,7 +306,7 @@ var saveShift = function (shiftRaw) {
                 campus: shiftRaw.campus
             }, true);
         },
-        error: function() {
+        error: function () {
             alert('Error saving shift to DB');
         },
         contentType: "application/json"

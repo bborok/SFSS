@@ -9,11 +9,17 @@ var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Tr
 var iNOCAMPUSES = [];
 
 var addButtonBool = false;
+var dateFormat = "YYYY-MM-DDTHH:mm:ss";
+var token;
+var header;
+var calendar;
+
 $(document).ready(function () {
-    console.log(api);  //this api variable is declared on schedule.jsp
     // page is now ready, initialize the calendar...
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
+    calendar = $('#calendar');
+
+    token = $("meta[name='_csrf']").attr("content");
+    header = $("meta[name='_csrf_header']").attr("content");
     $('#external-events .fc-event').each(function () {
 
         // store data so the calendar knows to render an event upon drop
@@ -31,7 +37,7 @@ $(document).ready(function () {
     });
 
 
-    $('#calendar').fullCalendar({
+    calendar.fullCalendar({
         eventSources: [
             api + '/shiftraws'
         ],
@@ -64,12 +70,12 @@ $(document).ready(function () {
         timezone: 'local',
         viewRender: function (view) {
             var h;
-            if (view.name == "month") {
+            if (view.name === "month") {
                 h = 700;
             } else {
                 h = 700;
             }
-            $('#calendar').fullCalendar('option', 'contentHeight', h);
+            calendar.fullCalendar('option', 'contentHeight', h);
         },
 
         header: {
@@ -154,7 +160,7 @@ $(document).ready(function () {
                     }
                 });
                 $('#fullCalModal').modal('hide');
-                $('#calendar').fullCalendar('removeEvents', event._id);
+                calendar.fullCalendar('removeEvents', event._id);
             })
         },
 
@@ -170,109 +176,10 @@ $(document).ready(function () {
     $('#submitButton').on('click', function (e) {
         // We don't want this to act as a link so cancel the link action
         e.preventDefault();
-
         doSubmit();
     });
 
-    function doSubmit() {
-        var eventTitleElement = $('#eventTitle');
-        $("#createEventModal").modal('hide');
 
-        //Start & End must be formatted: "yyyy-MM-dd'T'hh:mm:ss"
-        //This date format is what the AbstractShift class is currently programmed to accept.
-        var start = moment(new Date($('#apptStartTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-        var end = moment(new Date($('#apptEndTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-
-        if (addButtonBool == true) {
-            var start = moment(new Date($('#startTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-            var end = moment(new Date($('#endTime').val())).format('YYYY-MM-DDTHH:mm:ss');
-
-            var shiftRaw2 = {
-                title: eventTitleElement.find(":selected").attr('class'),
-                start: start,
-                end: end,
-                campus: $('#eventCampus').val(),
-                username: $('#eventMember').val(),
-                location: $('#eventLocation').val(),
-                notes: $('#eventNotes').val(),
-                requiredTraining: $('#eventRequiredTraining').val()
-            };
-
-            console.log(shiftRaw2);
-
-            $.ajax({
-                type: 'POST',
-                beforeSend: function(request) {
-                    request.setRequestHeader(header, token);
-                },
-                url: api + '/shifts/save',
-                data: JSON.stringify(shiftRaw2),
-                success: function (data) {
-                    $("#calendar").fullCalendar('renderEvent',
-                        {
-                            title: eventTitleElement.find(":selected").attr('class'),
-                            start: new Date($('#startTime').val()),
-                            end: new Date($('#endTime').val()),
-                            username: $('#eventMember').val(),
-                            campus: $('#eventCampus').val()
-                        }, true);
-                },
-                error: function () {
-                    alert('Error saving shift to DB');
-                },
-                contentType: "application/json",
-                // dataType: 'json'
-            });
-        } else {
-            //AJAX POST Request Here to Save to Database
-
-            //TODO: Read Comments Underneath
-            //PROBLEM: If the specified username and requiredTraining do not exist in the database,
-            //this shift will not be saved to the database
-            //POTENTIAL SOLUTION: Dropdown/Selection/Autocorrect Menus would ensure that the user
-            // cannot accidentally input an invalid value
-
-            //The fields in the 'shiftRaw' variable matches up with the field name
-            //in the AbstractShift and ShiftRaw classes
-            var shiftRaw = {
-                title: eventTitleElement.find(":selected").attr('class'),
-                start: start,
-                end: end,
-                campus: $('#eventCampus').val(),
-                username: $('#eventMember').val(),
-                location: $('#eventLocation').val(),
-                notes: $('#eventNotes').val(),
-                requiredTraining: $('#eventRequiredTraining').val()
-            };
-
-            console.log(shiftRaw);
-
-            $.ajax({
-                type: 'POST',
-                beforeSend: function(request) {
-                    request.setRequestHeader(header, token);
-                },
-                url: api + '/shifts/save',
-                data: JSON.stringify(shiftRaw),
-                success: function (data) {
-                    $("#calendar").fullCalendar('renderEvent',
-                        {
-                            title: eventTitleElement.find(":selected").attr('class'),
-                            start: new Date($('#apptStartTime').val()),
-                            end: new Date($('#apptEndTime').val()),
-                            username: $('#eventMember').val(),
-                            campus: $('#eventCampus').val()
-                        }, true);
-                },
-                error: function () {
-                    alert('Error saving shift to DB');
-                },
-                contentType: "application/json",
-                // dataType: 'json'
-            });
-        }
-
-    }
 
     function filter(calEvent) {
 
@@ -286,7 +193,7 @@ $(document).ready(function () {
 
         $('#shiftSelect option:selected').each(function () {
             vals2.push($(this).val());
-        })
+        });
 
         $('.allOrNone').on('click',function() { //
             if ($('.allOrNone').is(':checked')) {
@@ -295,32 +202,32 @@ $(document).ready(function () {
             } else {
                 $('.campusFilter').prop("checked", false);
             }
-        })
+        });
 
 
-        if ($('#shiftSelect').val() == null) {
+        if ($('#shiftSelect').val() === null) {
             return vals.indexOf(calEvent.campus) !== -1;
         }
-        if ($('#shiftSelect option:selected').val() == "all") {
+        if ($('#shiftSelect option:selected').val() === "all") {
             return vals.indexOf(calEvent.campus) !== -1;
         }
 
         return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
     }
 
-    $('.campusFilter').prop("checked", true) // everything is checked
+    $('.campusFilter').prop("checked", true) ;// everything is checked
 
     $('input:checkbox.allOrNone').on('change', function() {
-        $('#calendar').fullCalendar('rerenderEvents');
-    })
+        calendar.fullCalendar('rerenderEvents');
+    });
 
 
     $('input:checkbox.campusFilter').on('change', function () {
-        $('#calendar').fullCalendar('rerenderEvents');
+        calendar.fullCalendar('rerenderEvents');
     });
 
     $('#shiftSelect').on('change', function () {
-        $('#calendar').fullCalendar('rerenderEvents');
+        calendar.fullCalendar('rerenderEvents');
     });
 
     $(function () {
@@ -356,3 +263,56 @@ $(document).ready(function () {
     $('#addShiftTime').hide();
 
 });
+
+function doSubmit() {
+    var eventTitleElement = $('#eventTitle');
+    $("#createEventModal").modal('hide');
+
+    var start;
+    var end;
+
+    if (addButtonBool === true) {
+        start = moment(new Date($('#startTime').val())).format(dateFormat);
+        end = moment(new Date($('#endTime').val())).format(dateFormat);
+    } else {
+        start = moment(new Date($('#apptStartTime').val())).format(dateFormat);
+        end = moment(new Date($('#apptEndTime').val())).format(dateFormat);
+    }
+    var shiftRaw = {
+        title: eventTitleElement.find(":selected").attr('class'),
+        start: start,
+        end: end,
+        campus: $('#eventCampus').val(),
+        username: $('#eventMember').val(),
+        location: $('#eventLocation').val(),
+        notes: $('#eventNotes').val(),
+        requiredTraining: $('#eventRequiredTraining').val()
+    };
+    saveShift(shiftRaw);
+}
+
+var saveShift = function (shiftRaw) {
+    console.log(shiftRaw);
+    $.ajax({
+        type: 'POST',
+        beforeSend: function(request) {
+            request.setRequestHeader(header, token);
+        },
+        url: api + '/shifts/save',
+        data: JSON.stringify(shiftRaw),
+        success: function(data) {
+            $("#calendar").fullCalendar('renderEvent', {
+                title: shiftRaw.title,
+                start: shiftRaw.start,
+                end: shiftRaw.end,
+                username: shiftRaw.username,
+                campus: shiftRaw.campus
+            }, true);
+        },
+        error: function() {
+            alert('Error saving shift to DB');
+        },
+        contentType: "application/json"
+    });
+};
+

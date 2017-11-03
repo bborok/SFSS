@@ -3,6 +3,7 @@ package com.zeta.Controllers;
 import com.zeta.Data.TimeCard.TimeCardData;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
+import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.zeta.Models.Role;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class TimeCardController {
@@ -22,12 +30,17 @@ public class TimeCardController {
     }
 
     @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m, String username, Long shiftId) {
-
+    public String getTimeCard(Model m, HttpServletRequest request) {
+        List<String> shiftId = new ArrayList<String>();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return "users";
+        if (u.getRole() == Role.MEMBER) {
+//            shiftId = (long) 1;
+        }
         // To be removed, only for testing
-        username = "user1";
-        shiftId = (long) 1;
 
+        
 //        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
         TimeCard timeCard = new TimeCard();
         m.addAttribute("timeCard", timeCard);

@@ -3,7 +3,7 @@
 <!-- jQuery Resources -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<script src= 'resources/js/timecard.js'></script>
+
 
 <!-- Sidebar -->
 <div id="sidebar-wrapper">

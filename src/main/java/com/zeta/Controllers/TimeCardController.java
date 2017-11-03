@@ -28,8 +28,8 @@ public class TimeCardController {
         username = "user1";
         shiftId = (long) 1;
 
-        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
-        //TimeCard timeCard = new TimeCard();
+//        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
+        TimeCard timeCard = new TimeCard();
         m.addAttribute("timeCard", timeCard);
         return "timecard";
     }

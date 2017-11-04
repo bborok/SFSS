@@ -34,13 +34,13 @@ public class TimeCardController {
         List<String> shiftId = new ArrayList<String>();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if (u == null) return "users";
-        if (u.getRole() == Role.MEMBER) {
+//        if (u == null) return "timecard";
+//        if (u.getRole() == Role.MEMBER) {
 //            shiftId = (long) 1;
-        }
-        // To be removed, only for testing
+//        }
 
-        
+
+
 //        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
         TimeCard timeCard = new TimeCard();
         m.addAttribute("timeCard", timeCard);

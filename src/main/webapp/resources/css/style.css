@@ -196,19 +196,14 @@ img { max-width: 100%; }
 #nav ul li{
 	display: inline-block;
 }
-#nav ul li a{
-	padding: 20px;
+#nav ul li button{
+	padding: 10px;
 	color: white;
+	border-radius: 4px;
 }
 
-/*#fixed {*/
-	/*position:fixed;*/
-	/*top:25%;*/
-	/*right:2%;*/
-/*}*/
-
 #fixed{ margin-bottom:10px;}
-/*.likediv { margin-top:10px;}*/
+
 .affix{
 	right:3%;
 	float:right;

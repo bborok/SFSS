@@ -12,29 +12,29 @@
             <p>SFU SFEP</p>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/">Home</a>
+            <a href="${pageContext.request.contextPath}/" class="fa fa-home">Home</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
+            <a href="${pageContext.request.contextPath}/schedule" class="fa fa-calendar">Schedule</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/profile" class="fa fa-user">Profile</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
+            <a href="${pageContext.request.contextPath}/statistics_info_lf" class="fa fa-area-chart">Statistics</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
+            <a href="${pageContext.request.contextPath}/payroll" class="fa fa-credit-card">Payroll</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/log">Log</a>
+            <a href="${pageContext.request.contextPath}/log" class="fa fa-book">Log</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
+            <a href="${pageContext.request.contextPath}/timecard" class="fa fa-clock-o">Time Card</a>
         </li>
         <c:if test="${sessionScope.user.role != 'MEMBER'}">
             <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/users">Users</a>
+                <a href="${pageContext.request.contextPath}/users" class="fa fa-users">Users</a>
             </li>
         </c:if>
     </ul>

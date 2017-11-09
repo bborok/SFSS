@@ -11,30 +11,30 @@
         <li class="sidebar-brand">
             <p>SFU SFEP</p>
         </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/">Home</a>
+        <li class="sidebar-item" >
+            <a href="${pageContext.request.contextPath}/"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/schedule">Schedule</a>
+            <a href="${pageContext.request.contextPath}/schedule"><i class="fa fa-calendar"></i> Schedule</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i> Profile</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/statistics_info_lf">Statistics</a>
+            <a href="${pageContext.request.contextPath}/statistics_info_lf"><i class="fa fa-area-chart"></i> Statistics</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/payroll">Payroll</a>
+            <a href="${pageContext.request.contextPath}/payroll"><i class="fa fa-credit-card"></i> Payroll</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/log">Log</a>
+            <a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> Log</a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/timecard">Time Card</a>
+            <a href="${pageContext.request.contextPath}/timecard"><i class="fa fa-clock-o"></i> Time Card</a>
         </li>
         <c:if test="${sessionScope.user.role != 'MEMBER'}">
             <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/users">Users</a>
+                <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
             </li>
         </c:if>
     </ul>

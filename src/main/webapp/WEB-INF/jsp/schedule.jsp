@@ -283,18 +283,23 @@ cancel button functionalities
                                             <button type="button" class="close" data-dismiss="modal"><span
                                                     aria-hidden="true">&times;</span>
                                                 <span class="sr-only">close</span></button>
-                                            Title: <span id="modalTitle" class="modal-title"></span>
+                                            <h4><b>Title: <span id="modalTitle" class="modal-title"></span></b></h4>
                                         </div>
                                         <br>
-                                        Start: <span id="modalStart"></span><br>
-                                        End: <span id="modalEnd"></span><br><br>
-                                        Campus: <span id="modalCampus"></span><br><br>
-                                        ID: <span id="modalID"></span><br><br>
-                                        Member: <span id="modalMember"></span><br>
-                                        Date: <span id="modalDate"></span><br>
-                                        Location: <span id="modalLocation"></span><br>
-                                        Notes: <span id="modalNotes"></span><br>
-                                        Required Training: <span id="modalTraining"></span><br>
+                                        <div style="padding-left: 15px">
+                                            <b><u>Date:</u> </b><span id="modalDate"></span><br>
+                                            <b><u>Start:</u> </b><span id="modalStart"></span><br>
+                                            <b><u>End:</u> </b><span id="modalEnd"></span><br><hr>
+
+                                            <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
+                                            <b><u>Location:</u> </b><span id="modalLocation"></span><br>
+                                            <b><u>ID:</u> </b><span id="modalID"></span><br><hr>
+
+                                            <b><u>Member:</u> </b><span id="modalMember"></span><br>
+                                            <b><u>Notes:</u> </b><span id="modalNotes"></span><br>
+                                            <b><u>Required Training:</u> </b><span id="modalTraining"></span><br><br>
+                                        </div>
+
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -42,7 +42,7 @@ public class TimeCard {
         this.isTimeCardSubmitted = isTimeCardSubmitted;
     }
 
-    public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
+    public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date, boolean isTimeCardSubmitted,
                     String SPTotal, String TPTotal, String PCTotal,
                     String SWTotal, String HSRTotal, String ASTotal) {
 
@@ -57,6 +57,7 @@ public class TimeCard {
         this.SWTotal = SWTotal;
         this.HSRTotal = HSRTotal;
         this.ASTotal = ASTotal;
+        this.isTimeCardSubmitted = isTimeCardSubmitted;
     }
 
     public String getUsername() {

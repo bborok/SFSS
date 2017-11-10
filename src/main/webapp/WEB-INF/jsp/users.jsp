@@ -168,7 +168,7 @@
     };
 
     $(function () {
-        $("table td").click(function () {
+        $("table td").click(function (event) {
             event.preventDefault();
             $('table td').removeClass('current');
             $(this).addClass("current");

@@ -83,11 +83,11 @@
                                 </div>
                                 <div class="col-md-6 ">
                                     <label > Date : </label>
-                                    <form:input path="date" class="form-control" type="date" id="date" value=""/>
+                                    <form:input path="date" class="form-control" type="date" id="date" value="" required="required" />
                                 </div>
                                 <div class="col-md-6" style="margin-bottom: 1em;">
                                     <label > Location : </label>
-                                    <form:input path="location" class="form-control" type="input" id="location" value=""/>
+                                    <form:input path="location" class="form-control" type="input" id="location" value="" required="required" />
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel panel-info">
@@ -123,7 +123,7 @@
                                                             <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
                                                             <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
                                                         </td>
-                                                        <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="0"/></td>
+                                                        <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="0" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding-top: 1.5%;">Safe Walks</td>
@@ -162,7 +162,9 @@
                                 </div>
 
                                 <div class="pull-right">
-                                    <form:button type="submit" name="timecard" id="timecard" class="btn btn-success" style="margin-top:1em;margin-right:1em;">Submit Time Card</form:button>
+                                    <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>
+                                    <form:button type="submit" name="submit"  class="btn btn-success" style="margin-top:1em;margin-right:1em;">Submit Time Card</form:button>
+
                                 </div>
 
                             </div> <%--end of row--%>

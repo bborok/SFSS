@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zeta.Models.User" %><%--
   Page that displays the currently logged in users information.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -64,6 +64,10 @@
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("user", user);
+    %>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -84,7 +88,7 @@
                     <div>
                         <div>
                             <h1>
-                                <b><c:out value="${sessionScope.user.name}"/>'s Profile</b>
+                                <b><c:out value="${user.getName()}"/>'s Profile</b>
                             </h1>
                             <center>
                                 <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
@@ -93,20 +97,20 @@
 
                         </div>
                         <div>
-                            <h3>Role: ${sessionScope.user.role}</h3>
-                            <h3>Student Number: ${sessionScope.user.studentNumber}</h3>
-                            <h3>Username: ${sessionScope.user.username}</h3>
+                            <h3>Username: ${user.getUsername()}</h3>
+                            <h3>Student Number: ${user.getStudentNumber()}</h3>
+                            <h3>Role: ${user.getRole()}</h3>
                             <%--Info to display if role is MEMBER --%>
-                            <c:if test="${sessionScope.user.role eq 'MEMBER'}">
-                                <h3>Campus: ${sessionScope.user.preferredCampus}</h3>
+                            <c:if test="${user.getRole() eq 'MEMBER'}">
+                                <h3>Campus: ${user.getPreferredCampus()}</h3>
                                 <h3>Training:</h3>
                                 <c:choose>
-                                    <c:when test="${empty sessionScope.user.training}">
-                                        Current not trained for any task
+                                    <c:when test="${empty user.getTraining()}">
+                                        Currently not trained for any task
                                     </c:when>
                                     <c:otherwise>
                                         <ul>
-                                            <c:forEach var="training" items="${sessionScope.user.training}"
+                                            <c:forEach var="training" items="${user.getTraining()}"
                                                        varStatus="status">
                                                 <li>training</li>
                                             </c:forEach>

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.zeta.Models.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -76,7 +75,7 @@ public class TimeCardController {
         timeCard.setShiftId(7);
 
 
-        if (!timeCardData.addTimeCard(timeCard)) {
+        if (!timeCardData.saveTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
 
@@ -114,7 +113,7 @@ public class TimeCardController {
         timeCard.setShiftId(7);
 
 
-        if (!timeCardData.addTimeCard(timeCard)) {
+        if (!timeCardData.saveTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
 

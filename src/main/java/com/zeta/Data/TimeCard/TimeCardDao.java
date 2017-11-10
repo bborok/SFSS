@@ -31,9 +31,10 @@ public class TimeCardDao implements TimeCardData {
     }
 
     @Override
-    public Boolean addTimeCard(TimeCard timeCard) {
+    public boolean saveTimeCard(TimeCard timeCard) {
         try {
-            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ? where User = ? and ID = ?";
+            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
+                            "where User = ? and ID = ?";
             String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
 
             con.setAutoCommit(false);
@@ -42,8 +43,9 @@ public class TimeCardDao implements TimeCardData {
             updateShift.setString(1, timeCard.getCampus().toString());
             updateShift.setString(2, timeCard.getLocation());
             updateShift.setString(3, timeCard.getNotes());
-            updateShift.setString(4, timeCard.getUsername());
-            updateShift.setLong(5, timeCard.getShiftId());
+            updateShift.setInt(4, 0);   // save time card should always set submitted to 0
+            updateShift.setString(5, timeCard.getUsername());
+            updateShift.setLong(6, timeCard.getShiftId());
 
             updateShift.execute();
 
@@ -58,7 +60,37 @@ public class TimeCardDao implements TimeCardData {
     }
 
     @Override
-    public Boolean updateTimeCard(TimeCard timeCard) {
+    public boolean submitTimeCard(TimeCard timeCard) {
+        try {
+            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
+                    "where User = ? and ID = ?";
+            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
+
+            con.setAutoCommit(false);
+
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getCampus().toString());
+            updateShift.setString(2, timeCard.getLocation());
+            updateShift.setString(3, timeCard.getNotes());
+            updateShift.setInt(4, 1);   // submit time card should always set submitted to 1
+            updateShift.setString(5, timeCard.getUsername());
+            updateShift.setLong(6, timeCard.getShiftId());
+
+            updateShift.execute();
+
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
+
+            con.commit();
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean updateTimeCard(TimeCard timeCard) {
         try {
 
             String shiftSQL = "update Shift set Location = ?, Notes = ? where User = ? and ID = ?";

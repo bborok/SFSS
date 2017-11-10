@@ -7,12 +7,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class CustomTimestampSerializer extends JsonSerializer<Timestamp> {
+public class CustomDateTimeSerializer extends JsonSerializer<Date> {
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public void serialize(Timestamp timestamp, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(format.format(timestamp));
+    public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeString(format.format(date));
     }
 }

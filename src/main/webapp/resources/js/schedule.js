@@ -141,24 +141,12 @@ $(document).ready(function () {
             $('#fullCalModal').modal();
 
             $('#btnDelete').on('click', function (e) {
-
                 e.preventDefault();
                 //AJAX DELETE REQUEST
-                $.ajax({
-                    type: 'DELETE',
-                    beforeSend: function (request) {
-                        request.setRequestHeader(header, token);
-                    },
-                    url: api + '/shifts/delete/' + event.id,
-                    success: function (data) {
-                        location.reload(); //reload the page to refresh data (shouldn't really be need, but is used just in case)
-                    },
-                    fail: function () {
-                        alert('Error delete shift in DB');
-                    }
-                });
+                deleteShift(event.id);
+
                 $('#fullCalModal').modal('hide');
-                calendar.fullCalendar('removeEvents', event._id);
+
             })
         },
 
@@ -290,26 +278,39 @@ function doSubmit() {
 
 var saveShift = function (shiftRaw) {
     console.log(shiftRaw);
+    var url = api + '/shifts/save';
     $.ajax({
-        type: 'POST',
-        beforeSend: function (request) {
-            request.setRequestHeader(header, token);
+        headers: {
+            Accept: "text/plain"
         },
-        url: api + '/shifts/save',
-        data: JSON.stringify(shiftRaw),
-        success: function (data) {
-            $("#calendar").fullCalendar('renderEvent', {
-                title: shiftRaw.title,
-                start: shiftRaw.start,
-                end: shiftRaw.end,
-                username: shiftRaw.username,
-                campus: shiftRaw.campus
-            }, true);
+        type: 'POST',
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(shiftRaw),
+        success : function() {
+            alert('Success');
+            calendar.fullCalendar( 'renderEvent', shiftRaw);
         },
         error: function () {
-            alert('Error saving shift to DB');
-        },
-        contentType: "application/json"
+            alert('Error');
+        }
     });
 };
+
+var deleteShift = function (eventId) {
+    $.ajax({
+        type: 'DELETE',
+        headers: {
+            Accept: "text/plain"
+        },
+        url: api + '/shifts/delete/' + eventId,
+        success: function () {
+            calendar.fullCalendar('removeEvents', eventId);
+        },
+        fail: function () {
+            alert('Error deleting shift in DB');
+        }
+    });
+};
+
 

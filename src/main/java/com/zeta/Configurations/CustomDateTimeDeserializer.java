@@ -6,18 +6,18 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class CustomTimestampDeserializer extends JsonDeserializer<Timestamp> {
+public class CustomDateTimeDeserializer extends JsonDeserializer<Date> {
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public Timestamp deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         String date = jsonParser.getText();
         try {
-            return new Timestamp(format.parse(date).getTime());
+            return format.parse(date);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

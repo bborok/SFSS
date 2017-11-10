@@ -2,11 +2,16 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
 import com.zeta.Models.ShiftRaw;
+import com.zeta.Models.TestUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 
 
@@ -30,13 +35,17 @@ public class ShiftsController {
      * @return Status code 200 if successful, 400 if not
      */
     @PostMapping("/shifts/save")
-    public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
+    public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw, HttpServletRequest httpServletRequest) {
         System.out.println(shiftRaw.toString());
-        if (shiftData.saveShiftRaw(shiftRaw))
-            return ResponseEntity.ok().build();
+        if (shiftData.saveShiftRaw(shiftRaw)){
+            System.out.println("Shift saved successfully.");
+            return ResponseEntity
+                    .created(URI.create(httpServletRequest.getRequestURI()))
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("Success");
+        }
         else
             return ResponseEntity.badRequest().build();
-
     }
 
     /**

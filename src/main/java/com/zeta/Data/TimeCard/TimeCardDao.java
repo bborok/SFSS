@@ -32,68 +32,21 @@ public class TimeCardDao implements TimeCardData {
 
     @Override
     public boolean saveTimeCard(TimeCard timeCard) {
-        try {
-            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
-                            "where User = ? and ID = ?";
-            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
-
-            con.setAutoCommit(false);
-
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
-            updateShift.setString(1, timeCard.getCampus().toString());
-            updateShift.setString(2, timeCard.getLocation());
-            updateShift.setString(3, timeCard.getNotes());
-            updateShift.setInt(4, 0);   // save time card should always set submitted to 0
-            updateShift.setString(5, timeCard.getUsername());
-            updateShift.setLong(6, timeCard.getShiftId());
-
-            updateShift.execute();
-
-            insertTasksIntoUserTask(timeCard, userTaskSQL);
-
-            con.commit();
-
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        return addTimeCard(timeCard);
     }
 
     @Override
     public boolean submitTimeCard(TimeCard timeCard) {
-        try {
-            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
-                    "where User = ? and ID = ?";
-            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
-
-            con.setAutoCommit(false);
-
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
-            updateShift.setString(1, timeCard.getCampus().toString());
-            updateShift.setString(2, timeCard.getLocation());
-            updateShift.setString(3, timeCard.getNotes());
-            updateShift.setInt(4, 1);   // submit time card should always set submitted to 1
-            updateShift.setString(5, timeCard.getUsername());
-            updateShift.setLong(6, timeCard.getShiftId());
-
-            updateShift.execute();
-
-            insertTasksIntoUserTask(timeCard, userTaskSQL);
-
-            con.commit();
-
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        return addTimeCard(timeCard);
     }
 
 
     @Override
     public boolean updateTimeCard(TimeCard timeCard) {
+        int isSubmitted = timeCard.isTimeCardSubmitted() ? 1 : 0;
         try {
 
-            String shiftSQL = "update Shift set Location = ?, Notes = ? where User = ? and ID = ?";
+            String shiftSQL = "update Shift set Location = ?, Notes = ?, isTimeCardSubmitted = ? where User = ? and ID = ?";
             String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
 
             con.setAutoCommit(false);
@@ -101,8 +54,9 @@ public class TimeCardDao implements TimeCardData {
             PreparedStatement updateShift = con.prepareStatement(shiftSQL);
             updateShift.setString(1, timeCard.getLocation());
             updateShift.setString(2, timeCard.getNotes());
-            updateShift.setString(3, timeCard.getUsername());
-            updateShift.setLong(4, timeCard.getShiftId());
+            updateShift.setInt(3, isSubmitted);
+            updateShift.setString(4, timeCard.getUsername());
+            updateShift.setLong(5, timeCard.getShiftId());
 
             updateShift.execute();
 
@@ -123,7 +77,7 @@ public class TimeCardDao implements TimeCardData {
     public TimeCard getTimeCard(String username, long shiftId) {
         TimeCard timeCard = null;
         try {
-            String shiftSQL = "select Campus, Location, Notes from Shift where User = ? and ID = ?";
+            String shiftSQL = "select Campus, Location, Notes, isTimeCardSubmitted from Shift where User = ? and ID = ?";
             String taskSQL = "select Name from Task where isDeactivated = 0 order by Name asc";
             String userTaskSQL = "select Task, Count from UserTask where User = ? and Shift = ? order by Task asc";
 
@@ -154,6 +108,35 @@ public class TimeCardDao implements TimeCardData {
             return null;
         }
         return timeCard;
+    }
+
+    private boolean addTimeCard(TimeCard timeCard) {
+        int isSubmitted = timeCard.isTimeCardSubmitted() ? 1 : 0;
+        try {
+            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
+                    "where User = ? and ID = ?";
+            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
+
+            con.setAutoCommit(false);
+
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getCampus().toString());
+            updateShift.setString(2, timeCard.getLocation());
+            updateShift.setString(3, timeCard.getNotes());
+            updateShift.setInt(4, isSubmitted);
+            updateShift.setString(5, timeCard.getUsername());
+            updateShift.setLong(6, timeCard.getShiftId());
+
+            updateShift.execute();
+
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
+
+            con.commit();
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     private void clearRecords(String username, long shiftId) throws SQLException {

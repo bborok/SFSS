@@ -28,6 +28,11 @@ public class TimeCardRowMapper implements RowMapper<TimeCard> {
             timeCard.setNotes(resultSet.getString("Notes"));
         }
 
+        if (resultSet.getInt("isTimeCardSubmitted") == 1) {
+            timeCard.setTimeCardSubmitted(true);
+        } else {
+            timeCard.setTimeCardSubmitted(false);
+        }
         return timeCard;
     }
 }

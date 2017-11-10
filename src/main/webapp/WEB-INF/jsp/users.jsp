@@ -43,6 +43,11 @@
         display: inline-table;
     }
 
+    thead {
+        padding: 1px;
+        height: 1%;
+    }
+
     table {
         height: 300px;
     }
@@ -86,11 +91,11 @@
                         </p>
 
                         <table class="table table-striped" style="text-align:left; ">
-                            <thead>
-                            <tr>
-                                <th width="40%">Name</th>
-                                <th width="30%">#</th>
-                            </tr>
+                            <thead class="table-row-cell">
+                                <tr>
+                                    <th width="40%">Name</th>
+                                    <th width="30%">#</th>
+                                </tr>
                             </thead>
 
                             <tbody style="color:black">

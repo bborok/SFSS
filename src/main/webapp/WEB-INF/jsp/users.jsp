@@ -43,6 +43,10 @@
         display: inline-table;
     }
 
+    thead {
+        height: 1%;
+    }
+
     table {
         height: 300px;
     }
@@ -87,10 +91,10 @@
 
                         <table class="table table-striped" style="text-align:left; ">
                             <thead>
-                            <tr>
-                                <th width="40%">Name</th>
-                                <th width="30%">#</th>
-                            </tr>
+                                <tr>
+                                    <th width="40%">Name</th>
+                                    <th width="30%">#</th>
+                                </tr>
                             </thead>
 
                             <tbody style="color:black">
@@ -163,7 +167,7 @@
     };
 
     $(function () {
-        $("table td").click(function () {
+        $("table td").click(function (event) {
             event.preventDefault();
             $('table td').removeClass('current');
             $(this).addClass("current");

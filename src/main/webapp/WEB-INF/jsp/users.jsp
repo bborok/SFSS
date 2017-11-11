@@ -44,7 +44,6 @@
     }
 
     thead {
-        padding: 1px;
         height: 1%;
     }
 

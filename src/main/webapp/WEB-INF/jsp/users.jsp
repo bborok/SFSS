@@ -90,7 +90,7 @@
                         </p>
 
                         <table class="table table-striped" style="text-align:left; ">
-                            <thead class="table-row-cell">
+                            <thead>
                                 <tr>
                                     <th width="40%">Name</th>
                                     <th width="30%">#</th>

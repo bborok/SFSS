@@ -1,6 +1,7 @@
 package com.zeta.Data.User;
 
 import com.zeta.Models.Login;
+import com.zeta.Models.Training;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -99,6 +100,7 @@ public class UserDao implements UserData {
                         "CallSign, isDeactivated from User where Username = ? and " +
                         "(select 1 from User where Username = ?) and isDeactivated = 0";
                 user = jdbcTemplate.queryForObject(userSQL, new Object[] {username, username}, new UserRowMapper());
+                getUserTraining(user);
         } catch (Exception e) {
             return null;
         }
@@ -121,10 +123,10 @@ public class UserDao implements UserData {
 
     @Override
     public Boolean getUserTraining(User user) {
-        List<String> list;
+        List<Training> list;
         try {
-                String sql = "select Training from UserTraining where User = ?";
-                list = jdbcTemplate.queryForList(sql, new Object[] {user.getUsername()}, String.class);
+                String sql = "select Training, Hours, Date from UserTraining where User = ?";
+                list = jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new TrainingRowMapper());
                 user.setTraining(list);
         } catch (Exception e) {
             return false;

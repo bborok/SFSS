@@ -4,6 +4,7 @@ import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
+import com.zeta.Models.Training;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class UserController {
             @RequestParam("role") String role,
             @RequestParam("campus") String campus,
             @RequestParam("callSign") String callSign,
-            @RequestParam("training") List<String> training,
+            @RequestParam("training") List<Training> training,
             @RequestParam("isDeactivated") Boolean isDeactivated){
 
         User u = new User(

@@ -15,7 +15,7 @@ public class User {
     private Long studentNumber;
     private Role role;
     private String callSign;
-    private List<String> training;
+    private List<Training> training;
     private Boolean isDeactivated;
 
     //TODO: Uncomment and implement this
@@ -30,7 +30,7 @@ public class User {
     } //Required by JPA
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
-                Campus preferredCampus, String callSign, List<String> training, Boolean isDeactivated) {
+                Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -107,11 +107,11 @@ public class User {
         this.callSign = callSign;
     }
 
-    public List<String> getTraining() {
+    public List<Training> getTraining() {
         return training;
     }
 
-    public void setTraining(List<String> training) {
+    public void setTraining(List<Training> training) {
         this.training = training;
     }
 

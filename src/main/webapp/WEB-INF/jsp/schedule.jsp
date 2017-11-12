@@ -17,8 +17,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <%--CSRF Setup, needed for AJAX requests--%>
     <meta name="_csrf" content="${_csrf.token}"/>
-    <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <!-- ... -->
 
@@ -102,6 +102,9 @@ cancel button functionalities
                             </center>
                             <hr>
                         </div>
+
+                        <%--Used for displaying alerts--%>
+                        <div id="alertsDiv"></div>
 
                         <div class="col-sm-12 row">
                             <div class="radio">

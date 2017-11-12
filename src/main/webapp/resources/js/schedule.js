@@ -13,21 +13,22 @@ var dateFormat = "YYYY-MM-DD HH:mm:ss";
 var token;
 var header;
 var calendar;
+var errorDiv;
 
 $(document).ready(function () {
+    //CSRF Setup, needed for AJAX requests
     token = $("meta[name='_csrf']").attr("content");
     header = $("meta[name='_csrf_header']").attr("content");
-
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader(header, token);
     });
 
-    // page is now ready, initialize the calendar...
+    errorDiv = $('#alertsDiv');
+
+
+    // Initialize the calendar...
     calendar = $('#calendar');
-
-
     $('#external-events .fc-event').each(function () {
-
         // store data so the calendar knows to render an event upon drop
         $(this).data('event', {
             title: $.trim($(this).text()), // use the element's text as the event title
@@ -41,7 +42,6 @@ $(document).ready(function () {
             revertDuration: 0  //  original position after the drag
         });
     });
-
 
     calendar.fullCalendar({
         eventSources: [
@@ -139,7 +139,7 @@ $(document).ready(function () {
             $('#modalMember').html(event.username);
             $('#modalCampus').html(event.campus);
             $('#modalID').html(event.id);
-            $('#modalDate').html(event.date);
+            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
             $('#modalLocation').html(event.location);
             $('#modalNotes').html(event.notes);
             $('#modalTraining').html(event.requiredTraining);
@@ -149,19 +149,16 @@ $(document).ready(function () {
             $('#btnDelete').on('click', function (e) {
                 e.preventDefault();
                 //AJAX DELETE REQUEST
-                deleteShift(event.id);
+                deleteShift(event);
 
                 $('#fullCalModal').modal('hide');
-
             })
         },
 
         navLinks: true, // can click day/week names to navigate views
-
         weekNumbers: true,
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
-
         editable: true
     });
 
@@ -175,13 +172,11 @@ $(document).ready(function () {
     function filter(calEvent) {
 
         var vals = [];
-
         $('input:checkbox.campusFilter:checked').each(function () {
             vals.push($(this).val());
         });
 
         var vals2 = [];
-
         $('#shiftSelect option:selected').each(function () {
             vals2.push($(this).val());
         });
@@ -194,7 +189,6 @@ $(document).ready(function () {
                 $('.campusFilter').prop("checked", false);
             }
         });
-
 
         if ($('#shiftSelect').val() === null) {
             return vals.indexOf(calEvent.campus) !== -1;
@@ -292,31 +286,50 @@ var saveShift = function (shiftRaw) {
         type: 'POST',
         url: url,
         contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(shiftRaw),
-        success : function() {
-            alert('Success');
-            calendar.fullCalendar( 'renderEvent', shiftRaw);
+        data: JSON.stringify(shiftRaw),
+        success: function () {
+            displaySuccessAlert('Saved ' + shiftRaw.title + '.');
+            calendar.fullCalendar('refetchEvents');
         },
         error: function () {
-            alert('Error');
+            displayErrorAlert('Error saving ' + shiftRaw.title + ' to database.');
         }
     });
 };
 
-var deleteShift = function (eventId) {
+var deleteShift = function (event) {
     $.ajax({
         type: 'DELETE',
         headers: {
             Accept: "text/plain"
         },
-        url: api + '/shifts/delete/' + eventId,
+        url: api + '/shifts/delete/' + event.id,
         success: function () {
-            calendar.fullCalendar('removeEvents', eventId);
+            displaySuccessAlert('Deleted ' + event.title + '.');
+            calendar.fullCalendar('refetchEvents');
         },
         fail: function () {
-            alert('Error deleting shift in DB');
+            displayErrorAlert('Error deleting ' + event.title + 'to database.');
         }
     });
+};
+
+var displayErrorAlert = function (msg) {
+    errorDiv.append(
+        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Danger! </strong> " + msg +
+        "</div>"
+    );
+};
+
+var displaySuccessAlert = function (msg) {
+    errorDiv.append(
+        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Success! </strong> " + msg +
+        "</div>"
+    );
 };
 
 

@@ -109,11 +109,11 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-        timeCard.setUsername("user3");
-        timeCard.setShiftId(7);
+        timeCard.setUsername("timmyy");
+        timeCard.setShiftId(107);
 
 
-        if (!timeCardData.saveTimeCard(timeCard)) {
+        if (!timeCardData.submitTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
 

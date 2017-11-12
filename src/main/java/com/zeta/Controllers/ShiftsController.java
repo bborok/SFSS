@@ -35,15 +35,15 @@ public class ShiftsController {
     @PostMapping("/shifts/save")
     public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw, HttpServletRequest httpServletRequest) {
         System.out.println(shiftRaw.toString());
-        if (shiftData.saveShiftRaw(shiftRaw)){
+        if (shiftData.saveShiftRaw(shiftRaw)) {
             System.out.println("Shift saved successfully.");
             return ResponseEntity
                     .created(URI.create(httpServletRequest.getRequestURI()))
                     .contentType(MediaType.TEXT_PLAIN)
                     .body("Success");
-        }
-        else
+        } else {
             return ResponseEntity.badRequest().build();
+        }
     }
 
     /**

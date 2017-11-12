@@ -15,11 +15,17 @@ var header;
 var calendar;
 
 $(document).ready(function () {
+    token = $("meta[name='_csrf']").attr("content");
+    header = $("meta[name='_csrf_header']").attr("content");
+
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader(header, token);
+    });
+
     // page is now ready, initialize the calendar...
     calendar = $('#calendar');
 
-    token = $("meta[name='_csrf']").attr("content");
-    header = $("meta[name='_csrf_header']").attr("content");
+
     $('#external-events .fc-event').each(function () {
 
         // store data so the calendar knows to render an event upon drop

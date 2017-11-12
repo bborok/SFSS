@@ -32,18 +32,20 @@ public class TimeCardDao implements TimeCardData {
 
     @Override
     public boolean saveTimeCard(TimeCard timeCard) {
-        return addTimeCard(timeCard);
+        int isSubmitted = 0;    // saving timecard sets submitted to false
+        return addTimeCard(timeCard, isSubmitted);
     }
 
     @Override
     public boolean submitTimeCard(TimeCard timeCard) {
-        return addTimeCard(timeCard);
+        int isSubmitted = 1;    // submitting timecard sets submitted to true
+        return addTimeCard(timeCard, isSubmitted);
     }
 
 
     @Override
     public boolean updateTimeCard(TimeCard timeCard) {
-        int isSubmitted = timeCard.isTimeCardSubmitted() ? 1 : 0;
+        int isSubmitted = 1; // only able to update timecard after it has been submitted
         try {
 
             String shiftSQL = "update Shift set Location = ?, Notes = ?, isTimeCardSubmitted = ? where User = ? and ID = ?";
@@ -110,8 +112,7 @@ public class TimeCardDao implements TimeCardData {
         return timeCard;
     }
 
-    private boolean addTimeCard(TimeCard timeCard) {
-        int isSubmitted = timeCard.isTimeCardSubmitted() ? 1 : 0;
+    private boolean addTimeCard(TimeCard timeCard, int isSubmitted) {
         try {
             String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
                     "where User = ? and ID = ?";

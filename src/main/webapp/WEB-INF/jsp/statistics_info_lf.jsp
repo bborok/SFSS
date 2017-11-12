@@ -465,6 +465,18 @@
         }
 
 
+        // This must be a hyperlink
+        $("#export").click(function (event) {
+            // var outputFile = 'export'
+            var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+            outputFile = outputFile.replace('.csv','') + '.csv'
+
+            // CSV
+            exportTableToCSV.apply(this, [$('#table1 > table'), outputFile]);
+
+            // IF CSV, don't do event.preventDefault() or return false
+            // We actually need this to be a typical hyperlink
+        });
     });
 </script>
 </body>

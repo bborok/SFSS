@@ -95,9 +95,30 @@
                             </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
-                            <div class="panel-heading" id = "archives">Archives</div>
-                            <div class="panel-body" id = months>
-                                November 2017
+                            <div class="panel-heading" id = "announceFilter">Filter</div>
+                            <div class="panel-body" id = campusLead>
+                                <div class="col-sm-12 row">
+                                    <div class="radio">
+                                        <label>
+                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
+                                        </label>
+                                        <br>
+                                    </div>
+                                    <select class="form-control" id="shiftSelect"></select>
+                                    <br>
+                                </div>
                             </div>
                         </div>
                     <div class="panel panel-primary" style ="width:65%;text-align:left">
@@ -195,12 +216,11 @@
 
     });
 
-
-
     $(document).scroll(function(){
         $('.thisone').css('position','');
         top = $('.thisone').offset().top;
-        $('.thisone').css('position','absolute');   $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+        $('.thisone').css('position','absolute');
+        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
     });
 
 </script>

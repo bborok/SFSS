@@ -70,13 +70,12 @@
                             </ul>
                         </div>
                         <div class="col-md-4" style="padding-top: 15px">
-                            <button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>
+                            <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
                             <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
                             <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>
-                    <a title="Export" href="#" id="export">Export to Excel</a>
                 </div>
             </div>
 
@@ -95,11 +94,16 @@
             </center>
             <br>
 
+
             <br><br>
             <div class="col-sm-8">
+                <center><a title="Export" href="#" id="export">Export Table to CSV</a></center>
+
                 <table id="table1" class="display" width="100%"></table>
             </div>
             <div class="col-sm-4">
+                <center><a title="Export" href="#" id="export2">Export Table to CSV</a></center>
+
                 <table id="table2" class="display" width="100%"></table>
             </div>
 
@@ -473,6 +477,18 @@
 
             // CSV
             exportTableToCSV.apply(this, [$('#table1'), outputFile]);
+
+            // IF CSV, don't do event.preventDefault() or return false
+            // We actually need this to be a typical hyperlink
+        });
+
+        $("#export2").click(function (event) {
+            // var outputFile = 'export'
+            var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+            outputFile = outputFile.replace('.csv','') + '.csv'
+
+            // CSV
+            exportTableToCSV.apply(this, [$('#table2'), outputFile]);
 
             // IF CSV, don't do event.preventDefault() or return false
             // We actually need this to be a typical hyperlink

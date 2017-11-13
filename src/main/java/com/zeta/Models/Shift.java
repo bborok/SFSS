@@ -1,7 +1,6 @@
 package com.zeta.Models;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 public class Shift extends AbstractShift {
@@ -10,7 +9,7 @@ public class Shift extends AbstractShift {
     public Shift() {
     }
 
-    public Shift(Long id, String title, Timestamp start, Timestamp end, Campus campus, Date date, String location, String notes, String requiredTraining, User user) {
+    public Shift(Long id, String title, Date start, Date end, Campus campus, Date date, String location, String notes, String requiredTraining, User user) {
         super(id, title, start, end, campus, date, location, notes, requiredTraining);
         this.user = user;
     }
@@ -21,5 +20,13 @@ public class Shift extends AbstractShift {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "user=" + user +
+                "} " + super.toString();
     }
 }

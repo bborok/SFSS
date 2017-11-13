@@ -1,19 +1,26 @@
 package com.zeta.Models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.CustomDateTimeDeserializer;
+import com.zeta.Configurations.CustomDateTimeSerializer;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public abstract class AbstractShift {
     private Long id;
     private String title;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
-    private Timestamp start;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
-    private Timestamp end;
+
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    private Date start;
+
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    private Date end;
+
     private Campus campus;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+
     private Date date;
     private String location;
     private String notes;
@@ -22,7 +29,7 @@ public abstract class AbstractShift {
     public AbstractShift() {
     }
 
-    public AbstractShift(Long id, String title, Timestamp start, Timestamp end, Campus campus, Date date, String location, String notes, String requiredTraining) {
+    public AbstractShift(Long id, String title, Date start, Date end, Campus campus, Date date, String location, String notes, String requiredTraining) {
         this.id = id;
         this.title = title;
         this.start = start;
@@ -33,8 +40,6 @@ public abstract class AbstractShift {
         this.notes = notes;
         this.requiredTraining = requiredTraining;
     }
-
-
 
     public String getLocation() {
         return location;
@@ -84,21 +89,20 @@ public abstract class AbstractShift {
         this.title = title;
     }
 
-    public Timestamp getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(Date start) {
+        this.date = start; //TODO: This is a HACK
         this.start = start;
-        //set this.date to the Timestamp's date.
-        this.date = new Date(start.getTime());
     }
 
-    public Timestamp getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 
@@ -118,6 +122,10 @@ public abstract class AbstractShift {
                 ", start=" + start +
                 ", end=" + end +
                 ", campus=" + campus +
+                ", date=" + date +
+                ", location='" + location + '\'' +
+                ", notes='" + notes + '\'' +
+                ", requiredTraining='" + requiredTraining + '\'' +
                 '}';
     }
 }

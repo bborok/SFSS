@@ -17,8 +17,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <%--CSRF Setup, needed for AJAX requests--%>
     <meta name="_csrf" content="${_csrf.token}"/>
-    <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <!-- ... -->
 
@@ -33,7 +33,7 @@
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
 
     <!-- FullCalendar Resources -->
-    <link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>
+    <%--<link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>--%>
     <%--<script src='resources/lib/jquery.min.js'></script>--%>
     <%--<script src='resources/lib/moment.min.js'></script>--%>
     <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
@@ -48,11 +48,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%--<link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />--%>
 
-
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/css/fullCalendarCSS.css">
+    <%--fullCalendarCSS.css was throwing errors in Chrome dev console--%>
+    <%--<link rel="stylesheet" href="resources/css/fullCalendarCSS.css">--%>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
@@ -61,10 +61,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-
-
-
-
 </head>
 
 <style>
@@ -107,6 +103,9 @@ cancel button functionalities
                             <hr>
                         </div>
 
+                        <%--Used for displaying alerts--%>
+                        <div id="alertsDiv"></div>
+
                         <div class="col-sm-12 row">
                             <div class="radio">
                                 <label>
@@ -135,6 +134,7 @@ cancel button functionalities
                         </div>
                         <hr><br>
 
+                        <%--Calendar--%>
                         <div id='calendar'></div>
 
                             <%--Create Event Modal--%>
@@ -143,7 +143,6 @@ cancel button functionalities
                                 <%--Modal Content--%>
 
                                 <div class="modal-content">
-
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
                                         </button>

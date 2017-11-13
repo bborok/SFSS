@@ -66,8 +66,8 @@ public class ShiftDao implements ShiftData {
     @Override
     public boolean saveShiftRaw(ShiftRaw shiftRaw) {
         try {
-            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(sql,
                     shiftRaw.getTitle(),
                     shiftRaw.getStart(),
@@ -77,9 +77,11 @@ public class ShiftDao implements ShiftData {
                     shiftRaw.getLocation(),
                     shiftRaw.getNotes(),
                     shiftRaw.getDate(),
-                    shiftRaw.getRequiredTraining());
+                    shiftRaw.getRequiredTraining(),
+                    0); //By default, no timecard can be submitted if shift didn't exist already
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -110,7 +112,7 @@ public class ShiftDao implements ShiftData {
 
             con.commit();
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error deleting shift.");
             return false;
         }

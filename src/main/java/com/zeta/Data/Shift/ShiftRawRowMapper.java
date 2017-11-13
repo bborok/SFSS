@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ShiftRawRowMapper implements RowMapper<ShiftRaw> {
     @Override
@@ -14,8 +15,8 @@ public class ShiftRawRowMapper implements RowMapper<ShiftRaw> {
         sr.setId(rs.getLong("ID"));
         sr.setTitle(rs.getString("Name"));
         sr.setDate(rs.getDate("Date"));
-        sr.setStart(rs.getTimestamp("StartTime"));
-        sr.setEnd(rs.getTimestamp("EndTime"));
+        sr.setStart((Date) rs.getTimestamp("StartTime"));
+        sr.setEnd((Date) rs.getTimestamp("EndTime"));
         sr.setCampus(Campus.valueOf(rs.getString("Campus").toUpperCase()));
         sr.setUsername(rs.getString("User"));
         sr.setLocation(rs.getString("Location"));

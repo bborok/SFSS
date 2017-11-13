@@ -48,16 +48,13 @@
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
-
     <!-- Page Content -->
-
     <div id="page-content-wrapper">
         <right class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
-
                     <div class="row">
                         <div class="col-md-8">
                             <ul class="pagination">
@@ -71,8 +68,8 @@
                         </div>
                         <div class="col-md-4" style="padding-top: 15px;padding-left: 50px">
                             <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
-                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>

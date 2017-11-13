@@ -37,6 +37,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
 </style>
@@ -46,8 +47,6 @@
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
-
-
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -67,9 +66,10 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-4" style="padding-top: 15px">
-                            <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
+                        <div class="col-md-4" style="padding-top: 15px;padding-left: 50px">
+                            <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
+                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>

@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-abstract public class AnnouncementsDao implements AnnouncementsData{
+public class AnnouncementsDao implements AnnouncementsData{
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -32,6 +32,17 @@ abstract public class AnnouncementsDao implements AnnouncementsData{
     }
 
     @Override
+    public Announcements getAnnouncements (int id) {
+        try {
+            String sql =
+                    "SELECT * FROM Announcement WHERE ID =?";
+            Announcements announcements = jdbcTemplate.queryForObject(sql, new AnnouncementsRowMapper(), id);
+            return announcements;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    @Override
     public List<Announcements> getAllAnnouncements() {
         List<Announcements> list;
         try {
@@ -42,4 +53,5 @@ abstract public class AnnouncementsDao implements AnnouncementsData{
             return null;
         } return list;
     }
+
 }

@@ -32,7 +32,7 @@ public class AnnouncementsController {
             @RequestParam("username") String username,
             @RequestParam("title") String title,
             @RequestParam("message") String message,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
             @RequestParam("date") Date date,
             @RequestParam("campus") Campus campus,
             @RequestParam("id") int id) {

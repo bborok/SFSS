@@ -52,7 +52,7 @@
     <!-- Page Content -->
 
     <div id="page-content-wrapper">
-        <div class="container-fluid">
+        <right class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
@@ -69,10 +69,10 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-4" style="padding-top: 15px">
+                        <div class="col-md-4" style="padding-top: 15px;padding-left: 50px">
                             <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
-                            <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -92,9 +92,6 @@
                     </label>
                 </div>
             </center>
-            <br>
-
-
             <br><br>
             <div class="col-sm-8">
                 <center><a title="Export" href="#" id="export">Export Table to CSV</a></center>
@@ -395,12 +392,7 @@
         $("#wrapper").toggleClass("toggled");
     });
 
-
-
-
     $(document).ready(function () {
-
-        console.log("HELLO")
         function exportTableToCSV($table1, filename) {
             var $headers = $table1.find('tr:has(th)')
                 ,$rows = $table1.find('tr:has(td)')

@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/css/form-elements.css">
     <link rel="stylesheet" href="/resources/css/style.css">
-	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
+    <link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
 <style>
@@ -50,7 +50,7 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <right class="container-fluid">
+        <div class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
@@ -116,7 +116,6 @@
 <script src="/resources/bootstrap/js/bootstrap.js"></script>
 <script src="/resources/datatables/js/datatables.min.js"></script>
 <script src="/resources/js/echarts.common.min.js"></script>
-
 <script type="text/javascript">
 
 	//get chart element

@@ -95,69 +95,81 @@ public class IndexController {
 
     @RequestMapping(value="/statistic/data", produces="application/json", method = RequestMethod.GET)
     @ResponseBody
-    public String testjson(String campus) {
-        if (campus == null)
-            campus = "Burnaby";
-        StatisticsData sd = new StatisticsDao();
-        Date currDate = new Date();
-        Calendar ca = Calendar.getInstance();
-        ca.setTime(currDate);
-        int currYear = ca.get(Calendar.YEAR);
-        int[][] array= new int[6][12];
-        String[] strs = {"Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"};
-        for (int t = 0; t < 6; t++) {
-            for (int i = 0; i < 12; i ++) {
-                String str=String.valueOf(currYear) + "-" + String.valueOf(i+1) + "-01";
-                SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-                Date date = null;
-                try {
-                    date =sdf.parse(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
+    public String testjson(String kind, String campus) {
+        if (kind == "public_contact") {
+            if (campus == null)
+                campus = "Burnaby";
+            StatisticsData sd = new StatisticsDao();
+            Date currDate = new Date();
+            Calendar ca = Calendar.getInstance();
+            ca.setTime(currDate);
+            int currYear = ca.get(Calendar.YEAR);
+            int[][] array= new int[6][12];
+            String[] strs = {"Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"};
+            for (int t = 0; t < 6; t++) {
+                for (int i = 0; i < 12; i ++) {
+                    String str=String.valueOf(currYear) + "-" + String.valueOf(i+1) + "-01";
+                    SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+                    try {
+                        date =sdf.parse(str);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    array[t][i] = sd.getTaskCountMonth(strs[t], campus, calendar);
                 }
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                array[t][i] = sd.getTaskCountMonth(strs[t], campus, calendar);
             }
-        }
 
-        for (int t = 0; t < 6; t++) {
+            for (int t = 0; t < 6; t++) {
+                for (int i = 0; i < 12; i++) {
+                    System.out.print(array[t][i]);
+                }
+                System.out.print("\n");
+            }
+
+            JsonArrayBuilder title = Json.createArrayBuilder();
+            String[] title_strs = {String.valueOf(currYear), "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+            for (String str : title_strs) {
+                title.add(str);
+            }
+            JsonArrayBuilder val0 = Json.createArrayBuilder();
+            JsonArrayBuilder val1 = Json.createArrayBuilder();
+            JsonArrayBuilder val2 = Json.createArrayBuilder();
+            JsonArrayBuilder val3 = Json.createArrayBuilder();
+            JsonArrayBuilder val4 = Json.createArrayBuilder();
+            JsonArrayBuilder val5 = Json.createArrayBuilder();
             for (int i = 0; i < 12; i++) {
-                System.out.print(array[t][i]);
+                val0.add(array[0][i]);
+                val1.add(array[1][i]);
+                val2.add(array[2][i]);
+                val3.add(array[3][i]);
+                val4.add(array[4][i]);
+                val5.add(array[5][i]);
             }
-            System.out.print("\n");
+
+            JsonObject result = Json.createObjectBuilder()
+                    .add("title", title.build())
+                    .add(strs[0], val0.build())
+                    .add(strs[1], val1.build())
+                    .add(strs[2], val2.build())
+                    .add(strs[3], val3.build())
+                    .add(strs[4], val4.build())
+                    .add(strs[5], val5.build())
+                    .build();
+            return result.toString();
+        } else if (kind == "lost_found") {
+            if (campus == null)
+                campus = "Burnaby";
+            //to get data from database
+
+            //return json
+            return "";
+        } else {
+            return "";
         }
 
-        JsonArrayBuilder title = Json.createArrayBuilder();
-        String[] title_strs = {String.valueOf(currYear), "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-        for (String str : title_strs) {
-            title.add(str);
-        }
-        JsonArrayBuilder val0 = Json.createArrayBuilder();
-        JsonArrayBuilder val1 = Json.createArrayBuilder();
-        JsonArrayBuilder val2 = Json.createArrayBuilder();
-        JsonArrayBuilder val3 = Json.createArrayBuilder();
-        JsonArrayBuilder val4 = Json.createArrayBuilder();
-        JsonArrayBuilder val5 = Json.createArrayBuilder();
-        for (int i = 0; i < 12; i++) {
-            val0.add(array[0][i]);
-            val1.add(array[1][i]);
-            val2.add(array[2][i]);
-            val3.add(array[3][i]);
-            val4.add(array[4][i]);
-            val5.add(array[5][i]);
-        }
-
-        JsonObject result = Json.createObjectBuilder()
-                .add("title", title.build())
-                .add(strs[0], val0.build())
-                .add(strs[1], val1.build())
-                .add(strs[2], val2.build())
-                .add(strs[3], val3.build())
-                .add(strs[4], val4.build())
-                .add(strs[5], val5.build())
-                .build();
-        return result.toString();
     }
 
     @GetMapping("/statistics_public_contact")

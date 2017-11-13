@@ -242,7 +242,7 @@
 	});
 
 	function getData() {
-        $.get("/statistic/data?campus=" + CAMPUS,
+        $.get("/statistic/data?kind=public_contact&campus=" + CAMPUS,
         function(data,status){
             table_title = data.title;
             strs = ["Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"];

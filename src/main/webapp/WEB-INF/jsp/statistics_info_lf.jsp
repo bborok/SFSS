@@ -229,9 +229,34 @@
 			tmp_data = table1.rows().data();
 			showChart(tmp_data);
 		});
+
+        $("input:radio").change(function(){
+            if ($("#option1").is(":checked")) {
+                CAMPUS = "Burnaby";
+                getData();
+            }
+            if ($("#option2").is(":checked")) {
+                CAMPUS = "Surrey";
+                getData();
+            }
+            if ($("#option3").is(":checked")) {
+                CAMPUS = "Vancouver";
+                getData();
+            }
+        });s
 		
 		showChart(table1_data);
+
+        getData();
 	});
+
+    function getData() {
+        $.get("/statistic/data?kind=lost_found&campus=" + CAMPUS,
+            function(data,status){
+                //get data returned from api
+            }
+        );
+    }
 	
 	function showChart(tmp_data){
 		data_to_show = [];

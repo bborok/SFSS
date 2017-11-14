@@ -1,12 +1,14 @@
 package com.zeta.Data.Announcements;
 
-import com.zeta.Models.Announcements;
+import com.zeta.Models.Announcement;
 
 import java.util.List;
 
 public interface AnnouncementsData {
-    Boolean addAnnouncement(Announcements announcement); // required data to add an announcement
-    Announcements showAnnouncements(int id); //get the id associated with the announcement
-    List<Announcements> showAllAnnouncements(); //get all announcements
 
+    public boolean addAnnouncement(Announcement announcement);
+
+    public Announcement showAnnouncements(int ID);
+
+    public List<Announcement> showAllAnnouncements();
 }

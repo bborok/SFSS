@@ -41,9 +41,9 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
-                    <%--This contains all of the relevant info about announcements--%>
+                    <%--This contains all of the relevant info about announcement--%>
                     <center>
-                        <%--<h4>Announcements</h4><br>--%>
+                        <%--<h4>Announcement</h4><br>--%>
                             <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                         <div id="nav">
                             <ul>
@@ -197,7 +197,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src='resources/js/announcements.js'></script>
+<script src='resources/js/announcement.js'></script>
 
 <!-- Menu Toggle Script -->
 <script>

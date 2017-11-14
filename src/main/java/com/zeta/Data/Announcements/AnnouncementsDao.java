@@ -1,6 +1,6 @@
 package com.zeta.Data.Announcements;
 
-import com.zeta.Models.Announcements;
+import com.zeta.Models.Announcement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class AnnouncementsDao implements AnnouncementsData{
+public class AnnouncementsDao implements AnnouncementsData {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -18,41 +18,44 @@ public class AnnouncementsDao implements AnnouncementsData{
     }
 
     @Override
-    public Boolean addAnnouncement(Announcements announcements) {
+    public boolean addAnnouncement(Announcement announcement) {
         try {
             String sql =
-                    "INSERT INTO Announcement (ID, User, Title, Message, Date) VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql, announcements.getUsername(), announcements.getTitle(),
-                    announcements.getMessage(), announcements.getDate());
-        }catch (Exception e)
-        {
+                    "INSERT INTO Announcement (User, Title, Message, Date) VALUES (?, ?, ?, ?)";
+
+            jdbcTemplate.update(sql, announcement.getUsername(), announcement.getTitle(),
+                    announcement.getMessage(), announcement.getDate());
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
     @Override
-    public Announcements showAnnouncements (int id) {
-        Announcements announcements;
+    public Announcement showAnnouncements(int ID) {
+        Announcement announcement = null;
         try {
-            String sql =
-                    "SELECT * FROM Announcement WHERE User = ?";
-            announcements = jdbcTemplate.queryForObject(sql, new AnnouncementsRowMapper(), id);
-            return announcements;
+            String sql = "SELECT * FROM Announcement WHERE ID = ?";
+
+            announcement = jdbcTemplate.queryForObject(sql, new Object[]{ID}, new AnnouncementsRowMapper());
+
+            return announcement;
         } catch (Exception e) {
             return null;
         }
     }
+
     @Override
-    public List<Announcements> showAllAnnouncements() {
-        List<Announcements> list;
+    public List<Announcement> showAllAnnouncements() {
+        List<Announcement> list;
         try {
-            String sql =
-                    "SELECT * FROM Announcement";
+            String sql = "SELECT * FROM Announcement";
+
             list = jdbcTemplate.query(sql, new AnnouncementsRowMapper());
+
         } catch (Exception e) {
             return null;
-        } return list;
+        }
+        return list;
     }
-
 }

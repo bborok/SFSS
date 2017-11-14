@@ -121,4 +121,22 @@ public class TimeCardController {
 
         return "timecard";
     }
+
+    @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
+    public String getTimeCardList(Model m, HttpServletRequest request) {
+        List<String> shiftId = new ArrayList<String>();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+//        if (u == null) return "timecard";
+//        if (u.getRole() == Role.MEMBER) {
+//            shiftId = (long) 1;
+//        }
+
+
+
+//        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
+        TimeCard timeCard = new TimeCard();
+        m.addAttribute("timeCard", timeCard);
+        return "timecard_list";
+    }
 }

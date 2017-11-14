@@ -66,6 +66,17 @@
 
                     </center>
                 </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="pagination">
+
+                            <li>
+                                <a href="${pageContext.request.contextPath}/timecard_list">TimeCard List</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Time Card</div>
                     <div class="panel-body">

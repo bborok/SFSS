@@ -186,4 +186,25 @@ img { max-width: 100%; }
 	h1, h2 { font-size: 32px; }
 
 }
+#nav{
+	width: 100%;
+	display: inline-block;
+	text-align: right;
+	/*float: right;*/
+}
 
+#nav ul li{
+	display: inline-block;
+}
+#nav ul li button{
+	padding: 10px;
+	color: white;
+	border-radius: 4px;
+}
+
+#fixed{ margin-bottom:10px;}
+
+.affix{
+	right:3%;
+	float:right;
+}

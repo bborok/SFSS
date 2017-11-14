@@ -41,11 +41,97 @@
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
+                    <%--This contains all of the relevant info about announcements--%>
                     <center>
-                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
-                        <img src="resources/img/stole_from_sfu/sample_SSEP.png" class="img-responsive">
+                        <%--<h4>Announcements</h4><br>--%>
+                            <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
+                        <div id="nav">
+                            <ul>
+                                <li><button type="button" id = "createAnnouncement" style = "background:#901d33">Add an Announcement</button></li>
+                            </ul>
+                        </div>
+                        <hr>
+                            <div id = "createAnnouncementModal" class = "modal fade">
+                                <div class = "modal-dialog">
+                                    <div class = "modal-content">
+                                        <div class = "modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                            </button>
+                                            <h4 id="myModalLabel1" style="text-align:left"><b>Create an Announcement</b></h4>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <div class="controls">
+                                                <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                </input>
+                                            </div>
+
+                                            <br><br>
+
+                                            <label class="control-label" style="float:left;"><u>Date:</u>&nbsp;&nbsp;</label>
+                                                <input type="datetime-local" id="announceStartTime" name = "annStart" style="float:left;"/>
+
+                                            <br><br>
+
+                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="eventCampus" id="eventCampus">
+                                                <option value='all' id='allCampuses' disabled="true" selected>Select Teams
+                                                </option>
+                                            </select>
+
+                                            <label class="control-label" style="float:left;"><u>Message: </u> </label><br>
+                                            <div class="controls">
+                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes" placeholder="Enter a message."></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class = "modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary" id="submitAnnouncement">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </center>
+                        <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
+                            <div class="panel-heading" id = "archives">Archives</div>
+                            <div class="panel-body" id = months>
+                                November 2017
+                            </div>
+                        </div>
+                    <div class="panel panel-primary" style ="width:65%;text-align:left">
+                        <div class="panel-heading" id = "announceTitle">Title</div>
+                        <hr>
+                        <div class="panel-body" id = announceBody>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div><hr>
+                        <div class = "panel-body" id = "announceDate">Date: </div>
+                        <div class = "panel-body" id = "announceAuthor">Author: </div>
+                    </div>
+                        <div class="panel panel-primary" style ="width:65%;text-align:left"> <%--for demonstration purposes, should be deleted later--%>
+                            <div class="panel-heading" id = "announceTitle">Title</div>
+                            <hr>
+                            <div class="panel-body" id = announceBody>
+                                Message
+                            </div><hr>
+                            <div class = "panel-body" id = "announceDate">Date: </div>
+                            <div class = "panel-body" id = "announceAuthor">Author: </div>
+                        </div>
+                        <div class="panel panel-primary" style ="width:65%;text-align:left">
+                            <div class="panel-heading" id = "announceTitle">Title</div>
+                            <hr>
+                            <div class="panel-body" id = announceBody>
+                                Message
+                            </div><hr>
+                            <div class = "panel-body" id = "announceDate">Date: </div>
+                            <div class = "panel-body" id = "announceAuthor">Author: </div>
+                        </div> <%--for demonstration purposes, should be deleted later--%>
+
                 </div>
+
+
+
                 <hr><br>
                 <div class="col-sm-3">
                     <center>
@@ -90,12 +176,33 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src='resources/js/announcements.js'></script>
+
 <!-- Menu Toggle Script -->
 <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+
+    var top = $('.thisone').offset().top;
+    $('.trigger').click(function () {
+        $('.thisone').css('position','');
+        $('.left2').toggle('slow',function(){
+            top = $('.thisone').offset().top;
+        });
+
+
+    });
+
+
+
+    $(document).scroll(function(){
+        $('.thisone').css('position','');
+        top = $('.thisone').offset().top;
+        $('.thisone').css('position','absolute');   $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+    });
+
 </script>
 </body>
 </html>

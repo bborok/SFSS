@@ -13,6 +13,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
@@ -25,6 +28,14 @@
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src='resources/js/users.js'></script>
+
+    <script>
+        var api = '${pageContext.request.contextPath}/user';
+    </script>
 
 </head>
 
@@ -112,16 +123,16 @@
                                             <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="studentNumber" placeholder="Enter Student Number">
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userName" placeholder="Enter Full Name">
+                                            <label class="control-label"><u>Full Name:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userFullName" placeholder="Enter Full Name">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="email" placeholder="Enter Alternate Email">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userEmail" placeholder="Enter Alternate Email">
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="phoneNumber" placeholder="Enter Phone Number">
+                                            <label class="control-label"><u>Phone Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userPhoneNumber" placeholder="Enter Phone Number">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
@@ -140,18 +151,18 @@
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" value="burnaby">Burnaby
+                                                <input type="radio" name="campus" id="campusBurnaby" value="burnaby">Burnaby
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" value="surrey">Surrey
+                                                <input type="radio" name="campus" id="campusSurrey" value="surrey">Surrey
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" value="vancouver">Vancouver
+                                                <input type="radio" name="campus" id="campusVancouver" value="vancouver">Vancouver
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Call Sign:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="callsign" placeholder="Enter Call Sign">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userCallsign" placeholder="Enter Call Sign">
                                         </div>
                                     </div>
 
@@ -223,6 +234,13 @@
                                 <h5><c:out value="${user.getPreferredCampus()}"/></h5>
                             </div>
                         </c:forEach>
+
+                        <div>
+                            <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Edit User</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn">Remove User</button>
+                        </div>
                     </div>
                 </div>
             </div>

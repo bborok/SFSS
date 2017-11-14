@@ -1,12 +1,13 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Role;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +26,15 @@ public class UserController {
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
-    @GetMapping("/add")
-    public String addUserToDatabase(
+    @PostMapping("/add")
+    public @ResponseBody ResponseEntity addUserToDatabase(
             @RequestParam("username") String username,
             @RequestParam("studentNumber") long studentNumber,
             @RequestParam("name") String name,
             @RequestParam("email") String email ,
             @RequestParam("phoneNumber") long phoneNumber,
             @RequestParam("role") String role,
-            @RequestParam("campus") String campus,
+            @RequestParam("preferredCampus") String campus,
             @RequestParam("callSign") String callSign,
             @RequestParam("training") List<Training> training,
             @RequestParam("isDeactivated") Boolean isDeactivated){
@@ -50,11 +51,11 @@ public class UserController {
                 training,
                 isDeactivated);
 
-        if (!userData.addUser(u))
-        {
-            // TODO: Error handle this
+        if (userData.addUser(u)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return "redirect:" + "/user/" + u.getUsername().trim();
     }
 
     @GetMapping("/{username}")

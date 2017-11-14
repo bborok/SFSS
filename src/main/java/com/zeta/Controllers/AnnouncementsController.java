@@ -33,29 +33,30 @@ public class AnnouncementsController {
             @RequestParam("title") String title,
             @RequestParam("message") String message,
             @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-            @RequestParam("date") Date date,
-            @RequestParam("campus") Campus campus,
-            @RequestParam("id") int id) {
+            @RequestParam("date") Date date)
+//            @RequestParam("campus") Campus campus,
+//            @RequestParam("id") int id)
+    {
         Announcements a = new Announcements(
                 username,
                 title,
                 message,
-                date,
-                campus,
-                id);
-        return "redirect:" + "/announcements/" + a.getId();
+                date);
+//                campus,
+//                id);
+        return "redirect:" + "/announcements/" + a.getUsername();
     }
 
     @GetMapping("/showAllAnnouncements")
-    public String showAllAnnouncements(Model model){
-        List<Announcements> announcementsList = announcementsData.getAllAnnouncements();
+    public String getAllAnnouncements(Model model){
+        List<Announcements> announcementsList = announcementsData.showAllAnnouncements();
         model.addAttribute(announcementsList);
         return "/announcements/showAllAnnouncements";
     }
 
     @GetMapping("/{id}")
-    public String showAnnouncement(@PathVariable("id") int id, Model model){
-        Announcements a = announcementsData.getAnnouncements(id);
+    public String showOneAnnouncement(@PathVariable("id") int id, Model model){
+        Announcements a = announcementsData.showAnnouncements(id);
         model.addAttribute("a", a);
         return "/announcements/show";
     }

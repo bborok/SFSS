@@ -22,7 +22,7 @@ public class AnnouncementsDao implements AnnouncementsData{
         try {
             String sql =
                     "INSERT INTO Announcement (ID, User, Title, Message, Date) VALUES (?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql, announcements.getId(), announcements.getUsername(), announcements.getTitle(),
+            jdbcTemplate.update(sql, announcements.getUsername(), announcements.getTitle(),
                     announcements.getMessage(), announcements.getDate());
         }catch (Exception e)
         {
@@ -32,22 +32,23 @@ public class AnnouncementsDao implements AnnouncementsData{
     }
 
     @Override
-    public Announcements getAnnouncements (int id) {
+    public Announcements showAnnouncements (int id) {
+        Announcements announcements;
         try {
             String sql =
-                    "SELECT * FROM Announcement WHERE ID =?";
-            Announcements announcements = jdbcTemplate.queryForObject(sql, new AnnouncementsRowMapper(), id);
+                    "SELECT * FROM Announcement WHERE User = ?";
+            announcements = jdbcTemplate.queryForObject(sql, new AnnouncementsRowMapper(), id);
             return announcements;
         } catch (Exception e) {
             return null;
         }
     }
     @Override
-    public List<Announcements> getAllAnnouncements() {
+    public List<Announcements> showAllAnnouncements() {
         List<Announcements> list;
         try {
             String sql =
-                    "SELECT ID, User, Title, Message, Date";
+                    "SELECT * FROM Announcement";
             list = jdbcTemplate.query(sql, new AnnouncementsRowMapper());
         } catch (Exception e) {
             return null;

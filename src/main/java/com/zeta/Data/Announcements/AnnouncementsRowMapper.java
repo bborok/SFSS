@@ -11,7 +11,7 @@ public class AnnouncementsRowMapper implements RowMapper<Announcements> {
     @Override
     public Announcements mapRow(ResultSet rs, int i) throws SQLException {
         Announcements a = new Announcements();
-        a.setId(rs.getInt("ID"));
+//        a.setId(rs.getInt("ID"));
         a.setUsername(rs.getString("Username"));
         a.setTitle(rs.getString("Title"));
         a.setMessage(rs.getString("Message"));

@@ -1,5 +1,6 @@
 package com.zeta.Controllers;
 
+import com.zeta.Models.Role;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
@@ -22,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 
-// Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
@@ -76,7 +76,6 @@ public class IndexController {
     @GetMapping("/schedule")
     public String schedule(Model m) {
         List<User> users = userData.getAllUsers();
-        // m.addAttribute ("someAttribute", "someValue");
         m.addAttribute("users", users);
         return "schedule";
     }
@@ -195,6 +194,7 @@ public class IndexController {
 //        }
         users = userData.getAllUsers();
         m.addAttribute("users", users);
+        m.addAttribute("roles", Role.values());
         return "users";
     }
 }

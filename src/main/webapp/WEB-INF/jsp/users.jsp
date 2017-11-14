@@ -83,6 +83,90 @@
                 </center>
                 <br><br>
 
+                <div>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Add User</button>
+                </div>
+
+                <div id="userModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <%--Modal Content--%>
+
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                </button>
+                                <h4 id="myModalLabel1"><b>Add A User</b></h4>
+                            </div>
+
+                            <%--Modal Body--%>
+                            <div class="modal-body">
+                                <form id="addUserForm" class="form-horizontal">
+                                    <div style="padding-left: 15px;padding-right: 15px">
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Username:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="username" placeholder="Enter Username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Student Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="studentNumber" placeholder="Enter Student Number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Student Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userName" placeholder="Enter Full Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Email:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="email" placeholder="Enter Alternate Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Student Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="phoneNumber" placeholder="Enter Phone Number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Role:</u></label>
+                                            <div class="controls">
+                                                <select class="form-control" name="userMember" id="userRole">
+                                                    <option value="role" disabled="disabled" selected="selected">Select A Role
+                                                    <c:forEach items="${roles}" var="role">
+                                                        <option value="${role.name()}">
+                                                            ${role.name()}
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row-fluid">
+                                            <label class="control-label"><u>Preferred Campus:</u></label>
+                                            <br>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="burnaby">Burnaby
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="surrey">Surrey
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="vancouver">Vancouver
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Call Sign:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="callsign" placeholder="Enter Call Sign">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                <%--AJAX Request to POST to ShiftController--%>
+                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-6" style="height:600px; text-align:center; border-style:solid">
                         <p>

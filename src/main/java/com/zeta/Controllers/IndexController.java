@@ -17,6 +17,7 @@ import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,8 +77,20 @@ public class IndexController {
     @GetMapping("/schedule")
     public String schedule(Model m) {
         List<User> users = userData.getAllUsers();
-        // m.addAttribute ("someAttribute", "someValue");
         m.addAttribute("users", users);
+
+        String[] surreyShifts = {"Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"};
+        String[] vancouverShifts = {"Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"};
+        String[] burnabyShifts = {
+                "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety",
+                "Information and Lost&Found Kiosk", "Speed Watch/Moving Traffic",
+                "Auto Theft Prevention", "Bike Presence", "Smoking Checks", "Safety Screen"
+        };
+
+        m.addAttribute("SURREYSHIFTS", surreyShifts);
+        m.addAttribute("VANCOUVERSHIFTS", vancouverShifts);
+        m.addAttribute("BURNABYSHIFTS", burnabyShifts);
+
         return "schedule";
     }
 

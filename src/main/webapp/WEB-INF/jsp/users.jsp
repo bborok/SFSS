@@ -139,14 +139,14 @@
                                         <div class="form-group row-fluid">
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" value="burnaby">Burnaby
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" value="burnaby">Burnaby
                                             </label>
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" value="surrey">Surrey
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" value="surrey">Surrey
                                             </label>
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" value="vancouver">Vancouver
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" value="vancouver">Vancouver
                                             </label>
                                         </div>
                                         <div class="form-group">

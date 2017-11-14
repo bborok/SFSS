@@ -24,12 +24,12 @@ public class UserDao implements UserData {
         try {
              String sql =
                         "INSERT INTO User (Username, Name, Email, PhoneNumber, PreferredCampus, " +
-                                "StdNum, Role, CallSign) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                "StdNum, Role, CallSign, isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
              jdbcTemplate.update(sql, user.getUsername(), user.getName(), user.getEmail(),
                         (int) user.getPhoneNumber(), user.getPreferredCampus().toString(),
                         (int) user.getStudentNumber(), user.getRole().toString(),
-                        user.getCallSign());
+                        user.getCallSign(), user.getIsDeactivated());
         } catch (Exception e)
         {
             return false;

@@ -109,12 +109,17 @@
                                         Currently not trained for any task
                                     </c:when>
                                     <c:otherwise>
-                                        <ul>
+                                        <dl>
+                                            <c:set var="totalHours" value="${0}" />
                                             <c:forEach var="training" items="${user.getTraining()}"
                                                        varStatus="status">
-                                                <li>training</li>
+                                                <dt>${training.getTask()}:</dt>
+                                                <dd>${training.getHours()} hours</dd>
+                                                <c:set var="totalHours" value="${totalHours + training.getHours()}" />
                                             </c:forEach>
-                                        </ul>
+                                            <dt>Total Hours:</dt>
+                                            <dd>${totalHours} hours</dd>
+                                        </dl>
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>

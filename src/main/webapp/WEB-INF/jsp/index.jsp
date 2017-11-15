@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,35 +122,21 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="panel panel-primary" style ="width:65%;text-align:left">
-                        <div class="panel-heading" id = "announceTitle">Title</div>
-                        <hr>
-                        <div class="panel-body" id = announceBody>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </div><hr>
-                        <div class = "panel-body" id = "announceDate">Date: </div>
-                        <div class = "panel-body" id = "announceAuthor">Author: </div>
-                    </div>
-                        <div class="panel panel-primary" style ="width:65%;text-align:left"> <%--for demonstration purposes, should be deleted later--%>
-                            <div class="panel-heading" id = "announceTitle">Title</div>
-                            <hr>
-                            <div class="panel-body" id = announceBody>
-                                Message
-                            </div><hr>
-                            <div class = "panel-body" id = "announceDate">Date: </div>
-                            <div class = "panel-body" id = "announceAuthor">Author: </div>
+                        <div class="controls" style="width:65%;">
+                            <c:forEach items="${announcements}" var = "announcement">
+                                <div class="panel panel-primary" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
+                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()}</div>
+                                    <hr>
+                                    <div class="panel-body" id = announceBody>
+                                        ${announcement.getMessage()}
+                                    </div><hr>
+                                    <div class = "panel-body" id = "announceDate">Date: ${announcement.getDate()}</div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}</div>
+                                </div>
+                            </c:forEach>
                         </div>
-                        <div class="panel panel-primary" style ="width:65%;text-align:left">
-                            <div class="panel-heading" id = "announceTitle">Title</div>
-                            <hr>
-                            <div class="panel-body" id = announceBody>
-                                Message
-                            </div><hr>
-                            <div class = "panel-body" id = "announceDate">Date: </div>
-                            <div class = "panel-body" id = "announceAuthor">Author: </div>
-                        </div> <%--for demonstration purposes, should be deleted later--%>
+                    </div>
 
-                </div>
 
 
 
@@ -197,7 +184,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src='resources/js/announcement.js'></script>
+<script src='resources/js/announcements.js'></script>
 
 <!-- Menu Toggle Script -->
 <script>

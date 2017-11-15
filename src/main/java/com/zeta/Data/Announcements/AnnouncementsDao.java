@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 @Repository
 public class AnnouncementsDao implements AnnouncementsData {
     private JdbcTemplate jdbcTemplate;
@@ -21,7 +23,7 @@ public class AnnouncementsDao implements AnnouncementsData {
     public boolean addAnnouncement(Announcement announcement) {
         try {
             String sql =
-                    "INSERT INTO Announcement (User, Title, Message, Date) VALUES (?, ?, ?, ?)";
+                    "INSERT INTO Announcement (User, Title, Message, Date, Campus) VALUES (?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(sql, announcement.getUsername(), announcement.getTitle(),
                     announcement.getMessage(), announcement.getDate());
@@ -50,10 +52,9 @@ public class AnnouncementsDao implements AnnouncementsData {
         List<Announcement> list;
         try {
             String sql = "SELECT * FROM Announcement";
-
             list = jdbcTemplate.query(sql, new AnnouncementsRowMapper());
-
         } catch (Exception e) {
+
             return null;
         }
         return list;

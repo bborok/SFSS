@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zeta.Data.Announcements.AnnouncementsData;
 import com.zeta.Models.Announcement;
 
+import com.zeta.Models.Campus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,15 +32,16 @@ public class AnnouncementsController {
             @RequestParam("title") String title,
             @RequestParam("message") String message,
             @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-            @RequestParam("date") Date date)
-//            @RequestParam("campus") Campus campus,
+            @RequestParam("date") Date date,
+            @RequestParam("campus") Campus campus)
 //            @RequestParam("id") int id)
     {
         Announcement a = new Announcement(
                 username,
                 title,
                 message,
-                date);
+                date,
+                campus);
 //                campus,
 //                id);
         return "redirect:" + "/announcements/" + a.getUsername();

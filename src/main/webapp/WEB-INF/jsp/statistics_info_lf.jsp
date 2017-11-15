@@ -90,18 +90,19 @@
                 </div>
             </center>
             <br><br>
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
                 <center><a title="Export" href="#" id="export">Export Table to CSV</a></center>
 
                 <table id="table1" class="display" width="100%"></table>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
                 <center><a title="Export" href="#" id="export2">Export Table to CSV</a></center>
 
                 <table id="table2" class="display" width="100%"></table>
             </div>
 
-            <div class="col-sm-12">
+
+            <div class="col-sm-12" style="border-width: 1px;border-color: #0c0c0c; border-style:solid">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>
@@ -459,8 +460,7 @@
 
         // This must be a hyperlink
         $("#export").click(function (event) {
-            // var outputFile = 'export'
-            var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+            var outputFile = 'TableA'
             outputFile = outputFile.replace('.csv','') + '.csv'
 
             // CSV
@@ -471,15 +471,12 @@
         });
 
         $("#export2").click(function (event) {
-            // var outputFile = 'export'
-            var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+            var outputFile = 'TableB'
             outputFile = outputFile.replace('.csv','') + '.csv'
 
             // CSV
             exportTableToCSV.apply(this, [$('#table2'), outputFile]);
 
-            // IF CSV, don't do event.preventDefault() or return false
-            // We actually need this to be a typical hyperlink
         });
     });
 </script>

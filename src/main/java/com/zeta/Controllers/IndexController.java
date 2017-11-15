@@ -84,10 +84,12 @@ public class IndexController {
         List<User> users = userData.getAllUsers();
         m.addAttribute("users", users);
 
+        List<Task> allTasks = taskData.getTasks();
         List<Task> surreyTasks = taskData.getTasks(Campus.SURREY);
         List<Task> vancouverTasks = taskData.getTasks(Campus.VANCOUVER);
         List<Task> burnabyTasks = taskData.getTasks(Campus.BURNABY);
 
+        m.addAttribute("ALLTASKS", allTasks);
         m.addAttribute("SURREYTASKS", surreyTasks);
         m.addAttribute("VANCOUVERTASKS", vancouverTasks);
         m.addAttribute("BURNABYTASKS", burnabyTasks);

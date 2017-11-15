@@ -40,6 +40,24 @@
 
     <script>
         var api = '${pageContext.request.contextPath}/api';
+        var iBURNABY = [];
+        var iSURREY = [];
+        var iVANCOUVER = [];
+        var iALLCAMPUSES = [];
+        var iNOCAMPUSES = [];
+        <c:forEach items="${BURNABYTASKS}" var="task">
+            iBURNABY.push("${task.taskName}");
+        </c:forEach>
+        <c:forEach items="${SURREYTASKS}" var="task">
+            iSURREY.push("${task.taskName}");
+        </c:forEach>
+        <c:forEach items="${VANCOUVERTASKS}" var="task">
+            iVANCOUVER.push("${task.taskName}");
+        </c:forEach>
+        <c:forEach items="${ALLTASKS}" var="task">
+            iALLCAMPUSES.push("${task.taskName}");
+        </c:forEach>
+        console.log(iBURNABY);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -126,11 +144,7 @@ cancel button functionalities
                             <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
                         </label>
                         <br>
-                        <%--<label>--%>
-                        <%--<input class='campusFilter' type="checkbox" value="NOCAMPUSES" id="NOCAMPUS" class = "others">NONE--%>
-                        <%--</label>--%>
                     </div>
-                    <%--<select id="shiftSelect"></select>--%>
                     <select class="form-control" id="shiftSelect"></select>
                     <br>
                 </div>

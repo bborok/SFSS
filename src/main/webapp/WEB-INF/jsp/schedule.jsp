@@ -173,9 +173,9 @@ cancel button functionalities
                                                     Shift
                                                 </option>
 
-                                                <c:forEach items="${SURREYSHIFTS}" var="shift">
-                                                    <option value="SURREY" class="${shift}">
-                                                            ${shift}
+                                                <c:forEach items="${SURREYTASKS}" var="task">
+                                                    <option value="SURREY" class="${task.taskName}">
+                                                            ${task.taskName}
                                                     </option>
                                                 </c:forEach>
 
@@ -183,9 +183,9 @@ cancel button functionalities
                                                     Vancouver Shift
                                                 </option>
 
-                                                <c:forEach items="${VANCOUVERSHIFTS}" var="shift">
-                                                    <option value="VANCOUVER" class="${shift}">
-                                                            ${shift}
+                                                <c:forEach items="${VANCOUVERTASKS}" var="task">
+                                                    <option value="VANCOUVER" class="${task.taskName}">
+                                                            ${task.taskName}
                                                     </option>
                                                 </c:forEach>
 
@@ -193,9 +193,9 @@ cancel button functionalities
                                                     Burnaby Shift
                                                 </option>
 
-                                                <c:forEach items="${BURNABYSHIFTS}" var="shift">
-                                                    <option value="BURNABY" class="${shift}">
-                                                            ${shift}
+                                                <c:forEach items="${BURNABYTASKS}" var="task">
+                                                    <option value="BURNABY" class="${task.taskName}">
+                                                            ${task.taskName}
                                                     </option>
                                                 </c:forEach>
                                             </select>

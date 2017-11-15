@@ -1,5 +1,8 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Task.TaskData;
+import com.zeta.Models.Campus;
+import com.zeta.Models.Task;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
@@ -28,10 +31,12 @@ import java.util.List;
 public class IndexController {
 
     private UserData userData;
+    private TaskData taskData;
 
     @Autowired
-    public IndexController(UserData userData) {
+    public IndexController(UserData userData, TaskData taskData) {
         this.userData = userData;
+        this.taskData = taskData;
     }
 
     @RequestMapping(value = "/login")
@@ -79,17 +84,13 @@ public class IndexController {
         List<User> users = userData.getAllUsers();
         m.addAttribute("users", users);
 
-        String[] surreyShifts = {"Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"};
-        String[] vancouverShifts = {"Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"};
-        String[] burnabyShifts = {
-                "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety",
-                "Information and Lost&Found Kiosk", "Speed Watch/Moving Traffic",
-                "Auto Theft Prevention", "Bike Presence", "Smoking Checks", "Safety Screen"
-        };
+        List<Task> surreyTasks = taskData.getTasks(Campus.SURREY);
+        List<Task> vancouverTasks = taskData.getTasks(Campus.VANCOUVER);
+        List<Task> burnabyTasks = taskData.getTasks(Campus.BURNABY);
 
-        m.addAttribute("SURREYSHIFTS", surreyShifts);
-        m.addAttribute("VANCOUVERSHIFTS", vancouverShifts);
-        m.addAttribute("BURNABYSHIFTS", burnabyShifts);
+        m.addAttribute("SURREYTASKS", surreyTasks);
+        m.addAttribute("VANCOUVERTASKS", vancouverTasks);
+        m.addAttribute("BURNABYTASKS", burnabyTasks);
 
         return "schedule";
     }
@@ -106,7 +107,7 @@ public class IndexController {
         return "statistics_info_lf";
     }
 
-    @RequestMapping(value="/statistic/data", produces="application/json", method = RequestMethod.GET)
+    @RequestMapping(value = "/statistic/data", produces = "application/json", method = RequestMethod.GET)
     @ResponseBody
     public String testjson(String campus) {
         if (campus == null)
@@ -116,15 +117,15 @@ public class IndexController {
         Calendar ca = Calendar.getInstance();
         ca.setTime(currDate);
         int currYear = ca.get(Calendar.YEAR);
-        int[][] array= new int[6][12];
+        int[][] array = new int[6][12];
         String[] strs = {"Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"};
         for (int t = 0; t < 6; t++) {
-            for (int i = 0; i < 12; i ++) {
-                String str=String.valueOf(currYear) + "-" + String.valueOf(i+1) + "-01";
-                SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            for (int i = 0; i < 12; i++) {
+                String str = String.valueOf(currYear) + "-" + String.valueOf(i + 1) + "-01";
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = null;
                 try {
-                    date =sdf.parse(str);
+                    date = sdf.parse(str);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

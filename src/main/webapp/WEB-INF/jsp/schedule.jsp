@@ -124,11 +124,7 @@ cancel button functionalities
                                     <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
                                 </label>
                                 <br>
-                                <%--<label>--%>
-                                    <%--<input class='campusFilter' type="checkbox" value="NOCAMPUSES" id="NOCAMPUS" class = "others">NONE--%>
-                                <%--</label>--%>
                             </div>
-                            <%--<select id="shiftSelect"></select>--%>
                             <select class="form-control" id="shiftSelect"></select>
                             <br>
                         </div>

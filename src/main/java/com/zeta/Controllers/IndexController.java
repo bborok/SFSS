@@ -1,5 +1,7 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Announcements.AnnouncementsData;
+import com.zeta.Models.Announcement;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
@@ -21,16 +23,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 // Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
     private UserData userData;
+    private AnnouncementsData announcementsData;
 
     @Autowired
-    public IndexController(UserData userData) {
+    public IndexController(UserData userData, AnnouncementsData announcementsData) {
         this.userData = userData;
+        this.announcementsData = announcementsData;
     }
 
     @RequestMapping(value = "/login")
@@ -39,9 +45,11 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String dashboard(HttpServletRequest request) {
+    public String dashboard(HttpServletRequest request, Model m) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
+        List<Announcement> announcements = announcementsData.showAllAnnouncements();
+        m.addAttribute("announcements", announcements);
 
         if (principal instanceof UserDetails) {
             if (session.getAttribute("user") == null) {

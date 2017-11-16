@@ -8,6 +8,7 @@ import com.zeta.Data.Statistics.StatisticsDao;
 import com.zeta.Data.Statistics.StatisticsData;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.User;
+import com.zeta.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -190,18 +192,18 @@ public class IndexController {
         List<User> users;
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-//        if (u == null) return "users"; //Exit the request if user info can't get fetched
-//        //Filter the list users depending on the currently logged in users role.
-//        if (u.getRole() == Role.TEAM_LEADER) {
-//            //Filter the users based on the team leaders preferred campus.
-//            users = userData.getAllUsers().stream()
-//                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
-//                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
-//                    .collect(Collectors.toList());
-//        } else {
-//            users = userData.getAllUsers();
-//        }
-        users = userData.getAllUsers();
+        if (u == null) return "users"; //Exit the request if user info can't get fetched
+        //Filter the list users depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+            //Filter the users based on the team leaders preferred campus.
+            users = userData.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else {
+            users = userData.getAllUsers();
+        }
+
         m.addAttribute("users", users);
         return "users";
     }

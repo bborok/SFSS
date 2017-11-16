@@ -19,6 +19,7 @@ public class TimeCard {
     private List<Task> tasks;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
+    private boolean isTimeCardSubmitted;
     private String SPTotal;
     private String TPTotal;
     private String PCTotal;
@@ -30,16 +31,18 @@ public class TimeCard {
         tasks = new ArrayList<>();
     }
 
-    public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks) {
+    public TimeCard(String username, long shiftId, Campus campus, String location, String notes, List<Task> tasks,
+                    boolean isTimeCardSubmitted) {
         this.username = username;
         this.shiftId = shiftId;
         this.campus = campus;
         this.location = location;
         this.notes = notes;
         this.tasks = tasks;
+        this.isTimeCardSubmitted = isTimeCardSubmitted;
     }
 
-    public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date,
+    public TimeCard(Campus campus, String location, String notes, List<Task> tasks, Calendar date, boolean isTimeCardSubmitted,
                     String SPTotal, String TPTotal, String PCTotal,
                     String SWTotal, String HSRTotal, String ASTotal) {
 
@@ -54,6 +57,7 @@ public class TimeCard {
         this.SWTotal = SWTotal;
         this.HSRTotal = HSRTotal;
         this.ASTotal = ASTotal;
+        this.isTimeCardSubmitted = isTimeCardSubmitted;
     }
 
     public String getUsername() {
@@ -114,6 +118,14 @@ public class TimeCard {
 
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    public boolean isTimeCardSubmitted() {
+        return isTimeCardSubmitted;
+    }
+
+    public void setTimeCardSubmitted(boolean timeCardSubmitted) {
+        isTimeCardSubmitted = timeCardSubmitted;
     }
 
     public String getSPTotal() {

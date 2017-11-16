@@ -1,9 +1,6 @@
 package com.zeta.Data.Shift;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.User.UserDao;
-import com.zeta.Data.User.UserData;
-import com.zeta.Models.ShiftRaw;
+import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,17 +37,17 @@ public class ShiftDao implements ShiftData {
      * @return List<ShiftRaw>
      */
     @Override
-    public List<ShiftRaw> getShiftRaws() {
+    public List<Shift> getShifts() {
         String shiftRawQuery = "SELECT * FROM Shift";
-        return jdbcTemplate.query(shiftRawQuery, new ShiftRawRowMapper());
+        return jdbcTemplate.query(shiftRawQuery, new ShiftRowMapper());
     }
 
     @Override
-    public ShiftRaw getShiftRaw(long id) {
+    public Shift getShift(long id) {
         try {
             String sql = "SELECT * FROM Shift WHERE ID=?";
-            ShiftRaw shiftRaw = jdbcTemplate.queryForObject(sql, new ShiftRawRowMapper(), id);
-            return shiftRaw;
+            Shift shift = jdbcTemplate.queryForObject(sql, new ShiftRowMapper(), id);
+            return shift;
         } catch (Exception e) {
             return null;
         }
@@ -60,24 +57,24 @@ public class ShiftDao implements ShiftData {
     /**
      * Adds a new row to the Shift table.
      *
-     * @param shiftRaw ShiftRaw object to save
+     * @param shift ShiftRaw object to save
      * @return True if successful, false otherwise
      */
     @Override
-    public boolean saveShiftRaw(ShiftRaw shiftRaw) {
+    public boolean saveShift(Shift shift) {
         try {
             String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(sql,
-                    shiftRaw.getTitle(),
-                    shiftRaw.getStart(),
-                    shiftRaw.getEnd(),
-                    shiftRaw.getUsername(),
-                    shiftRaw.getCampus().toString(),
-                    shiftRaw.getLocation(),
-                    shiftRaw.getNotes(),
-                    shiftRaw.getDate(),
-                    shiftRaw.getRequiredTraining(),
+                    shift.getTitle(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    shift.getUsername(),
+                    shift.getCampus().toString(),
+                    shift.getLocation(),
+                    shift.getNotes(),
+                    shift.getDate(),
+                    shift.getRequiredTraining(),
                     0); //By default, no timecard can be submitted if shift didn't exist already
             return true;
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
-import com.zeta.Models.ShiftRaw;
+import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,13 +29,13 @@ public class ShiftsController {
     /**
      * Use this when needing to add a new row to the Shift table by passing in a ShiftRaw
      *
-     * @param shiftRaw 'stringified' ShiftRaw JSON object
+     * @param shift 'stringified' ShiftRaw JSON object
      * @return Status code 200 if successful, 400 if not
      */
-    @PostMapping("/shifts/save")
-    public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw, HttpServletRequest httpServletRequest) {
-        System.out.println(shiftRaw.toString());
-        if (shiftData.saveShiftRaw(shiftRaw)) {
+    @PostMapping("/shift/save")
+    public ResponseEntity<Object> saveShift(@RequestBody Shift shift, HttpServletRequest httpServletRequest) {
+        System.out.println(shift.toString());
+        if (shiftData.saveShift(shift)) {
             System.out.println("Shift saved successfully.");
             return ResponseEntity
                     .created(URI.create(httpServletRequest.getRequestURI()))
@@ -51,10 +51,10 @@ public class ShiftsController {
      *
      * @return List<ShiftRaw>
      */
-    @GetMapping("/shiftraws")
-    public ResponseEntity<List<ShiftRaw>> shiftRaws() {
-        List<ShiftRaw> shiftRaws = shiftData.getShiftRaws();
-        return new ResponseEntity<>(shiftRaws, HttpStatus.OK);
+    @GetMapping("/shifts")
+    public ResponseEntity<List<Shift>> shiftRaws() {
+        List<Shift> shifts = shiftData.getShifts();
+        return new ResponseEntity<>(shifts, HttpStatus.OK);
     }
 
     /**
@@ -63,11 +63,11 @@ public class ShiftsController {
      * @param id id of Shift
      * @return ShiftRaw object
      */
-    @GetMapping("/shiftraws/{id}")
-    public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id) {
-        ShiftRaw shiftRaw = shiftData.getShiftRaw(id);
-        if (shiftRaw == null) return ResponseEntity.notFound().build();
-        return new ResponseEntity<>(shiftRaw, HttpStatus.OK);
+    @GetMapping("/shift/{id}")
+    public ResponseEntity<Shift> getShiftRaw(@PathVariable long id) {
+        Shift shift = shiftData.getShift(id);
+        if (shift == null) return ResponseEntity.notFound().build();
+        return new ResponseEntity<>(shift, HttpStatus.OK);
     }
 
     /**
@@ -76,7 +76,7 @@ public class ShiftsController {
      * @param id id of Shift to delete
      * @return Status code 200 if successful, 400 if not
      */
-    @DeleteMapping("/shifts/delete/{id}")
+    @DeleteMapping("/shift/delete/{id}")
     public ResponseEntity<Object> deleteShift(@PathVariable long id) {
         if (shiftData.deleteShift(id)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zeta.Models.User" %><%--
   Created by IntelliJ IDEA.
   model.User: PrivateAcc
   Date: 2017-09-29
@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>SFU</title>
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,6 +26,9 @@
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
+<script>
+    var api = '${pageContext.request.contextPath}/announcements';
+</script>
 <style>
     #side-container{
     }
@@ -36,6 +41,15 @@
 <body>
 <div id="wrapper" class="toggled">
     <jsp:include page="partfiles/sidebar.jsp"/>
+
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("user", user);
+
+    %>
+    <div id = "username" hidden>${user.getUsername()}bobaec</div>
+
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
@@ -52,6 +66,7 @@
                             </ul>
                         </div>
                         <hr>
+
                             <div id = "createAnnouncementModal" class = "modal fade">
                                 <div class = "modal-dialog">
                                     <div class = "modal-content">
@@ -69,27 +84,31 @@
 
                                             <br><br>
 
-                                            <label class="control-label" style="float:left;"><u>Date:</u>&nbsp;&nbsp;</label>
-                                                <input type="datetime-local" id="announceStartTime" name = "annStart" style="float:left;"/>
+                                            <label class="control-label" style="float:left;" ><u>Date:</u>&nbsp;&nbsp;</label>
+                                                <input type="datetime-local" id = "announceDateModal" name = "announceDateModal" style="float:left;"/>
 
                                             <br><br>
 
                                             <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
-                                            <select class="form-control" name="eventCampus" id="eventCampus">
+                                            <select class="form-control" name="announceCampusModal" id="announceCampusModal">
                                                 <option value='all' id='allCampuses' disabled="true" selected>Select Teams
                                                 </option>
+                                                <option value ="BURNABY" class = "BURNABY">BURNABY</option>
+                                                <option value ="SURREY" class = "SURREY">SURREY</option>
+                                                <option value ="VANCOUVER" class = "VANCOUVER">VANCOUVER</option>
+
                                             </select>
 
-                                            <label class="control-label" style="float:left;"><u>Message: </u> </label><br>
+                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
                                             <div class="controls">
-                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes" placeholder="Enter a message."></textarea>
+                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceMessageModal" placeholder="Enter a message."></textarea>
                                             </div>
                                         </div>
 
                                         <div class = "modal-footer">
                                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
-                                            <button type="submit" class="btn btn-primary" id="submitAnnouncement">Save</button>
+                                            <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
                                         </div>
                                     </div>
                                 </div>

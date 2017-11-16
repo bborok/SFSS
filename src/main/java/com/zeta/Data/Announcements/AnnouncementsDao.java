@@ -26,7 +26,7 @@ public class AnnouncementsDao implements AnnouncementsData {
                     "INSERT INTO Announcement (User, Title, Message, Date, Campus) VALUES (?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(sql, announcement.getUsername(), announcement.getTitle(),
-                    announcement.getMessage(), announcement.getDate());
+                    announcement.getMessage(), announcement.getDate(), announcement.getCampus());
         } catch (Exception e) {
             return false;
         }

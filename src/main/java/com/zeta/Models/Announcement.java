@@ -14,13 +14,13 @@ public class Announcement {
     }
 
     // TODO: Remove this constructor once campus and id are linked with frontend
-    public Announcement(String username, String title, String message, Date date, Campus campus) {
-        this.username = username;
-        this.title = title;
-        this.message = message;
-        this.date = date;
-        this.campus = campus;
-    }
+//    public Announcement(String username, String title, String message, Date date, Campus campus) {
+//        this.username = username;
+//        this.title = title;
+//        this.message = message;
+//        this.date = date;
+//        this.campus = campus;
+//    }
 
     public Announcement(String username, String title, String message, Date date, Campus campus, int id) {
         this.username = username;

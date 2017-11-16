@@ -1,5 +1,6 @@
 package com.zeta.Data.TimeCard;
 
+import com.zeta.Data.Task.TaskRowMapper;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,7 @@ public class TimeCardDao implements TimeCardData {
             timeCard = jdbcTemplate.queryForObject(shiftSQL, new Object[]{username, shiftId}, new TimeCardRowMapper());
 
             // Get list of all tasks
-            List<Task> allTasks = jdbcTemplate.query(taskSQL, new TaskMapper());
+            List<Task> allTasks = jdbcTemplate.query(taskSQL, new TaskRowMapper());
 
             // Get list of all tasks user did in particular shift
             List<Task> userTasks = jdbcTemplate.query(

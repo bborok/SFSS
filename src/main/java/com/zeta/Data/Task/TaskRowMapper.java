@@ -1,4 +1,4 @@
-package com.zeta.Data.TimeCard;
+package com.zeta.Data.Task;
 
 import com.zeta.Models.Task;
 import org.springframework.jdbc.core.RowMapper;
@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TaskMapper implements RowMapper<Task> {
+public class TaskRowMapper implements RowMapper<Task> {
 
     @Override
     public Task mapRow(ResultSet resultSet, int i) throws SQLException {

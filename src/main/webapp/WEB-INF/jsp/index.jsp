@@ -47,7 +47,7 @@
         pageContext.setAttribute("user", user);
 
     %>
-    <div id = "username" hidden>${user.getUsername()}bobaec</div>
+    <div id = "username" hidden >${user.getUsername()}bobaec</div>
 
 
     <!-- Page Content -->

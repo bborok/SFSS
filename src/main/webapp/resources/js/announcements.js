@@ -4,22 +4,20 @@ $(document).ready(function() {
         doSubmit();
     });
 
-
-
     function doSubmit() {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
 
-        var user = $('#username').html();
+        var user = ($('#username').html()).toString();
 
         $('#createAnnouncementModal').modal('hide');
 
         var announcement = {
-            "user": user,
-            "title": $('#announceTitleModal').val(),
-            "message": $('#announceMessageModal').val(),
+            "username": user,
+            "title": ($('#announceTitleModal').val()).toString(),
+            "message": ($('#announceMessageModal').val().toString()),
             "date": $('#announceDateModal').val(),
-            "campus": ($('#announceCampusModal').val().toUpperCase())
+            "campus": ($('#announceCampusModal').val().toUpperCase()).toString()
         };
 
         console.log(announcement);
@@ -30,11 +28,11 @@ $(document).ready(function() {
             },
             url: api + '/add',
             data: JSON.stringify(announcement),
-            success: function(data) {
+            success: function() {
                 alert("Saved successfully");
                 location.reload();
             },
-            error: function(e) {
+            error: function() {
                 alert("error saving announcement to DB");
             },
             dataType: "json",

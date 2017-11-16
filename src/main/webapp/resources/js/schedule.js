@@ -1,14 +1,5 @@
-var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
-var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-
-var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety",
-    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety",
-    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-
-var iNOCAMPUSES = [];
-
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
+var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
 var token;
 var header;
 var calendar;
@@ -39,8 +30,8 @@ $(document).ready(function () {
             add_event: {
                 text: 'Add a Shift',
                 click: function (start, end) {
-                    startTimeInput.val(moment(start).format("YYYY-MM-DD'T'HH:mm:ss"));
-                    endTimeInput.val(moment(end).format("YYYY-MM-DD'T'HH:mm:ss"));
+                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
+                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -133,7 +124,6 @@ $(document).ready(function () {
 
 
     function filter(calEvent) {
-
         var vals = [];
         $('input:checkbox.campusFilter:checked').each(function () {
             vals.push($(this).val());
@@ -285,5 +275,3 @@ var displaySuccessAlert = function (msg) {
         "</div>"
     );
 };
-
-

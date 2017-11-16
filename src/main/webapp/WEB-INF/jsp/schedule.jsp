@@ -78,8 +78,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
 <style>
@@ -125,31 +124,29 @@ cancel button functionalities
                 <%--Used for displaying alerts--%>
                 <div id="alertsDiv"></div>
 
-                <div class="col-sm-12 row">
-                    <div class="radio">
-                        <label>
-                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL
-                            CAMPUSES
-                        </label>
-                        <br>
-                        <label>
-                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">BURNABY
-                        </label>
-                        <br>
-                        <label>
-                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">SURREY
-                        </label>
-                        <br>
-                        <label>
-                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
-                        </label>
-                        <br>
-                    </div>
-                    <select class="form-control" id="shiftSelect"></select>
-                    <br>
-                </div>
-                <hr>
-                <br>
+                        <div class="col-sm-12 row">
+                            <div class="radio">
+                                <label>
+                                    <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
+                                </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
+                                </label>
+                                <br>
+                                <label>
+                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
+                                </label>
+                                <br>
+                                </div>
+                            <select class="form-control" id="shiftSelect"></select>
+                            <br>
+                        </div>
+                        <hr><br>
 
                 <%--Calendar--%>
                 <div id='calendar'></div>
@@ -329,6 +326,8 @@ cancel button functionalities
     //    $(document).ready(function() {
     //        $('#eventRequiredTraining').multiselect();
     //    });
+
+
 
 
 </script>

@@ -1,5 +1,7 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Announcements.AnnouncementsData;
+import com.zeta.Models.Announcement;
 import com.zeta.Data.Task.TaskData;
 import com.zeta.Models.Campus;
 import com.zeta.Models.Task;
@@ -25,18 +27,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 // Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
     private UserData userData;
+    private AnnouncementsData announcementsData;
     private TaskData taskData;
 
     @Autowired
-    public IndexController(UserData userData, TaskData taskData) {
+    public IndexController(UserData userData, TaskData taskData,AnnouncementsData announcementsData) {
         this.userData = userData;
         this.taskData = taskData;
+        this.announcementsData = announcementsData;
     }
 
     @RequestMapping(value = "/login")
@@ -45,9 +51,11 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String dashboard(HttpServletRequest request) {
+    public String dashboard(HttpServletRequest request, Model m) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
+        List<Announcement> announcements = announcementsData.showAllAnnouncements();
+        m.addAttribute("announcements", announcements);
 
         if (principal instanceof UserDetails) {
             if (session.getAttribute("user") == null) {

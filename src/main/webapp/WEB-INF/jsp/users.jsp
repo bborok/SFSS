@@ -239,7 +239,7 @@
                             <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Edit User</button>
                         </div>
                         <div>
-                            <button type="button" class="btn">Remove User</button>
+                            <button type="button" class="btn btn-primary" id="removeButton">Remove User</button>
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,15 @@
 $(document).ready(function () {
     $('#submitButton').on('click', function (e) {
-        // We don't want this to act as a link so cancel the link action
         e.preventDefault();
-
         doSubmit();
-    });
+    },
+
+    $('#removeButton').on('click', function (e) {
+        e.preventDefault();
+        doRemove();
+    })
+
+    );
 
     function doSubmit() {
         var token = $("meta[name='_csrf']").attr("content");
@@ -48,7 +53,33 @@ $(document).ready(function () {
             error: function (e) {
                 alert('Error saving shift to DB');
             },
-            dataType: "json",
+            // dataType: "json",
+            contentType: "application/json"
+        });
+    }
+
+    function doRemove() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        var username = $('.tab-content:visible').attr('id');
+        console.log(username);
+
+        $.ajax({
+            type: 'POST',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            url: api + '/remove',
+            data: JSON.stringify(username),
+            success: function (username) {
+                alert(username + " removed");
+                location.reload();
+            },
+            error: function (e) {
+                alert('Error removing from DB');
+            },
+            // dataType: "json",
             contentType: "application/json"
         });
     }

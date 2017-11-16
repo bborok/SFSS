@@ -35,6 +35,15 @@ public class UserController {
         }
     }
 
+    @PostMapping("/remove")
+    public ResponseEntity removeUserFromDatabase(@RequestBody String username) {
+        if (userData.removeUser(username)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 //    @GetMapping("/{username}")
 //    public String showUser(@PathVariable("username") String username, Model model){
 //        User user = userData.getUser(username);

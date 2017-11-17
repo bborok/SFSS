@@ -1,4 +1,6 @@
-<%--
+<%@ page import="org.codehaus.jackson.map.ObjectMapper" %>
+<%@ page import="org.springframework.ui.Model" %>
+<%@ page import="com.zeta.Models.User" %><%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>
@@ -20,6 +22,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
@@ -75,6 +78,23 @@
 
 <body>
 
+<script>
+    var users = {
+        <c:forEach items="${users}" var="user">
+        "${user.username}" : {
+            username : "${user.username}",
+            name : "${user.name}",
+            email : "${user.email}",
+            phoneNumber : "${user.phoneNumber}",
+            preferredCampus : "${user.preferredCampus.toString()}",
+            studentNumber : "${user.studentNumber}",
+            role : "${user.role.toString()}",
+            callSign : "${user.callSign}"
+        },
+        </c:forEach>
+    }
+</script>
+
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
@@ -112,33 +132,36 @@
 
                             <%--Modal Body--%>
                             <div class="modal-body">
-                                <form id="addUserForm" class="form-horizontal">
+                                <form id="userForm" class="form-horizontal" data-toggle="validator">
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group">
                                             <label class="control-label"><u>Username:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="username" placeholder="Enter Username">
+                                            <div class="input-group">
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
+                                                <span class="input-group-addon">@sfu.ca</span>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="studentNumber" placeholder="Enter Student Number">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Full Name:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userFullName" placeholder="Enter Full Name">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userEmail" placeholder="Enter Alternate Email">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userPhoneNumber" placeholder="Enter Phone Number">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
                                             <div class="controls">
-                                                <select class="form-control" name="userMember" id="userRole">
-                                                    <option value="role" disabled="disabled" selected="selected">Select A Role
+                                                <select class="form-control" name="role" id="userRole" required>
+                                                    <option value="" disabled="disabled" selected="selected">Select A Role
                                                     <c:forEach items="${roles}" var="role">
                                                         <option value="${role.name()}">
                                                             ${role.name()}
@@ -151,28 +174,28 @@
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" id="campusBurnaby" value="burnaby">Burnaby
+                                                <input type="radio" name="campus" id="BURNABY" value="BURNABY" required>Burnaby
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" id="campusSurrey" value="surrey">Surrey
+                                                <input type="radio" name="campus" id="SURREY" value="SURREY" required>Surrey
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="campus" id="campusVancouver" value="vancouver">Vancouver
+                                                <input type="radio" name="campus" id="VANCOUVER" value="VANCOUVER" required>Vancouver
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Call Sign:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="userMember" id="userCallsign" placeholder="Enter Call Sign">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
                                         </div>
                                     </div>
 
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
-                                <%--AJAX Request to POST to ShiftController--%>
-                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                        <%--AJAX Request to POST to ShiftController--%>
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -194,11 +217,11 @@
 
                             <tbody style="color:black">
                             <c:forEach items="${users}" var="user">
-                                <tr onclick="switchColors(this)" data-tab="${user.getUsername()}">
+                                <tr onclick="switchColors(this)" data-tab="${user.username}">
                                     <td class="col-sm-6 col-xs-6">
-                                            <c:out value="${user.getName()}"/>
+                                            <c:out value="${user.name}"/>
                                     <td class="col-sm-6">
-                                            <c:out value="${user.getStudentNumber()}"/>
+                                            <c:out value="${user.studentNumber}"/>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -220,7 +243,7 @@
                         </div>
 
                         <c:forEach items="${users}" var="user">
-                            <div class="tab-content" id="${user.getUsername()}" style="display: none">
+                            <div class="tab-content" id="${user.username}" style="display: none">
                                 <p>
                                     <b>Profile</b>
                                 </p>
@@ -228,17 +251,15 @@
                                     <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300"
                                          width="300">
                                 </center>
-                                <h3><c:out value="${user.getName()}"/></h3>
-                                <h4><c:out value="${user.getRole()}"/></h4>
-                                <p><c:out value="${user.getEmail()}"/></p>
-                                <h5><c:out value="${user.getPreferredCampus()}"/></h5>
+                                <h3><c:out value="${user.name}"/></h3>
+                                <h4><c:out value="${user.role}"/></h4>
+                                <p><c:out value="${user.email}"/></p>
+                                <h5><c:out value="${user.preferredCampus}"/></h5>
                             </div>
                         </c:forEach>
 
                         <div>
-                            <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Edit User</button>
-                        </div>
-                        <div>
+                            <button type="button" class="btn btn-primary" id="editButton">Edit User</button>
                             <button type="button" class="btn btn-primary" id="removeButton">Remove User</button>
                         </div>
                     </div>
@@ -253,6 +274,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
@@ -277,6 +299,13 @@
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
         });
+    });
+
+    $('#userModal').on('hidden.bs.modal', function () {
+        $(this).find("input,select").val('').end()
+            .find('[id="username"]').prop('disabled', false).end()
+            .data('bootstrapValidator').resetForm();
+        $('input[name="campus"]:checked').prop('checked', false);
     });
 </script>
 

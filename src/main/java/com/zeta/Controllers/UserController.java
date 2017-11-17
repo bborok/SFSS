@@ -28,10 +28,18 @@ public class UserController {
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
     @PostMapping("/add")
     public ResponseEntity addUserToDatabase(@RequestBody User user){
-        if (userData.addUser(user)) {
-            return new ResponseEntity(HttpStatus.OK);
+        if (userData.getUser(user.getUsername()) == null) {
+            if (userData.addUser(user)) {
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
         } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            if (userData.updateUser(user)) {
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
         }
     }
 

@@ -32,10 +32,12 @@ public interface UserData {
     public List<Training> getUserTraining(User user);
 
     // Date must be in the format YYYY-MM-DD
-    public boolean setUserTraining(String username, String training, String date, int hours);
+    public boolean addUserTraining(String username, String training, String date, int hours);
 
     // Date must be in the format YYYY-MM-DD
+    // Updates date and hours for particular user and training
     public boolean updateUserTraining(String username, String training, String date, int hours);
 
+    // Removes record of training for particular user and training
     public boolean removeTraining(String username, String training);
 }

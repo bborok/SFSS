@@ -45,7 +45,7 @@ public class UserDao implements UserData {
 
                jdbcTemplate.update(sql, user.getName(), user.getEmail(),
                        user.getPhoneNumber(), user.getPreferredCampus(), user.getStudentNumber(),
-                       user.getRole(), user.getUsername(), user.getCallSign());
+                       user.getRole(), user.getCallSign(), user.getUsername());
        } catch (Exception e) {
            return false;
        }
@@ -142,7 +142,7 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public boolean setUserTraining(String username, String training, String date, int hours) {
+    public boolean addUserTraining(String username, String training, String date, int hours) {
         try {
             String sql = "insert into UserTraining (User, Training, Date, Hours) values (?, ?, ?, ?)";
             jdbcTemplate.update(sql, username, training, date, hours);
@@ -156,8 +156,8 @@ public class UserDao implements UserData {
     @Override
     public boolean updateUserTraining(String username, String training, String date, int hours) {
         try {
-            String sql = "update UserTraining set Training = ?, Date = ?, Hours = ? where User = ?";
-            jdbcTemplate.update(sql, training, date, hours, username);
+            String sql = "update UserTraining set Date = ?, Hours = ? where User = ? and Training = ?";
+            jdbcTemplate.update(sql, date, hours, username, training);
         } catch (Exception e) {
             return false;
         }

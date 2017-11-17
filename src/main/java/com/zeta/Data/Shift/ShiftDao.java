@@ -29,17 +29,15 @@ public class ShiftDao implements ShiftData {
         }
     }
 
-    //ShiftRaw Methods
-
     /**
-     * Returns a list of ShiftRaw objects.
+     * Returns a list of Shift objects.
      *
-     * @return List<ShiftRaw>
+     * @return List<Shift>
      */
     @Override
     public List<Shift> getShifts() {
-        String shiftRawQuery = "SELECT * FROM Shift";
-        return jdbcTemplate.query(shiftRawQuery, new ShiftRowMapper());
+        String sql = "SELECT * FROM Shift ORDER BY Date DESC";
+        return jdbcTemplate.query(sql, new ShiftRowMapper());
     }
 
     @Override
@@ -57,7 +55,7 @@ public class ShiftDao implements ShiftData {
     /**
      * Adds a new row to the Shift table.
      *
-     * @param shift ShiftRaw object to save
+     * @param shift Shift object to save
      * @return True if successful, false otherwise
      */
     @Override

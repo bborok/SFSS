@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * Handles API requests for Shift's and ShiftRaw's
+ * Handles API requests for Shift's and Shift's
  */
 @RequestMapping("/api")
 @RestController
@@ -26,10 +26,12 @@ public class ShiftsController {
         this.shiftData = shiftData;
     }
 
+    //TODO: Implement / change methods to only fetch a certain time frame
+
     /**
-     * Use this when needing to add a new row to the Shift table by passing in a ShiftRaw
+     * Use this when needing to add a new row to the Shift table by passing in a Shift
      *
-     * @param shift 'stringified' ShiftRaw JSON object
+     * @param shift 'stringified' Shift JSON object
      * @return Status code 200 if successful, 400 if not
      */
     @PostMapping("/shift/save")
@@ -47,24 +49,24 @@ public class ShiftsController {
     }
 
     /**
-     * Use this to get a list of all Shifts in the database as a ShiftRaw object.
+     * Use this to get a list of all Shifts in the database as a Shift object.
      *
-     * @return List<ShiftRaw>
+     * @return List<Shift>
      */
     @GetMapping("/shifts")
-    public ResponseEntity<List<Shift>> shiftRaws() {
+    public ResponseEntity<List<Shift>> getShifts() {
         List<Shift> shifts = shiftData.getShifts();
         return new ResponseEntity<>(shifts, HttpStatus.OK);
     }
 
     /**
-     * Use this to get a ShiftRaw object based on the id
+     * Use this to get a Shift object based on the id
      *
      * @param id id of Shift
-     * @return ShiftRaw object
+     * @return Shift object
      */
     @GetMapping("/shift/{id}")
-    public ResponseEntity<Shift> getShiftRaw(@PathVariable long id) {
+    public ResponseEntity<Shift> getShift(@PathVariable long id) {
         Shift shift = shiftData.getShift(id);
         if (shift == null) return ResponseEntity.notFound().build();
         return new ResponseEntity<>(shift, HttpStatus.OK);
@@ -81,5 +83,4 @@ public class ShiftsController {
         if (shiftData.deleteShift(id)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
-
 }

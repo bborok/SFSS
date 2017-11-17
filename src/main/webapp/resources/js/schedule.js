@@ -1,19 +1,11 @@
-var iBURNABY = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety"];
-var iSURREY = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-var iVANCOUVER = ["Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-
-var iALLCAMPUSES = ["Information and Lost & Found Kiosk", "Speed Watch/Moving Traffic", "Community Presence", "Safety Screen", "Theft Prevention", "Auto Theft Prevention", "Bike Presence", "Special Events", "Smoking Checks", "Pedestrian Safety",
-    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety",
-    "Community Presence", "Theft Prevention", "Special Events", "Pedestrian Safety"];
-
-var iNOCAMPUSES = [];
-
-var addButtonBool = false;
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
+var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
 var token;
 var header;
 var calendar;
-var errorDiv;
+var alertsDiv;
+var startTimeInput;
+var endTimeInput;
 
 $(document).ready(function () {
     //CSRF Setup, needed for AJAX requests
@@ -23,25 +15,11 @@ $(document).ready(function () {
         jqXHR.setRequestHeader(header, token);
     });
 
-    errorDiv = $('#alertsDiv');
-
-
+    alertsDiv = $('#alertsDiv');
+    startTimeInput = $('#startTime');
+    endTimeInput = $('#endTime');
     // Initialize the calendar...
     calendar = $('#calendar');
-    $('#external-events .fc-event').each(function () {
-        // store data so the calendar knows to render an event upon drop
-        $(this).data('event', {
-            title: $.trim($(this).text()), // use the element's text as the event title
-            stick: true // maintain when user navigates (see docs on the renderEvent method)
-        });
-
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-            zIndex: 999,
-            revert: true,      // will cause the event to go back to its
-            revertDuration: 0  //  original position after the drag
-        });
-    });
 
     calendar.fullCalendar({
         eventSources: [
@@ -52,23 +30,8 @@ $(document).ready(function () {
             add_event: {
                 text: 'Add a Shift',
                 click: function (start, end) {
-                    addButtonBool = true;
-                    $('#addShiftTime').show();
-                    $('#apptStartTime').hide();
-                    $('#apptEndTime').hide();
-                    $('#when').hide();
-                    $('#hideDate').hide();
-
-                    var startTime = moment(start).format('MMM Do h:mm A');
-                    var endTime = moment(end).format('MMM Do h:mm A');
-                    var mywhen = startTime + ' - ' + endTime;
-
-                    $('#createEventModal #startTime').val(start);
-                    $('#createEventModal #endTime').val(end);
-                    // $('#createEventModal #eventCampus').val(event.campus);
-                    // $('#createEventModal #eventMember').val(event.member);
-                    $('#createEventModal #when').text(mywhen);
-
+                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
+                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -93,7 +56,6 @@ $(document).ready(function () {
         selectable: true,
 
         eventRender: function eventRender(event, element, view) {
-
             if (event.campus === 'BURNABY') {
                 element.css('background-color', '#E8502F');
             }
@@ -112,27 +74,19 @@ $(document).ready(function () {
 
         //Selecting an empty area
         select: function (start, end) {
-            addButtonBool = false;
-            $('#addShiftTime').hide();
-            $('#apptStartTime').show();
-            $('#apptEndTime').show();
-            $('#when').show();
-            $('#hideDate').show();
-            var startTime = moment(start).format('MMM Do h:mm A');
-            var endTime = moment(end).format('MMM Do h:mm A');
-            var mywhen = startTime + ' - ' + endTime;
-
-            $('#createEventModal #apptStartTime').val(start);
-            $('#createEventModal #apptEndTime').val(end);
-            $('#createEventModal #when').text(mywhen);
-
+            var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
+            var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
+            console.log(myStart);
+            console.log(myEnd);
+            startTimeInput.val(myStart);
+            endTimeInput.val(myEnd);
             $('#createEventModal').modal('show'); //popup modal
         },
 
         //Selecting a scheduled event
         eventClick: function (event) {
             console.log(event);
-            //The field after 'event' matches up with the field name in the AbstractShift and Shift class
+            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
             $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
@@ -146,11 +100,11 @@ $(document).ready(function () {
 
             $('#fullCalModal').modal();
 
-            $('#btnDelete').on('click', function (e) {
+            $('#btnDelete').off().on('click', function (e) {
                 e.preventDefault();
                 //AJAX DELETE REQUEST
+                console.log('Deleting shift ' + event.id);
                 deleteShift(event);
-
                 $('#fullCalModal').modal('hide');
             })
         },
@@ -159,7 +113,7 @@ $(document).ready(function () {
         weekNumbers: true,
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
-        editable: true
+        editable: false
     });
 
     $('#submitButton').on('click', function (e) {
@@ -170,7 +124,6 @@ $(document).ready(function () {
 
 
     function filter(calEvent) {
-
         var vals = [];
         $('input:checkbox.campusFilter:checked').each(function () {
             vals.push($(this).val());
@@ -244,27 +197,19 @@ $(document).ready(function () {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
-
-    $('#addShiftTime').hide();
-
 });
 
 function doSubmit() {
     var eventTitleElement = $('#eventTitle');
     $("#createEventModal").modal('hide');
 
-    var start;
-    var end;
+    var start = moment(new Date($('#startTime').val())).format(dateFormat);
+    var end = moment(new Date($('#endTime').val())).format(dateFormat);
+    var date = moment(new Date($('#startTime').val())).format("YYYY-MM-DD");
 
-    if (addButtonBool === true) {
-        start = moment(new Date($('#startTime').val())).format(dateFormat);
-        end = moment(new Date($('#endTime').val())).format(dateFormat);
-    } else {
-        start = moment(new Date($('#apptStartTime').val())).format(dateFormat);
-        end = moment(new Date($('#apptEndTime').val())).format(dateFormat);
-    }
     var shift = {
-        title: eventTitleElement.find(":selected").attr('class'),
+        title: eventTitleElement.find(":selected").attr("class"),
+        date: date,
         start: start,
         end: end,
         campus: $('#eventCampus').val(),
@@ -305,6 +250,7 @@ var deleteShift = function (event) {
         },
         url: api + '/shift/delete/' + event.id,
         success: function () {
+            console.log('Deleted shift' + event.id);
             displaySuccessAlert('Deleted ' + event.title + '.');
             calendar.fullCalendar('refetchEvents');
         },
@@ -315,7 +261,7 @@ var deleteShift = function (event) {
 };
 
 var displayErrorAlert = function (msg) {
-    errorDiv.append(
+    alertsDiv.append(
         "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
         "    <strong>Danger! </strong> " + msg +
@@ -324,12 +270,10 @@ var displayErrorAlert = function (msg) {
 };
 
 var displaySuccessAlert = function (msg) {
-    errorDiv.append(
+    alertsDiv.append(
         "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
         "    <strong>Success! </strong> " + msg +
         "</div>"
     );
 };
-
-

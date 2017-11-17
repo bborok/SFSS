@@ -14,7 +14,7 @@ public class ShiftRowMapper implements RowMapper<Shift> {
         Shift sr = new Shift();
         sr.setId(rs.getLong("ID"));
         sr.setTitle(rs.getString("Name"));
-        sr.setDate(rs.getDate("Date"));
+        sr.setDate((Date) rs.getDate("Date"));
         sr.setStart((Date) rs.getTimestamp("StartTime"));
         sr.setEnd((Date) rs.getTimestamp("EndTime"));
         sr.setCampus(Campus.valueOf(rs.getString("Campus").toUpperCase()));

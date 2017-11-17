@@ -1,7 +1,10 @@
 package com.zeta.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.CustomDateDeserializer;
+import com.zeta.Configurations.CustomDateSerializer;
 import com.zeta.Configurations.CustomDateTimeDeserializer;
 import com.zeta.Configurations.CustomDateTimeSerializer;
 
@@ -10,6 +13,10 @@ import java.util.Date;
 public abstract class AbstractShift {
     private Long id;
     private String title;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private Date date;
 
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
@@ -21,7 +28,6 @@ public abstract class AbstractShift {
 
     private Campus campus;
 
-    private Date date;
     private String location;
     private String notes;
     private String requiredTraining;
@@ -94,7 +100,6 @@ public abstract class AbstractShift {
     }
 
     public void setStart(Date start) {
-        this.date = start; //TODO: This is a HACK
         this.start = start;
     }
 

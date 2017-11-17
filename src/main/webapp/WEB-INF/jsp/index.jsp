@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <script>
-    var api = '${pageContext.request.contextPath}/announcements';
+    var api = '${pageContext.request.contextPath}';
 </script>
 <style>
     #side-container{
@@ -45,10 +45,11 @@
     <%
         User user = (User) session.getAttribute("user");
         pageContext.setAttribute("user", user);
-
     %>
-    <div id = "username" hidden >${user.getUsername()}bobaec</div>
 
+    <script>
+        var user = "${user.username}";
+    </script>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -81,11 +82,6 @@
                                                 <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
                                                 </input>
                                             </div>
-
-                                            <br><br>
-
-                                            <label class="control-label" style="float:left;" ><u>Date:</u>&nbsp;&nbsp;</label>
-                                                <input type="datetime-local" id = "announceDateModal" name = "announceDateModal" style="float:left;"/>
 
                                             <br><br>
 

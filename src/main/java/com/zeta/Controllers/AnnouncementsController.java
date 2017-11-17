@@ -16,7 +16,6 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/announcements")
 public class AnnouncementsController {
     private AnnouncementsData announcementsData;
 
@@ -25,7 +24,7 @@ public class AnnouncementsController {
         this.announcementsData = announcementsData;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/announcements/add")
     public ResponseEntity addAnnouncementToDatabase(@RequestBody Announcement a) {
         if (announcementsData.addAnnouncement(a)) {
             return new ResponseEntity(HttpStatus.OK);

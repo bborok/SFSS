@@ -6,9 +6,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import static javax.swing.JOptionPane.showMessageDialog;
 
 @Repository
 public class AnnouncementsDao implements AnnouncementsData {
@@ -21,12 +22,16 @@ public class AnnouncementsDao implements AnnouncementsData {
 
     @Override
     public boolean addAnnouncement(Announcement announcement) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
+
         try {
             String sql =
                     "INSERT INTO Announcement (User, Title, Message, Date, Campus) VALUES (?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(sql, announcement.getUsername(), announcement.getTitle(),
-                    announcement.getMessage(), announcement.getDate(), announcement.getCampus());
+                    announcement.getMessage(), sqlDate, announcement.getCampus().toString());
         } catch (Exception e) {
             return false;
         }

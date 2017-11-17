@@ -42,7 +42,7 @@ public class ShiftDao implements ShiftData {
 
     @Override
     public List<Shift> getShiftsWithSubmittedTimeCards() {
-        String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1";
+        String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1 ORDER BY Date DESC";
         return jdbcTemplate.query(sql, new ShiftRowMapper());
     }
 

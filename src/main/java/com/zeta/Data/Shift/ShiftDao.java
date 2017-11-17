@@ -41,15 +41,19 @@ public class ShiftDao implements ShiftData {
     }
 
     @Override
+    public List<Shift> getShiftsWithSubmittedTimeCards() {
+        String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1";
+        return jdbcTemplate.query(sql, new ShiftRowMapper());
+    }
+
+    @Override
     public Shift getShift(long id) {
         try {
             String sql = "SELECT * FROM Shift WHERE ID=?";
-            Shift shift = jdbcTemplate.queryForObject(sql, new ShiftRowMapper(), id);
-            return shift;
+            return jdbcTemplate.queryForObject(sql, new ShiftRowMapper(), id);
         } catch (Exception e) {
             return null;
         }
-
     }
 
     /**
@@ -73,7 +77,8 @@ public class ShiftDao implements ShiftData {
                     shift.getNotes(),
                     shift.getDate(),
                     shift.getRequiredTraining(),
-                    0); //By default, no timecard can be submitted if shift didn't exist already
+                    shift.isTimeCardSubmitted()
+            ); //By default, no timecard can be submitted if shift didn't exist already
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,6 +116,5 @@ public class ShiftDao implements ShiftData {
             System.out.println("Error deleting shift.");
             return false;
         }
-
     }
 }

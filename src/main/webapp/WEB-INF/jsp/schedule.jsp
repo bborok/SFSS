@@ -294,7 +294,8 @@ cancel button functionalities
 
                                 <b><u>Member:</u> </b><span id="modalMember"></span><br>
                                 <b><u>Notes:</u> </b><span id="modalNotes"></span><br>
-                                <b><u>Required Training:</u> </b><span id="modalTraining"></span><br><br>
+                                <b><u>Required Training:</u> </b><span id="modalTraining"></span><br>
+                                <b><u>TimeCard Submitted: </u></b> <span id="modalTimeCard"></span><br><br>
                             </div>
 
                             <div class="modal-footer">

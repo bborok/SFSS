@@ -27,6 +27,16 @@ public class ShiftsController {
     }
 
     //TODO: Implement / change methods to only fetch a certain time frame
+    /**
+     * Use this to get a list of all Shifts in the database as a Shift object.
+     *
+     * @return List<Shift>
+     */
+    @GetMapping("/shifts")
+    public ResponseEntity<List<Shift>> getShifts() {
+        List<Shift> shifts = shiftData.getShifts();
+        return new ResponseEntity<>(shifts, HttpStatus.OK);
+    }
 
     /**
      * Use this when needing to add a new row to the Shift table by passing in a Shift
@@ -48,16 +58,6 @@ public class ShiftsController {
         }
     }
 
-    /**
-     * Use this to get a list of all Shifts in the database as a Shift object.
-     *
-     * @return List<Shift>
-     */
-    @GetMapping("/shifts")
-    public ResponseEntity<List<Shift>> getShifts() {
-        List<Shift> shifts = shiftData.getShifts();
-        return new ResponseEntity<>(shifts, HttpStatus.OK);
-    }
 
     /**
      * Use this to get a Shift object based on the id

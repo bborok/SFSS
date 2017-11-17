@@ -30,11 +30,13 @@ public class Shift {
     private String location;
     private String notes;
     private String requiredTraining;
+    private boolean isTimeCardSubmitted = false; //By default is false
     private String username;
 
-    public Shift() { }
+    public Shift() {
+    }
 
-    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, String username) {
+    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -44,6 +46,7 @@ public class Shift {
         this.location = location;
         this.notes = notes;
         this.requiredTraining = requiredTraining;
+        this.isTimeCardSubmitted = isTimeCardSubmitted;
         this.username = username;
     }
 
@@ -125,6 +128,14 @@ public class Shift {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isTimeCardSubmitted() {
+        return isTimeCardSubmitted;
+    }
+
+    public void setTimeCardSubmitted(boolean timeCardSubmitted) {
+        isTimeCardSubmitted = timeCardSubmitted;
     }
 
     @Override

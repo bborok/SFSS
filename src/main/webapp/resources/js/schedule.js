@@ -97,6 +97,7 @@ $(document).ready(function () {
             $('#modalLocation').html(event.location);
             $('#modalNotes').html(event.notes);
             $('#modalTraining').html(event.requiredTraining);
+            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
 
             $('#fullCalModal').modal();
 

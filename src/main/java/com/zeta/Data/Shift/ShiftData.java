@@ -15,4 +15,7 @@ public interface ShiftData {
     boolean saveShift(Shift shift);
 
     boolean deleteShift(long id);
+
+    List<Shift> getShiftsWithSubmittedTimeCards();
+
 }

@@ -44,8 +44,8 @@ public class UserDao implements UserData {
                        "Role = ?, CallSign = ? WHERE Username = ?";
 
                jdbcTemplate.update(sql, user.getName(), user.getEmail(),
-                       user.getPhoneNumber(), user.getPreferredCampus(), user.getStudentNumber(),
-                       user.getRole(), user.getCallSign(), user.getUsername());
+                       user.getPhoneNumber(), user.getPreferredCampus().toString(), user.getStudentNumber(),
+                       user.getRole().toString(), user.getCallSign(), user.getUsername());
        } catch (Exception e) {
            return false;
        }

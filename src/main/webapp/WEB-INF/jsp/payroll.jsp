@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="resources/css/style.css">
+    <%--<link rel="stylesheet" href="resources/css/style.css">--%>
 
 </head>
 
@@ -43,13 +43,42 @@
 </nav>
 
 
-<div id="wrapper" class="toggled">
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
 
+            <li class="active">
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Home</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Schedule</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span> Profile</a>
+            </li>
+            <li>
+                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span> Statistics</a>
+                <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Lost & Found</a></li>
+                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Public Contact</a></li>
 
+                </ul>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>Payroll</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Time Cards</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Users</a>
+            </li>
+        </ul>
+    </div><!-- /#sidebar-wrapper -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
                     <img src="resources/img/logo_made/logo_2.png" class="img-responsive">
@@ -67,14 +96,9 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+<script src="resources/js/jquery-1.11.2.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/js/sidebar_menu.js"></script>
 
 </body>
 

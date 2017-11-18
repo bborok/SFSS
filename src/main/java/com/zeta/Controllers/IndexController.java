@@ -1,5 +1,6 @@
 package com.zeta.Controllers;
 
+import com.zeta.Models.Role;
 import com.zeta.Data.Announcements.AnnouncementsData;
 import com.zeta.Models.Announcement;
 import com.zeta.Data.Task.TaskData;
@@ -32,7 +33,6 @@ import java.util.stream.Collectors;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
-// Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
@@ -221,6 +221,7 @@ public class IndexController {
         }
 
         m.addAttribute("users", users);
+        m.addAttribute("roles", Role.values());
         return "users";
     }
 }

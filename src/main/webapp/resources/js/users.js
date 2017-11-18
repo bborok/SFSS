@@ -80,6 +80,10 @@ $userJQ(document).ready(function () {
                     validators: {
                         notEmpty: {
                             message: 'Callsign is required and cannot be empty..'
+                        },
+                        regexp: {
+                            regexp: /^[A-Z0-9]+$/,
+                            message: 'The title can only consist of capital letters and numbers'
                         }
                     }
                 }
@@ -149,9 +153,9 @@ $userJQ(document).ready(function () {
                 xhr.setRequestHeader(header, token);
             },
             url: api + '/remove',
-            data: JSON.stringify(username),
-            success: function (username) {
-                alert(username + " removed");
+            data: username,
+            success: function () {
+                alert("removed");
                 location.reload();
             },
             error: function () {

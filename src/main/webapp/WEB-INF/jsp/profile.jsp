@@ -28,14 +28,6 @@
 </head>
 
 <style>
-    #side-container {
-    }
-
-    #side-contact {
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
 
     tr {
         width: 100%;
@@ -60,8 +52,23 @@
 </style>
 
 <body>
+<nav class="navbar navbar-default no-margin">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="wrapper">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
     <%
@@ -72,7 +79,6 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
 
             <div class="col-sm-12 text">
                 <center>
@@ -139,10 +145,6 @@
 
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
     function switchColors(element) {
         links = document.getElementsByTagName("tr");

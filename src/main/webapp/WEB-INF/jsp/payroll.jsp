@@ -42,6 +42,7 @@
     </div>
 </nav>
 
+
 <div id="wrapper">
     <!-- Sidebar -->
     <jsp:include page="partfiles/sidebar.jsp"/>
@@ -67,7 +68,6 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-1.11.2.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/sidebar_menu.js"></script>
 
 </body>

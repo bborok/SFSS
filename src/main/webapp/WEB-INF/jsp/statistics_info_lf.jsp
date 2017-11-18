@@ -17,30 +17,28 @@
 
     <title>SFU</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/css/form-elements.css">
     <link rel="stylesheet" href="/resources/css/style.css">
 	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
-<style>
-    #side-container{
-    }
+<%--<style>--%>
+    <%--#side-container{--%>
+    <%--}--%>
 
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
+    <%--#side-contact{--%>
+        <%--position: absolute;--%>
+        <%--bottom: 0;--%>
+        <%--color: #ffffff;--%>
+    <%--}--%>
 
-</style>
+<%--</style>--%>
 
 <body>
 <nav class="navbar navbar-default no-margin">

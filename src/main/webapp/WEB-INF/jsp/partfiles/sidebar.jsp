@@ -35,23 +35,11 @@
             <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
             </li>
+            <li class="sidebar-item" style="padding-top: 200px">
+                <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow;font-size: 15px">Sign Out</b></a>
+            </li>
 
         </ul>
-        <div id="side-container" style="bottom: 0;position: absolute;padding-bottom: 60px;";>
-            <div id="side-contact" style="text-align:center; margin-bottom:10px;">
-                <p style="text-align:center; font-size:20px">
-                    <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/logout">Sign Out</a>
-                </p>
-                <br>
-                <div style="color: white">
-                    <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-                    <p class="fa fa-phone col-sm-12"> (778)-782-5425</p>
-                    <p class="fa fa-envelope-o col-sm-12"> sfucsp@sfu.ca</p>
-                </div>
-                <%--https://www.sfu.ca/srs/security/contact-us.html--%>
-            </div>
-        </div>
-
 
     </div><!-- /#sidebar-wrapper -->
 

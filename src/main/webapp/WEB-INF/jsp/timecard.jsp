@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="resources/css/style.css">
 
     <!-- jQuery Resources -->
+    <script src="resources/js/sidebar_menu.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
@@ -69,7 +70,6 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description" style="margin-bottom: 2em;">
                     <center>
@@ -207,6 +207,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+
 
 <!-- Menu Toggle Script -->
 

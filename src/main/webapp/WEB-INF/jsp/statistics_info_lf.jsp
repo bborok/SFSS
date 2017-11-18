@@ -28,18 +28,6 @@
 	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
-<%--<style>--%>
-    <%--#side-container{--%>
-    <%--}--%>
-
-    <%--#side-contact{--%>
-        <%--position: absolute;--%>
-        <%--bottom: 0;--%>
-        <%--color: #ffffff;--%>
-    <%--}--%>
-
-<%--</style>--%>
-
 <body>
 <nav class="navbar navbar-default no-margin">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -66,7 +54,6 @@
 
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
@@ -130,6 +117,8 @@
 <script src="/resources/bootstrap/js/bootstrap.js"></script>
 <script src="/resources/datatables/js/datatables.min.js"></script>
 <script src="/resources/js/echarts.common.min.js"></script>
+<script src="resources/js/sidebar_menu.js"></script>
+
 
 <script type="text/javascript">
 

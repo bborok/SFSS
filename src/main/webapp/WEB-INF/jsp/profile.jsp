@@ -137,6 +137,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/js/sidebar_menu.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>

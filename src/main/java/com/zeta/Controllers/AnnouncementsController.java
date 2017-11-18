@@ -6,18 +6,16 @@ import com.zeta.Models.Announcement;
 
 import com.zeta.Models.Campus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.util.List;
 
-@Controller
-@RequestMapping("/announcements")
+@RestController
 public class AnnouncementsController {
     private AnnouncementsData announcementsData;
 
@@ -26,38 +24,46 @@ public class AnnouncementsController {
         this.announcementsData = announcementsData;
     }
 
-    @GetMapping("announcements/add")
-    public String addAnnouncement(
-            @RequestParam("username") String username,
-            @RequestParam("title") String title,
-            @RequestParam("message") String message,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-            @RequestParam("date") Date date,
-            @RequestParam("campus") Campus campus)
-//            @RequestParam("id") int id)
-    {
-        Announcement a = new Announcement(
-                username,
-                title,
-                message,
-                date,
-                campus);
-//                campus,
-//                id);
-        return "redirect:" + "/announcements/" + a.getUsername();
+    @PostMapping("/announcements/add")
+    public ResponseEntity addAnnouncementToDatabase(@RequestBody Announcement a) {
+        if (announcementsData.addAnnouncement(a)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
-
-    @GetMapping("/showAllAnnouncements")
-    public String getAllAnnouncements(Model model){
-        List<Announcement> announcementList = announcementsData.showAllAnnouncements();
-        model.addAttribute(announcementList);
-        return "/announcements/showAllAnnouncements";
-    }
-
-    @GetMapping("/{id}")
-    public String showOneAnnouncement(@PathVariable("id") int id, Model model){
-        Announcement a = announcementsData.showAnnouncements(id);
-        model.addAttribute("a", a);
-        return "/announcements/show";
-    }
+//    @GetMapping("announcements/add")
+//    public String addAnnouncement(
+//            @RequestParam("username") String username,
+//            @RequestParam("title") String title,
+//            @RequestParam("message") String message,
+//            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//            @RequestParam("date") Date date,
+//            @RequestParam("campus") Campus campus)
+////            @RequestParam("id") int id)
+//    {
+//        Announcement a = new Announcement(
+//                username,
+//                title,
+//                message,
+//                date,
+//                campus);
+////                campus,
+////                id);
+//        return "redirect:" + "/announcements/" + a.getUsername();
+//    }
+//
+//    @GetMapping("/showAllAnnouncements")
+//    public String getAllAnnouncements(Model model){
+//        List<Announcement> announcementList = announcementsData.showAllAnnouncements();
+//        model.addAttribute(announcementList);
+//        return "/announcements/showAllAnnouncements";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public String showOneAnnouncement(@PathVariable("id") int id, Model model){
+//        Announcement a = announcementsData.showAnnouncements(id);
+//        model.addAttribute("a", a);
+//        return "/announcements/show";
+//    }
 }

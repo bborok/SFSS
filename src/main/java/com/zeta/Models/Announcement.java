@@ -8,27 +8,27 @@ public class Announcement {
     private String message;
     private Date date;
     private Campus campus;
-    private int id;
+//    private int id;
 
     public Announcement() {
     }
 
     // TODO: Remove this constructor once campus and id are linked with frontend
+//    public Announcement(String username, String title, String message, Date date, Campus campus) {
+//        this.username = username;
+//        this.title = title;
+//        this.message = message;
+//        this.date = date;
+//        this.campus = campus;
+//    }
+
     public Announcement(String username, String title, String message, Date date, Campus campus) {
         this.username = username;
         this.title = title;
         this.message = message;
         this.date = date;
         this.campus = campus;
-    }
-
-    public Announcement(String username, String title, String message, Date date, Campus campus, int id) {
-        this.username = username;
-        this.title = title;
-        this.message = message;
-        this.date = date;
-        this.campus = campus;
-        this.id = id;
+//        this.id = id;
     }
 
     public String getUsername() {
@@ -71,11 +71,11 @@ public class Announcement {
         this.campus = campus;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 }

@@ -27,19 +27,8 @@
 	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
-<style>
-    #side-container{
-    }
-
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-    }
-
-</style>
-
 <body>
-<nav class="navbar navbar-default no-margin">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header fixed-brand">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
@@ -55,11 +44,56 @@
     </div>
 </nav>
 
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 56px">
 
-    <jsp:include page="partfiles/sidebar.jsp"/>
+    <%--<jsp:include page="partfiles/sidebar.jsp"/>--%>
 
+        <div id="sidebar-wrapper" style="padding-top: 0px">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
 
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x "></i></span> Home</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/schedule"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span> Schedule</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/profile"><span class="fa-stack fa-lg pull-left"><i class="fa fa-user fa-stack-1x "></i></span> Profile</a>
+                </li>
+                <li class="sidebar-item active">
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span> Statistics</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="${pageContext.request.contextPath}/statistics_info_lf"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Lost & Found</a></li>
+                        <li class="active"><a href="${pageContext.request.contextPath}/statistics_public_contact"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Public Contact</a></li>
+
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/payroll"><span class="fa-stack fa-lg pull-left"><i class="fa fa-credit-card fa-stack-1x "></i></span>Payroll</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/timecard"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
+                </li>
+
+            </ul>
+            <div id="side-container" style="bottom: 0;position: absolute;padding-bottom: 60px;";>
+                <div id="side-contact" style="text-align:center; margin-bottom:10px;">
+                    <p style="text-align:center; font-size:20px">
+                        <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/logout">Sign Out</a>
+                    </p>
+                    <br>
+                    <div style="color: white">
+                        <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
+                        <p class="fa fa-phone col-sm-12"> (778)-782-5425</p>
+                        <p class="fa fa-envelope-o col-sm-12"> sfucsp@sfu.ca</p>
+                    </div>
+                    <%--https://www.sfu.ca/srs/security/contact-us.html--%>
+                </div>
+            </div>
+        </div><!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

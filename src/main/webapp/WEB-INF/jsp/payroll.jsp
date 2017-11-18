@@ -26,7 +26,7 @@
 
 <body>
 
-<nav class="navbar navbar-default no-margin">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header fixed-brand">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
@@ -43,7 +43,7 @@
 </nav>
 
 
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 56px">
     <!-- Sidebar -->
     <jsp:include page="partfiles/sidebar.jsp"/>
 

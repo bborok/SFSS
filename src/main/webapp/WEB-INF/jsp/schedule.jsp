@@ -82,7 +82,7 @@
 
 <body>
 
-<nav class="navbar navbar-default no-margin">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header fixed-brand">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
@@ -97,20 +97,20 @@
         </ul>
     </div>
 </nav>
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 56px">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
     <div id="page-content-wrapper">
         <div class="container-fluid xyz">
             <div class="col-sm-12 text">
-                <%--<div class="description">--%>
-                    <%--<center>--%>
-                        <%--<img src="resources/img/logo_made/logo_2.png" class="img-responsive"--%>
-                             <%--style="height:100px;width:500px">--%>
-                    <%--</center>--%>
-                    <%--<hr>--%>
-                <%--</div>--%>
+                <div class="description">
+                    <center>
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
+                             style="height:100px;width:500px">
+                    </center>
+                    <hr>
+                </div>
 
                 <%--Used for displaying alerts--%>
                 <div id="alertsDiv"></div>

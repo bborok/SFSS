@@ -21,10 +21,12 @@
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+
 </head>
 
 <body>
-<nav class="navbar navbar-default no-margin">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header fixed-brand">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
@@ -37,9 +39,13 @@
         <ul class="nav navbar-nav">
             <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
         </ul>
+        <div class="nav pull-right" style="padding-top: 10px;padding-right: 10px">
+            <%--<button type="button" class="btn btn-default" href="${pageContext.request.contextPath}/logout" style="height: 37px;font-size: 15px;padding-bottom: 30px"><b>Sign Out</b></button>--%>
+        </div>
     </div>
+
 </nav>
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 56px">
 
 <jsp:include page="partfiles/sidebar.jsp"/>
     <!-- Page Content -->

@@ -100,14 +100,7 @@ $userJQ(document).ready(function () {
 
             var phone  = $('#userPhoneNumber').val().replace(/^\D+/g,"");
 
-            var campus = '';
-            if ($('#campusBurnaby').prop('checked', true)) {
-                campus = 'BURNABY';
-            } else if ($('#campusSurrey').prop('checked', true)) {
-                campus = 'SURREY';
-            } else {
-                campus = 'VANCOUVER';
-            }
+            var campus = $('input[name="campus"]:checked').attr('id');
 
             var user = {
                 "username": $('#username').val().toLowerCase(),

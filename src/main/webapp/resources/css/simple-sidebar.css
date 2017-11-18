@@ -1,4 +1,6 @@
-#wrapper {
+ /* Toggle Styles */
+
+ #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -20,7 +22,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #971e30;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -66,7 +68,7 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: white;
 }
 
 .sidebar-nav li a:hover {
@@ -79,6 +81,15 @@
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
     text-decoration: none;
+    color: red; !important;
+
+}
+
+.active a{
+    color: white !important;
+}
+
+.active li{
 }
 
 .sidebar-nav > .sidebar-brand {

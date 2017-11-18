@@ -65,7 +65,7 @@
 
                 </ul>
             </li>
-            <li>
+            <li class="active">
                 <a href="${pageContext.request.contextPath}/payroll"><span class="fa-stack fa-lg pull-left"><i class="fa fa-credit-card fa-stack-1x "></i></span>Payroll</a>
             </li>
             <li>
@@ -78,7 +78,7 @@
     </div><!-- /#sidebar-wrapper -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
                 <div class="description">
                     <img src="resources/img/logo_made/logo_2.png" class="img-responsive">

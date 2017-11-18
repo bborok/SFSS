@@ -23,7 +23,7 @@ $(document).ready(function () {
 
     calendar.fullCalendar({
         eventSources: [
-            api + '/shiftraws'
+            api + '/shifts'
         ],
         // put your options and callbacks here
         customButtons: {
@@ -86,7 +86,7 @@ $(document).ready(function () {
         //Selecting a scheduled event
         eventClick: function (event) {
             console.log(event);
-            //The field after 'event' matches up with the field name in the AbstractShift and ShiftRaw classes
+            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
             $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
@@ -97,6 +97,7 @@ $(document).ready(function () {
             $('#modalLocation').html(event.location);
             $('#modalNotes').html(event.notes);
             $('#modalTraining').html(event.requiredTraining);
+            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
 
             $('#fullCalModal').modal();
 
@@ -205,9 +206,11 @@ function doSubmit() {
 
     var start = moment(new Date($('#startTime').val())).format(dateFormat);
     var end = moment(new Date($('#endTime').val())).format(dateFormat);
+    var date = moment(new Date($('#startTime').val())).format("YYYY-MM-DD");
 
-    var shiftRaw = {
+    var shift = {
         title: eventTitleElement.find(":selected").attr("class"),
+        date: date,
         start: start,
         end: end,
         campus: $('#eventCampus').val(),
@@ -216,12 +219,12 @@ function doSubmit() {
         notes: $('#eventNotes').val(),
         requiredTraining: $('#eventRequiredTraining').val()
     };
-    saveShift(shiftRaw);
+    saveShift(shift);
 }
 
-var saveShift = function (shiftRaw) {
-    console.log(shiftRaw);
-    var url = api + '/shifts/save';
+var saveShift = function (shift) {
+    console.log(shift);
+    var url = api + '/shift/save';
     $.ajax({
         headers: {
             Accept: "text/plain"
@@ -229,13 +232,13 @@ var saveShift = function (shiftRaw) {
         type: 'POST',
         url: url,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(shiftRaw),
+        data: JSON.stringify(shift),
         success: function () {
-            displaySuccessAlert('Saved ' + shiftRaw.title + '.');
+            displaySuccessAlert('Saved ' + shift.title + '.');
             calendar.fullCalendar('refetchEvents');
         },
         error: function () {
-            displayErrorAlert('Error saving ' + shiftRaw.title + ' to database.');
+            displayErrorAlert('Error saving ' + shift.title + ' to database.');
         }
     });
 };
@@ -246,7 +249,7 @@ var deleteShift = function (event) {
         headers: {
             Accept: "text/plain"
         },
-        url: api + '/shifts/delete/' + event.id,
+        url: api + '/shift/delete/' + event.id,
         success: function () {
             console.log('Deleted shift' + event.id);
             displaySuccessAlert('Deleted ' + event.title + '.');

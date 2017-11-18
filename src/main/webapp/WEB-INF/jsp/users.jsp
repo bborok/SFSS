@@ -1,6 +1,4 @@
-<%@ page import="org.codehaus.jackson.map.ObjectMapper" %>
-<%@ page import="org.springframework.ui.Model" %>
-<%@ page import="com.zeta.Models.User" %><%--
+<%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>

@@ -80,6 +80,12 @@
                 <li class="sidebar-item" style="padding-top: 200px">
                     <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow;font-size: 15px">Sign Out</b></a>
                 </li>
+                <li class="sidebar-item" style="padding-top: 100px">
+                    <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white"> (778)-782-5425</b></a>
+                </li>
+                <li class="sidebar-item">
+                    <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-envelope-o fa-stack-1x "></i></span><b style="font-size: 15px;color: white"> sfucsp@sfu.ca</b></a>
+                </li>
 
             </ul>
         </div><!-- /#sidebar-wrapper -->

@@ -9,7 +9,7 @@
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
-            <p>SFU SFEP</p>
+            <p>SFU SSEP</p>
         </li>
         <li class="sidebar-item" >
             <a href="${pageContext.request.contextPath}/"><i class="fa fa-home"></i> Home</a>

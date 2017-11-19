@@ -82,10 +82,7 @@ public class IndexController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model m) {
-        List<User> users = userData.getAllUsers();
-        m.addAttribute("users", users);
-
+    public String profile() {
         return "profile";
     }
 

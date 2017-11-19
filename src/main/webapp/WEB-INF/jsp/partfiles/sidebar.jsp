@@ -20,8 +20,11 @@
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i> Profile</a>
         </li>
-        <li class="sidebar-item">
+        <li id="stats" class="sidebar-item stats">
             <a href="${pageContext.request.contextPath}/statistics_info_lf"><i class="fa fa-area-chart"></i> Statistics</a>
+        </li>
+        <li class="sidebar-item stats">
+            <a href="${pageContext.request.contextPath}/statistics_public_contact" ></a>
         </li>
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/payroll"><i class="fa fa-credit-card"></i> Payroll</a>
@@ -62,6 +65,9 @@
         $sbJQ.each(links, function(key, value) {
             if (value.href === document.URL) {
                 $sbJQ(this).parent().addClass('active');
+                if ($sbJQ(this).parent().hasClass('stats')) {
+                    $('#stats').addClass('active');
+                }
             }
         })
     });

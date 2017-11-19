@@ -48,7 +48,8 @@
     %>
 
     <script>
-        var user = "${user.username}";
+        <%--var user = "${user.username}";--%>
+        var user = "bobaec";
     </script>
 
     <!-- Page Content -->
@@ -137,15 +138,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="controls" style="width:65%;">
+                        <div class="controls" id = "sortAnnounce" style="width:65%;">
                             <c:forEach items="${announcements}" var = "announcement">
-                                <div class="panel panel-primary" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
+                                <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
                                     <div class="panel-heading" id = "announceTitle">${announcement.getTitle()}</div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
                                         ${announcement.getMessage()}
                                     </div><hr>
-                                    <div class = "panel-body" id = "announceDate">Date: ${announcement.getDate()}</div>
+                                    <div class = "panel-body" id = "1">Date: <a style="color:grey;"id = "announceDate">${announcement.getDate()}</a></div>
                                     <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}</div>
                                 </div>
                             </c:forEach>

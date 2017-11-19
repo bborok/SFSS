@@ -83,12 +83,98 @@
                         <hr>
                     </div>
                 </center>
+
+                <div id="userModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <%--Modal Content--%>
+
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                </button>
+                                <h4 id="myModalLabel1"><b>Edit User</b></h4>
+                            </div>
+
+                            <%--Modal Body--%>
+                            <div class="modal-body">
+                                <form id="userForm" class="form-horizontal" data-toggle="validator">
+                                    <div style="padding-left: 15px;padding-right: 15px">
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Username:</u></label>
+                                            <div class="input-group">
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
+                                                <span class="input-group-addon">@sfu.ca</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Student Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Full Name:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Email:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Phone Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Role:</u></label>
+                                            <div class="controls">
+                                                <select class="form-control" name="role" id="userRole" required>
+                                                    <option value="" disabled="disabled" selected="selected">Select A Role
+                                                        <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.name()}">
+                                                            ${role.name()}
+                                                    </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row-fluid">
+                                            <label class="control-label"><u>Preferred Campus:</u></label>
+                                            <br>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" id="BURNABY" value="BURNABY" required>Burnaby
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" id="SURREY" value="SURREY" required>Surrey
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="campus" id="VANCOUVER" value="VANCOUVER" required>Vancouver
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Call Sign:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                        <%--AJAX Request to POST to ShiftController--%>
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <br><br>
                 <center>
                     <div>
                         <div>
                             <h1>
                                 <b><c:out value="${user.getName()}"/>'s Profile</b>
+                                <br>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Edit User</button>
                             </h1>
                             <center>
                                 <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"

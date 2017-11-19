@@ -32,7 +32,7 @@
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/timecard"><i class="fa fa-clock-o"></i> Time Card</a>
         </li>
-        <c:if test="${sessionScope.user.role != 'MEMBER'}">
+        <c:if test="${sessionScope.user.role == 'ADMIN' || sessionScope.user.role == 'SUPERVISOR'}">
             <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
             </li>

@@ -12,10 +12,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
@@ -24,6 +28,14 @@
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src='resources/js/users.js'></script>
+
+    <script>
+        var api = '${pageContext.request.contextPath}/user';
+    </script>
 
 </head>
 
@@ -68,6 +80,19 @@
         User user = (User) session.getAttribute("user");
         pageContext.setAttribute("user", user);
     %>
+
+    <script>
+        var loggedInUser = {
+            username : "${user.username}",
+            name : "${user.name}",
+            email : "${user.email}",
+            phoneNumber : "${user.phoneNumber}",
+            preferredCampus : "${user.preferredCampus.toString()}",
+            studentNumber : "${user.studentNumber}",
+            role : "${user.role.toString()}",
+            callSign : "${user.callSign}"
+        };
+    </script>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -174,7 +199,7 @@
                             <h1>
                                 <b><c:out value="${user.getName()}"/>'s Profile</b>
                                 <br>
-                                <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Edit User</button>
+                                <button type="button" id="editButton" class="btn">Edit User</button>
                             </h1>
                             <center>
                                 <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
@@ -222,6 +247,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
@@ -230,22 +256,11 @@
         $("#wrapper").toggleClass("toggled");
     });
 
-    function switchColors(element) {
-        links = document.getElementsByTagName("tr");
-        for (var i = 0; i < links.length; i++)
-            links.item(i).style.color = 'black';
-        element.style.color = 'orange';
-    };
-
-    $(function () {
-        $("table td").click(function () {
-            event.preventDefault();
-            $('table td').removeClass('current');
-            $(this).addClass("current");
-            var tab = $(this).parent().attr("data-tab");
-            $('.tab-content').hide();
-            $('#' + tab).fadeIn();
-        });
+    $('#userModal').on('hidden.bs.modal', function () {
+        $(this).find("input,select").val('').end()
+            .find('[id="username"]').prop('disabled', false).end()
+            .data('bootstrapValidator').resetForm();
+        $('input[name="campus"]:checked').prop('checked', false);
     });
 </script>
 

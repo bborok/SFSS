@@ -14,7 +14,7 @@
         <sec:intercept-url pattern="/login" access="permitAll()" />
         <sec:intercept-url pattern="/logout" access="permitAll()" />
         <sec:intercept-url pattern="/api/*" access="permitAll()" />
-        <!--<sec:intercept-url pattern="/**" access="isAuthenticated()" />-->
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
         <sec:logout invalidate-session="true" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
         <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />

@@ -1,5 +1,7 @@
 package com.zeta.Controllers;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
@@ -12,11 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -87,94 +88,110 @@ public class IndexController {
         return "statistics";
     }
 
-    @GetMapping("/statistics_info_lf")
+    @GetMapping("/statistics/info_lf")
     public String statistics_info_lf(Model m) {
-        m.addAttribute("someAttribute", "someValue");
         return "statistics_info_lf";
     }
 
-    @RequestMapping(value="/statistic/data", produces="application/json", method = RequestMethod.GET)
+    @RequestMapping(value = "/statistics/info_lf/data/get", produces="application/json", method = RequestMethod.GET)
     @ResponseBody
-    public String testjson(String kind, String campus) {
-        if (kind == "public_contact") {
-            if (campus == null)
-                campus = "Burnaby";
-            StatisticsData sd = new StatisticsDao();
-            Date currDate = new Date();
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(currDate);
-            int currYear = ca.get(Calendar.YEAR);
-            int[][] array= new int[6][12];
-            String[] strs = {"Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"};
-            for (int t = 0; t < 6; t++) {
-                for (int i = 0; i < 12; i ++) {
-                    String str=String.valueOf(currYear) + "-" + String.valueOf(i+1) + "-01";
-                    SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = null;
-                    try {
-                        date =sdf.parse(str);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(date);
-                    array[t][i] = sd.getTaskCountMonth(strs[t], campus, calendar);
-                }
-            }
-
-            for (int t = 0; t < 6; t++) {
-                for (int i = 0; i < 12; i++) {
-                    System.out.print(array[t][i]);
-                }
-                System.out.print("\n");
-            }
-
-            JsonArrayBuilder title = Json.createArrayBuilder();
-            String[] title_strs = {String.valueOf(currYear), "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-            for (String str : title_strs) {
-                title.add(str);
-            }
-            JsonArrayBuilder val0 = Json.createArrayBuilder();
-            JsonArrayBuilder val1 = Json.createArrayBuilder();
-            JsonArrayBuilder val2 = Json.createArrayBuilder();
-            JsonArrayBuilder val3 = Json.createArrayBuilder();
-            JsonArrayBuilder val4 = Json.createArrayBuilder();
-            JsonArrayBuilder val5 = Json.createArrayBuilder();
-            for (int i = 0; i < 12; i++) {
-                val0.add(array[0][i]);
-                val1.add(array[1][i]);
-                val2.add(array[2][i]);
-                val3.add(array[3][i]);
-                val4.add(array[4][i]);
-                val5.add(array[5][i]);
-            }
-
-            JsonObject result = Json.createObjectBuilder()
-                    .add("title", title.build())
-                    .add(strs[0], val0.build())
-                    .add(strs[1], val1.build())
-                    .add(strs[2], val2.build())
-                    .add(strs[3], val3.build())
-                    .add(strs[4], val4.build())
-                    .add(strs[5], val5.build())
-                    .build();
-            return result.toString();
-        } else if (kind == "lost_found") {
-            if (campus == null)
-                campus = "Burnaby";
-            //to get data from database
-
-            //return json
-            return "";
-        } else {
-            return "";
+    public String get_statistics_info_lf_data(String campus) {
+        if (campus == null)
+            campus = "Burnaby";
+        StatisticsData sd = new StatisticsDao();
+        String[] strs = {"directions", "lost & found", "payments", "phone services", "key services", "other inquiries"};
+        int[][] array = sd.getDataForInfoLF(campus, strs);
+        JSONObject ret = new JSONObject();
+        JSONArray title_json = new JSONArray();
+        Date currDate = new Date();
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(currDate);
+        int currYear = ca.get(Calendar.YEAR);
+        String[] title_strs = {String.valueOf(currYear), "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        for (String str : title_strs) {
+            title_json.add(str);
         }
-
+        ArrayList<JSONArray> vals = new ArrayList<JSONArray>();
+        for (int j = 0; j < 6; j++) {
+            JSONArray tmp = new JSONArray();
+            for (int i = 0; i < 12; i++) {
+                tmp.add(array[j][i]);
+            }
+            vals.add(tmp);
+        }
+        ret.put("title", title_json);
+        ret.put(strs[0], vals.get(0));
+        ret.put(strs[1], vals.get(1));
+        ret.put(strs[2], vals.get(2));
+        ret.put(strs[3], vals.get(3));
+        ret.put(strs[4], vals.get(4));
+        ret.put(strs[5], vals.get(5));
+        return ret.toString();
     }
 
-    @GetMapping("/statistics_public_contact")
+    @RequestMapping(value = "/statistics/info_lf/data/post", produces="application/json", method = RequestMethod.POST)
+    @ResponseBody
+    public String post_statistics_info_lf_data(String campus, String data) {
+        if (campus == null)
+            campus = "Burnaby";
+        StatisticsData sd = new StatisticsDao();
+        JSONArray jsonArray = JSONArray.fromObject(data);
+        System.out.println(jsonArray.toString());
+        String[] titles = {"directions", "lost & found", "payments", "phone services", "key services", "other inquiries"};
+        for (int i = 0; i < 6; i++) {
+            int[] tmp_arr = new int[12];
+            for (int j = 0; j < 12; j++) {
+                System.out.println(jsonArray.getInt(i*12 + j));
+                tmp_arr[j] = jsonArray.getInt(i * 12 + j);
+            }
+            sd.updateDataForInfoLF(campus, titles[i], tmp_arr);
+        }
+        JSONObject retObject = new JSONObject();
+        retObject.put("result", "success");
+        retObject.put("message", "success");
+        return retObject.toString();
+    }
+
+    @GetMapping("/statistics/public_contact")
     public String statistics_public_contact(Model m) {
         return "statistics_public_contact";
+    }
+
+    @RequestMapping(value="/statistics/public_contact/data", produces="application/json", method = RequestMethod.GET)
+    @ResponseBody
+    public String statistics_public_contact_data(String campus) {
+        if (campus == null)
+            campus = "Burnaby";
+        StatisticsData sd = new StatisticsDao();
+        Date currDate = new Date();
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(currDate);
+        int currYear = ca.get(Calendar.YEAR);
+        String[] strs = {"Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"};
+        int[][] array = sd.getDataForPublicContact(campus, strs);
+        JSONObject ret = new JSONObject();
+        JSONArray title_json = new JSONArray();
+        String[] title_strs = {String.valueOf(currYear), "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        for (String str : title_strs) {
+            title_json.add(str);
+        }
+
+        ArrayList<JSONArray> vals = new ArrayList<JSONArray>();
+        for (int j = 0; j < 6; j++) {
+            JSONArray tmp = new JSONArray();
+            for (int i = 0; i < 12; i++) {
+                tmp.add(array[j][i]);
+            }
+            vals.add(tmp);
+        }
+        ret.put("title", title_json);
+        ret.put(strs[0], vals.get(0));
+        ret.put(strs[1], vals.get(1));
+        ret.put(strs[2], vals.get(2));
+        ret.put(strs[3], vals.get(3));
+        ret.put(strs[4], vals.get(4));
+        ret.put(strs[5], vals.get(5));
+        return ret.toString();
     }
 
     @GetMapping("/temp_schedule")

@@ -1,6 +1,4 @@
-$userJQ = jQuery.noConflict(false);
-
-$userJQ(document).ready(function () {
+$(document).ready(function () {
 
     $('#removeButton').on('click', function (e) {
         e.preventDefault();
@@ -160,8 +158,13 @@ $userJQ(document).ready(function () {
     }
     
     function doEdit() {
-        var username = $('.tab-content:visible').attr('id');
-        var user = users[username];
+        var user;
+        if (window.location.pathname === '/users') {
+            var username = $('.tab-content:visible').attr('id');
+            user = users[username];
+        } else {
+            user = loggedInUser;
+        }
 
         $('#userModal')
             .find('[id="myModalLabel1"]').html('<b>Edit User</b>').end()

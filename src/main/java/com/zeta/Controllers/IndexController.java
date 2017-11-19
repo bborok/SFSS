@@ -82,7 +82,15 @@ public class IndexController {
     }
 
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(Model m, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User loggedIn = (User) session.getAttribute("user");
+        String username = loggedIn.getUsername();
+
+        User user = userData.getUser(username);
+        session.setAttribute("user", user);
+
+        m.addAttribute("roles", Role.values());
         return "profile";
     }
 

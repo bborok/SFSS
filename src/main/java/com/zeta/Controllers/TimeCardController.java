@@ -1,10 +1,14 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Shift.ShiftData;
 import com.zeta.Data.TimeCard.TimeCardData;
+import com.zeta.Models.Shift;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +26,12 @@ import javax.servlet.http.HttpSession;
 public class TimeCardController {
 
     TimeCardData timeCardData;
+    ShiftData shiftData;
 
     @Autowired
-    public TimeCardController(TimeCardData timeCardData) {
+    public TimeCardController(TimeCardData timeCardData, ShiftData shiftData) {
         this.timeCardData = timeCardData;
+        this.shiftData = shiftData;
     }
 
     @RequestMapping(value = "/timecard", method = RequestMethod.GET)
@@ -124,9 +130,10 @@ public class TimeCardController {
 
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
     public String getTimeCardList(Model m, HttpServletRequest request) {
-        List<String> shiftId = new ArrayList<String>();
+        List<Shift> shifts = shiftData.getShifts();
+//        ResponseEntity<List<Shift>>  allShifts = new ResponseEntity<>(shifts, HttpStatus.OK);
         HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
+        User u = (User) session.getAttribute("user" );
 //        if (u == null) return "timecard";
 //        if (u.getRole() == Role.MEMBER) {
 //            shiftId = (long) 1;
@@ -137,6 +144,7 @@ public class TimeCardController {
 //        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
         TimeCard timeCard = new TimeCard();
         m.addAttribute("timeCard", timeCard);
+        m.addAttribute("shifts", shifts);
         return "timecard_list";
     }
 }

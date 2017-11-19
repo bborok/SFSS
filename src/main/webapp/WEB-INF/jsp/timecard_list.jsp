@@ -73,25 +73,35 @@
                         <table class="table table-striped" style="text-align:left; ">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>User</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Campus</th>
-                                <th>Location</th>
+                                <th width="20%">Name</th>
+                                <th width="10%">User</th>
+                                <th width="15%">Date</th>
+                                <th width="15%">Start Time</th>
+                                <th width="15%">End Time</th>
+                                <th width="10%">Campus</th>
+                                <th width="10%">Location</th>
                             </tr>
                             </thead>
 
                             <tbody style="color:black">
-                            <%--<c:forEach items="${users}" var="user">--%>
-                                <%--<tr onclick="switchColors(this)" data-tab="${user.username}">--%>
-                                    <%--<td class="col-sm-6 col-xs-6">--%>
-                                            <%--<c:out value="${user.name}"/>--%>
-                                    <%--<td class="col-sm-6">--%>
-                                            <%--<c:out value="${user.studentNumber}"/>--%>
-                                <%--</tr>--%>
-                            <%--</c:forEach>--%>
+                            <c:forEach items="${shifts}" var="shift">
+                                <tr>
+                                    <td >
+                                        <a href="#"><c:out value="${shift.title}"/></a>
+                                    <td >
+                                            <c:out value="${shift.username}"/>
+                                    <td >
+                                            <c:out value="${shift.date}"/>
+                                    <td >
+                                            <c:out value="${shift.start}"/>
+                                    <td >
+                                            <c:out value="${shift.end}"/>
+                                    <td >
+                                            <c:out value="${shift.campus}"/>
+                                    <td >
+                                            <c:out value="${shift.location}"/>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
 

@@ -68,9 +68,32 @@
                     </center>
                 </div>
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Time Card List</div>
+                    <div class="panel-heading">List of Timecards</div>
                     <div class="panel-body">
+                        <table class="table table-striped" style="text-align:left; ">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>User</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Campus</th>
+                                <th>Location</th>
+                            </tr>
+                            </thead>
 
+                            <tbody style="color:black">
+                            <%--<c:forEach items="${users}" var="user">--%>
+                                <%--<tr onclick="switchColors(this)" data-tab="${user.username}">--%>
+                                    <%--<td class="col-sm-6 col-xs-6">--%>
+                                            <%--<c:out value="${user.name}"/>--%>
+                                    <%--<td class="col-sm-6">--%>
+                                            <%--<c:out value="${user.studentNumber}"/>--%>
+                                <%--</tr>--%>
+                            <%--</c:forEach>--%>
+                            </tbody>
+                        </table>
 
                     </div> <%--end of panel body--%>
                 </div><%--end of panel primary--%>

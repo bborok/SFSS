@@ -1,6 +1,7 @@
 package com.zeta.Data.User;
 
 import com.zeta.Models.Login;
+import com.zeta.Models.Training;
 import com.zeta.Models.User;
 
 import java.util.List;
@@ -9,14 +10,14 @@ import java.util.List;
 public interface UserData {
 
     // Set argument to null if no data
-    public Boolean addUser(User user);
+    public boolean addUser(User user);
 
     // Set argument to null if no data
-    public Boolean updateUser(User user);
+    public boolean updateUser(User user);
 
-    public Boolean removeUser(String username);
+    public boolean removeUser(String username);
 
-    public Boolean activateDeactivatedUser(String username);
+    public boolean activateDeactivatedUser(String username);
 
     public List<User> getDeactivatedUsers();
 
@@ -28,15 +29,15 @@ public interface UserData {
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
 
-    public Boolean getUserTraining(User user);
+    public List<Training> getUserTraining(User user);
 
     // Date must be in the format YYYY-MM-DD
-    public Boolean setUserTraining(String username, String training, String date);
+    public boolean addUserTraining(String username, String training, String date, int hours);
 
     // Date must be in the format YYYY-MM-DD
-    public Boolean updateUserTraining(String username, String training, String date);
+    // Updates date and hours for particular user and training
+    public boolean updateUserTraining(String username, String training, String date, int hours);
 
-    public Boolean removeTraining(String username, String training, String date);
-
-
+    // Removes record of training for particular user and training
+    public boolean removeTraining(String username, String training);
 }

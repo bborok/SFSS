@@ -1,17 +1,21 @@
 package com.zeta.Data.Shift;
 
 import com.zeta.Models.Shift;
-import com.zeta.Models.ShiftRaw;
 
 import java.util.List;
 
 /**
- * Interface to save ShiftRaw's to the database
+ * Interface to save Shift's to the database
  */
 public interface ShiftData {
-    List<ShiftRaw> getShiftRaws();
-    ShiftRaw getShiftRaw(long id);
-    boolean saveShiftRaw(ShiftRaw shiftRaw);
+    List<Shift> getShifts();
+
+    Shift getShift(long id);
+
+    boolean saveShift(Shift shift);
 
     boolean deleteShift(long id);
+
+    List<Shift> getShiftsWithSubmittedTimeCards();
+
 }

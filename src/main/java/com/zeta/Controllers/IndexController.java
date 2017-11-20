@@ -2,12 +2,20 @@ package com.zeta.Controllers;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import com.zeta.Models.Role;
+import com.zeta.Data.Announcements.AnnouncementsData;
+import com.zeta.Models.Announcement;
+import com.zeta.Data.Task.TaskData;
+import com.zeta.Models.Campus;
+import com.zeta.Models.Task;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.zeta.Data.Statistics.StatisticsDao;
 import com.zeta.Data.Statistics.StatisticsData;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.User;
+import com.zeta.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,20 +26,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 
-// Test function found in tutorial for setting up this project, can be discarded
 @Controller
 public class IndexController {
 
     private UserData userData;
+    private AnnouncementsData announcementsData;
+    private TaskData taskData;
 
     @Autowired
-    public IndexController(UserData userData) {
+    public IndexController(UserData userData, TaskData taskData,AnnouncementsData announcementsData) {
         this.userData = userData;
+        this.taskData = taskData;
+        this.announcementsData = announcementsData;
     }
 
     @RequestMapping(value = "/login")
@@ -40,9 +55,11 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String dashboard(HttpServletRequest request) {
+    public String dashboard(HttpServletRequest request, Model m) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
+        List<Announcement> announcements = announcementsData.showAllAnnouncements();
+        m.addAttribute("announcements", announcements);
 
         if (principal instanceof UserDetails) {
             if (session.getAttribute("user") == null) {
@@ -67,18 +84,33 @@ public class IndexController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model m) {
-        List<User> users = userData.getAllUsers();
-        m.addAttribute("users", users);
+    public String profile(Model m, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User loggedIn = (User) session.getAttribute("user");
+        String username = loggedIn.getUsername();
 
+        User user = userData.getUser(username);
+        session.setAttribute("user", user);
+
+        m.addAttribute("roles", Role.values());
         return "profile";
     }
 
     @GetMapping("/schedule")
     public String schedule(Model m) {
         List<User> users = userData.getAllUsers();
-        // m.addAttribute ("someAttribute", "someValue");
         m.addAttribute("users", users);
+
+        List<Task> allTasks = taskData.getTasks();
+        List<Task> surreyTasks = taskData.getTasks(Campus.SURREY);
+        List<Task> vancouverTasks = taskData.getTasks(Campus.VANCOUVER);
+        List<Task> burnabyTasks = taskData.getTasks(Campus.BURNABY);
+
+        m.addAttribute("ALLTASKS", allTasks);
+        m.addAttribute("SURREYTASKS", surreyTasks);
+        m.addAttribute("VANCOUVERTASKS", vancouverTasks);
+        m.addAttribute("BURNABYTASKS", burnabyTasks);
+
         return "schedule";
     }
 
@@ -92,6 +124,7 @@ public class IndexController {
     public String statistics_info_lf(Model m) {
         return "statistics_info_lf";
     }
+
 
     @RequestMapping(value = "/statistics/info_lf/data/get", produces="application/json", method = RequestMethod.GET)
     @ResponseBody
@@ -211,19 +244,20 @@ public class IndexController {
         List<User> users;
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-//        if (u == null) return "users"; //Exit the request if user info can't get fetched
-//        //Filter the list users depending on the currently logged in users role.
-//        if (u.getRole() == Role.TEAM_LEADER) {
-//            //Filter the users based on the team leaders preferred campus.
-//            users = userData.getAllUsers().stream()
-//                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
-//                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
-//                    .collect(Collectors.toList());
-//        } else {
-//            users = userData.getAllUsers();
-//        }
-        users = userData.getAllUsers();
+        if (u == null) return "users"; //Exit the request if user info can't get fetched
+        //Filter the list users depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+            //Filter the users based on the team leaders preferred campus.
+            users = userData.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else {
+            users = userData.getAllUsers();
+        }
+
         m.addAttribute("users", users);
+        m.addAttribute("roles", Role.values());
         return "users";
     }
 }

@@ -1,5 +1,6 @@
 package com.zeta.Data.TimeCard;
 
+import com.zeta.Data.Task.TaskRowMapper;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,37 +32,24 @@ public class TimeCardDao implements TimeCardData {
     }
 
     @Override
-    public Boolean addTimeCard(TimeCard timeCard) {
-        try {
-            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ? where User = ? and ID = ?";
-            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
-
-            con.setAutoCommit(false);
-
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
-            updateShift.setString(1, timeCard.getCampus().toString());
-            updateShift.setString(2, timeCard.getLocation());
-            updateShift.setString(3, timeCard.getNotes());
-            updateShift.setString(4, timeCard.getUsername());
-            updateShift.setLong(5, timeCard.getShiftId());
-
-            updateShift.execute();
-
-            insertTasksIntoUserTask(timeCard, userTaskSQL);
-
-            con.commit();
-
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+    public boolean saveTimeCard(TimeCard timeCard) {
+        int isSubmitted = 0;    // saving timecard sets submitted to false
+        return addTimeCard(timeCard, isSubmitted);
     }
 
     @Override
-    public Boolean updateTimeCard(TimeCard timeCard) {
+    public boolean submitTimeCard(TimeCard timeCard) {
+        int isSubmitted = 1;    // submitting timecard sets submitted to true
+        return addTimeCard(timeCard, isSubmitted);
+    }
+
+
+    @Override
+    public boolean updateTimeCard(TimeCard timeCard) {
+        int isSubmitted = 1; // only able to update timecard after it has been submitted
         try {
 
-            String shiftSQL = "update Shift set Location = ?, Notes = ? where User = ? and ID = ?";
+            String shiftSQL = "update Shift set Location = ?, Notes = ?, isTimeCardSubmitted = ? where User = ? and ID = ?";
             String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
 
             con.setAutoCommit(false);
@@ -69,8 +57,9 @@ public class TimeCardDao implements TimeCardData {
             PreparedStatement updateShift = con.prepareStatement(shiftSQL);
             updateShift.setString(1, timeCard.getLocation());
             updateShift.setString(2, timeCard.getNotes());
-            updateShift.setString(3, timeCard.getUsername());
-            updateShift.setLong(4, timeCard.getShiftId());
+            updateShift.setInt(3, isSubmitted);
+            updateShift.setString(4, timeCard.getUsername());
+            updateShift.setLong(5, timeCard.getShiftId());
 
             updateShift.execute();
 
@@ -91,7 +80,7 @@ public class TimeCardDao implements TimeCardData {
     public TimeCard getTimeCard(String username, long shiftId) {
         TimeCard timeCard = null;
         try {
-            String shiftSQL = "select Campus, Location, Notes from Shift where User = ? and ID = ?";
+            String shiftSQL = "select Campus, Location, Notes, isTimeCardSubmitted from Shift where User = ? and ID = ?";
             String taskSQL = "select Name from Task where isDeactivated = 0 order by Name asc";
             String userTaskSQL = "select Task, Count from UserTask where User = ? and Shift = ? order by Task asc";
 
@@ -99,7 +88,7 @@ public class TimeCardDao implements TimeCardData {
             timeCard = jdbcTemplate.queryForObject(shiftSQL, new Object[]{username, shiftId}, new TimeCardRowMapper());
 
             // Get list of all tasks
-            List<Task> allTasks = jdbcTemplate.query(taskSQL, new TaskMapper());
+            List<Task> allTasks = jdbcTemplate.query(taskSQL, new TaskRowMapper());
 
             // Get list of all tasks user did in particular shift
             List<Task> userTasks = jdbcTemplate.query(
@@ -122,6 +111,34 @@ public class TimeCardDao implements TimeCardData {
             return null;
         }
         return timeCard;
+    }
+
+    private boolean addTimeCard(TimeCard timeCard, int isSubmitted) {
+        try {
+            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
+                    "where User = ? and ID = ?";
+            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
+
+            con.setAutoCommit(false);
+
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getCampus().toString());
+            updateShift.setString(2, timeCard.getLocation());
+            updateShift.setString(3, timeCard.getNotes());
+            updateShift.setInt(4, isSubmitted);
+            updateShift.setString(5, timeCard.getUsername());
+            updateShift.setLong(6, timeCard.getShiftId());
+
+            updateShift.execute();
+
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
+
+            con.commit();
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     private void clearRecords(String username, long shiftId) throws SQLException {

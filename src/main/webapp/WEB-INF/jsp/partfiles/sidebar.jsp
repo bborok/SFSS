@@ -9,7 +9,7 @@
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
-            <p>SFU SFEP</p>
+            <p>SFU SSEP</p>
         </li>
         <li class="sidebar-item" >
             <a href="${pageContext.request.contextPath}/"><i class="fa fa-home"></i> Home</a>
@@ -23,6 +23,9 @@
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/statistics/info_lf"><i class="fa fa-area-chart"></i> Statistics</a>
         </li>
+        <li class="sidebar-item stats">
+            <a href="${pageContext.request.contextPath}/statistics_public_contact" ></a>
+        </li>
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/payroll"><i class="fa fa-credit-card"></i> Payroll</a>
         </li>
@@ -32,7 +35,7 @@
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/timecard"><i class="fa fa-clock-o"></i> Time Card</a>
         </li>
-        <c:if test="${sessionScope.user.role != 'MEMBER'}">
+        <c:if test="${sessionScope.user.role == 'ADMIN' || sessionScope.user.role == 'SUPERVISOR'}">
             <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
             </li>
@@ -62,8 +65,10 @@
         $sbJQ.each(links, function(key, value) {
             if (value.href === document.URL) {
                 $sbJQ(this).parent().addClass('active');
+                if ($sbJQ(this).parent().hasClass('stats')) {
+                    $('#stats').addClass('active');
+                }
             }
         })
     });
 </script>
-

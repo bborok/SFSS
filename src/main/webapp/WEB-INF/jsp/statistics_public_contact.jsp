@@ -37,6 +37,7 @@
     #side-contact{
         position: absolute;
         bottom: 0;
+        color: #ffffff;
     }
 
 </style>
@@ -46,8 +47,6 @@
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
-
-
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -67,10 +66,10 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-4" style="padding-top: 15px">
-                            <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                            <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
+                        <div class="col-md-4" style="padding-top: 15px;padding-left: 50px">
+                            <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
+                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -90,17 +89,21 @@
                 </div>
             </center>
             <br><br>
-            <div class="col-sm-9">
+            <div class="col-sm-8"style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
+                <center><a title="Export" href="#" id="export">Export Table to CSV</a></center>
                 <table id="table1" class="display" width="100%"></table>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4"style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
+                <center><a title="Export" href="#" id="export2">Export Table to CSV</a></center>
                 <table id="table2" class="display" width="100%"></table>
             </div>
 
-            <div class="col-sm-12">
+
+            <div class="col-sm-12"style="border-width: 1px;border-color: #0c0c0c; border-style:solid">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>
+
     </div>
     <!-- /#page-content-wrapper -->
 
@@ -415,7 +418,7 @@
 	}
 	
     
-    
+
 </script>
 
 <!-- Menu Toggle Script -->
@@ -424,6 +427,97 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+
+    $(document).ready(function () {
+        function exportTableToCSV($table1, filename) {
+            var $headers = $table1.find('tr:has(th)')
+                ,$rows = $table1.find('tr:has(td)')
+
+                // Temporary delimiter characters unlikely to be typed by keyboard
+                // This is to avoid accidentally splitting the actual contents
+                ,tmpColDelim = String.fromCharCode(11) // vertical tab character
+                ,tmpRowDelim = String.fromCharCode(0) // null character
+
+                // actual delimiter characters for CSV format
+                ,colDelim = '","'
+                ,rowDelim = '"\r\n"';
+
+            // Grab text from table into CSV formatted string
+            var csv = '"';
+            csv += formatRows($headers.map(grabRow));
+            csv += rowDelim;
+            csv += formatRows($rows.map(grabRow)) + '"';
+
+            // Data URI
+            var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+            // For IE (tested 10+)
+            if (window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(csv))], {
+                    type: "text/csv;charset=utf-8;"
+                });
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                $(this)
+                    .attr({
+                        'download': filename
+                        ,'href': csvData
+                        //,'target' : '_blank' //if you want it to open in a new window
+                    });
+            }
+
+            //------------------------------------------------------------
+            // Helper Functions
+            //------------------------------------------------------------
+            // Format the output so it has the appropriate delimiters
+            function formatRows(rows){
+                return rows.get().join(tmpRowDelim)
+                    .split(tmpRowDelim).join(rowDelim)
+                    .split(tmpColDelim).join(colDelim);
+            }
+            // Grab and format a row from the table
+            function grabRow(i,row){
+
+                var $row = $(row);
+                //for some reason $cols = $row.find('td') || $row.find('th') won't work...
+                var $cols = $row.find('td');
+                if(!$cols.length) $cols = $row.find('th');
+
+                return $cols.map(grabCol)
+                    .get().join(tmpColDelim);
+            }
+            // Grab and format a column from the table
+            function grabCol(j,col){
+                var $col = $(col),
+                    $text = $col.text();
+
+                return $text.replace('"', '""'); // escape double quotes
+
+            }
+        }
+
+        // This must be a hyperlink
+        $("#export").click(function (event) {
+            var outputFile = 'TableA'
+            outputFile = outputFile.replace('.csv','') + '.csv'
+            // CSV
+            exportTableToCSV.apply(this, [$('#table1'), outputFile]);
+
+            // IF CSV, don't do event.preventDefault() or return false
+            // We actually need this to be a typical hyperlink
+        });
+
+        $("#export2").click(function (event) {
+            // var outputFile = 'export'
+            var outputFile = 'TableB'
+            outputFile = outputFile.replace('.csv','') + '.csv'
+
+            // CSV
+            exportTableToCSV.apply(this, [$('#table2'), outputFile]);
+
+        });
+    });
+
 </script>
 </body>
 </html>

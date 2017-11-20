@@ -1,6 +1,7 @@
 package com.zeta.Data.User;
 
 import com.zeta.Models.Login;
+import com.zeta.Models.Training;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,16 +20,16 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean addUser(User user) {
+    public boolean addUser(User user) {
         try {
              String sql =
                         "INSERT INTO User (Username, Name, Email, PhoneNumber, PreferredCampus, " +
-                                "StdNum, Role, CallSign) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                "StdNum, Role, CallSign, isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
              jdbcTemplate.update(sql, user.getUsername(), user.getName(), user.getEmail(),
                         (int) user.getPhoneNumber(), user.getPreferredCampus().toString(),
                         (int) user.getStudentNumber(), user.getRole().toString(),
-                        user.getCallSign());
+                        user.getCallSign(), user.getIsDeactivated());
         } catch (Exception e)
         {
             return false;
@@ -37,14 +38,14 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean updateUser(User user) {
+    public boolean updateUser(User user) {
        try {
                String sql = "UPDATE User SET Name = ?, Email = ?, PhoneNumber = ?, PreferredCampus = ? , StdNum = ?, " +
                        "Role = ?, CallSign = ? WHERE Username = ?";
 
                jdbcTemplate.update(sql, user.getName(), user.getEmail(),
-                       user.getPhoneNumber(), user.getPreferredCampus(), user.getStudentNumber(),
-                       user.getRole(), user.getUsername(), user.getCallSign());
+                       user.getPhoneNumber(), user.getPreferredCampus().toString(), user.getStudentNumber(),
+                       user.getRole().toString(), user.getCallSign(), user.getUsername());
        } catch (Exception e) {
            return false;
        }
@@ -52,7 +53,7 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean removeUser(String username) {
+    public boolean removeUser(String username) {
         try {
                 String sql = "UPDATE User SET isDeactivated = 1 WHERE Username = ?";
                 jdbcTemplate.update(sql, username);
@@ -63,7 +64,7 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean activateDeactivatedUser(String username) {
+    public boolean activateDeactivatedUser(String username) {
         try {
             String sql = "UPDATE User SET isDeactivated = 0 WHERE Username = ?";
             jdbcTemplate.update(sql, username);
@@ -99,6 +100,14 @@ public class UserDao implements UserData {
                         "CallSign, isDeactivated from User where Username = ? and " +
                         "(select 1 from User where Username = ?) and isDeactivated = 0";
                 user = jdbcTemplate.queryForObject(userSQL, new Object[] {username, username}, new UserRowMapper());
+
+                List<Training> trainings = getUserTraining(user);
+                if (trainings != null) {
+                    user.setTraining(trainings);
+                } else {
+                    user.setTraining(null);
+                }
+
         } catch (Exception e) {
             return null;
         }
@@ -120,12 +129,24 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean getUserTraining(User user) {
-        List<String> list;
+    public List<Training> getUserTraining(User user) {
+        List<Training> list;
         try {
-                String sql = "select Training from UserTraining where User = ?";
-                list = jdbcTemplate.queryForList(sql, new Object[] {user.getUsername()}, String.class);
-                user.setTraining(list);
+                String sql = "select Training, Hours, Date from UserTraining where User = ?";
+                list = jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new TrainingRowMapper());
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public boolean addUserTraining(String username, String training, String date, int hours) {
+        try {
+            String sql = "insert into UserTraining (User, Training, Date, Hours) values (?, ?, ?, ?)";
+            jdbcTemplate.update(sql, username, training, date, hours);
+
         } catch (Exception e) {
             return false;
         }
@@ -133,10 +154,10 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean setUserTraining(String username, String training, String date) {
+    public boolean updateUserTraining(String username, String training, String date, int hours) {
         try {
-            String sql = "insert into UserTraining (User, Training, Date) values (?, ?, ?)";
-            jdbcTemplate.update(sql, username, training, date);
+            String sql = "update UserTraining set Date = ?, Hours = ? where User = ? and Training = ?";
+            jdbcTemplate.update(sql, date, hours, username, training);
         } catch (Exception e) {
             return false;
         }
@@ -144,21 +165,11 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public Boolean updateUserTraining(String username, String training, String date) {
+    public boolean removeTraining(String username, String training) {
         try {
-            String sql = "update UserTraining set Training = ?, Date = ? where User = ?";
-            jdbcTemplate.update(sql, training, date, username);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+            String sql = "delete from UserTraining where User = ?, Training = ?";
+            jdbcTemplate.update(sql, username, training);
 
-    @Override
-    public Boolean removeTraining(String username, String training, String date) {
-        try {
-            String sql = "delete from UserTraining where User = ?, Training = ?, Date = ? limit 1";
-            jdbcTemplate.update(sql, username, training, date);
         } catch (Exception e) {
             return false;
         }

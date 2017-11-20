@@ -1,17 +1,20 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
-import com.zeta.Models.ShiftRaw;
+import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 
 
 /**
- * Handles API requests for Shift's and ShiftRaw's
+ * Handles API requests for Shift's and Shift's
  */
 @RequestMapping("/api")
 @RestController
@@ -23,39 +26,50 @@ public class ShiftsController {
         this.shiftData = shiftData;
     }
 
+    //TODO: Implement / change methods to only fetch a certain time frame
     /**
-     * Use this when needing to add a new row to the Shift table by passing in a ShiftRaw
+     * Use this to get a list of all Shifts in the database as a Shift object.
      *
-     * @param shiftRaw 'stringified' ShiftRaw JSON object
+     * @return List<Shift>
+     */
+    @GetMapping("/shifts")
+    public ResponseEntity<List<Shift>> getShifts() {
+        List<Shift> shifts = shiftData.getShifts();
+        return new ResponseEntity<>(shifts, HttpStatus.OK);
+    }
+
+    /**
+     * Use this when needing to add a new row to the Shift table by passing in a Shift
+     *
+     * @param shift 'stringified' Shift JSON object
      * @return Status code 200 if successful, 400 if not
      */
-    @PostMapping("/shifts/save")
-    public ResponseEntity<Object> saveShift(@RequestBody ShiftRaw shiftRaw) {
-        System.out.println(shiftRaw.toString());
-        if (shiftData.saveShiftRaw(shiftRaw)) return ResponseEntity.ok().build();
-        else return ResponseEntity.badRequest().build();
+    @PostMapping("/shift/save")
+    public ResponseEntity<Object> saveShift(@RequestBody Shift shift, HttpServletRequest httpServletRequest) {
+        System.out.println(shift.toString());
+        if (shiftData.saveShift(shift)) {
+            System.out.println("Shift saved successfully.");
+            return ResponseEntity
+                    .created(URI.create(httpServletRequest.getRequestURI()))
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body("Success");
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
+
     /**
-     * Use this to get a list of all Shifts in the database as a ShiftRaw object.
+     * Use this to get a Shift object based on the id
      *
-     * @return List<ShiftRaw>
-     */
-    @GetMapping("/shiftraws")
-    public ResponseEntity<List<ShiftRaw>> shiftRaws() {
-        return new ResponseEntity<>(shiftData.getShiftRaws(), HttpStatus.OK);
-    }
-
-    /**
-     * Use this to get a ShiftRaw object based on the id
      * @param id id of Shift
-     * @return ShiftRaw object
+     * @return Shift object
      */
-    @GetMapping("/shiftraws/{id}")
-    public ResponseEntity<ShiftRaw> getShiftRaw(@PathVariable long id){
-        ShiftRaw shiftRaw = shiftData.getShiftRaw(id);
-        if (shiftRaw==null) return ResponseEntity.notFound().build();
-        return new ResponseEntity<>(shiftRaw, HttpStatus.OK);
+    @GetMapping("/shift/{id}")
+    public ResponseEntity<Shift> getShift(@PathVariable long id) {
+        Shift shift = shiftData.getShift(id);
+        if (shift == null) return ResponseEntity.notFound().build();
+        return new ResponseEntity<>(shift, HttpStatus.OK);
     }
 
     /**
@@ -64,10 +78,9 @@ public class ShiftsController {
      * @param id id of Shift to delete
      * @return Status code 200 if successful, 400 if not
      */
-    @DeleteMapping("/shifts/delete/{id}")
+    @DeleteMapping("/shift/delete/{id}")
     public ResponseEntity<Object> deleteShift(@PathVariable long id) {
         if (shiftData.deleteShift(id)) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
-
 }

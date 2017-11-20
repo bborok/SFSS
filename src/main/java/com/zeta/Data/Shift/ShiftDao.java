@@ -1,9 +1,6 @@
 package com.zeta.Data.Shift;
 
-import com.zeta.Configurations.PersistenceConfig;
-import com.zeta.Data.User.UserDao;
-import com.zeta.Data.User.UserData;
-import com.zeta.Models.ShiftRaw;
+import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,54 +29,59 @@ public class ShiftDao implements ShiftData {
         }
     }
 
-    //ShiftRaw Methods
-
     /**
-     * Returns a list of ShiftRaw objects.
+     * Returns a list of Shift objects.
      *
-     * @return List<ShiftRaw>
+     * @return List<Shift>
      */
     @Override
-    public List<ShiftRaw> getShiftRaws() {
-        String shiftRawQuery = "SELECT * FROM Shift";
-        return jdbcTemplate.query(shiftRawQuery, new ShiftRawRowMapper());
+    public List<Shift> getShifts() {
+        String sql = "SELECT * FROM Shift ORDER BY Date DESC";
+        return jdbcTemplate.query(sql, new ShiftRowMapper());
     }
 
     @Override
-    public ShiftRaw getShiftRaw(long id) {
+    public List<Shift> getShiftsWithSubmittedTimeCards() {
+        String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1 ORDER BY Date DESC";
+        return jdbcTemplate.query(sql, new ShiftRowMapper());
+    }
+
+    @Override
+    public Shift getShift(long id) {
         try {
             String sql = "SELECT * FROM Shift WHERE ID=?";
-            ShiftRaw shiftRaw = jdbcTemplate.queryForObject(sql, new ShiftRawRowMapper(), id);
-            return shiftRaw;
+            return jdbcTemplate.queryForObject(sql, new ShiftRowMapper(), id);
         } catch (Exception e) {
             return null;
         }
-
     }
 
     /**
      * Adds a new row to the Shift table.
      *
-     * @param shiftRaw ShiftRaw object to save
+     * @param shift Shift object to save
      * @return True if successful, false otherwise
      */
     @Override
-    public boolean saveShiftRaw(ShiftRaw shiftRaw) {
+    public boolean saveShift(Shift shift) {
         try {
-            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(sql,
-                    shiftRaw.getTitle(),
-                    shiftRaw.getStart(),
-                    shiftRaw.getEnd(),
-                    shiftRaw.getUsername(),
-                    shiftRaw.getCampus().toString(),
-                    shiftRaw.getLocation(),
-                    shiftRaw.getNotes(),
-                    shiftRaw.getDate(),
-                    shiftRaw.getRequiredTraining());
+                    shift.getTitle(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    shift.getUsername(),
+                    shift.getCampus().toString(),
+                    shift.getLocation(),
+                    shift.getNotes(),
+                    shift.getDate(),
+                    shift.getRequiredTraining(),
+                    shift.isTimeCardSubmitted()
+            ); //By default, no timecard can be submitted if shift didn't exist already
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -110,10 +112,9 @@ public class ShiftDao implements ShiftData {
 
             con.commit();
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error deleting shift.");
             return false;
         }
-
     }
 }

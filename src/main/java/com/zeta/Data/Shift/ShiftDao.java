@@ -41,6 +41,19 @@ public class ShiftDao implements ShiftData {
     }
 
     @Override
+    public List<Shift> getShiftsByUser(String username) {
+        List<Shift> list;
+        try {
+            String sql = "select * from Shift where User = ? order by Date desc";
+            list = jdbcTemplate.query(sql, new ShiftRowMapper());
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list;
+    }
+
+    @Override
     public List<Shift> getShiftsWithSubmittedTimeCards() {
         String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1 ORDER BY Date DESC";
         return jdbcTemplate.query(sql, new ShiftRowMapper());

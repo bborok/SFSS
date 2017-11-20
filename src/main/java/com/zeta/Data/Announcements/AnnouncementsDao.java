@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +17,8 @@ import java.util.List;
 @Repository
 public class AnnouncementsDao implements AnnouncementsData {
     private JdbcTemplate jdbcTemplate;
+    private Connection con;
+
 
     @Autowired
     public AnnouncementsDao(DataSource dataSource) {
@@ -38,6 +43,21 @@ public class AnnouncementsDao implements AnnouncementsData {
         return true;
     }
 
+    @Override
+    public boolean removeAnnouncement(int ID) {
+        Object[] params = {ID};
+        int[] types = {Types.INTEGER};
+        System.out.println("dao" + ID);
+        try {
+
+            String sql = "DELETE FROM Announcement WHERE ID = ?";
+            jdbcTemplate.update(sql, params, types);
+        } catch (Exception e) {
+            System.out.println(e + "exceptsasaaion" + ID);
+            return false;
+        }
+        return true;
+    }
     @Override
     public Announcement showAnnouncements(int ID) {
         Announcement announcement = null;

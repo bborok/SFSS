@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%@ page import="com.zeta.Models.Announcement" %><%--
   Created by IntelliJ IDEA.
   model.User: PrivateAcc
   Date: 2017-09-29
@@ -48,15 +49,28 @@
     %>
 
     <script>
-        <%--var user = "${user.username}";--%>
-        var user = "bobaec";
+        var user = "${user.username}"; // for website use
+//        var user = "bobaec"; // for local use
+
+        var id = { // for editing
+            <c:forEach items="${announcements}" var="announcement">
+            "${announcement.username}" : {
+                ID : '${announcement.id}',
+                User : '${announcement.username}',
+                Title : '${announcement.title}',
+                Message : '${announcement.message}',
+                Date : '${announcement.date}',
+                Campus : '${announcement.campus}'
+            },
+        </c:forEach>
+        }
     </script>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-            <div class="col-sm-12 text">
+            < class="col-sm-12 text">
                 <div class="description">
                     <%--This contains all of the relevant info about announcement--%>
                     <center>
@@ -117,7 +131,7 @@
                                 <div class="col-sm-12 row">
                                     <div class="radio">
                                         <label>
-                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" onclick="allOrNone(this)" checked>ALL CAMPUSES
                                         </label>
                                         <br>
                                         <label>
@@ -133,26 +147,31 @@
                                         </label>
                                         <br>
                                     </div>
-                                    <select class="form-control" id="shiftSelect"></select>
-                                    <br>
                                 </div>
                             </div>
                         </div>
                         <div class="controls" id = "sortAnnounce" style="width:65%;">
+
                             <c:forEach items="${announcements}" var = "announcement">
-                                <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
-                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()}</div>
+                                <div class = "check" id = "${announcement.getId()}">
+                                <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
+                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
+                                    </div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
                                         ${announcement.getMessage()}
                                     </div><hr>
                                     <div class = "panel-body" id = "1">Date: <a style="color:grey;"id = "announceDate">${announcement.getDate()}</a></div>
-                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}</div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                        <button type="button" class="removeButton" style="float:right;">Remove Announcement</button>
+
+                                    </div>
+                                </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-
+                </>
 
 
 

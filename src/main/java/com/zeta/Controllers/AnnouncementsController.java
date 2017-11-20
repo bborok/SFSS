@@ -32,6 +32,16 @@ public class AnnouncementsController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/announcements/remove")
+    public ResponseEntity removeAnnouncementFromDatabase(@RequestBody int ID) {
+        System.out.println("controller" + ID);
+        if (announcementsData.removeAnnouncement(ID)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
 //    @GetMapping("announcements/add")
 //    public String addAnnouncement(
 //            @RequestParam("username") String username,

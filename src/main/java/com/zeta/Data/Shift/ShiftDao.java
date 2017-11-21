@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +39,18 @@ public class ShiftDao implements ShiftData {
     public List<Shift> getShifts() {
         String sql = "SELECT * FROM Shift ORDER BY Date DESC";
         return jdbcTemplate.query(sql, new ShiftRowMapper());
+    }
+
+    @Override
+    public List<Shift> getShiftsWithUsername(String username) {
+        String sql = "SELECT * FROM Shift WHERE User = ?";
+        return jdbcTemplate.query(sql, new ShiftRowMapper(), username);
+    }
+
+    @Override
+    public List<Shift> getShiftsInTimeFrame(Date start, Date end) {
+        String sql = "SELECT * FROM Shift WHERE Date >= ? AND Date <= ?";
+        return jdbcTemplate.query(sql, new ShiftRowMapper(), start, end);
     }
 
     @Override

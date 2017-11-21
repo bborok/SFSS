@@ -1,4 +1,4 @@
-package com.zeta.Configurations;
+package com.zeta.Configurations.JsonDeserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,8 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomDateDeserializer extends JsonDeserializer<Date> {
-    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+public class CustomDateTimeDeserializer extends JsonDeserializer<Date> {
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {

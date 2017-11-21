@@ -2,6 +2,7 @@ package com.zeta.Data.Shift;
 
 import com.zeta.Models.Shift;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,6 +10,10 @@ import java.util.List;
  */
 public interface ShiftData {
     List<Shift> getShifts();
+
+    List<Shift> getShiftsWithUsername(String username);
+
+    List<Shift> getShiftsInTimeFrame(Date start, Date end);
 
     Shift getShift(long id);
 

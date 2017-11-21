@@ -15,6 +15,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
@@ -235,6 +239,15 @@
                 }
             }
             post_data += "]";
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                }
+            });
             $.post("/statistics/info_lf/data/post",
                 {
                     campus: CAMPUS,

@@ -24,8 +24,7 @@ public class AnnouncementsDao implements AnnouncementsData {
 
     @Override
     public boolean addAnnouncement(Announcement announcement) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = dateFormat.getCalendar().getTime();
+        Date date = new Date();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
 
         try {

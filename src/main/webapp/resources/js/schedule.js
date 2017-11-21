@@ -8,19 +8,137 @@ var startTimeInput;
 var endTimeInput;
 
 $(document).ready(function () {
+    csrfAndAjaxSetup();
+
+    alertsDiv = $('#alertsDiv');
+    startTimeInput = $('#startTime');
+    endTimeInput = $('#endTime');
+    initCalendar();
+    initEventHandlers();
+
+});
+
+function doSubmit() {
+    var eventTitleElement = $('#eventTitle');
+    $("#createEventModal").modal('hide');
+
+    var start = moment(new Date($('#startTime').val())).format(dateFormat);
+    var end = moment(new Date($('#endTime').val())).format(dateFormat);
+    var date = moment(new Date($('#startTime').val())).format("YYYY-MM-DD");
+
+    var shift = {
+        title: eventTitleElement.find(":selected").attr("class"),
+        date: date,
+        start: start,
+        end: end,
+        campus: $('#eventCampus').val(),
+        username: $('#eventMember').val(),
+        location: $('#eventLocation').val(),
+        notes: $('#eventNotes').val(),
+        requiredTraining: $('#eventRequiredTraining').val()
+    };
+    saveShift(shift);
+}
+
+var saveShift = function (shift) {
+    console.log(shift);
+    var url = api + '/shift/save';
+    $.ajax({
+        headers: {
+            Accept: "text/plain"
+        },
+        type: 'POST',
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(shift),
+        success: function () {
+            displaySuccessAlert('Saved ' + shift.title + '.');
+            calendar.fullCalendar('refetchEvents');
+        },
+        error: function () {
+            displayErrorAlert('Error saving ' + shift.title + ' to database.');
+        }
+    });
+};
+
+var deleteShift = function (event) {
+    $.ajax({
+        type: 'DELETE',
+        headers: {
+            Accept: "text/plain"
+        },
+        url: api + '/shift/delete/' + event.id,
+        success: function () {
+            console.log('Deleted shift' + event.id);
+            displaySuccessAlert('Deleted ' + event.title + '.');
+            calendar.fullCalendar('refetchEvents');
+        },
+        fail: function () {
+            displayErrorAlert('Error deleting ' + event.title + 'to database.');
+        }
+    });
+};
+
+var displayErrorAlert = function (msg) {
+    alertsDiv.append(
+        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Danger! </strong> " + msg +
+        "</div>"
+    );
+};
+
+var displaySuccessAlert = function (msg) {
+    alertsDiv.append(
+        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Success! </strong> " + msg +
+        "</div>"
+    );
+};
+
+function filter(calEvent) {
+    var vals = [];
+    $('input:checkbox.campusFilter:checked').each(function () {
+        vals.push($(this).val());
+    });
+
+    var vals2 = [];
+    $('#shiftSelect option:selected').each(function () {
+        vals2.push($(this).val());
+    });
+
+    $('.allOrNone').on('click', function () { //
+        if ($('.allOrNone').is(':checked')) {
+            $('.campusFilter').prop("checked", true)
+
+        } else {
+            $('.campusFilter').prop("checked", false);
+        }
+    });
+
+    if ($('#shiftSelect').val() === null) {
+        return vals.indexOf(calEvent.campus) !== -1;
+    }
+    if ($('#shiftSelect option:selected').val() === "all") {
+        return vals.indexOf(calEvent.campus) !== -1;
+    }
+
+    return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+}
+
+function csrfAndAjaxSetup() {
     //CSRF Setup, needed for AJAX requests
     token = $("meta[name='_csrf']").attr("content");
     header = $("meta[name='_csrf_header']").attr("content");
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader(header, token);
     });
+}
 
-    alertsDiv = $('#alertsDiv');
-    startTimeInput = $('#startTime');
-    endTimeInput = $('#endTime');
+function initCalendar() {
     // Initialize the calendar...
     calendar = $('#calendar');
-
     calendar.fullCalendar({
         eventSources: [
             api + '/shifts'
@@ -116,43 +234,14 @@ $(document).ready(function () {
         weekNumberCalculation: 'ISO',
         editable: false
     });
+}
 
+function initEventHandlers() {
     $('#submitButton').on('click', function (e) {
         // We don't want this to act as a link so cancel the link action
         e.preventDefault();
         doSubmit();
     });
-
-
-    function filter(calEvent) {
-        var vals = [];
-        $('input:checkbox.campusFilter:checked').each(function () {
-            vals.push($(this).val());
-        });
-
-        var vals2 = [];
-        $('#shiftSelect option:selected').each(function () {
-            vals2.push($(this).val());
-        });
-
-        $('.allOrNone').on('click', function () { //
-            if ($('.allOrNone').is(':checked')) {
-                $('.campusFilter').prop("checked", true)
-
-            } else {
-                $('.campusFilter').prop("checked", false);
-            }
-        });
-
-        if ($('#shiftSelect').val() === null) {
-            return vals.indexOf(calEvent.campus) !== -1;
-        }
-        if ($('#shiftSelect option:selected').val() === "all") {
-            return vals.indexOf(calEvent.campus) !== -1;
-        }
-
-        return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
-    }
 
     $('.campusFilter').prop("checked", true);// everything is checked
 
@@ -198,83 +287,4 @@ $(document).ready(function () {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
-});
-
-function doSubmit() {
-    var eventTitleElement = $('#eventTitle');
-    $("#createEventModal").modal('hide');
-
-    var start = moment(new Date($('#startTime').val())).format(dateFormat);
-    var end = moment(new Date($('#endTime').val())).format(dateFormat);
-    var date = moment(new Date($('#startTime').val())).format("YYYY-MM-DD");
-
-    var shift = {
-        title: eventTitleElement.find(":selected").attr("class"),
-        date: date,
-        start: start,
-        end: end,
-        campus: $('#eventCampus').val(),
-        username: $('#eventMember').val(),
-        location: $('#eventLocation').val(),
-        notes: $('#eventNotes').val(),
-        requiredTraining: $('#eventRequiredTraining').val()
-    };
-    saveShift(shift);
 }
-
-var saveShift = function (shift) {
-    console.log(shift);
-    var url = api + '/shift/save';
-    $.ajax({
-        headers: {
-            Accept: "text/plain"
-        },
-        type: 'POST',
-        url: url,
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(shift),
-        success: function () {
-            displaySuccessAlert('Saved ' + shift.title + '.');
-            calendar.fullCalendar('refetchEvents');
-        },
-        error: function () {
-            displayErrorAlert('Error saving ' + shift.title + ' to database.');
-        }
-    });
-};
-
-var deleteShift = function (event) {
-    $.ajax({
-        type: 'DELETE',
-        headers: {
-            Accept: "text/plain"
-        },
-        url: api + '/shift/delete/' + event.id,
-        success: function () {
-            console.log('Deleted shift' + event.id);
-            displaySuccessAlert('Deleted ' + event.title + '.');
-            calendar.fullCalendar('refetchEvents');
-        },
-        fail: function () {
-            displayErrorAlert('Error deleting ' + event.title + 'to database.');
-        }
-    });
-};
-
-var displayErrorAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Danger! </strong> " + msg +
-        "</div>"
-    );
-};
-
-var displaySuccessAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Success! </strong> " + msg +
-        "</div>"
-    );
-};

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class AnnouncementsDao implements AnnouncementsData {
     @Override
     public boolean addAnnouncement(Announcement announcement) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
+        Date date = dateFormat.getCalendar().getTime();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
 
         try {
@@ -62,6 +64,14 @@ public class AnnouncementsDao implements AnnouncementsData {
 
             return null;
         }
+
+        Collections.sort(list, new Comparator<Announcement>() {
+            @Override
+            public int compare(Announcement o1, Announcement o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
         return list;
     }
 }

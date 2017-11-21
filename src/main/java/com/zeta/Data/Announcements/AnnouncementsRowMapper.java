@@ -22,7 +22,7 @@ public class AnnouncementsRowMapper implements RowMapper<Announcement> {
 
         a.setMessage(rs.getString("Message"));
 
-        a.setDate(rs.getDate("Date"));
+        a.setDate(rs.getTimestamp("Date"));
         a.setCampus(Campus.valueOf(rs.getString("Campus").toUpperCase()));
 
         return a;

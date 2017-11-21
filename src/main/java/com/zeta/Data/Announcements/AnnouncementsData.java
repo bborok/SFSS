@@ -10,6 +10,8 @@ public interface AnnouncementsData {
 
     public boolean removeAnnouncement(int ID);
 
+    public boolean editAnnouncement(Announcement announcement);
+
     public Announcement showAnnouncements(int ID);
 
     public List<Announcement> showAllAnnouncements();

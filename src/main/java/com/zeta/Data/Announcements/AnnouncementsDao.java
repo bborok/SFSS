@@ -59,6 +59,18 @@ public class AnnouncementsDao implements AnnouncementsData {
         return true;
     }
     @Override
+    public boolean editAnnouncement(Announcement announcement) {
+        try {
+            System.out.println("edit");
+            String sql = "UPDATE Announcement SET Title = ?, Message = ?, Campus = ? WHERE ID = ?";
+            jdbcTemplate.update(sql, announcement.getTitle(), announcement.getMessage(), announcement.getCampus().toString(), announcement.getId());
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+    @Override
     public Announcement showAnnouncements(int ID) {
         Announcement announcement = null;
         try {

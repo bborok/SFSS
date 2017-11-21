@@ -26,10 +26,20 @@ public class AnnouncementsController {
 
     @PostMapping("/announcements/add")
     public ResponseEntity addAnnouncementToDatabase(@RequestBody Announcement a) {
-        if (announcementsData.addAnnouncement(a)) {
-            return new ResponseEntity(HttpStatus.OK);
+        if (a.getId() == 0) {
+            if (announcementsData.addAnnouncement(a)) {
+                System.out.println("add");
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
         } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            if (announcementsData.editAnnouncement(a)) {
+                System.out.println("edit");
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
         }
     }
 

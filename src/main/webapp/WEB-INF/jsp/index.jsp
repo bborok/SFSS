@@ -70,7 +70,7 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
-            < class="col-sm-12 text">
+            <div class="col-sm-12 text">
                 <div class="description">
                     <%--This contains all of the relevant info about announcement--%>
                     <center>
@@ -124,6 +124,47 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id = "editAnnouncementModal" class = "modal fade">
+                                <div class = "modal-dialog">
+                                    <div class = "modal-content">
+                                        <div class = "modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                            </button>
+                                            <h4 id="myModalLabel2" style="text-align:left"><b>Edit an Announcement</b></h4>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <div class="controls">
+                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                </input>
+                                            </div>
+
+                                            <br><br>
+
+                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus">
+                                                <option value='all' id='allSaveCampus' disabled="true" selected>Select Teams
+                                                </option>
+                                                <option value ="BURNABY" class = "BURNABY">BURNABY</option>
+                                                <option value ="SURREY" class = "SURREY">SURREY</option>
+                                                <option value ="VANCOUVER" class = "VANCOUVER">VANCOUVER</option>
+
+                                            </select>
+
+                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
+                                            <div class="controls">
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message."></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class = "modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
                             <div class="panel-heading" id = "announceFilter">Filter</div>
@@ -146,6 +187,14 @@
                                             <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
                                         </label>
                                         <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="SUPERVISOR" id="SUPERVISOR" class = "others">SUPERVISOR
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="ADMINISTRATOR" id="ADMINISTRATOR" class = "others">ADMINISTRATOR
+                                        </label>
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -163,6 +212,7 @@
                                     </div><hr>
                                     <div class = "panel-body" id = "1">Date: <a style="color:grey;"id = "announceDate">${announcement.getDate()}</a></div>
                                     <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                        <button type="button" class="editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
                                         <button type="button" class="removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
 
                                     </div>
@@ -171,9 +221,6 @@
                             </c:forEach>
                         </div>
                     </div>
-
-
-
                 <hr><br>
                 <div class="col-sm-3">
                     <center>
@@ -244,13 +291,56 @@
         $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
     });
 
+    function doEdit(id, title, message, campus) {
+
+        $('#announceSaveTitle').val(title);
+        $('#announceSaveMessage').val(message);
+        $('#announceSaveCampus').val(campus);
+
+        $('#editAnnouncementModal').modal('show');
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $('#saveButton').on('click', function (e) {
+            e.preventDefault();
+            save();
+        });
+        function save() {
+            var announcement = {
+                "id" : parseInt(id),
+                "username": user.trim(),
+                "title": $('#announceSaveTitle').val().trim(),
+                "message": $('#announceSaveMessage').val(),
+                "campus": $('#announceSaveCampus').val().toUpperCase().toString()
+            };
+
+            $.ajax({
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                url: api + '/announcements/add',
+                data: JSON.stringify(announcement),
+                success: function() {
+                    alert("Saved successfully");
+                    location.reload();
+                },
+                error: function(e) {
+                    alert(e);
+
+                    alert("error editing announcement to DB");
+                },
+                contentType: "application/json; charset=utf-8"
+            });
+        }
+
+    };
+
     function doRemove(ID) {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-        // var ID = $('.check').attr('id');
-        // console.log($('#announceBody').text());
-//        ID = parseInt(ID);
-        console.log(ID);
+
          $.ajax({
              type: 'POST',
              beforeSend: function(xhr) {
@@ -269,6 +359,8 @@
              contentType: "application/json; charset=utf-8"
          });
     }
+
+
 </script>
 </body>
 </html>

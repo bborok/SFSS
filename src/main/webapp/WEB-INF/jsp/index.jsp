@@ -153,9 +153,9 @@
                         <div class="controls" id = "sortAnnounce" style="width:65%;">
 
                             <c:forEach items="${announcements}" var = "announcement">
-                                <div class = "check" id = "${announcement.getId()}">
+                                <div class = "check" id = "${announcement.id}">
                                 <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
-                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
+                                    <div class="panel-heading" id = "announceTitle">${announcement.title} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
                                     </div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
@@ -163,7 +163,7 @@
                                     </div><hr>
                                     <div class = "panel-body" id = "1">Date: <a style="color:grey;"id = "announceDate">${announcement.getDate()}</a></div>
                                     <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
-                                        <button type="button" class="removeButton" style="float:right;">Remove Announcement</button>
+                                        <button type="button" class="removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
 
                                     </div>
                                 </div>
@@ -171,7 +171,6 @@
                             </c:forEach>
                         </div>
                     </div>
-                </>
 
 
 
@@ -245,6 +244,31 @@
         $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
     });
 
+    function doRemove(ID) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        // var ID = $('.check').attr('id');
+        // console.log($('#announceBody').text());
+//        ID = parseInt(ID);
+        console.log(ID);
+         $.ajax({
+             type: 'POST',
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             url: api + '/announcements/remove',
+             data: JSON.stringify(ID),
+
+             success: function() {
+                 alert("Removed successfully");
+                 location.reload();
+             },
+             error: function() {
+                 alert("error removing " + ID + "from db");
+             },
+             contentType: "application/json; charset=utf-8"
+         });
+    }
 </script>
 </body>
 </html>

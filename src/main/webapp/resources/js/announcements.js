@@ -5,11 +5,6 @@ $(document).ready(function() {
         doSubmit();
     });
 
-    $('.removeButton').on('click', function (e) {
-        e.preventDefault();
-        doRemove();
-    });
-
     $('#sortAnnounce #sortAnnounce2').sort(sortDescending).appendTo('#sortAnnounce');
 
     function doSubmit() {
@@ -44,29 +39,7 @@ $(document).ready(function() {
         });
     }
 
-    function doRemove() {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-        var ID = $('.check').attr('id');
-        ID = parseInt(ID);
-        $.ajax({
-            type: 'POST',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            url: api + '/announcements/remove',
-            data: JSON.stringify(ID),
 
-            success: function() {
-                alert("Removed successfully");
-                location.reload();
-            },
-            error: function() {
-                alert("error removing " + ID + "from db");
-            },
-            contentType: "application/json; charset=utf-8"
-        });
-    }
 
     $('#createAnnouncement').on('click', function () {
         $('#createAnnouncementModal').modal('show');

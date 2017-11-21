@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,13 +141,16 @@
                         <div class="controls" style="width:65%;">
                             <c:forEach items="${announcements}" var = "announcement">
                                 <div class="panel panel-primary" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
-                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()}</div>
+                                    <div class="panel-heading" id = "announceTitle">${announcement.title}</div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
-                                        ${announcement.getMessage()}
+                                        ${announcement.message}
                                     </div><hr>
-                                    <div class = "panel-body" id = "announceDate">Date: ${announcement.getDate()}</div>
-                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}</div>
+                                    <div class = "panel-body" id = "announceDate">Date:
+                                        <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
+                                                        value = "${announcement.date}" />
+                                    </div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.username}</div>
                                 </div>
                             </c:forEach>
                         </div>

@@ -77,8 +77,8 @@
             </div>
             <center>
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-success">
-                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby" checked="checked"> Burnaby
+                    <label class="btn btn-success active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
                         <input type="radio" name="options" id="option2" autocomplete="off" value="Surrey"> Surrey

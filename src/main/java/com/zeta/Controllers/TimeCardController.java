@@ -179,7 +179,8 @@ public class TimeCardController {
 
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
     public String getTimeCardList(Model m, HttpServletRequest request) {
-        List<Shift> shifts = shiftData.getShifts();
+       // List<Shift> shifts = shiftData.getShifts();
+        List<Shift> userShifts = shiftData.getShiftsByUser("admin1");
 //        ResponseEntity<List<Shift>>  allShifts = new ResponseEntity<>(shifts, HttpStatus.OK);
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user" );
@@ -189,7 +190,7 @@ public class TimeCardController {
 //        }
 //        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
-        m.addAttribute("shifts", shifts);
+        m.addAttribute("shifts", userShifts);
         return "timecard_list";
     }
 }

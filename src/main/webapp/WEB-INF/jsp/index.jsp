@@ -72,7 +72,7 @@
                                             <h4 id="myModalLabel1" style="text-align:left"><b>Create an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br><br>
                                             <div class="controls">
                                                 <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
                                                 </input>
@@ -80,18 +80,21 @@
 
                                             <br><br>
 
-                                            <label class="control-label" style="float:left;"><u>Date:</u>&nbsp;&nbsp;</label>
+                                            <label class="control-label" style="float:left;padding-top: 10px"><u>Date:</u>&nbsp;&nbsp;</label><br><br>
                                                 <input type="datetime-local" id="announceStartTime" name = "annStart" style="float:left;"/>
 
                                             <br><br>
 
-                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
+                                            <hr>
+                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label><br><br>
                                             <select class="form-control" name="eventCampus" id="eventCampus">
                                                 <option value='all' id='allCampuses' disabled="true" selected>Select Teams
                                                 </option>
                                             </select>
 
-                                            <label class="control-label" style="float:left;"><u>Message: </u> </label><br>
+                                            <br>
+
+                                            <label class="control-label" style="float:left;padding-top: 10px"><u>Message: </u> </label><br>
                                             <div class="controls">
                                             <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id="eventNotes" placeholder="Enter a message."></textarea>
                                             </div>

@@ -82,7 +82,7 @@
 
             <center>
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-success active">
+                    <label class="btn btn-success">
                         <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
@@ -274,6 +274,7 @@
 		
 		showChart(table1_data);
         getData();
+        $("#option1").click();
 	});
 
     function getData() {

@@ -196,10 +196,11 @@
                 <center>
                     <div>
                         <div>
-                            <h1>
+                            <h1 class="row" style="padding-left: 20px">
                                 <b><c:out value="${user.getName()}"/>'s Profile</b>
+                                <button type="button" id="editButton" class="btn"><i class="fa fa-edit"></i></button>
+
                                 <br>
-                                <button type="button" id="editButton" class="btn">Edit User</button>
                             </h1>
                             <center>
                                 <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"

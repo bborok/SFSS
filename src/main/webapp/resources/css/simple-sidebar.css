@@ -89,6 +89,10 @@
     color: white !important;
 }
 
+.active {
+    box-shadow:0 0 5px #ffffff;
+}
+
 .active li{
 }
 

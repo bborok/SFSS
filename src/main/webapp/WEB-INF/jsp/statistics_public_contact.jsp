@@ -77,10 +77,15 @@
                 <li class="sidebar-item">
                     <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
                 </li>
-                <li class="sidebar-item" style="padding-top: 200px">
-                    <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow;font-size: 15px">Sign Out</b></a>
+                <li class="sidebar-item" style="padding-top: 180px">
+                    <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow">Sign Out</b></a>
                 </li>
-                <li class="sidebar-item" style="padding-top: 100px">
+
+                <li class="sidebar-item" style="padding-top: 50px">
+                    <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"></span><img src="resources/img/etc/dog.jpg" style="width: 150px;height: 160px"></a>
+                </li>
+
+                <li class="sidebar-item">
                     <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white"> (778)-782-5425</b></a>
                 </li>
                 <li class="sidebar-item">

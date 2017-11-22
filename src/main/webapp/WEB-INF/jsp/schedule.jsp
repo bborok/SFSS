@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zeta.Models.User" %><%--
   Created by IntelliJ IDEA.
   User: PrivateAcc
   Date: 2017-09-29
@@ -38,6 +38,10 @@
     <%--<script src='resources/lib/moment.min.js'></script>--%>
     <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
 
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("user", user);
+    %>
     <script>
         var api = '${pageContext.request.contextPath}/api';
         var iBURNABY = [];
@@ -57,7 +61,9 @@
         <c:forEach items="${ALLTASKS}" var="task">
             iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
-        console.log(iBURNABY);
+
+        var user = ${user};
+        console.log(user);
     </script>
     <script src='resources/js/schedule.js'></script>
 

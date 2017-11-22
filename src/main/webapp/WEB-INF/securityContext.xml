@@ -14,6 +14,7 @@
         <sec:intercept-url pattern="/login" access="permitAll()" />
         <sec:intercept-url pattern="/logout" access="permitAll()" />
         <sec:intercept-url pattern="/statistics/info_lf/data/post" access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR')" />
+        <sec:intercept-url pattern="/api/*" access="permitAll()" />
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />
         <sec:logout invalidate-session="true" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />

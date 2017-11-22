@@ -59,7 +59,7 @@
                         <div class="col-md-8">
                             <ul class="pagination">
                                 <li >
-                                    <a href="${pageContext.request.contextPath}/statistics_info_lf">Lost & Found</a>
+                                    <a href="${pageContext.request.contextPath}/statistics/info_lf">Lost & Found</a>
                                 </li>
                                 <li class="active">
                                     <a href="#">Public Contact</a>
@@ -78,13 +78,13 @@
             <center>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success">
-                        <input type="radio"  name="option1" id="option1" autocomplete="off"> Burnaby
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio"  name="option2" id="option2" autocomplete="off"> Surrey
+                        <input type="radio" name="options" id="option2" autocomplete="off" value="Surrey"> Surrey
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio"  name="option3" id="option3" autocomplete="off"> Vancouver
+                        <input type="radio" name="options" id="option3" autocomplete="off" value="Vancouver"> Vancouver
                     </label>
                 </div>
             </center>
@@ -225,27 +225,22 @@
 		});
 
         $("input:radio").change(function(){
-            if ($("#option1").is(":checked")) {
-                CAMPUS = "Burnaby";
-                getData();
-            }
-            if ($("#option2").is(":checked")) {
-                CAMPUS = "Surrey";
-                getData();
-            }
-            if ($("#option3").is(":checked")) {
-                CAMPUS = "Vancouver";
+
+            if ($(this).is(":checked")) {
+                CAMPUS = $(this).val();
                 getData();
             }
         });
 		showChart(table1_data);
 
 		getData();
+		
+		$("#option1").click();
 
 	});
 
 	function getData() {
-        $.get("/statistic/data?campus=" + CAMPUS,
+        $.get("/statistics/public_contact/data?campus=" + CAMPUS,
         function(data,status){
             table_title = data.title;
             strs = ["Smoke Prevention", "Theft Prevention", "Public Contact", "Safe Walk", "Hazard/Service Request", "Assist Security"];

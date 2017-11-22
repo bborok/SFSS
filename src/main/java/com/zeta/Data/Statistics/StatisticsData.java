@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface StatisticsData {
 
+    public void updateDataForInfoLF(String area, String strs, int[] data);
+
+    public int[][] getDataForInfoLF(String area, String[] strs);
+
+    public int[][] getDataForPublicContact(String area, String[] strs);
+
     public int getTaskCountYear(String taskName, String area, Calendar year);
 
     public int getTaskCountMonth(String taskName, String area, Calendar month);

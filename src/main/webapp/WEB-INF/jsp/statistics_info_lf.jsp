@@ -15,6 +15,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+
     <title>SFU</title>
 
     <!-- Bootstrap core CSS -->
@@ -62,7 +66,7 @@
                                     <a href="#">Lost & Found</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
+                                    <a href="${pageContext.request.contextPath}/statistics/public_contact">Public Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -79,13 +83,13 @@
             <center>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                        <input type="radio" name="options" id="option2" autocomplete="off" value="Surrey"> Surrey
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                        <input type="radio" name="options" id="option3" autocomplete="off" value="Vancouver"> Vancouver
                     </label>
                 </div>
             </center>
@@ -118,21 +122,21 @@
 <script src="/resources/datatables/js/datatables.min.js"></script>
 <script src="/resources/js/echarts.common.min.js"></script>
 <script type="text/javascript">
-
+    var CAMPUS = "Burnaby";
 	//get chart element
     var myChart = echarts.init(document.getElementById('chart1'));
 
 	var table_title = [
-		"2017", "DEC16", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" 
+		"2017", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 	];
 	
 	var table1_data =  [
-		["Directions", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Lost&Found", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Payments", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["PhoneService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["KeyService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Others", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		["Directions", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Lost&Found", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Payments", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["PhoneService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["KeyService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Others", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
 	];
 	
 	var table2_data = [
@@ -166,7 +170,6 @@
 				{title: table_title[10], width: "20px"},
 				{title: table_title[11], width: "20px"},
 				{title: table_title[12], width: "20px"},
-				{title: table_title[13], width: "20px"},
 				{defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
 			],
 			autoWidth: false,
@@ -226,11 +229,96 @@
 			$(".save-btn").click();
 			setTimeout(300);
 			tmp_data = table1.rows().data();
+            var post_data = "[";
+            for (var i = 0; i < 6; i++) {
+                for (var j = 0; j < 12; j++) {
+                    post_data += tmp_data[i][j+1];
+                    if (i != 5 || j != 11) {
+                        post_data += ",";
+                    }
+                }
+            }
+            post_data += "]";
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                }
+            });
+            $.post("/statistics/info_lf/data/post",
+                {
+                    campus: CAMPUS,
+                    data: post_data
+                },
+                function(data,status){
+                    if (data.result == "success") {
+                        alert("update success");
+                    } else {
+                        alert("update failed");
+                    }
+                }
+            );
 			showChart(tmp_data);
 		});
+
+        $("input:radio").change(function(){
+            $(".save-btn").click();
+            if ($(this).is(":checked")) {
+                CAMPUS = $(this).val();
+                getData();
+            }
+        });
 		
 		showChart(table1_data);
+        getData();
+        $("#option1").click();
 	});
+
+    function getData() {
+        $.get("/statistics/info_lf/data/get?campus=" + CAMPUS,
+            function(data,status){
+                table_title = data.title;
+                strs = ["directions", "lost & found", "payments", "phone services", "key services", "other inquiries"];
+                for(var i = 0; i < 12; i++) {
+                    table1_data[0][i+1] = "" + data[strs[0]][i];
+                    table1_data[1][i+1] = "" + data[strs[1]][i];
+                    table1_data[2][i+1] = "" + data[strs[2]][i];
+                    table1_data[3][i+1] = "" + data[strs[3]][i];
+                    table1_data[4][i+1] = "" + data[strs[4]][i];
+                    table1_data[5][i+1] = "" + data[strs[5]][i];
+                }
+                table1.destroy();
+                table1 = $('#table1').DataTable({
+                    data: table1_data,
+                    columns: [
+                        {title: table_title[0], width: "20px"},
+                        {title: table_title[1], width: "20px"},
+                        {title: table_title[2], width: "20px"},
+                        {title: table_title[3], width: "20px"},
+                        {title: table_title[4], width: "20px"},
+                        {title: table_title[5], width: "20px"},
+                        {title: table_title[6], width: "20px"},
+                        {title: table_title[7], width: "20px"},
+                        {title: table_title[8], width: "20px"},
+                        {title: table_title[9], width: "20px"},
+                        {title: table_title[10], width: "20px"},
+                        {title: table_title[11], width: "20px"},
+                        {title: table_title[12], width: "20px"},
+                        {defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
+                    ],
+                    autoWidth: false,
+                    ordering: false,
+                    bPaginate: false,
+                    bFilter: false,
+                    scrollX: true
+                });
+                showChart(table1_data);
+            }
+        );
+    }
 	
 	function showChart(tmp_data){
 		data_to_show = [];

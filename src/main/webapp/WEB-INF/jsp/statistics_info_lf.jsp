@@ -82,7 +82,7 @@
                 </li>
 
                 <li class="sidebar-item" style="padding-top: 50px">
-                    <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"></span><img src="resources/img/etc/dog.jpg" style="width: 150px;height: 160px"></a>
+                    <span class="fa-stack fa-lg pull-left"></span><img src="resources/img/etc/dog.jpg" style="width: 150px;height: 160px">
                 </li>
 
                 <li class="sidebar-item">

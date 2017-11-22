@@ -62,7 +62,7 @@
             iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
 
-        var user = ${user};
+        var userRole = "${user.role}";
         console.log(user);
     </script>
     <script src='resources/js/schedule.js'></script>
@@ -266,9 +266,14 @@ cancel button functionalities
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                <%--AJAX Request to POST to ShiftController--%>
-                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+
+                                <c:if test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
+                                    <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                </c:if>
+                                <c:otherwise>
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                </c:otherwise>
                             </div>
                         </div>
                     </div>
@@ -306,7 +311,9 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                <c:if test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
+                                    <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                </c:if>
                             </div>
                         </div>
                     </div>

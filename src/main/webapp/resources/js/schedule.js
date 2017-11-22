@@ -15,8 +15,181 @@ $(document).ready(function () {
     endTimeInput = $('#endTime');
     initCalendar();
     initEventHandlers();
-
 });
+
+function csrfAndAjaxSetup() {
+    //CSRF Setup, needed for AJAX requests
+    token = $("meta[name='_csrf']").attr("content");
+    header = $("meta[name='_csrf_header']").attr("content");
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader(header, token);
+    });
+}
+
+function initCalendar() {
+    // Initialize the calendar for an admin, supervisor or team_leader...
+    var calendarInitObject = {
+        eventSources: [
+            api + '/shifts'
+        ],
+        // put your options and callbacks here
+        customButtons: {
+            add_event: {
+                text: 'Add a Shift',
+                click: function (start, end) {
+                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
+                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
+                    $('#createEventModal').modal('show'); //popup modal
+                }
+            }
+        },
+        timezone: 'local',
+        viewRender: function (view) {
+            var h;
+            if (view.name === "month") {
+                h = 700;
+            } else {
+                h = 700;
+            }
+            calendar.fullCalendar('option', 'contentHeight', h);
+        },
+
+        header: {
+            left: 'prev,next today, add_event',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+
+        selectable: true,
+
+        eventRender: function eventRender(event, element, view) {
+            if (event.campus === 'BURNABY') {
+                element.css('background-color', '#E8502F');
+            }
+            if (event.campus === "SURREY") {
+                element.css('background-color', '#C5E744');
+            }
+            if (event.campus === "VANCOUVER") {
+                element.css('background-color', '#75C6E7');
+            }
+            return filter(event);
+        },
+
+        eventAfterRender: function (event, element, view) {
+            $(element).css('width', '80%');
+        },
+
+        //Selecting an empty area
+        select: function (start, end) {
+            var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
+            var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
+            console.log(myStart);
+            console.log(myEnd);
+            startTimeInput.val(myStart);
+            endTimeInput.val(myEnd);
+            $('#createEventModal').modal('show'); //popup modal
+        },
+
+        //Selecting a scheduled event
+        eventClick: function (event) {
+            console.log(event);
+            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
+            $('#modalTitle').html(event.title);
+            $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
+            $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
+            $('#modalMember').html(event.username);
+            $('#modalCampus').html(event.campus);
+            $('#modalID').html(event.id);
+            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
+            $('#modalLocation').html(event.location);
+            $('#modalNotes').html(event.notes);
+            $('#modalTraining').html(event.requiredTraining);
+            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
+
+            $('#fullCalModal').modal();
+
+            $('#btnDelete').off().on('click', function (e) {
+                e.preventDefault();
+                //AJAX DELETE REQUEST
+                console.log('Deleting shift ' + event.id);
+                deleteShift(event);
+                $('#fullCalModal').modal('hide');
+            })
+        },
+
+        navLinks: true, // can click day/week names to navigate views
+        weekNumbers: true,
+        weekNumbersWithinDays: true,
+        weekNumberCalculation: 'ISO',
+        editable: false
+    };
+
+    //Overwrite some settings of the calendarInitObject if a member of volunteer
+    calendarInitObject.customButtons = {};
+    calendarInitObject.header = {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+    };
+    calendarInitObject.selectable = false;
+
+    //Finally init the calendar
+    calendar = $('#calendar');
+    calendar.fullCalendar(calendarInitObject);
+}
+
+function initEventHandlers() {
+    $('#submitButton').on('click', function (e) {
+        // We don't want this to act as a link so cancel the link action
+        e.preventDefault();
+        doSubmit();
+    });
+
+    $('.campusFilter').prop("checked", true);// everything is checked
+
+    $('input:checkbox.allOrNone').on('change', function () {
+        calendar.fullCalendar('rerenderEvents');
+    });
+
+
+    $('input:checkbox.campusFilter').on('change', function () {
+        calendar.fullCalendar('rerenderEvents');
+    });
+
+    $('#shiftSelect').on('change', function () {
+        calendar.fullCalendar('rerenderEvents');
+    });
+
+    $(function () {
+        $("input:checked").each(function () {
+            addItemsFromArray(eval("i" + this.id));
+        });
+        $("input:checkbox").change(function () {
+
+            $("#shiftSelect").html("");
+            $("input:checked").each(function () {
+                addItemsFromArray(eval("i" + this.id));
+            });
+        });
+
+        function addItemsFromArray(arr) {
+            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+            $.each(arr, function (i, v) {
+                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
+            });
+        }
+    });
+
+    $("#eventCampus").on('change', function () {
+        if ($(this).data('options') === undefined) {
+            /*Taking an array of all options-2 and kind of embedding it on the select1*/
+            $(this).data('options', $('#eventTitle option').clone());
+        }
+        var id = $(this).val();
+        var options = $(this).data('options').filter('[value=' + id + ']');
+        $('#eventTitle').html(options);
+    });
+}
 
 function doSubmit() {
     var eventTitleElement = $('#eventTitle');
@@ -125,166 +298,4 @@ function filter(calEvent) {
     }
 
     return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
-}
-
-function csrfAndAjaxSetup() {
-    //CSRF Setup, needed for AJAX requests
-    token = $("meta[name='_csrf']").attr("content");
-    header = $("meta[name='_csrf_header']").attr("content");
-    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        jqXHR.setRequestHeader(header, token);
-    });
-}
-
-function initCalendar() {
-    // Initialize the calendar...
-    calendar = $('#calendar');
-    calendar.fullCalendar({
-        eventSources: [
-            api + '/shifts'
-        ],
-        // put your options and callbacks here
-        customButtons: {
-            add_event: {
-                text: 'Add a Shift',
-                click: function (start, end) {
-                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
-                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
-                    $('#createEventModal').modal('show'); //popup modal
-                }
-            }
-        },
-        timezone: 'local',
-        viewRender: function (view) {
-            var h;
-            if (view.name === "month") {
-                h = 700;
-            } else {
-                h = 700;
-            }
-            calendar.fullCalendar('option', 'contentHeight', h);
-        },
-
-        header: {
-            left: 'prev,next today, add_event',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-
-        selectable: true,
-
-        eventRender: function eventRender(event, element, view) {
-            if (event.campus === 'BURNABY') {
-                element.css('background-color', '#E8502F');
-            }
-            if (event.campus === "SURREY") {
-                element.css('background-color', '#C5E744');
-            }
-            if (event.campus === "VANCOUVER") {
-                element.css('background-color', '#75C6E7');
-            }
-            return filter(event);
-        },
-
-        eventAfterRender: function (event, element, view) {
-            $(element).css('width', '80%');
-        },
-
-        //Selecting an empty area
-        select: function (start, end) {
-            var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
-            var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            console.log(myStart);
-            console.log(myEnd);
-            startTimeInput.val(myStart);
-            endTimeInput.val(myEnd);
-            $('#createEventModal').modal('show'); //popup modal
-        },
-
-        //Selecting a scheduled event
-        eventClick: function (event) {
-            console.log(event);
-            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-            $('#modalTitle').html(event.title);
-            $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-            $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.username);
-            $('#modalCampus').html(event.campus);
-            $('#modalID').html(event.id);
-            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-            $('#modalLocation').html(event.location);
-            $('#modalNotes').html(event.notes);
-            $('#modalTraining').html(event.requiredTraining);
-            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-
-            $('#fullCalModal').modal();
-
-            $('#btnDelete').off().on('click', function (e) {
-                e.preventDefault();
-                //AJAX DELETE REQUEST
-                console.log('Deleting shift ' + event.id);
-                deleteShift(event);
-                $('#fullCalModal').modal('hide');
-            })
-        },
-
-        navLinks: true, // can click day/week names to navigate views
-        weekNumbers: true,
-        weekNumbersWithinDays: true,
-        weekNumberCalculation: 'ISO',
-        editable: false
-    });
-}
-
-function initEventHandlers() {
-    $('#submitButton').on('click', function (e) {
-        // We don't want this to act as a link so cancel the link action
-        e.preventDefault();
-        doSubmit();
-    });
-
-    $('.campusFilter').prop("checked", true);// everything is checked
-
-    $('input:checkbox.allOrNone').on('change', function () {
-        calendar.fullCalendar('rerenderEvents');
-    });
-
-
-    $('input:checkbox.campusFilter').on('change', function () {
-        calendar.fullCalendar('rerenderEvents');
-    });
-
-    $('#shiftSelect').on('change', function () {
-        calendar.fullCalendar('rerenderEvents');
-    });
-
-    $(function () {
-        $("input:checked").each(function () {
-            addItemsFromArray(eval("i" + this.id));
-        });
-        $("input:checkbox").change(function () {
-
-            $("#shiftSelect").html("");
-            $("input:checked").each(function () {
-                addItemsFromArray(eval("i" + this.id));
-            });
-        });
-
-        function addItemsFromArray(arr) {
-            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
-            $.each(arr, function (i, v) {
-                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
-            });
-        }
-    });
-
-    $("#eventCampus").on('change', function () {
-        if ($(this).data('options') === undefined) {
-            /*Taking an array of all options-2 and kind of embedding it on the select1*/
-            $(this).data('options', $('#eventTitle option').clone());
-        }
-        var id = $(this).val();
-        var options = $(this).data('options').filter('[value=' + id + ']');
-        $('#eventTitle').html(options);
-    });
 }

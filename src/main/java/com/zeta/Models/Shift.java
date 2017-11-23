@@ -2,10 +2,10 @@ package com.zeta.Models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.zeta.Configurations.CustomDateDeserializer;
-import com.zeta.Configurations.CustomDateSerializer;
-import com.zeta.Configurations.CustomDateTimeDeserializer;
-import com.zeta.Configurations.CustomDateTimeSerializer;
+import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
+import com.zeta.Configurations.JsonDeserializers.CustomDateTimeDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateTimeSerializer;
 
 import java.util.Date;
 

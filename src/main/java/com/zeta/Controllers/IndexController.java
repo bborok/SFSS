@@ -26,10 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -37,13 +34,12 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 @Controller
 public class IndexController {
-
     private UserData userData;
     private AnnouncementsData announcementsData;
     private TaskData taskData;
 
     @Autowired
-    public IndexController(UserData userData, TaskData taskData,AnnouncementsData announcementsData) {
+    public IndexController(UserData userData, TaskData taskData, AnnouncementsData announcementsData) {
         this.userData = userData;
         this.taskData = taskData;
         this.announcementsData = announcementsData;
@@ -97,9 +93,25 @@ public class IndexController {
     }
 
     @GetMapping("/schedule")
-    public String schedule(Model m) {
-        List<User> users = userData.getAllUsers();
-        m.addAttribute("users", users);
+    public String schedule(HttpServletRequest request, Model m) {
+        List<User> usersForSelection;
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return "users"; //Exit the request if user info can't get fetched
+        //Filter the list users depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+            //Filter the users based on the team leaders preferred campus.
+            usersForSelection = userData.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR){
+            usersForSelection = userData.getAllUsers();
+        } else {
+            usersForSelection = new ArrayList<>(); //this is members/volunteer
+        }
+        m.addAttribute("users", usersForSelection);
+
 
         List<Task> allTasks = taskData.getTasks();
         List<Task> surreyTasks = taskData.getTasks(Campus.SURREY);

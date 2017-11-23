@@ -1,27 +1,32 @@
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
 var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
-var token;
-var header;
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
 var alertsDiv;
 var startTimeInput;
 var endTimeInput;
 
 $(document).ready(function () {
-    //CSRF Setup, needed for AJAX requests
-    token = $("meta[name='_csrf']").attr("content");
-    header = $("meta[name='_csrf_header']").attr("content");
-    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        jqXHR.setRequestHeader(header, token);
-    });
+    csrfAndAjaxSetup();
 
     alertsDiv = $('#alertsDiv');
     startTimeInput = $('#startTime');
     endTimeInput = $('#endTime');
-    // Initialize the calendar...
-    calendar = $('#calendar');
+    initCalendar();
+    initEventHandlers();
+});
 
-    calendar.fullCalendar({
+function csrfAndAjaxSetup() {
+    //CSRF Setup, needed for AJAX requests
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader(header, token);
+    });
+}
+
+function initCalendar() {
+    // Initialize the calendar for an admin, supervisor or team_leader...
+    var calendarInitObject = {
         eventSources: [
             api + '/shifts'
         ],
@@ -30,21 +35,21 @@ $(document).ready(function () {
             add_event: {
                 text: 'Add a Shift',
                 click: function (start, end) {
-                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
-                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
+                    // startTimeInput.val(moment(start).format(dateTimeInputFormat));
+                    // endTimeInput.val(moment(end).format(dateTimeInputFormat));
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
         },
         timezone: 'local',
         viewRender: function (view) {
-            var h;
+            var height;
             if (view.name === "month") {
-                h = 700;
+                height = 700;
             } else {
-                h = 700;
+                height = 700;
             }
-            calendar.fullCalendar('option', 'contentHeight', h);
+            calendar.fullCalendar('option', 'contentHeight', height);
         },
 
         header: {
@@ -76,8 +81,8 @@ $(document).ready(function () {
         select: function (start, end) {
             var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
             var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            console.log(myStart);
-            console.log(myEnd);
+            // console.log(myStart);
+            // console.log(myEnd);
             startTimeInput.val(myStart);
             endTimeInput.val(myEnd);
             $('#createEventModal').modal('show'); //popup modal
@@ -85,7 +90,7 @@ $(document).ready(function () {
 
         //Selecting a scheduled event
         eventClick: function (event) {
-            console.log(event);
+            // console.log(event);
             //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
@@ -104,7 +109,7 @@ $(document).ready(function () {
             $('#btnDelete').off().on('click', function (e) {
                 e.preventDefault();
                 //AJAX DELETE REQUEST
-                console.log('Deleting shift ' + event.id);
+                // console.log('Deleting shift ' + event.id);
                 deleteShift(event);
                 $('#fullCalModal').modal('hide');
             })
@@ -115,44 +120,29 @@ $(document).ready(function () {
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
         editable: false
-    });
+    };
 
+    //Overwrite some settings of the calendarInitObject if a member of volunteer
+    if (loggedInUser.role === 'MEMBER' || loggedInUser.role === 'VOLUNTEER') {
+        calendarInitObject.customButtons = {};
+        calendarInitObject.header = {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
+        calendarInitObject.selectable = false;
+    }
+
+    //Finally init the calendar
+    calendar = $('#calendar');
+    calendar.fullCalendar(calendarInitObject);
+}
+
+function initEventHandlers() {
     $('#submitButton').on('click', function (e) {
-        // We don't want this to act as a link so cancel the link action
         e.preventDefault();
         doSubmit();
     });
-
-
-    function filter(calEvent) {
-        var vals = [];
-        $('input:checkbox.campusFilter:checked').each(function () {
-            vals.push($(this).val());
-        });
-
-        var vals2 = [];
-        $('#shiftSelect option:selected').each(function () {
-            vals2.push($(this).val());
-        });
-
-        $('.allOrNone').on('click', function () { //
-            if ($('.allOrNone').is(':checked')) {
-                $('.campusFilter').prop("checked", true)
-
-            } else {
-                $('.campusFilter').prop("checked", false);
-            }
-        });
-
-        if ($('#shiftSelect').val() === null) {
-            return vals.indexOf(calEvent.campus) !== -1;
-        }
-        if ($('#shiftSelect option:selected').val() === "all") {
-            return vals.indexOf(calEvent.campus) !== -1;
-        }
-
-        return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
-    }
 
     $('.campusFilter').prop("checked", true);// everything is checked
 
@@ -174,7 +164,6 @@ $(document).ready(function () {
             addItemsFromArray(eval("i" + this.id));
         });
         $("input:checkbox").change(function () {
-
             $("#shiftSelect").html("");
             $("input:checked").each(function () {
                 addItemsFromArray(eval("i" + this.id));
@@ -198,8 +187,9 @@ $(document).ready(function () {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
-});
+}
 
+//Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
     var eventTitleElement = $('#eventTitle');
     $("#createEventModal").modal('hide');
@@ -222,8 +212,9 @@ function doSubmit() {
     saveShift(shift);
 }
 
+//Sends a requests via AJAX to save a shift
 var saveShift = function (shift) {
-    console.log(shift);
+    // console.log(shift);
     var url = api + '/shift/save';
     $.ajax({
         headers: {
@@ -243,6 +234,7 @@ var saveShift = function (shift) {
     });
 };
 
+//Sends a request via AJAX to delete a shift
 var deleteShift = function (event) {
     $.ajax({
         type: 'DELETE',
@@ -251,7 +243,7 @@ var deleteShift = function (event) {
         },
         url: api + '/shift/delete/' + event.id,
         success: function () {
-            console.log('Deleted shift' + event.id);
+            // console.log('Deleted shift' + event.id);
             displaySuccessAlert('Deleted ' + event.title + '.');
             calendar.fullCalendar('refetchEvents');
         },
@@ -261,6 +253,7 @@ var deleteShift = function (event) {
     });
 };
 
+//Displays a Bootstrap error alert at the top of the page
 var displayErrorAlert = function (msg) {
     alertsDiv.append(
         "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
@@ -270,6 +263,7 @@ var displayErrorAlert = function (msg) {
     );
 };
 
+//Displays a Bootstrap success alert at the top of the page
 var displaySuccessAlert = function (msg) {
     alertsDiv.append(
         "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
@@ -278,3 +272,33 @@ var displaySuccessAlert = function (msg) {
         "</div>"
     );
 };
+
+function filter(calEvent) {
+    var vals = [];
+    $('input:checkbox.campusFilter:checked').each(function () {
+        vals.push($(this).val());
+    });
+
+    var vals2 = [];
+    $('#shiftSelect option:selected').each(function () {
+        vals2.push($(this).val());
+    });
+
+    $('.allOrNone').on('click', function () { //
+        if ($('.allOrNone').is(':checked')) {
+            $('.campusFilter').prop("checked", true)
+
+        } else {
+            $('.campusFilter').prop("checked", false);
+        }
+    });
+
+    if ($('#shiftSelect').val() === null) {
+        return vals.indexOf(calEvent.campus) !== -1;
+    }
+    if ($('#shiftSelect option:selected').val() === "all") {
+        return vals.indexOf(calEvent.campus) !== -1;
+    }
+
+    return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+}

@@ -118,7 +118,7 @@
                                 <br>
                             </h1>
                             <center>
-                                <img src="/user/image/${user.username}" class="img-responsive" height="300"
+                                <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
                                      width="300">
                             </center>
                             <label class="control-label"><u>Upload Profile Picture:</u></label>

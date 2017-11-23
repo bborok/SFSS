@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%@ page import="com.zeta.Models.Announcement" %><%--
   Created by IntelliJ IDEA.
   model.User: PrivateAcc
   Date: 2017-09-29
@@ -50,6 +51,8 @@
 
     <script>
         var user = "${user.username}";
+        //  var user = "bobaec"; // for local use
+
     </script>
 
     <!-- Page Content -->
@@ -110,6 +113,47 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id = "editAnnouncementModal" class = "modal fade">
+                                <div class = "modal-dialog">
+                                    <div class = "modal-content">
+                                        <div class = "modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                            </button>
+                                            <h4 id="myModalLabel2" style="text-align:left"><b>Edit an Announcement</b></h4>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <div class="controls">
+                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                </input>
+                                            </div>
+
+                                            <br><br>
+
+                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus">
+                                                <option value='all' id='allSaveCampus' disabled="true" selected>Select Teams
+                                                </option>
+                                                <option value ="BURNABY" class = "BURNABY">BURNABY</option>
+                                                <option value ="SURREY" class = "SURREY">SURREY</option>
+                                                <option value ="VANCOUVER" class = "VANCOUVER">VANCOUVER</option>
+
+                                            </select>
+
+                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
+                                            <div class="controls">
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message."></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class = "modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
                             <div class="panel-heading" id = "announceFilter">Filter</div>
@@ -117,7 +161,7 @@
                                 <div class="col-sm-12 row">
                                     <div class="radio">
                                         <label>
-                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" onclick="allOrNone(this)" checked>ALL CAMPUSES
                                         </label>
                                         <br>
                                         <label>
@@ -132,16 +176,25 @@
                                             <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
                                         </label>
                                         <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="SUPERVISOR" id="SUPERVISOR" class = "others">SUPERVISOR
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="ADMINISTRATOR" id="ADMINISTRATOR" class = "others">ADMINISTRATOR
+                                        </label>
+                                        <br>
                                     </div>
-                                    <select class="form-control" id="shiftSelect"></select>
-                                    <br>
                                 </div>
                             </div>
                         </div>
-                        <div class="controls" style="width:65%;">
+                        <div class="controls" id = "sortAnnounce" style="width:65%;">
+
                             <c:forEach items="${announcements}" var = "announcement">
-                                <div class="panel panel-primary" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
-                                    <div class="panel-heading" id = "announceTitle">${announcement.title}</div>
+                                <div class = "check" id = "${announcement.id}">
+                                <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
+                                    <div class="panel-heading" id = "announceTitle">${announcement.title} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
+                                    </div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
                                         ${announcement.message}
@@ -149,16 +202,16 @@
                                     <div class = "panel-body" id = "announceDate">Date:
                                         <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />
+                                    </div>                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                        <button type="button" class="editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
+                                        <button type="button" class="removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
+
                                     </div>
-                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.username}</div>
+                                </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-
-
-
-
                 <hr><br>
                 <div class="col-sm-3">
                     <center>
@@ -228,6 +281,76 @@
         $('.thisone').css('position','absolute');
         $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
     });
+
+    function doEdit(id, title, message, campus) {
+
+        $('#announceSaveTitle').val(title);
+        $('#announceSaveMessage').val(message);
+        $('#announceSaveCampus').val(campus);
+
+        $('#editAnnouncementModal').modal('show');
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $('#saveButton').on('click', function (e) {
+            e.preventDefault();
+            save();
+        });
+        function save() {
+            var announcement = {
+                "id" : parseInt(id),
+                "username": user.trim(),
+                "title": $('#announceSaveTitle').val().trim(),
+                "message": $('#announceSaveMessage').val(),
+                "campus": $('#announceSaveCampus').val().toUpperCase().toString()
+            };
+
+            $.ajax({
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                url: api + '/announcements/add',
+                data: JSON.stringify(announcement),
+                success: function() {
+                    alert("Saved successfully");
+                    location.reload();
+                },
+                error: function(e) {
+                    alert(e);
+
+                    alert("error editing announcement to DB");
+                },
+                contentType: "application/json; charset=utf-8"
+            });
+        }
+
+    };
+
+    function doRemove(ID) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+         $.ajax({
+             type: 'POST',
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             url: api + '/announcements/remove',
+             data: JSON.stringify(ID),
+
+             success: function() {
+                 alert("Removed successfully");
+                 location.reload();
+             },
+             error: function() {
+                 alert("error removing " + ID + "from db");
+             },
+             contentType: "application/json; charset=utf-8"
+         });
+    }
+
 
 </script>
 </body>

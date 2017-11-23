@@ -1,4 +1,5 @@
 <%@ page import="com.zeta.Models.User" %>
+<%--
   Page that displays the currently logged in users information.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -117,7 +118,7 @@
                                 <br>
                             </h1>
                             <center>
-                                <img src="/image/${user.username}" class="img-responsive" height="300"
+                                <img src="/user/image/${user.username}" class="img-responsive" height="300"
                                      width="300">
                             </center>
                             <label class="control-label"><u>Upload Profile Picture:</u></label>

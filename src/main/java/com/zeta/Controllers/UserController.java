@@ -79,7 +79,7 @@ public class UserController {
                 // Create the file on server
                 File serverFile = new File(PROFILE_DIR.getAbsolutePath() + File.separator + username + ".png");
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(file.getBytes());
+                stream.write(bytes);
                 stream.close();
             } catch (Exception e) {
                 System.out.println(e.getMessage());

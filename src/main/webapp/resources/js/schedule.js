@@ -1,7 +1,7 @@
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
 var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
-var token;
-var header;
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
 var alertsDiv;
 var startTimeInput;
@@ -19,8 +19,6 @@ $(document).ready(function () {
 
 function csrfAndAjaxSetup() {
     //CSRF Setup, needed for AJAX requests
-    token = $("meta[name='_csrf']").attr("content");
-    header = $("meta[name='_csrf_header']").attr("content");
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader(header, token);
     });
@@ -37,21 +35,21 @@ function initCalendar() {
             add_event: {
                 text: 'Add a Shift',
                 click: function (start, end) {
-                    startTimeInput.val(moment(start).format(dateTimeInputFormat));
-                    endTimeInput.val(moment(end).format(dateTimeInputFormat));
+                    // startTimeInput.val(moment(start).format(dateTimeInputFormat));
+                    // endTimeInput.val(moment(end).format(dateTimeInputFormat));
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
         },
         timezone: 'local',
         viewRender: function (view) {
-            var h;
+            var height;
             if (view.name === "month") {
-                h = 700;
+                height = 700;
             } else {
-                h = 700;
+                height = 700;
             }
-            calendar.fullCalendar('option', 'contentHeight', h);
+            calendar.fullCalendar('option', 'contentHeight', height);
         },
 
         header: {
@@ -125,13 +123,15 @@ function initCalendar() {
     };
 
     //Overwrite some settings of the calendarInitObject if a member of volunteer
-    calendarInitObject.customButtons = {};
-    calendarInitObject.header = {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-    };
-    calendarInitObject.selectable = false;
+    if (loggedInUser.role === 'MEMBER' || loggedInUser.role === 'VOLUNTEER') {
+        calendarInitObject.customButtons = {};
+        calendarInitObject.header = {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        };
+        calendarInitObject.selectable = false;
+    }
 
     //Finally init the calendar
     calendar = $('#calendar');
@@ -140,7 +140,6 @@ function initCalendar() {
 
 function initEventHandlers() {
     $('#submitButton').on('click', function (e) {
-        // We don't want this to act as a link so cancel the link action
         e.preventDefault();
         doSubmit();
     });
@@ -165,7 +164,6 @@ function initEventHandlers() {
             addItemsFromArray(eval("i" + this.id));
         });
         $("input:checkbox").change(function () {
-
             $("#shiftSelect").html("");
             $("input:checked").each(function () {
                 addItemsFromArray(eval("i" + this.id));
@@ -191,6 +189,7 @@ function initEventHandlers() {
     });
 }
 
+//Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
     var eventTitleElement = $('#eventTitle');
     $("#createEventModal").modal('hide');
@@ -213,6 +212,7 @@ function doSubmit() {
     saveShift(shift);
 }
 
+//Sends a requests via AJAX to save a shift
 var saveShift = function (shift) {
     console.log(shift);
     var url = api + '/shift/save';
@@ -234,6 +234,7 @@ var saveShift = function (shift) {
     });
 };
 
+//Sends a request via AJAX to delete a shift
 var deleteShift = function (event) {
     $.ajax({
         type: 'DELETE',
@@ -252,6 +253,7 @@ var deleteShift = function (event) {
     });
 };
 
+//Displays a Bootstrap error alert at the top of the page
 var displayErrorAlert = function (msg) {
     alertsDiv.append(
         "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
@@ -261,6 +263,7 @@ var displayErrorAlert = function (msg) {
     );
 };
 
+//Displays a Bootstrap success alert at the top of the page
 var displaySuccessAlert = function (msg) {
     alertsDiv.append(
         "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +

@@ -50,20 +50,45 @@
         var iALLCAMPUSES = [];
         var iNOCAMPUSES = [];
         <c:forEach items="${BURNABYTASKS}" var="task">
-            iBURNABY.push("${task.taskName}");
+        iBURNABY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${SURREYTASKS}" var="task">
-            iSURREY.push("${task.taskName}");
+        iSURREY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${VANCOUVERTASKS}" var="task">
-            iVANCOUVER.push("${task.taskName}");
+        iVANCOUVER.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${ALLTASKS}" var="task">
-            iALLCAMPUSES.push("${task.taskName}");
+        iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
 
-        var userRole = "${user.role}";
-        console.log(user);
+        <%--TODO: uncomment below on deploy--%>
+        <%--Fetch the currently logged in user from session--%>
+        <%--var loggedInUser = {--%>
+        <%--username : "${user.username}",--%>
+        <%--name : "${user.name}",--%>
+        <%--email : "${user.email}",--%>
+        <%--phoneNumber : "${user.phoneNumber}",--%>
+        <%--preferredCampus : "${user.preferredCampus.toString()}",--%>
+        <%--studentNumber : "${user.studentNumber}",--%>
+        <%--role : "${user.role.toString()}",--%>
+        <%--callSign : "${user.callSign}"--%>
+        <%--};--%>
+
+        <%--TODO: delete on deploy--%>
+        var loggedInUser = {
+            username: "test",
+            name: "testname",
+            email: "test@gmail.com",
+            phoneNumber: "6044564561",
+            preferredCampus: "BURNABY",
+            studentNumber: "2565891",
+            role: "ADMIN",
+            callSign: "LCK56"
+        };
+
+
+        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -84,7 +109,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
 <style>
@@ -130,29 +156,31 @@ cancel button functionalities
                 <%--Used for displaying alerts--%>
                 <div id="alertsDiv"></div>
 
-                        <div class="col-sm-12 row">
-                            <div class="radio">
-                                <label>
-                                    <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
-                                </label>
-                                <br>
-                                </div>
-                            <select class="form-control" id="shiftSelect"></select>
-                            <br>
-                        </div>
-                        <hr><br>
+                <div class="col-sm-12 row">
+                    <div class="radio">
+                        <label>
+                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL
+                            CAMPUSES
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">BURNABY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">SURREY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
+                        </label>
+                        <br>
+                    </div>
+                    <select class="form-control" id="shiftSelect"></select>
+                    <br>
+                </div>
+                <hr>
+                <br>
 
                 <%--Calendar--%>
                 <div id='calendar'></div>
@@ -267,13 +295,15 @@ cancel button functionalities
                             </div>
                             <div class="modal-footer">
 
-                                <c:if test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
-                                    <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                </c:if>
-                                <c:otherwise>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                </c:otherwise>
+                                <c:choose>
+                                    <c:when test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -311,9 +341,14 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <c:if test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
-                                    <button class="btn btn-primary" id="btnDelete">Remove</button>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
+                                        <button class="btn btn-primary" id="btnConfirmAvailability">Confirm Availability</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -340,8 +375,6 @@ cancel button functionalities
     //    $(document).ready(function() {
     //        $('#eventRequiredTraining').multiselect();
     //    });
-
-
 
 
 </script>

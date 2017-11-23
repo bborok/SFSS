@@ -109,12 +109,6 @@ public class IndexController {
         m.addAttribute("VANCOUVERTASKS", vancouverTasks);
         m.addAttribute("BURNABYTASKS", burnabyTasks);
 
-//        HttpSession session = request.getSession();
-//        User loggedIn = (User) session.getAttribute("user");
-//        String username = loggedIn.getUsername();
-//        User user = userData.getUser(username);
-//        session.setAttribute("user", user);
-
         return "schedule";
     }
 

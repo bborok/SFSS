@@ -69,7 +69,7 @@
         callSign : "${user.callSign}"
         };
 
-        console.log(loggedInUser);
+//        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 

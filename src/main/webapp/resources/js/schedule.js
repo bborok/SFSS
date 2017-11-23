@@ -81,8 +81,8 @@ function initCalendar() {
         select: function (start, end) {
             var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
             var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            console.log(myStart);
-            console.log(myEnd);
+            // console.log(myStart);
+            // console.log(myEnd);
             startTimeInput.val(myStart);
             endTimeInput.val(myEnd);
             $('#createEventModal').modal('show'); //popup modal
@@ -90,7 +90,7 @@ function initCalendar() {
 
         //Selecting a scheduled event
         eventClick: function (event) {
-            console.log(event);
+            // console.log(event);
             //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
@@ -109,7 +109,7 @@ function initCalendar() {
             $('#btnDelete').off().on('click', function (e) {
                 e.preventDefault();
                 //AJAX DELETE REQUEST
-                console.log('Deleting shift ' + event.id);
+                // console.log('Deleting shift ' + event.id);
                 deleteShift(event);
                 $('#fullCalModal').modal('hide');
             })
@@ -214,7 +214,7 @@ function doSubmit() {
 
 //Sends a requests via AJAX to save a shift
 var saveShift = function (shift) {
-    console.log(shift);
+    // console.log(shift);
     var url = api + '/shift/save';
     $.ajax({
         headers: {
@@ -243,7 +243,7 @@ var deleteShift = function (event) {
         },
         url: api + '/shift/delete/' + event.id,
         success: function () {
-            console.log('Deleted shift' + event.id);
+            // console.log('Deleted shift' + event.id);
             displaySuccessAlert('Deleted ' + event.title + '.');
             calendar.fullCalendar('refetchEvents');
         },

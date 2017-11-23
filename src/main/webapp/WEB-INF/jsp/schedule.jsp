@@ -1,10 +1,4 @@
-<%@ page import="com.zeta.Models.User" %><%--
-  Created by IntelliJ IDEA.
-  User: PrivateAcc
-  Date: 2017-09-29
-  Time: 5:03 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.zeta.Models.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -64,29 +58,16 @@
 
         <%--TODO: uncomment below on deploy--%>
         <%--Fetch the currently logged in user from session--%>
-        <%--var loggedInUser = {--%>
-        <%--username : "${user.username}",--%>
-        <%--name : "${user.name}",--%>
-        <%--email : "${user.email}",--%>
-        <%--phoneNumber : "${user.phoneNumber}",--%>
-        <%--preferredCampus : "${user.preferredCampus.toString()}",--%>
-        <%--studentNumber : "${user.studentNumber}",--%>
-        <%--role : "${user.role.toString()}",--%>
-        <%--callSign : "${user.callSign}"--%>
-        <%--};--%>
-
-        <%--TODO: delete on deploy--%>
         var loggedInUser = {
-            username: "test",
-            name: "testname",
-            email: "test@gmail.com",
-            phoneNumber: "6044564561",
-            preferredCampus: "BURNABY",
-            studentNumber: "2565891",
-            role: "ADMIN",
-            callSign: "LCK56"
+        username : "${user.username}",
+        name : "${user.name}",
+        email : "${user.email}",
+        phoneNumber : "${user.phoneNumber}",
+        preferredCampus : "${user.preferredCampus.toString()}",
+        studentNumber : "${user.studentNumber}",
+        role : "${user.role.toString()}",
+        callSign : "${user.callSign}"
         };
-
 
         console.log(loggedInUser);
     </script>
@@ -309,7 +290,7 @@ cancel button functionalities
                     </div>
                 </div>
 
-                <!-- Modal -->
+                <!-- Select Event Modal -->
                 <div id="fullCalModal" class="modal fade">
                     <div class="modal-dialog">
 
@@ -343,7 +324,7 @@ cancel button functionalities
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <c:choose>
                                     <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
-                                        <button class="btn btn-primary" id="btnConfirmAvailability">Confirm Availability</button>
+                                        <button class="btn btn-primary" id="btnConfirmAvailability">Update Availability</button>
                                     </c:when>
                                     <c:otherwise>
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>

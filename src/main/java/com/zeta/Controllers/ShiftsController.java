@@ -48,16 +48,15 @@ public class ShiftsController {
         List<Shift> shifts;
 
         //TODO: uncomment when deploying to server
-//        //Filter by roles
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user");
-//        if (u == null) return ResponseEntity.badRequest().build();
-//        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
-//            shifts = shiftData.getShiftsWithUsername(u.getUsername());
-//        } else {
-//            shifts = shiftData.getShifts();
-//        }
-        shifts = shiftData.getShifts(); //TODO: comment when deploying  to server
+        //Filter by roles
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return ResponseEntity.badRequest().build();
+        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
+            shifts = shiftData.getShiftsWithUsername(u.getUsername());
+        } else {
+            shifts = shiftData.getShifts();
+        }
 
         //Filter by start and end query parameters (if available)
         shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());

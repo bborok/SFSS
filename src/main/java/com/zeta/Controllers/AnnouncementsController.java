@@ -26,7 +26,27 @@ public class AnnouncementsController {
 
     @PostMapping("/announcements/add")
     public ResponseEntity addAnnouncementToDatabase(@RequestBody Announcement a) {
-        if (announcementsData.addAnnouncement(a)) {
+        if (a.getId() == 0) {
+            if (announcementsData.addAnnouncement(a)) {
+                System.out.println("add");
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            if (announcementsData.editAnnouncement(a)) {
+                System.out.println("edit");
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
+    @PostMapping("/announcements/remove")
+    public ResponseEntity removeAnnouncementFromDatabase(@RequestBody int ID) {
+        System.out.println("controller" + ID);
+        if (announcementsData.removeAnnouncement(ID)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

@@ -50,6 +50,7 @@
 
 <body>
 
+
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
@@ -68,9 +69,48 @@
                     </center>
                 </div>
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Time Card List</div>
+                    <div class="panel-heading">List of Timecards</div>
                     <div class="panel-body">
+                        <table class="table table-striped" style="text-align:left; ">
+                            <thead>
+                            <tr>
+                                <th width="18%">Name</th>
+                                <th width="10%">User</th>
+                                <th width="14%">Date</th>
+                                <th width="15%">Time Card</th>
+                                <th width="14%">Start Time</th>
+                                <th width="14%">End Time</th>
+                                <th width="5%">Campus</th>
+                                <th width="10%">Location</th>
+                            </tr>
+                            </thead>
 
+                            <tbody style="color:black">
+                            <c:forEach items="${shifts}" var="shift">
+                                <tr>
+                                    <td >
+                                        <a href="${pageContext.request.contextPath}/timecard_edit?user_id=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
+                                    <td >
+                                            <c:out value="${shift.username}"/>
+                                    <td >
+                                            <c:out value="${shift.date}"/>
+                                    <td >
+                                        <%--<c:choose>--%>
+                                            <%--<c:when test="${$shift.isTimeCardSubmitted == 1}"> Submitted </c:when>--%>
+                                            <%--<c:otherwise> Not Submitted</c:otherwise>--%>
+                                        <%--</c:choose>--%>
+                                    <td >
+                                            <c:out value="${shift.start}"/>
+                                    <td >
+                                            <c:out value="${shift.end}"/>
+                                    <td >
+                                            <c:out value="${shift.campus}"/>
+                                    <td >
+                                            <c:out value="${shift.location}"/>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
 
                     </div> <%--end of panel body--%>
                 </div><%--end of panel primary--%>

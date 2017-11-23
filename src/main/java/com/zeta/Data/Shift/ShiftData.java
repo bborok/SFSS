@@ -17,6 +17,9 @@ public interface ShiftData {
 
     Shift getShift(long id);
 
+    // Returns a list of all shifts for a specific user
+    List<Shift> getShiftsByUser(String username);
+
     boolean saveShift(Shift shift);
 
     boolean deleteShift(long id);

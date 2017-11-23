@@ -37,8 +37,23 @@ public class ShiftDao implements ShiftData {
      */
     @Override
     public List<Shift> getShifts() {
-        String sql = "SELECT * FROM Shift ORDER BY Date DESC";
-        return jdbcTemplate.query(sql, new ShiftRowMapper());
+        try {
+            String sql = "SELECT * FROM Shift ORDER BY Date DESC";
+            return jdbcTemplate.query(sql, new ShiftRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Shift> getShiftsByUser(String username) {
+        try {
+            String sql = "select * from Shift where User = ? order by Date desc";
+            return jdbcTemplate.query(sql, new Object[] {username}, new ShiftRowMapper());
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -55,8 +70,12 @@ public class ShiftDao implements ShiftData {
 
     @Override
     public List<Shift> getShiftsWithSubmittedTimeCards() {
-        String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1 ORDER BY Date DESC";
-        return jdbcTemplate.query(sql, new ShiftRowMapper());
+        try {
+            String sql = "SELECT * FROM Shift WHERE isTimeCardSubmitted = 1 ORDER BY Date DESC";
+            return jdbcTemplate.query(sql, new ShiftRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

@@ -50,7 +50,7 @@ public class TimeCardController {
     }
 
     @RequestMapping(value = "/timecard_edit", method = RequestMethod.GET)
-    public String getEditTimeCard(Model m, HttpServletRequest request, @RequestParam("shift_id") long shift_id,@RequestParam("user_id") String username) {
+    public String getEditTimeCard(Model m, HttpServletRequest request, @RequestParam("shift_id") long shift_id, @RequestParam("username") String username) {
 
         TimeCard timeCard = timeCardData.getTimeCard(username, shift_id);
         List<String> shiftId = new ArrayList<String>();
@@ -63,7 +63,7 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "save" })
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = {"save"})
     public String saveTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
@@ -101,7 +101,7 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "submit" })
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = {"submit"})
     public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
@@ -139,7 +139,7 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "edit" })
+    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = {"edit"})
     public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
@@ -179,11 +179,11 @@ public class TimeCardController {
 
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
     public String getTimeCardList(Model m, HttpServletRequest request) {
-       // List<Shift> shifts = shiftData.getShifts();
+        // List<Shift> shifts = shiftData.getShifts();
         List<Shift> userShifts = shiftData.getShiftsByUser("admin1");
 //        ResponseEntity<List<Shift>>  allShifts = new ResponseEntity<>(shifts, HttpStatus.OK);
         HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user" );
+        User u = (User) session.getAttribute("user");
 //        if (u == null) return "timecard";
 //        if (u.getRole() == Role.MEMBER) {
 //            shiftId = (long) 1;

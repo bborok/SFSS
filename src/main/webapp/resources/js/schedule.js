@@ -98,8 +98,11 @@ $(document).ready(function () {
             $('#modalNotes').html(event.notes);
             $('#modalTraining').html(event.requiredTraining);
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-
             $('#fullCalModal').modal();
+
+            $('#btnTimecard').off().on('click', function () {
+                $(location).attr('href', contextPath + '/timecard_edit?shift_id=' + event.id + '&username=' + event.username);
+            });
 
             $('#btnDelete').off().on('click', function (e) {
                 e.preventDefault();
@@ -222,7 +225,7 @@ function doSubmit() {
     saveShift(shift);
 }
 
-var saveShift = function (shift) {
+function saveShift(shift) {
     console.log(shift);
     var url = api + '/shift/save';
     $.ajax({
@@ -241,9 +244,9 @@ var saveShift = function (shift) {
             displayErrorAlert('Error saving ' + shift.title + ' to database.');
         }
     });
-};
+}
 
-var deleteShift = function (event) {
+function deleteShift(event) {
     $.ajax({
         type: 'DELETE',
         headers: {
@@ -259,22 +262,23 @@ var deleteShift = function (event) {
             displayErrorAlert('Error deleting ' + event.title + 'to database.');
         }
     });
-};
+}
 
-var displayErrorAlert = function (msg) {
+
+function displayErrorAlert(msg) {
     alertsDiv.append(
         "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
         "    <strong>Danger! </strong> " + msg +
         "</div>"
     );
-};
+}
 
-var displaySuccessAlert = function (msg) {
+function displaySuccessAlert(msg) {
     alertsDiv.append(
         "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
         "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
         "    <strong>Success! </strong> " + msg +
         "</div>"
     );
-};
+}

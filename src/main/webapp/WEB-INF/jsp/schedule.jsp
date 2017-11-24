@@ -39,7 +39,8 @@
     <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
 
     <script>
-        var api = '${pageContext.request.contextPath}/api';
+        var contextPath = '${pageContext.request.contextPath}';
+        var api = contextPath +'/api';
         var iBURNABY = [];
         var iSURREY = [];
         var iVANCOUVER = [];
@@ -268,7 +269,7 @@ cancel button functionalities
                     </div>
                 </div>
 
-                <!-- Modal -->
+                <!-- Select Event Modal -->
                 <div id="fullCalModal" class="modal fade">
                     <div class="modal-dialog">
 
@@ -301,6 +302,8 @@ cancel button functionalities
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                <button class="btn btn-primary" id="btnTimecard">Timecard</button>
+
                             </div>
                         </div>
                     </div>

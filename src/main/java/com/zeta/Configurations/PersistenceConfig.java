@@ -13,8 +13,7 @@ public class PersistenceConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        //TODO: Change the parameters in the functions calls below as appropriate.
-        dataSource.setUrl("jdbc:mysql://cmpt373-1177z.cmpt.sfu.ca:3306/testdb");
+        dataSource.setUrl("jdbc:localhost:3306/testdb"); //TODO: change back to VM server before deploy
         dataSource.setUsername("testuser".trim());
         dataSource.setPassword("testtest".trim());
         return dataSource;

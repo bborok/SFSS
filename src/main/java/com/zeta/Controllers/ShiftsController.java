@@ -48,15 +48,16 @@ public class ShiftsController {
         List<Shift> shifts;
 
         //TODO: uncomment when deploying to server
-        //Filter by roles
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        if (u == null) return ResponseEntity.badRequest().build();
-        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
-            shifts = shiftData.getShiftsWithUsername(u.getUsername());
-        } else {
-            shifts = shiftData.getShifts();
-        }
+//        //Filter by roles
+//        HttpSession session = request.getSession();
+//        User u = (User) session.getAttribute("user");
+//        if (u == null) return ResponseEntity.badRequest().build();
+//        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
+//            shifts = shiftData.getShiftsWithUsername(u.getUsername());
+//        } else {
+//            shifts = shiftData.getShifts();
+//        }
+        shifts = shiftData.getShifts();
 
         //Filter by start and end query parameters (if available)
         shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());
@@ -81,6 +82,17 @@ public class ShiftsController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("shift/updateConfirmation")
+    public ResponseEntity<Object> updateConfirmation(
+            @RequestParam("shift_id") long shiftId,
+            @RequestParam("confirmation_status") Boolean availability
+    ) {
+        if (shiftData.updateAvailability(shiftId, availability))
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Success");
+        else
+            return ResponseEntity.badRequest().build();
     }
 
 

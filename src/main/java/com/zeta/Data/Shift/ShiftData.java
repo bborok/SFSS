@@ -17,6 +17,8 @@ public interface ShiftData {
 
     Shift getShift(long id);
 
+    boolean updateAvailability(long id, Boolean confirmed);
+
     // Returns a list of all shifts for a specific user
     List<Shift> getShiftsByUser(String username);
 

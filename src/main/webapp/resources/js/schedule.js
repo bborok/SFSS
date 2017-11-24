@@ -90,7 +90,7 @@ function initCalendar() {
 
         //Selecting a scheduled event
         eventClick: function (event) {
-            // console.log(event);
+            console.log(event);
             //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
@@ -104,6 +104,13 @@ function initCalendar() {
             $('#modalTraining').html(event.requiredTraining);
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
 
+            if (event.confirmed === null)
+                $('#availabilitySelect').val('');
+            else if (event.confirmed === true)
+                $('#availabilitySelect').val('true');
+            else
+                $('#availabilitySelect').val('false');
+
             $('#fullCalModal').modal();
 
             $('#btnDelete').off().on('click', function (e) {
@@ -112,7 +119,12 @@ function initCalendar() {
                 // console.log('Deleting shift ' + event.id);
                 deleteShift(event);
                 $('#fullCalModal').modal('hide');
-            })
+            });
+
+            $("#btnConfirmAvailability").off().on('click', function () {
+                console.log("Updating availability.");
+                updateShiftConfirmation(event.id, $("#btnConfirmAvailability").val());
+            });
         },
 
         navLinks: true, // can click day/week names to navigate views
@@ -187,6 +199,8 @@ function initEventHandlers() {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
+
+
 }
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
@@ -252,6 +266,31 @@ var deleteShift = function (event) {
         }
     });
 };
+
+function updateShiftConfirmation(shiftId, status) {
+    console.log("Updating " + shiftId + "with status of: " + status);
+    var payload = {
+        shift_id: shiftId,
+        confirmation_status: status
+    };
+    $.ajax({
+        type: 'POST',
+        headers: {
+            Accept: "text/plain",
+        },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        url: api + 'shift/updateConfirmation',
+        data: $.param(payload),
+        success: function () {
+            console.log('Updated shift' + event.id);
+            displaySuccessAlert('Updated ' + event.title + '.');
+            calendar.fullCalendar('refetchEvents');
+        },
+        fail: function () {
+            displayErrorAlert('Error deleting ' + event.title + 'to database.');
+        }
+    });
+}
 
 //Displays a Bootstrap error alert at the top of the page
 var displayErrorAlert = function (msg) {

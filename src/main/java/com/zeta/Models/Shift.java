@@ -32,11 +32,12 @@ public class Shift {
     private String requiredTraining;
     private boolean isTimeCardSubmitted = false; //By default is false
     private String username;
+    private Boolean confirmed;
 
     public Shift() {
     }
 
-    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username) {
+    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username, Boolean confirmed) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -48,6 +49,7 @@ public class Shift {
         this.requiredTraining = requiredTraining;
         this.isTimeCardSubmitted = isTimeCardSubmitted;
         this.username = username;
+        this.confirmed = confirmed;
     }
 
     public Long getId() {
@@ -138,6 +140,14 @@ public class Shift {
         isTimeCardSubmitted = timeCardSubmitted;
     }
 
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
     @Override
     public String toString() {
         return "Shift{" +
@@ -150,7 +160,9 @@ public class Shift {
                 ", location='" + location + '\'' +
                 ", notes='" + notes + '\'' +
                 ", requiredTraining='" + requiredTraining + '\'' +
+                ", isTimeCardSubmitted=" + isTimeCardSubmitted +
                 ", username='" + username + '\'' +
+                ", confirmed=" + confirmed +
                 '}';
     }
 }

@@ -23,6 +23,7 @@ public class ShiftRowMapper implements RowMapper<Shift> {
         sr.setNotes(rs.getString("Notes"));
         sr.setRequiredTraining(rs.getString("RequiredTraining"));
         sr.setTimeCardSubmitted(rs.getBoolean("isTimeCardSubmitted"));
+        sr.setConfirmed(rs.getBoolean("Confirmed"));
         return sr;
     }
 }

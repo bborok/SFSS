@@ -58,18 +58,29 @@
 
         <%--TODO: uncomment below on deploy--%>
         <%--Fetch the currently logged in user from session--%>
-        var loggedInUser = {
-        username : "${user.username}",
-        name : "${user.name}",
-        email : "${user.email}",
-        phoneNumber : "${user.phoneNumber}",
-        preferredCampus : "${user.preferredCampus.toString()}",
-        studentNumber : "${user.studentNumber}",
-        role : "${user.role.toString()}",
-        callSign : "${user.callSign}"
+        <%--var loggedInUser = {--%>
+        <%--username: "${user.username}",--%>
+        <%--name: "${user.name}",--%>
+        <%--email: "${user.email}",--%>
+        <%--phoneNumber: "${user.phoneNumber}",--%>
+        <%--preferredCampus: "${user.preferredCampus.toString()}",--%>
+        <%--studentNumber: "${user.studentNumber}",--%>
+        <%--role: "${user.role.toString()}",--%>
+        <%--callSign: "${user.callSign}"--%>
+        <%--};--%>
+
+        var loggedInuser = {
+            username: "test",
+            name: "testname",
+            email: "test@gmail.com",
+            phoneNumber: "6044564561",
+            preferredCampus: "BURNABY",
+            studentNumber: "2565891",
+            role: "ADMIN",
+            callSign: "LCK56"
         };
 
-//        console.log(loggedInUser);
+        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -309,6 +320,15 @@ cancel button functionalities
                                 <b><u>End:</u> </b><span id="modalEnd"></span><br>
                                 <hr>
 
+                                <b><u>Availability: </u></b>
+                                <select id="availabilitySelect">
+                                    <option value="" id="optionNoResponse">No Response</option>
+                                    <option value="true" id="optionConfirmed">Confirmed</option>
+                                    <option value="false" id="optionDeclined">Declined</option>
+                                </select>
+
+                                <hr>
+
                                 <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
                                 <b><u>Location:</u> </b><span id="modalLocation"></span><br>
                                 <b><u>ID:</u> </b><span id="modalID"></span><br>
@@ -324,7 +344,9 @@ cancel button functionalities
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <c:choose>
                                     <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
-                                        <button class="btn btn-primary" id="btnConfirmAvailability">Update Availability</button>
+                                        <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                            Availability
+                                        </button>
                                     </c:when>
                                     <c:otherwise>
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>

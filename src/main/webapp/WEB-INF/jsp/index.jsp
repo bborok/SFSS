@@ -218,8 +218,8 @@
                                         <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />
                                     </div>                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
-                                        <button type="button" class="editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
-                                        <button type="button" class="removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
+                                        <button type="button" class="btn btn-primary editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
+                                        <button type="button" class="btn btn-primary removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
 
                                     </div>
                                 </div>
@@ -302,7 +302,6 @@
         var vancouverCheck = $('#VANCOUVER').is(":checked");
 
         var filterArray = [];
-
         for (var campus in announce) {
             if (announce[campus].campus.toUpperCase() == "BURNABY" && burnabyCheck) {
                 filterArray.push(announce[campus]);
@@ -311,9 +310,21 @@
                 filterArray.push(announce[campus]);
             }
             if (announce[campus].campus.toUpperCase() == "VANCOUVER" && vancouverCheck) {
+
                 filterArray.push(announce[campus]);
             }
         }
+        console.log(announce.campus);
+
+        filterArray.sort(function(firstCampus, comparingCampus) {
+            if (firstCampus.date > comparingCampus.date) {
+                return -1;
+            }
+            if (firstCampus.date < comparingCampus.date) {
+                return 1;
+            }
+            return 0;
+        });
         var htmlAdd = "";
         for (var index in filterArray) {
             htmlAdd += "<div class = 'check'>" +
@@ -331,16 +342,18 @@
 
 
                     "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
-                    "<button type = 'button' class = 'editButton' style='float:right;' id = '" + filterArray[index].id + "'" + "onclick='doEdit('" +
+                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + "onclick='doEdit('" +
                     filterArray[index].id + "," + filterArray[index].title + "," + filterArray[index].message + "," + filterArray[index].campus + "," +
                     "')>Edit Announcement</button>" +
-                    "<button type = 'button' class = 'removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + "onclick='doRemove('" +
+                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + "onclick='doRemove('" +
                     filterArray[index].id + "," + "')>Remove Announcement</button>" +
                     "</div></div></div>"
+
         }
         $('.controls').empty();
         $('.controls').append(htmlAdd);
     });
+
 
     function doEdit(id, title, message, campus) {
 

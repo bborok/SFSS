@@ -52,8 +52,8 @@
     %>
 
     <script>
-        <%--var user = "${user.username}";--%>
-          var user = "bobaec"; // for local use
+        var user = "${user.username}";
+//          var user = "bobaec"; // for local use
 
         var announce = {
             <c:forEach items="${announcements}" var = "announcement">
@@ -63,7 +63,8 @@
                 message : '${announcement.message}',
                 date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />',
-                campus : '${announcement.campus}'
+                campus : '${announcement.campus}',
+                role : ${user.role}
             },
             </c:forEach>
         };
@@ -305,6 +306,8 @@
         var burnabyCheck = $('#BURNABY').is(":checked");
         var surreyCheck = $('#SURREY').is(":checked");
         var vancouverCheck = $('#VANCOUVER').is(":checked");
+        var supervisorCheck = $('#SUPERVISOR').is(":checked");
+        var administratorCheck = $('#ADMINISTRATOR').is(":checked");
 
         var filterArray = [];
         for (var campus in announce) {
@@ -315,7 +318,12 @@
                 filterArray.push(announce[campus]);
             }
             if (announce[campus].campus.toUpperCase() == "VANCOUVER" && vancouverCheck) {
-
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].role.toUpperCase() == "SUPERVISOR" && supervisorCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].role.toUpperCase() == "ADMINISTRATOR" && administratorCheck) {
                 filterArray.push(announce[campus]);
             }
         }
@@ -355,6 +363,7 @@
                     "</div></div></div>"
 
         }
+        console.log(filterArray);
         if (htmlAdd.length == 0) {
             var emptyAdd = "";
             emptyAdd += "<div class ='empty'>" +

@@ -1,5 +1,6 @@
 <%@ page import="com.zeta.Models.User" %>
-<%@ page import="com.zeta.Models.Announcement" %><%--
+<%@ page import="com.zeta.Models.Announcement" %>
+<%@ page import="java.sql.Date" %><%--
   Created by IntelliJ IDEA.
   model.User: PrivateAcc
   Date: 2017-09-29
@@ -60,7 +61,8 @@
                 user : '${announcement.username}',
                 title : '${announcement.title}',
                 message : '${announcement.message}',
-                date : '${announcement.date}',
+                date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
+                                                        value = "${announcement.date}" />',
                 campus : '${announcement.campus}'
             },
             </c:forEach>
@@ -317,13 +319,15 @@
             htmlAdd += "<div class = 'check'>" +
                     "<div class = 'panel panel-primary' id = 'sortAnnounce2' style = 'text-align:left'>" +
                     "<div class = 'panel-heading' id = 'announceTitle'>" + filterArray[index].title +
-                    "<a id = 'sortCampus style='color:white;'>" + "| " + filterArray[index].campus + "</a>" +
+                    "<a id = 'sortCampus' style='color:white;'>" + " | " + filterArray[index].campus + "</a>" +
                     "</div>" + "<hr>" +
                     "<div class = 'panel-body' id = 'announceBody'>" + filterArray[index].message + "</div>" + "<hr>" +
                     "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
 
-                    "<fmt:formatDate type = 'both' dateStyle = 'medium' timeStyle = 'medium' value = '" +
-                    filterArray[index].date + "'/>" + "</div>" +
+                    filterArray[index].date +
+                    <%--"<fmt:formatDate type = 'both' dateStyle = 'medium' timeStyle = 'medium' value = '" +--%>
+                    <%--filterArray[index].date + "'/>'"--%>
+                     "</div>" +
 
 
                     "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +

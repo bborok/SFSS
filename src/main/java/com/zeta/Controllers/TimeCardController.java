@@ -2,10 +2,8 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
 import com.zeta.Data.TimeCard.TimeCardData;
-import com.zeta.Models.Shift;
-import com.zeta.Models.Task;
-import com.zeta.Models.TimeCard;
-import com.zeta.Models.User;
+import com.zeta.Data.User.UserData;
+import com.zeta.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +26,14 @@ public class TimeCardController {
 
     TimeCardData timeCardData;
     ShiftData shiftData;
+    private UserData userData;
+
 
     @Autowired
-    public TimeCardController(TimeCardData timeCardData, ShiftData shiftData) {
+    public TimeCardController(TimeCardData timeCardData, ShiftData shiftData, UserData userData) {
         this.timeCardData = timeCardData;
         this.shiftData = shiftData;
+        this.userData = userData;
     }
 
 
@@ -63,8 +64,9 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = {"save"})
-    public String saveTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
+
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "save" })
+    public String saveTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
         timeCard.addToTasks(SPTotal);
@@ -87,6 +89,9 @@ public class TimeCardController {
         Task ASTotal = new Task("Assist Security");
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
+
+//        HttpSession session = request.getSession();
+//        User u = (User) session.getAttribute("user" );
 
         timeCard.setUsername("user3");
         timeCard.setShiftId(7);
@@ -101,8 +106,10 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = {"submit"})
-    public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, BindingResult bindingResult) {
+
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "submit" })
+    public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
+
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
         timeCard.addToTasks(SPTotal);
@@ -126,9 +133,11 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
+//        HttpSession session = request.getSession();
+//        User u = (User) session.getAttribute("user" );
+
         timeCard.setUsername("admin1");
         timeCard.setShiftId(96);
-
 
         if (!timeCardData.submitTimeCard(timeCard)) {
             System.out.println("this is not working");
@@ -139,8 +148,10 @@ public class TimeCardController {
         return "timecard";
     }
 
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = {"edit"})
-    public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
+
+    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "edit" })
+    public String EditTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
+
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
         timeCard.addToTasks(SPTotal);
@@ -163,6 +174,9 @@ public class TimeCardController {
         Task ASTotal = new Task("Assist Security");
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
+
+//        HttpSession session = request.getSession();
+//        User u = (User) session.getAttribute("user" );
 
         timeCard.setUsername("admin1");
         timeCard.setShiftId(96);
@@ -179,18 +193,24 @@ public class TimeCardController {
 
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
     public String getTimeCardList(Model m, HttpServletRequest request) {
-        // List<Shift> shifts = shiftData.getShifts();
-        List<Shift> userShifts = shiftData.getShiftsByUser("admin1");
+
+        List<Shift> shifts ;
+//        List<Shift> userShifts = shiftData.getShiftsByUser("admin1");
 //        ResponseEntity<List<Shift>>  allShifts = new ResponseEntity<>(shifts, HttpStatus.OK);
         HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
+        session.setAttribute("user", userData.getUser("user1"));
+        User u = (User) session.getAttribute("user" );
+
 //        if (u == null) return "timecard";
-//        if (u.getRole() == Role.MEMBER) {
-//            shiftId = (long) 1;
-//        }
+        if (u.getRole() == Role.MEMBER) {
+            shifts = shiftData.getShiftsByUser(u.getUsername());
+        }else{
+            shifts = shiftData.getShifts();
+        }
+
 //        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
-        m.addAttribute("shifts", userShifts);
+        m.addAttribute("shifts", shifts);
         return "timecard_list";
     }
 }

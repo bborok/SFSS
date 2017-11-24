@@ -225,7 +225,9 @@
                                 </div>
                                 </div>
                             </c:forEach>
+
                         </div>
+
                     </div>
                 <hr><br>
                 <div class="col-sm-3">
@@ -276,6 +278,9 @@
 
 <!-- Menu Toggle Script -->
 <script>
+
+//    $('.empty').hide();
+
 //    $("#menu-toggle").click(function(e) {
 //        e.preventDefault();
 //        $("#wrapper").toggleClass("toggled");
@@ -314,7 +319,6 @@
                 filterArray.push(announce[campus]);
             }
         }
-        console.log(announce.campus);
 
         filterArray.sort(function(firstCampus, comparingCampus) {
             if (firstCampus.date > comparingCampus.date) {
@@ -325,6 +329,7 @@
             }
             return 0;
         });
+
         var htmlAdd = "";
         for (var index in filterArray) {
             htmlAdd += "<div class = 'check'>" +
@@ -350,8 +355,21 @@
                     "</div></div></div>"
 
         }
-        $('.controls').empty();
-        $('.controls').append(htmlAdd);
+        if (htmlAdd.length == 0) {
+            var emptyAdd = "";
+            emptyAdd += "<div class ='empty'>" +
+                    "<div class = 'panel panel-primary' style='text-align:left'>" +
+                    "<div class = 'panel-heading'>" + "No announcements to show" +
+                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"
+
+            $('#sortAnnounce').empty();
+            $('#sortAnnounce').append(emptyAdd);
+        } else {
+            $('#sortAnnounce').empty();
+
+            $('#sortAnnounce').append(htmlAdd);
+        }
+
     });
 
 

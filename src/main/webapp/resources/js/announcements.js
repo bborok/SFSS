@@ -63,6 +63,7 @@ function sortDescending(a, b) {
 
 if ($('.allOrNone').is(':checked')) {
     $('.campusFilter').prop("checked", true)
+    $('.empty').hide();
 }
 else {
     $('.campusFilter').prop("checked", false);

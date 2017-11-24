@@ -20,6 +20,7 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src='resources/js/notify.js'></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
@@ -58,16 +59,16 @@
 
         <%--Fetch the currently logged in user from session--%>
         var loggedInUser = {
-            username: "${user.username}",
-            name: "${user.name}",
-            email: "${user.email}",
-            phoneNumber: "${user.phoneNumber}",
-            preferredCampus: "${user.preferredCampus.toString()}",
-            studentNumber: "${user.studentNumber}",
-            role: "${user.role.toString()}",
-            callSign: "${user.callSign}"
+            username: "test",
+            name: "testname",
+            email: "test@gmail.com",
+            phoneNumber: "6044564561",
+            preferredCampus: "BURNABY",
+            studentNumber: "2565891",
+            role: "ADMIN",
+            callSign: "LCK56"
         };
-        //console.log(loggedInUser);
+        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -132,8 +133,6 @@ cancel button functionalities
                     <hr>
                 </div>
 
-                <%--Used for displaying alerts--%>
-                <div id="alertsDiv"></div>
 
                 <div class="col-sm-12 row">
                     <div class="radio">

@@ -53,7 +53,6 @@ public class ShiftsController {
         User u = (User) session.getAttribute("user");
         if (u == null) return ResponseEntity.badRequest().build();
 
-
         if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
             //Get the Members/Volunteers shifts
             shifts = shiftData.getShiftsWithUsername(u.getUsername());
@@ -63,6 +62,7 @@ public class ShiftsController {
                 shifts = shifts.stream().filter(shift -> shift.getCampus() == u.getPreferredCampus()).collect(Collectors.toList());
             }
         }
+
         //Filter by start and end query parameters (if available)
         shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());
         return new ResponseEntity<>(shifts, HttpStatus.OK);

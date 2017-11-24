@@ -1,16 +1,14 @@
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
-var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
+// var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
-var alertsDiv;
 var startTimeInput;
 var endTimeInput;
 
 $(document).ready(function () {
     csrfAndAjaxSetup();
 
-    alertsDiv = $('#alertsDiv');
     startTimeInput = $('#startTime');
     endTimeInput = $('#endTime');
     initCalendar();
@@ -30,13 +28,10 @@ function initCalendar() {
         eventSources: [
             api + '/shifts'
         ],
-        // put your options and callbacks here
         customButtons: {
             add_event: {
                 text: 'Add a Shift',
-                click: function (start, end) {
-                    // startTimeInput.val(moment(start).format(dateTimeInputFormat));
-                    // endTimeInput.val(moment(end).format(dateTimeInputFormat));
+                click: function () {
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -60,7 +55,7 @@ function initCalendar() {
 
         selectable: true,
 
-        eventRender: function eventRender(event, element, view) {
+        eventRender: function eventRender(event, element) {
             if (event.campus === 'BURNABY') {
                 element.css('background-color', '#E8502F');
             }
@@ -73,7 +68,7 @@ function initCalendar() {
             return filter(event);
         },
 
-        eventAfterRender: function (event, element, view) {
+        eventAfterRender: function (event, element) {
             $(element).css('width', '80%');
         },
 
@@ -81,8 +76,6 @@ function initCalendar() {
         select: function (start, end) {
             var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
             var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            // console.log(myStart);
-            // console.log(myEnd);
             startTimeInput.val(myStart);
             endTimeInput.val(myEnd);
             $('#createEventModal').modal('show'); //popup modal
@@ -118,6 +111,7 @@ function initCalendar() {
             $("#btnConfirmAvailability").off().on('click', function () {
                 console.log("Updating availability.");
                 updateShiftConfirmation(event.id, $("#availabilitySelect").val());
+                $('#fullCalModal').modal('hide');
             });
         },
 
@@ -233,11 +227,11 @@ var saveShift = function (shift) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(shift),
         success: function () {
-            displaySuccessAlert('Saved ' + shift.title + '.');
+            $.notify("Saved shift.", "success");
             calendar.fullCalendar('refetchEvents');
         },
         error: function () {
-            displayErrorAlert('Error saving ' + shift.title + ' to database.');
+            $.notify("Error saving shift", "warn");
         }
     });
 };
@@ -251,12 +245,11 @@ var deleteShift = function (event) {
         },
         url: api + '/shift/delete/' + event.id,
         success: function () {
-            // console.log('Deleted shift' + event.id);
-            displaySuccessAlert('Deleted ' + event.title + '.');
+            $.notify("Deleted shift.", "success");
             calendar.fullCalendar('refetchEvents');
         },
-        fail: function () {
-            displayErrorAlert('Error deleting ' + event.title + 'to database.');
+        error: function () {
+            $.notify("Error deleting shift", "warn");
         }
     });
 };
@@ -276,35 +269,14 @@ function updateShiftConfirmation(shiftId, status) {
         url: api + '/shift/updateConfirmation',
         data: $.param(payload),
         success: function () {
-            console.log('Updated shift' + event.id);
-            displaySuccessAlert('Updated ' + event.title + '.');
+            $.notify("Updated availability.", "success");
             calendar.fullCalendar('refetchEvents');
         },
-        fail: function () {
-            displayErrorAlert('Error deleting ' + event.title + 'to database.');
+        error: function () {
+            $.notify("Error updating availability", "warn");
         }
     });
 }
-
-//Displays a Bootstrap error alert at the top of the page
-var displayErrorAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Danger! </strong> " + msg +
-        "</div>"
-    );
-};
-
-//Displays a Bootstrap success alert at the top of the page
-var displaySuccessAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Success! </strong> " + msg +
-        "</div>"
-    );
-};
 
 function filter(calEvent) {
     var vals = [];

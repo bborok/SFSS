@@ -69,7 +69,7 @@
         <%--callSign: "${user.callSign}"--%>
         <%--};--%>
 
-        var loggedInuser = {
+        var loggedInUser = {
             username: "test",
             name: "testname",
             email: "test@gmail.com",
@@ -322,9 +322,9 @@ cancel button functionalities
 
                                 <b><u>Availability: </u></b>
                                 <select id="availabilitySelect">
-                                    <option value="" id="optionNoResponse">No Response</option>
-                                    <option value="true" id="optionConfirmed">Confirmed</option>
-                                    <option value="false" id="optionDeclined">Declined</option>
+                                    <option value="NO_RESPONSE">No Response</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DECLINED">Declined</option>
                                 </select>
 
                                 <hr>
@@ -342,11 +342,12 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                    Availability
+                                </button>
                                 <c:choose>
                                     <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
-                                        <button class="btn btn-primary" id="btnConfirmAvailability">Update
-                                            Availability
-                                        </button>
+
                                     </c:when>
                                     <c:otherwise>
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>

@@ -32,12 +32,12 @@ public class Shift {
     private String requiredTraining;
     private boolean isTimeCardSubmitted = false; //By default is false
     private String username;
-    private Boolean confirmed;
+    private ConfirmationStatus confirmationStatus;
 
     public Shift() {
     }
 
-    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username, Boolean confirmed) {
+    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username, ConfirmationStatus confirmationStatus) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -49,7 +49,7 @@ public class Shift {
         this.requiredTraining = requiredTraining;
         this.isTimeCardSubmitted = isTimeCardSubmitted;
         this.username = username;
-        this.confirmed = confirmed;
+        this.confirmationStatus = confirmationStatus;
     }
 
     public Long getId() {
@@ -140,12 +140,12 @@ public class Shift {
         isTimeCardSubmitted = timeCardSubmitted;
     }
 
-    public Boolean getConfirmed() {
-        return confirmed;
+    public ConfirmationStatus getConfirmationStatus() {
+        return confirmationStatus;
     }
 
-    public void setConfirmed(Boolean confirmed) {
-        this.confirmed = confirmed;
+    public void setConfirmationStatus(ConfirmationStatus confirmationStatus) {
+        this.confirmationStatus = confirmationStatus;
     }
 
     @Override
@@ -162,7 +162,7 @@ public class Shift {
                 ", requiredTraining='" + requiredTraining + '\'' +
                 ", isTimeCardSubmitted=" + isTimeCardSubmitted +
                 ", username='" + username + '\'' +
-                ", confirmed=" + confirmed +
+                ", confirmationStatus=" + confirmationStatus +
                 '}';
     }
 }

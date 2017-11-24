@@ -1,6 +1,7 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Role;
 import com.zeta.Models.Shift;
 import com.zeta.Models.User;
@@ -87,9 +88,9 @@ public class ShiftsController {
     @PostMapping("shift/updateConfirmation")
     public ResponseEntity<Object> updateConfirmation(
             @RequestParam("shift_id") long shiftId,
-            @RequestParam("confirmation_status") Boolean availability
+            @RequestParam("confirmation_status") ConfirmationStatus confirmationStatus
     ) {
-        if (shiftData.updateAvailability(shiftId, availability))
+        if (shiftData.updateAvailability(shiftId, confirmationStatus))
             return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Success");
         else
             return ResponseEntity.badRequest().build();

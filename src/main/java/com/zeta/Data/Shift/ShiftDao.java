@@ -1,5 +1,6 @@
 package com.zeta.Data.Shift;
 
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,10 +58,10 @@ public class ShiftDao implements ShiftData {
     }
 
     @Override
-    public boolean updateAvailability(long id, Boolean confirmed) {
+    public boolean updateAvailability(long id, ConfirmationStatus confirmationStatus) {
         String sql = "UPDATE  Shift SET Confirmed = ? WHERE ID = ?";
         try {
-            jdbcTemplate.update(sql, confirmed, id);
+            jdbcTemplate.update(sql, confirmationStatus.toString(), id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

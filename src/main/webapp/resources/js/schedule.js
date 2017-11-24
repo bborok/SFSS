@@ -103,13 +103,7 @@ function initCalendar() {
             $('#modalNotes').html(event.notes);
             $('#modalTraining').html(event.requiredTraining);
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-
-            if (event.confirmed === null)
-                $('#availabilitySelect').val('');
-            else if (event.confirmed === true)
-                $('#availabilitySelect').val('true');
-            else
-                $('#availabilitySelect').val('false');
+            $('#availabilitySelect').val(event.confirmationStatus);
 
             $('#fullCalModal').modal();
 
@@ -123,7 +117,7 @@ function initCalendar() {
 
             $("#btnConfirmAvailability").off().on('click', function () {
                 console.log("Updating availability.");
-                updateShiftConfirmation(event.id, $("#btnConfirmAvailability").val());
+                updateShiftConfirmation(event.id, $("#availabilitySelect").val());
             });
         },
 
@@ -279,7 +273,7 @@ function updateShiftConfirmation(shiftId, status) {
             Accept: "text/plain",
         },
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        url: api + 'shift/updateConfirmation',
+        url: api + '/shift/updateConfirmation',
         data: $.param(payload),
         success: function () {
             console.log('Updated shift' + event.id);

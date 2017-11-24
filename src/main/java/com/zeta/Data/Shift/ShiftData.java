@@ -1,5 +1,6 @@
 package com.zeta.Data.Shift;
 
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Shift;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public interface ShiftData {
 
     Shift getShift(long id);
 
-    boolean updateAvailability(long id, Boolean confirmed);
+    boolean updateAvailability(long id, ConfirmationStatus confirmed);
 
     // Returns a list of all shifts for a specific user
     List<Shift> getShiftsByUser(String username);

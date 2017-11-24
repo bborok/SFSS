@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
+
 <script>
     var api = '${pageContext.request.contextPath}';
 </script>
@@ -50,8 +51,20 @@
     %>
 
     <script>
-        var user = "${user.username}";
-        //  var user = "bobaec"; // for local use
+        <%--var user = "${user.username}";--%>
+          var user = "bobaec"; // for local use
+
+        var announce = {
+            <c:forEach items="${announcements}" var = "announcement">
+            "${announcement.id}" : {
+                user : '${announcement.username}',
+                title : '${announcement.title}',
+                message : '${announcement.message}',
+                date : '${announcement.date}',
+                campus : '${announcement.campus}'
+            },
+            </c:forEach>
+        };
 
     </script>
 
@@ -159,29 +172,29 @@
                             <div class="panel-heading" id = "announceFilter">Filter</div>
                             <div class="panel-body" id = campusLead>
                                 <div class="col-sm-12 row">
-                                    <div class="radio">
+                                    <div class="radio" id = "filter">
                                         <label>
                                             <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" onclick="allOrNone(this)" checked>ALL CAMPUSES
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
+                                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY">BURNABY
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
+                                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
+                                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="SUPERVISOR" id="SUPERVISOR" class = "others">SUPERVISOR
+                                            <input class='campusFilter' type="checkbox" value="SUPERVISOR" id="SUPERVISOR">SUPERVISOR
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="ADMINISTRATOR" id="ADMINISTRATOR" class = "others">ADMINISTRATOR
+                                            <input class='campusFilter' type="checkbox" value="ADMINISTRATOR" id="ADMINISTRATOR">ADMINISTRATOR
                                         </label>
                                         <br>
                                     </div>
@@ -254,32 +267,75 @@
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
+
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src='resources/js/announcements.js'></script>
 
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+//    $("#menu-toggle").click(function(e) {
+//        e.preventDefault();
+//        $("#wrapper").toggleClass("toggled");
+//    });
+//
+//    var top = $('.thisone').offset().top;
+//    $('.trigger').click(function () {
+//        $('.thisone').css('position','');
+//        $('.left2').toggle('slow',function(){
+//            top = $('.thisone').offset().top;
+//        });
+//    });
+//
+//    $(document).scroll(function(){
+//        $('.thisone').css('position','');
+//        top = $('.thisone').offset().top;
+//        $('.thisone').css('position','absolute');
+//        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+//    });
 
-    var top = $('.thisone').offset().top;
-    $('.trigger').click(function () {
-        $('.thisone').css('position','');
-        $('.left2').toggle('slow',function(){
-            top = $('.thisone').offset().top;
-        });
+    $("#filter input").click(function() {
+        var burnabyCheck = $('#BURNABY').is(":checked");
+        var surreyCheck = $('#SURREY').is(":checked");
+        var vancouverCheck = $('#VANCOUVER').is(":checked");
+
+        var filterArray = [];
+
+        for (var campus in announce) {
+            if (announce[campus].campus.toUpperCase() == "BURNABY" && burnabyCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].campus.toUpperCase() == "SURREY" && surreyCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].campus.toUpperCase() == "VANCOUVER" && vancouverCheck) {
+                filterArray.push(announce[campus]);
+            }
+        }
+        var htmlAdd = "";
+        for (var index in filterArray) {
+            htmlAdd += "<div class = 'check'>" +
+                    "<div class = 'panel panel-primary' id = 'sortAnnounce2' style = 'text-align:left'>" +
+                    "<div class = 'panel-heading' id = 'announceTitle'>" + filterArray[index].title +
+                    "<a id = 'sortCampus style='color:white;'>" + "| " + filterArray[index].campus + "</a>" +
+                    "</div>" + "<hr>" +
+                    "<div class = 'panel-body' id = 'announceBody'>" + filterArray[index].message + "</div>" + "<hr>" +
+                    "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
+
+                    "<fmt:formatDate type = 'both' dateStyle = 'medium' timeStyle = 'medium' value = '" +
+                    filterArray[index].date + "'/>" + "</div>" +
 
 
-    });
-
-    $(document).scroll(function(){
-        $('.thisone').css('position','');
-        top = $('.thisone').offset().top;
-        $('.thisone').css('position','absolute');
-        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+                    "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
+                    "<button type = 'button' class = 'editButton' style='float:right;' id = '" + filterArray[index].id + "'" + "onclick='doEdit('" +
+                    filterArray[index].id + "," + filterArray[index].title + "," + filterArray[index].message + "," + filterArray[index].campus + "," +
+                    "')>Edit Announcement</button>" +
+                    "<button type = 'button' class = 'removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + "onclick='doRemove('" +
+                    filterArray[index].id + "," + "')>Remove Announcement</button>" +
+                    "</div></div></div>"
+        }
+        $('.controls').empty();
+        $('.controls').append(htmlAdd);
     });
 
     function doEdit(id, title, message, campus) {
@@ -350,7 +406,6 @@
              contentType: "application/json; charset=utf-8"
          });
     }
-
 
 </script>
 </body>

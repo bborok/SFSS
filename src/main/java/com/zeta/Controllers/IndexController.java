@@ -94,28 +94,29 @@ public class IndexController {
 
     @GetMapping("/schedule")
     public String schedule(HttpServletRequest request, Model m) {
-//        List<User> usersForSelection;
-//
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user");
-//
-//        //Exit the request if user info can't get fetched
-//        if (u == null) return "index";
-//        //TODO: This shouldn't even be possible. Maybe delete in production?
-//
-//        //Filter the list users depending on the currently logged in users role.
-//        if (u.getRole() == Role.TEAM_LEADER) {
-//            //Filter the users based on the team leaders preferred campus.
-//            usersForSelection = userData.getAllUsers().stream()
-//                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
-//                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
-//                    .collect(Collectors.toList());
-//        } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR){
-//            usersForSelection = userData.getAllUsers();
-//        } else {
-//            usersForSelection = new ArrayList<>(); //this is members/volunteer
-//        }
-//        m.addAttribute("users", usersForSelection);
+        List<User> usersForSelection;
+
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+
+        //Exit the request if user info can't get fetched
+        if (u == null) return "index";
+        //TODO: This shouldn't even be possible. Maybe delete in production?
+
+        //Filter the list users  depending on the currently logged in users role.
+        if (u.getRole() == Role.TEAM_LEADER) {
+            //Filter the users based on the team leaders preferred campus.
+            usersForSelection = userData.getAllUsers().stream()
+                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+                    .collect(Collectors.toList());
+        } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR) {
+            usersForSelection = userData.getAllUsers();
+        } else {
+            //At this point the currently logged in User must be a MEMBER/VOLUNTEER
+            usersForSelection = new ArrayList<>();
+        }
+        m.addAttribute("users", usersForSelection);
 
 
         List<Task> allTasks = taskData.getTasks();

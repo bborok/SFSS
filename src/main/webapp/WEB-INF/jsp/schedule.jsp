@@ -56,31 +56,18 @@
         iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
 
-        <%--TODO: uncomment below on deploy--%>
         <%--Fetch the currently logged in user from session--%>
-        <%--var loggedInUser = {--%>
-        <%--username: "${user.username}",--%>
-        <%--name: "${user.name}",--%>
-        <%--email: "${user.email}",--%>
-        <%--phoneNumber: "${user.phoneNumber}",--%>
-        <%--preferredCampus: "${user.preferredCampus.toString()}",--%>
-        <%--studentNumber: "${user.studentNumber}",--%>
-        <%--role: "${user.role.toString()}",--%>
-        <%--callSign: "${user.callSign}"--%>
-        <%--};--%>
-
         var loggedInUser = {
-            username: "test",
-            name: "testname",
-            email: "test@gmail.com",
-            phoneNumber: "6044564561",
-            preferredCampus: "BURNABY",
-            studentNumber: "2565891",
-            role: "ADMIN",
-            callSign: "LCK56"
+            username: "${user.username}",
+            name: "${user.name}",
+            email: "${user.email}",
+            phoneNumber: "${user.phoneNumber}",
+            preferredCampus: "${user.preferredCampus.toString()}",
+            studentNumber: "${user.studentNumber}",
+            role: "${user.role.toString()}",
+            callSign: "${user.callSign}"
         };
-
-        console.log(loggedInUser);
+        //console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 

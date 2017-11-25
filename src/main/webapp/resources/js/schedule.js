@@ -32,6 +32,7 @@ function initCalendar() {
             add_event: {
                 text: 'Add a Shift',
                 click: function () {
+                    resetFormFields();
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -180,6 +181,7 @@ var selectEventHandler = function (start, end) {
     var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
     startTimeInput.val(myStart);
     endTimeInput.val(myEnd);
+    resetFormFields();
     $('#createEventModal').modal('show'); //popup modal
 };
 
@@ -246,6 +248,12 @@ function doSubmit() {
         requiredTraining: $('#eventRequiredTraining').val()
     };
     saveShift(shift);
+}
+
+function resetFormFields() {
+    $('#eventCampus').val("");
+    $('#eventMember').val("");
+    $('#eventRequiredTraining').val("");
 }
 
 //Sends a requests via AJAX to save a shift

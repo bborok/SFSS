@@ -182,17 +182,15 @@ cancel button functionalities
                                         <label class="control-label"><u>Shift:</u> </label>
                                         <div class="controls">
                                             <select class="form-control" name="eventCampus" id="eventCampus">
-                                                <option value='all' id='allCampuses' disabled="true" selected>Select
-                                                    Campus
-                                                </option>
-                                                <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                                <option value="SURREY" class="SURREY">SURREY</option>
-                                                <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                <option value="" disabled selected>Select Campus</option>
+                                                <option value="BURNABY" class="BURNABY">Burnaby</option>
+                                                <option value="SURREY" class="SURREY">Surrey</option>
+                                                <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
                                             </select>
 
                                             <select class="form-control" name="eventTitle" id="eventTitle">
 
-                                                <option value="SURREY" disabled="true" selected="selected">Select Surrey
+                                                <option value="SURREY" disabled selected="selected">Select Surrey
                                                     Shift
                                                 </option>
 
@@ -202,7 +200,7 @@ cancel button functionalities
                                                     </option>
                                                 </c:forEach>
 
-                                                <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                <option value="VANCOUVER" disabled selected="selected">Select
                                                     Vancouver Shift
                                                 </option>
 
@@ -241,6 +239,7 @@ cancel button functionalities
                                             <div class="controls">
                                                 <select class="form-control" name="eventMember" id="eventMember"
                                                         data-tab="${user.getUsername()}">
+                                                    <option value="" disabled selected>Select User</option>
                                                     <c:forEach items="${users}" var="user">
                                                         <option value="${user.getUsername()}">
                                                                 ${user.getUsername()}

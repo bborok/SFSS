@@ -1,5 +1,6 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Training.TrainingData;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import com.zeta.Models.Role;
@@ -37,12 +38,14 @@ public class IndexController {
     private UserData userData;
     private AnnouncementsData announcementsData;
     private TaskData taskData;
+    private TrainingData trainingData;
 
     @Autowired
-    public IndexController(UserData userData, TaskData taskData, AnnouncementsData announcementsData) {
+    public IndexController(UserData userData, TaskData taskData, AnnouncementsData announcementsData, TrainingData trainingData) {
         this.userData = userData;
         this.taskData = taskData;
         this.announcementsData = announcementsData;
+        this.trainingData = trainingData;
     }
 
     @RequestMapping(value = "/login")
@@ -128,6 +131,7 @@ public class IndexController {
         m.addAttribute("SURREYTASKS", surreyTasks);
         m.addAttribute("VANCOUVERTASKS", vancouverTasks);
         m.addAttribute("BURNABYTASKS", burnabyTasks);
+        m.addAttribute("TRAININGTYPES", trainingData.getListOfTraining());
 
         return "schedule";
     }

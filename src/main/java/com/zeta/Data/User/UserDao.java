@@ -133,7 +133,7 @@ public class UserDao implements UserData {
         List<Training> list;
         try {
                 String sql = "select Training, Hours, Date from UserTraining where User = ?";
-                list = jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new TrainingRowMapper());
+                list = jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new UserTrainingRowMapper());
 
         } catch (Exception e) {
             return null;

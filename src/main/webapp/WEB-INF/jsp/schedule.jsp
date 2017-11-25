@@ -257,9 +257,14 @@ cancel button functionalities
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Required Training:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1"
-                                                   class="form-control" name="eventMember" id="eventRequiredTraining"
-                                                   placeholder="Enter the Requirements">
+                                            <div class="controls">
+                                                <select class="form-control" id="eventRequiredTraining">
+                                                    <option value="" selected>None</option>
+                                                    <c:forEach items="${TRAININGTYPES}" var="training">
+                                                        <option value="${training}">${training}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">

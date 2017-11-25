@@ -33,48 +33,42 @@ public class TimeCardDao implements TimeCardData {
 
     @Override
     public boolean saveTimeCard(TimeCard timeCard) {
-        // 0 is isSubmitted in integer form, needs to be false because timecard should not be submitted before this
-        return updateRecords(timeCard, 0);
+        // TimeCard is not being submitted by this method
+        timeCard.setTimeCardSubmitted(false);
+        return updateRecords(timeCard);
     }
 
     @Override
     public boolean submitTimeCard(TimeCard timeCard) {
-        // 1 is isSumbitted in integer form, needs to be true because we submit the timecard via this method
-        return updateRecords(timeCard, 1);
+        // TimeCard IS being submitted by this method
+        timeCard.setTimeCardSubmitted(true);
+        return updateRecords(timeCard);
     }
 
-    private boolean updateRecords(TimeCard timeCard, int isSubmitted) {
-        // If timecard is already submitted it should not be allowed to be saved/submitted again
-        if (timeCard.getIsTimeCardSubmitted())
-            return false;
+    private boolean updateRecords(TimeCard timeCard) {
 
         if (timeCardRecordExist(timeCard))
             return updateTimeCard(timeCard);
 
-        return addNewTimeCard(timeCard, isSubmitted);
+        return addNewTimeCard(timeCard);
     }
 
     // Returns true if user-shift combo record exists
+    @Override
     public boolean timeCardRecordExist(TimeCard timeCard) {
         try {
             Integer result = jdbcTemplate.queryForObject(
                     "select exists(select ID from UserTask where User = ? and Shift = ?)",
                     new Object[]{timeCard.getUsername(), timeCard.getShiftId()}, Integer.class);
 
-            if (result == 0) {
-                // If doesn't exist
-                return false;
-            } else {
-                // If does exist
-                return true;
-            }
+            return result != 0;
 
         } catch (Exception e) {
             return false;
         }
     }
 
-    private boolean addNewTimeCard(TimeCard timeCard, int isSubmitted) {
+    private boolean addNewTimeCard(TimeCard timeCard) {
         try {
             String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
                     "where User = ? and ID = ?";
@@ -86,7 +80,7 @@ public class TimeCardDao implements TimeCardData {
             updateShift.setString(1, timeCard.getCampus().toString());
             updateShift.setString(2, timeCard.getLocation());
             updateShift.setString(3, timeCard.getNotes());
-            updateShift.setInt(4, isSubmitted);
+            updateShift.setBoolean(4, timeCard.getIsTimeCardSubmitted());
             updateShift.setString(5, timeCard.getUsername());
             updateShift.setLong(6, timeCard.getShiftId());
 

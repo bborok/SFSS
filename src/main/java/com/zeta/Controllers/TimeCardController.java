@@ -172,7 +172,7 @@ public class TimeCardController {
 
         List<Shift> shifts ;
         HttpSession session = request.getSession();
-        session.setAttribute("user", userData.getUser("user4"));
+//        session.setAttribute("user", userData.getUser("admin1"));
         User u = (User) session.getAttribute("user" );
 
         if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {

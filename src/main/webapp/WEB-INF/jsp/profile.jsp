@@ -115,8 +115,6 @@
                         <div>
                             <h1 class="row" style="padding-left: 20px">
                                 <b><c:out value="${user.getName()}"/>'s Profile</b>
-                                <button type="button" id="editButton" class="btn"><i class="fa fa-edit"></i></button>
-
                                 <br>
                             </h1>
                             <center>

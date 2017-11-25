@@ -55,92 +55,17 @@ function initCalendar() {
 
         selectable: true,
 
-        eventRender: function eventRender(event, element) {
-            if (event.campus === 'BURNABY') {
-                element.css('background-color', '#9fa8da');
-            } else if (event.campus === "SURREY") {
-                element.css('background-color', '#9ccc65');
-            } else if (event.campus === "VANCOUVER") {
-                element.css('background-color', '#bbdefb');
-            }
-
-            if (event.confirmationStatus === "NO_RESPONSE"){
-                element.css({
-                    "border-style": "solid",
-                    "border-width": "3px",
-                    "border-color": "#ff8f00"
-                })
-            } else if(event.confirmationStatus === "CONFIRMED"){
-                element.css({
-                    "border-style": "solid",
-                    "border-width": "3px",
-                    "border-color": "#00600f"
-                })
-            } else {
-                element.css({
-                    "border-style": "solid",
-                    "border-width": "3px",
-                    "border-color": "#a30000"
-                })
-            }
-            return filter(event);
-        },
+        eventRender: eventRenderHandler,
 
         eventAfterRender: function (event, element) {
             $(element).css('width', '80%');
         },
 
         //Selecting an empty area
-        select: function (start, end) {
-            var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
-            var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            startTimeInput.val(myStart);
-            endTimeInput.val(myEnd);
-            $('#createEventModal').modal('show'); //popup modal
-        },
+        select: selectEventHandler,
 
         //Selecting a scheduled event
-        eventClick: function (event) {
-            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-            $('#modalTitle').html(event.title);
-            $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-            $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.username);
-            $('#modalCampus').html(event.campus);
-            $('#modalID').html(event.id);
-            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-            $('#modalLocation').html(event.location);
-            $('#modalNotes').html(event.notes);
-            $('#modalTraining').html(event.requiredTraining);
-            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-            $('#availabilitySelect').val(event.confirmationStatus);
-            $('#modalAvailability').text(_.replace(event.confirmationStatus,'_',' '));
-
-            $('#fullCalModal').modal();
-
-            $('#btnDelete').off().on('click', function (e) {
-                e.preventDefault();
-                deleteShift(event);
-                $('#fullCalModal').modal('hide');
-            });
-
-            $("#btnConfirmAvailability").off().on('click', function () {
-                updateShiftConfirmation(event.id, $("#availabilitySelect").val());
-                $('#fullCalModal').modal('hide');
-            });
-
-            var eventStart = moment(event.start).format(dateFormat);
-            var currentDate = moment().format(dateFormat);
-
-            //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
-            if (moment(eventStart).isAfter(currentDate)){
-                $("#availabilitySelect").show();
-                $("#modalAvailability").hide();
-            } else {
-                $("#availabilitySelect").hide();
-                $("#modalAvailability").show();
-            }
-        },
+        eventClick: eventClickHandler,
 
         navLinks: true, // can click day/week names to navigate views
         weekNumbers: true,
@@ -219,6 +144,87 @@ function initEventHandlers() {
 
 }
 
+var eventRenderHandler = function (event, element) {
+    if (event.campus === 'BURNABY') {
+        element.css('background-color', '#9fa8da');
+    } else if (event.campus === "SURREY") {
+        element.css('background-color', '#9ccc65');
+    } else if (event.campus === "VANCOUVER") {
+        element.css('background-color', '#bbdefb');
+    }
+
+    if (event.confirmationStatus === "NO_RESPONSE") {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#ff8f00"
+        })
+    } else if (event.confirmationStatus === "CONFIRMED") {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#00600f"
+        })
+    } else {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#a30000"
+        })
+    }
+    return filter(event);
+};
+
+var selectEventHandler = function (start, end) {
+    var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
+    var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
+    startTimeInput.val(myStart);
+    endTimeInput.val(myEnd);
+    $('#createEventModal').modal('show'); //popup modal
+};
+
+var eventClickHandler = function (event) {
+    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
+    $('#modalTitle').html(event.title);
+    $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
+    $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
+    $('#modalMember').html(event.username);
+    $('#modalCampus').html(event.campus);
+    $('#modalID').html(event.id);
+    $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
+    $('#modalLocation').html(event.location);
+    $('#modalNotes').html(event.notes);
+    $('#modalTraining').html(event.requiredTraining);
+    $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
+    $('#availabilitySelect').val(event.confirmationStatus);
+    $('#modalAvailability').text(_.replace(event.confirmationStatus, '_', ' '));
+
+    $('#fullCalModal').modal();
+
+    $('#btnDelete').off().on('click', function (e) {
+        e.preventDefault();
+        deleteShift(event);
+        $('#fullCalModal').modal('hide');
+    });
+
+    $("#btnConfirmAvailability").off().on('click', function () {
+        updateShiftConfirmation(event.id, $("#availabilitySelect").val());
+        $('#fullCalModal').modal('hide');
+    });
+
+    var eventStart = moment(event.start).format(dateFormat);
+    var currentDate = moment().format(dateFormat);
+
+    //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
+    if (moment(eventStart).isAfter(currentDate)) {
+        $("#availabilitySelect").show();
+        $("#modalAvailability").hide();
+    } else {
+        $("#availabilitySelect").hide();
+        $("#modalAvailability").show();
+    }
+};
+
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
     var eventTitleElement = $('#eventTitle');
@@ -243,7 +249,7 @@ function doSubmit() {
 }
 
 //Sends a requests via AJAX to save a shift
-var saveShift = function (shift) {
+function saveShift(shift) {
     var url = api + '/shift/save';
     $.ajax({
         headers: {
@@ -261,10 +267,10 @@ var saveShift = function (shift) {
             $.notify("Error saving shift", "warn");
         }
     });
-};
+}
 
 //Sends a request via AJAX to delete a shift
-var deleteShift = function (event) {
+function deleteShift(event) {
     $.ajax({
         type: 'DELETE',
         headers: {
@@ -279,7 +285,7 @@ var deleteShift = function (event) {
             $.notify("Error deleting shift", "warn");
         }
     });
-};
+}
 
 function updateShiftConfirmation(shiftId, status) {
     var payload = {

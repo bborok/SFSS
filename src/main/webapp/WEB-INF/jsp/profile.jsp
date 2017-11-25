@@ -87,9 +87,9 @@
             name : "${user.name}",
             email : "${user.email}",
             phoneNumber : "${user.phoneNumber}",
-            preferredCampus : "${user.preferredCampus.toString()}",
+            preferredCampus : "${user.preferredCampus}",
             studentNumber : "${user.studentNumber}",
-            role : "${user.role.toString()}",
+            role : "${user.role}",
             callSign : "${user.callSign}"
         };
     </script>
@@ -114,7 +114,7 @@
                     <div>
                         <div>
                             <h1 class="row" style="padding-left: 20px">
-                                <b><c:out value="${user.getName()}"/>'s Profile</b>
+                                <b><c:out value="${user.name}"/>'s Profile</b>
                                 <br>
                             </h1>
                             <center>
@@ -128,33 +128,15 @@
                             <div id="file-error"></div>
 
                         </div>
+
                         <div>
-                            <h3>Username: ${user.getUsername()}</h3>
-                            <h3>Student Number: ${user.getStudentNumber()}</h3>
-                            <h3>Role: ${user.getRole()}</h3>
-                            <%--Info to display if role is MEMBER --%>
-                            <c:if test="${user.getRole() eq 'MEMBER'}">
-                                <h3>Campus: ${user.getPreferredCampus()}</h3>
-                                <h3>Training:</h3>
-                                <c:choose>
-                                    <c:when test="${empty user.getTraining()}">
-                                        Currently not trained for any task
-                                    </c:when>
-                                    <c:otherwise>
-                                        <dl>
-                                            <c:set var="totalHours" value="${0}" />
-                                            <c:forEach var="training" items="${user.getTraining()}"
-                                                       varStatus="status">
-                                                <dt>${training.getTask()}:</dt>
-                                                <dd>${training.getHours()} hours</dd>
-                                                <c:set var="totalHours" value="${totalHours + training.getHours()}" />
-                                            </c:forEach>
-                                            <dt>Total Hours:</dt>
-                                            <dd>${totalHours} hours</dd>
-                                        </dl>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
+                            <h3>Username: ${user.username}</h3>
+                            <h3>Student Number: ${user.studentNumber}</h3>
+                            <h3>Role: ${user.role}</h3>
+                            <h3>Email: ${user.email}</h3>
+                            <h3>Phone Number: ${user.phoneNumber}</h3>
+                            <h3>Alternate Phone Number:</h3>
+                            <h3>Qualifications:</h3>
                         </div>
                     </div>
                 </center>

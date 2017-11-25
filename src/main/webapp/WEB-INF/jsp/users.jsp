@@ -392,6 +392,12 @@
                 var tab = $(this).parent().attr("data-tab");
                 $('.tab-content').hide();
                 $('#' + tab).fadeIn();
+
+                if ('${loggedInUser}' === tab) {
+                    $('#removeButton').hide();
+                } else {
+                    $('#removeButton').show();
+                }
             });
         });
     });

@@ -110,12 +110,12 @@
                             </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
-                            <div class="panel-heading" id = "announceFilter">Filter</div>
+                            <div class="panel-heading" id = "announceFilter">Campus Filter</div>
                             <div class="panel-body" id = campusLead>
                                 <div class="col-sm-12 row">
                                     <div class="radio">
                                         <label>
-                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL
                                         </label>
                                         <br>
                                         <label>
@@ -157,32 +157,32 @@
                 <hr><br>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="190px" width="200px">
-                        <h3><b>Cidric Butac</b></h3>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="140px" width="140px">
+                        <h4><b>Cidric Butac</b></h4>
                         <h4>Supervisor</h4>
                         <p>sfucsp@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="190px" width="200px">
-                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Miriam Sise Odaa</b></h4>
                         <h4>Burnaby Team Lead</h4>
                         <p>ssepbur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="190px" width="200px">
-                        <h3><b>Kitty Lo</b></h3>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Kitty Lo</b></h4>
                         <h4>Surrey Team Lead</h4>
                         <p>ssepsur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="190px" width="200px">
-                        <h3><b>Satpal Samra</b></h3>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Satpal Samra</b></h4>
                         <h4>Vancouver Team Lead</h4>
                         <p>ssepvan@sfu.ca</p>
                     </center>

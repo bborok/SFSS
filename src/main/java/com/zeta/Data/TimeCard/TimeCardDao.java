@@ -57,19 +57,14 @@ public class TimeCardDao implements TimeCardData {
     }
 
     // Returns true if user-shift combo record exists
+    @Override
     public boolean timeCardRecordExist(TimeCard timeCard) {
         try {
             Integer result = jdbcTemplate.queryForObject(
                     "select exists(select ID from UserTask where User = ? and Shift = ?)",
                     new Object[]{timeCard.getUsername(), timeCard.getShiftId()}, Integer.class);
 
-            if (result == 0) {
-                // If doesn't exist
-                return false;
-            } else {
-                // If does exist
-                return true;
-            }
+            return result != 0;
 
         } catch (Exception e) {
             return false;
@@ -88,7 +83,7 @@ public class TimeCardDao implements TimeCardData {
             updateShift.setString(1, timeCard.getCampus().toString());
             updateShift.setString(2, timeCard.getLocation());
             updateShift.setString(3, timeCard.getNotes());
-            updateShift.setBoolean(4, timeCard.isTimeCardSubmitted());
+            updateShift.setBoolean(4, timeCard.getIsTimeCardSubmitted());
             updateShift.setString(5, timeCard.getUsername());
             updateShift.setLong(6, timeCard.getShiftId());
 

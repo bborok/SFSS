@@ -91,6 +91,7 @@
         },
         </c:forEach>
     }
+
 </script>
 
 <div id="wrapper" class="toggled">
@@ -262,6 +263,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-sm-12 row">
+                    <div class="radio" id="filter">
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="NAME" id="filter_name">NAME
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="NAME" id="filter_stu">STU#
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="BURNABY" id="filter_burnaby" checked>BURNABY
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="SURREY" id="filter_surrey" checked>SURREY
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="VANCOUVER" id="filter_vancouver" checked>VANCOUVER
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -288,6 +309,26 @@
         element.style.color = 'orange';
     };
 
+    function sortByName(a, b) {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+        } else if(a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    function sortByStu(a, b) {
+        if (a.studentNumber.toLowerCase() > b.studentNumber.toLowerCase()) {
+            return 1;
+        } else if(a.studentNumber.toLowerCase() < b.studentNumber.toLowerCase()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
     $(function () {
         $("table td").click(function (event) {
             event.preventDefault();
@@ -296,6 +337,51 @@
             var tab = $(this).parent().attr("data-tab");
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
+        });
+
+        $("#filter input").click(function () {
+           var checked_name = $("#filter_name").is(":checked");
+           var checked_stu = $("#filter_stu").is(":checked");
+           var checked_burnaby = $("#filter_burnaby").is(":checked");
+           var checked_surrey = $("#filter_surrey").is(":checked");
+           var checked_vancouver = $("#filter_vancouver").is(":checked");
+           var filter_array = [];
+           for(var name in users) {
+               if(users[name].preferredCampus.toLowerCase() == "burnaby" && checked_burnaby) {
+                   filter_array.push(users[name]);
+               }
+               if(users[name].preferredCampus.toLowerCase() == "surrey" && checked_surrey) {
+                   filter_array.push(users[name]);
+               }
+               if(users[name].preferredCampus.toLowerCase() == "vancouver" && checked_vancouver) {
+                   filter_array.push(users[name]);
+               }
+           }
+           if (checked_name) {
+               filter_array.sort(sortByName);
+           } else if (checked_stu){
+               filter_array.sort(sortByStu);
+           }
+           var htmlAdd = "";
+           for(var index in filter_array) {
+               htmlAdd += "<tr onclick=\"switchColors(this)\" data-tab=\"" + filter_array[index].username + "\">"
+                   + "<td class=\"col-sm-6 col-xs-6\">" + filter_array[index].name + "</td>"
+                   + "<td class=\"col-sm-6\">" + filter_array[index].studentNumber + "</td>"
+                   + "</tr>";
+           }
+           $("table tbody").empty();
+           $("table tbody").append(htmlAdd);
+           //clean event
+            $("table td").unbind();
+            //rebind event
+            $("table td").click(function (event) {
+                event.preventDefault();
+                $('table td').removeClass('current');
+                $(this).addClass("current");
+                var tab = $(this).parent().attr("data-tab");
+                $('.tab-content').hide();
+                $('#' + tab).fadeIn();
+            });
         });
     });
 

@@ -83,7 +83,6 @@ function initCalendar() {
 
         //Selecting a scheduled event
         eventClick: function (event) {
-            console.log(event);
             //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
             $('#modalTitle').html(event.title);
             $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
@@ -97,22 +96,32 @@ function initCalendar() {
             $('#modalTraining').html(event.requiredTraining);
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
             $('#availabilitySelect').val(event.confirmationStatus);
+            $('#modalAvailability').text(_.replace(event.confirmationStatus,'_',' '));
 
             $('#fullCalModal').modal();
 
             $('#btnDelete').off().on('click', function (e) {
                 e.preventDefault();
-                //AJAX DELETE REQUEST
-                // console.log('Deleting shift ' + event.id);
                 deleteShift(event);
                 $('#fullCalModal').modal('hide');
             });
 
             $("#btnConfirmAvailability").off().on('click', function () {
-                console.log("Updating availability.");
                 updateShiftConfirmation(event.id, $("#availabilitySelect").val());
                 $('#fullCalModal').modal('hide');
             });
+
+            var eventStart = moment(event.start).format(dateFormat);
+            var currentDate = moment().format(dateFormat);
+
+            //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
+            if (moment(eventStart).isAfter(currentDate)){
+                $("#availabilitySelect").show();
+                $("#modalAvailability").hide();
+            } else {
+                $("#availabilitySelect").hide();
+                $("#modalAvailability").show();
+            }
         },
 
         navLinks: true, // can click day/week names to navigate views
@@ -216,7 +225,6 @@ function doSubmit() {
 
 //Sends a requests via AJAX to save a shift
 var saveShift = function (shift) {
-    // console.log(shift);
     var url = api + '/shift/save';
     $.ajax({
         headers: {
@@ -255,7 +263,6 @@ var deleteShift = function (event) {
 };
 
 function updateShiftConfirmation(shiftId, status) {
-    console.log("Updating " + shiftId + "with status of: " + status);
     var payload = {
         shift_id: shiftId,
         confirmation_status: status

@@ -20,10 +20,11 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
     <script src='resources/js/notify.js'></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
 
@@ -59,16 +60,15 @@
 
         <%--Fetch the currently logged in user from session--%>
         var loggedInUser = {
-            username: "test",
-            name: "testname",
-            email: "test@gmail.com",
-            phoneNumber: "6044564561",
-            preferredCampus: "BURNABY",
-            studentNumber: "2565891",
-            role: "ADMIN",
-            callSign: "LCK56"
+            username: "${user.username}",
+            name: "${user.name}",
+            email: "${user.email}",
+            phoneNumber: "${user.phoneNumber}",
+            preferredCampus: "${user.preferredCampus.toString()}",
+            studentNumber: "${user.studentNumber}",
+            role: "${user.role.toString()}",
+            callSign: "${user.callSign}"
         };
-        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -312,6 +312,7 @@ cancel button functionalities
                                     <option value="CONFIRMED">Confirmed</option>
                                     <option value="DECLINED">Declined</option>
                                 </select>
+                                <span id="modalAvailability"></span>
 
                                 <hr>
 

@@ -2,6 +2,7 @@ package com.zeta.Controllers;
 
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.User;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 
 @RestController
@@ -88,8 +86,15 @@ public class UserController {
     }
 
     @RequestMapping("/image/{username}")
-    public byte[] getProfileImage(@PathVariable("username") String username) throws IOException {
+    public byte[] getProfileImage(@PathVariable("username") String username, HttpServletRequest request) throws IOException {
         File image = new File(PROFILE_DIR.getAbsolutePath() + File.separator + username + ".png");
+
+        if (!image.exists()) {
+            String defaultPic = "/resources/img/etc/annonymous.jpg";
+            InputStream inputStream = request.getServletContext().getResourceAsStream(defaultPic);
+            return IOUtils.toByteArray(inputStream);
+        }
+
         return Files.readAllBytes(image.toPath());
     }
 

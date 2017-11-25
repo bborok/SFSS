@@ -59,9 +59,11 @@
         $sbJQ.each(links, function(key, value) {
             if (value.href === document.URL) {
                 $sbJQ(this).parent().addClass('active');
+                if ($sbJQ(this).parent().hasClass('stats')) {
+                    $('#stats').addClass('active');
+                }
             }
         })
     });
 </script>
 <script src="resources/js/sidebar_menu.js"></script>
-

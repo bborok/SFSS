@@ -91,10 +91,7 @@
                                 <div class="col-md-4">
                                     <label><form:radiobutton path="campus" name="campus" id="surrey" value="SURREY"/> Surrey </label>
                                 </div>
-                                <div class="col-md-6 ">
-                                    <label > Date : </label>
-                                    <form:input path="date" class="form-control" type="date" id="date" value="" required="required" />
-                                </div>
+
                                 <div class="col-md-6" style="margin-bottom: 1em;">
                                     <label > Location : </label>
                                     <form:input path="location" class="form-control" type="input" id="location" value="" required="required" />
@@ -111,54 +108,109 @@
                                                         <th>#</th>
                                                         <th>Total</th>
                                                     </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Smoking Prevention</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="SPTotal" type="input" class="form-control" id="SPTotal" value="0" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Theft Prevention</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="TPTotal" type="input" class="form-control" id="TPTotal" value="0"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Public Contact</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="0" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Safe Walks</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="SWTotal" type="input" class="form-control" id="SWTotal" value="0"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Hazards/Service Request</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="HSRTotal" type="input" class="form-control" id="HSRTotal" value="0"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="padding-top: 1.5%;">Assist Security</td>
-                                                        <td>
-                                                            <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                            <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </td>
-                                                        <td><form:input path="ASTotal" type="input" class="form-control" id="ASTotal" value="0"/></td>
-                                                    </tr>
+                                                <c:choose>
+                                                    <c:when test="${newCard}">
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Smoking Prevention</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="SPTotal" type="input" class="form-control" id="SPTotal" value="0" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Theft Prevention</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="TPTotal" type="input" class="form-control" id="TPTotal" value="0"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Public Contact</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="0" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Safe Walks</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="SWTotal" type="input" class="form-control" id="SWTotal" value="0"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Hazards/Service Request</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="HSRTotal" type="input" class="form-control" id="HSRTotal" value="0"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Assist Security</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="ASTotal" type="input" class="form-control" id="ASTotal" value="0"/></td>
+                                                        </tr>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Smoking Prevention</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="SPTotal" type="input" class="form-control" id="SPTotal" value="${timeCard.tasks[4].count}" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Theft Prevention</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="TPTotal" type="input" class="form-control" id="TPTotal" value="${timeCard.tasks[5].count}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Public Contact</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="PCTotal" type="input" class="form-control" id="PCTotal" value="${timeCard.tasks[2].count}" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Safe Walks</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="SWTotal" type="input" class="form-control" id="SWTotal" value="${timeCard.tasks[3].count}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Hazards/Service Request</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="HSRTotal" type="input" class="form-control" id="HSRTotal" value="${timeCard.tasks[1].count}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-top: 1.5%;">Assist Security</td>
+                                                            <td>
+                                                                <button type="button" name='increaseTotal' class="btn" style="background-color: blue;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                                <button type="button" name='decreaseTotal' class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </td>
+                                                            <td><form:input path="ASTotal" type="input" class="form-control" id="ASTotal" value="${timeCard.tasks[0].count}"/></td>
+                                                        </tr>
+                                                    </c:otherwise>
+                                                </c:choose>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -172,8 +224,15 @@
                                 </div>
 
                                 <div class="pull-right">
-                                    <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>
-                                    <form:button type="submit" name="submit"  class="btn btn-success" style="margin-top:1em;margin-right:1em;">Submit Time Card</form:button>
+                                    <c:choose>
+                                        <c:when test="${editCard}">
+                                            <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Edit Time Card</form:button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>
+                                            <form:button type="submit" name="submit"  class="btn btn-success" style="margin-top:1em;margin-right:1em;">Submit Time Card</form:button>
+                                        </c:otherwise>
+                                    </c:choose>
 
                                 </div>
 

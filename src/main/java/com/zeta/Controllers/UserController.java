@@ -1,22 +1,26 @@
 package com.zeta.Controllers;
 
-import com.zeta.Data.User.UserDao;
 import com.zeta.Data.User.UserData;
-import com.zeta.Models.Campus;
-import com.zeta.Models.Role;
-import com.zeta.Models.Training;
 import com.zeta.Models.User;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.nio.file.Files;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     private UserData userData;
+    private final String ROOT_PATH = System.getProperty("catalina.home");
+    private final String IMAGE_PATH = ROOT_PATH + File.separator + "images" + File.separator + "profiles";
+    private final File PROFILE_DIR = new File(IMAGE_PATH);
 
     @Autowired
     public UserController(UserData userData) {
@@ -25,54 +29,90 @@ public class UserController {
 
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
-    @GetMapping("/add")
-    public String addUserToDatabase(
-            @RequestParam("username") String username,
-            @RequestParam("studentNumber") long studentNumber,
-            @RequestParam("name") String name,
-            @RequestParam("email") String email ,
-            @RequestParam("phoneNumber") long phoneNumber,
-            @RequestParam("role") String role,
-            @RequestParam("campus") String campus,
-            @RequestParam("callSign") String callSign,
-            @RequestParam("training") List<Training> training,
-            @RequestParam("isDeactivated") Boolean isDeactivated){
-
-        User u = new User(
-                username,
-                studentNumber,
-                name,
-                email,
-                phoneNumber,
-                Role.valueOf(role.toUpperCase()),
-                Campus.valueOf(campus.toUpperCase()),
-                callSign,
-                training,
-                isDeactivated);
-
-        if (!userData.addUser(u))
-        {
-            // TODO: Error handle this
+    @PostMapping("/add")
+    public ResponseEntity addUserToDatabase(@RequestBody User user) {
+        if (userData.getUser(user.getUsername()) == null) {
+            if (userData.addUser(user)) {
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            if (userData.updateUser(user)) {
+                return new ResponseEntity(HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
         }
-        return "redirect:" + "/user/" + u.getUsername().trim();
     }
 
-    @GetMapping("/{username}")
-    public String showUser(@PathVariable("username") String username, Model model){
-        User user = userData.getUser(username);
-        model.addAttribute("user", user);
-        return "/user/show";
+    @PostMapping("/remove")
+    public ResponseEntity removeUserFromDatabase(@RequestBody String username) {
+        if (userData.removeUser(username)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @GetMapping("/showAll")
-    public String allUsers(Model model){
-        List<User> userList = userData.getAllUsers();
-        model.addAttribute(userList);
-        return "/user/showAll";
+    @PostMapping("/addImage")
+    public ResponseEntity uploadImageForUser(@RequestParam("userImage") MultipartFile file, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        uploadImage(file, user.getUsername());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public String testPage(){
-        return "/user/testPage";
+    private void uploadImage(MultipartFile file, String username) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+
+                // Creating the directory to store file
+                if (!PROFILE_DIR.exists()) {
+                    PROFILE_DIR.mkdirs();
+                }
+
+                // Create the file on server
+                File serverFile = new File(PROFILE_DIR.getAbsolutePath() + File.separator + username + ".png");
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
+
+    @RequestMapping("/image/{username}")
+    public byte[] getProfileImage(@PathVariable("username") String username, HttpServletRequest request) throws IOException {
+        File image = new File(PROFILE_DIR.getAbsolutePath() + File.separator + username + ".png");
+
+        if (!image.exists()) {
+            String defaultPic = "/resources/img/etc/annonymous.jpg";
+            InputStream inputStream = request.getServletContext().getResourceAsStream(defaultPic);
+            return IOUtils.toByteArray(inputStream);
+        }
+
+        return Files.readAllBytes(image.toPath());
+    }
+
+//    @GetMapping("/{username}")
+//    public String showUser(@PathVariable("username") String username, Model model){
+//        User user = userData.getUser(username);
+//        model.addAttribute("user", user);
+//        return "/user/show";
+//    }
+//
+//    @GetMapping("/showAll")
+//    public String allUsers(Model model){
+//        List<User> userList = userData.getAllUsers();
+//        model.addAttribute(userList);
+//        return "/user/showAll";
+//    }
+//
+//    @GetMapping("/test")
+//    public String testPage(){
+//        return "/user/testPage";
+//    }
 }

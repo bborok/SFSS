@@ -15,6 +15,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+
     <title>SFU</title>
 
     <!-- Custom styles for this template -->
@@ -25,7 +29,7 @@
     <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/css/form-elements.css">
     <link rel="stylesheet" href="/resources/css/style.css">
-	<link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
+    <link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
 <body>
@@ -91,9 +95,7 @@
             </ul>
         </div><!-- /#sidebar-wrapper -->
 
-
     <!-- Page Content -->
-
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="col-sm-12 text">
@@ -107,14 +109,14 @@
                                     <a href="#">Lost & Found</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
+                                    <a href="${pageContext.request.contextPath}/statistics/public_contact">Public Contact</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-4" style="padding-top: 15px">
-                            <button type="button" class="btn"><i class="fa fa-file-excel-o"></i></button>
-                            <button type="button" class="btn" id="button_save"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="btn" id="button_edit"><i class="fa fa-pencil-square-o"></i></button>
+                        <div class="col-md-4" style="padding-top: 15px;padding-left: 50px">
+                            <%--<button type="button" class="btn" id="button_export"><i class="fa fa-file-excel-o"></i></button>--%>
+                            <button type="button" class="btn-primary" id="button_save" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="btn-primary" id="button_edit" style="height: 40px;width: 40px; border-color: white; border-width: 5px"><i class="fa fa-pencil-square-o"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -124,27 +126,30 @@
             <center>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                        <input type="radio" name="options" id="option2" autocomplete="off" value="Surrey"> Surrey
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                        <input type="radio" name="options" id="option3" autocomplete="off" value="Vancouver"> Vancouver
                     </label>
                 </div>
             </center>
-            <br>
-
             <br><br>
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
+                <center><a title="Export" href="#" id="export">Export Table to CSV</a></center>
+
                 <table id="table1" class="display" width="100%"></table>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="border-width: 1px;border-color: #0c0c0c; border-style:solid;height: 443px">
+                <center><a title="Export" href="#" id="export2">Export Table to CSV</a></center>
+
                 <table id="table2" class="display" width="100%"></table>
             </div>
 
-            <div class="col-sm-12">
+
+            <div class="col-sm-12" style="border-width: 1px;border-color: #0c0c0c; border-style:solid">
                 <div id="chart1" style="width:100%;height:400px;"></div>
             </div>
         </div>
@@ -163,21 +168,21 @@
 
 
 <script type="text/javascript">
-
+    var CAMPUS = "Burnaby";
 	//get chart element
     var myChart = echarts.init(document.getElementById('chart1'));
 
 	var table_title = [
-		"2017", "DEC16", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" 
+		"2017", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 	];
 	
 	var table1_data =  [
-		["Directions", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Lost&Found", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Payments", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["PhoneService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["KeyService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Others", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		["Directions", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Lost&Found", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Payments", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["PhoneService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["KeyService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Others", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
 	];
 	
 	var table2_data = [
@@ -211,7 +216,6 @@
 				{title: table_title[10], width: "20px"},
 				{title: table_title[11], width: "20px"},
 				{title: table_title[12], width: "20px"},
-				{title: table_title[13], width: "20px"},
 				{defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
 			],
 			autoWidth: false,
@@ -271,12 +275,97 @@
 			$(".save-btn").click();
 			setTimeout(300);
 			tmp_data = table1.rows().data();
+            var post_data = "[";
+            for (var i = 0; i < 6; i++) {
+                for (var j = 0; j < 12; j++) {
+                    post_data += tmp_data[i][j+1];
+                    if (i != 5 || j != 11) {
+                        post_data += ",";
+                    }
+                }
+            }
+            post_data += "]";
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                }
+            });
+            $.post("/statistics/info_lf/data/post",
+                {
+                    campus: CAMPUS,
+                    data: post_data
+                },
+                function(data,status){
+                    if (data.result == "success") {
+                        alert("update success");
+                    } else {
+                        alert("update failed");
+                    }
+                }
+            );
 			showChart(tmp_data);
 		});
-		
+
+        $("input:radio").change(function(){
+            $(".save-btn").click();
+            if ($(this).is(":checked")) {
+                CAMPUS = $(this).val();
+                getData();
+            }
+        });
+
 		showChart(table1_data);
+        getData();
+        $("#option1").click();
 	});
-	
+
+    function getData() {
+        $.get("/statistics/info_lf/data/get?campus=" + CAMPUS,
+            function(data,status){
+                table_title = data.title;
+                strs = ["directions", "lost & found", "payments", "phone services", "key services", "other inquiries"];
+                for(var i = 0; i < 12; i++) {
+                    table1_data[0][i+1] = "" + data[strs[0]][i];
+                    table1_data[1][i+1] = "" + data[strs[1]][i];
+                    table1_data[2][i+1] = "" + data[strs[2]][i];
+                    table1_data[3][i+1] = "" + data[strs[3]][i];
+                    table1_data[4][i+1] = "" + data[strs[4]][i];
+                    table1_data[5][i+1] = "" + data[strs[5]][i];
+                }
+                table1.destroy();
+                table1 = $('#table1').DataTable({
+                    data: table1_data,
+                    columns: [
+                        {title: table_title[0], width: "20px"},
+                        {title: table_title[1], width: "20px"},
+                        {title: table_title[2], width: "20px"},
+                        {title: table_title[3], width: "20px"},
+                        {title: table_title[4], width: "20px"},
+                        {title: table_title[5], width: "20px"},
+                        {title: table_title[6], width: "20px"},
+                        {title: table_title[7], width: "20px"},
+                        {title: table_title[8], width: "20px"},
+                        {title: table_title[9], width: "20px"},
+                        {title: table_title[10], width: "20px"},
+                        {title: table_title[11], width: "20px"},
+                        {title: table_title[12], width: "20px"},
+                        {defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
+                    ],
+                    autoWidth: false,
+                    ordering: false,
+                    bPaginate: false,
+                    bFilter: false,
+                    scrollX: true
+                });
+                showChart(table1_data);
+            }
+        );
+    }
+
 	function showChart(tmp_data){
 		data_to_show = [];
 		total_sum = 0;
@@ -429,5 +518,102 @@
 
 <!-- Menu Toggle Script -->
 
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    $(document).ready(function () {
+        function exportTableToCSV($table1, filename) {
+            var $headers = $table1.find('tr:has(th)')
+                ,$rows = $table1.find('tr:has(td)')
+
+                // Temporary delimiter characters unlikely to be typed by keyboard
+                // This is to avoid accidentally splitting the actual contents
+                ,tmpColDelim = String.fromCharCode(11) // vertical tab character
+                ,tmpRowDelim = String.fromCharCode(0) // null character
+
+                // actual delimiter characters for CSV format
+                ,colDelim = '","'
+                ,rowDelim = '"\r\n"';
+
+            // Grab text from table into CSV formatted string
+            var csv = '"';
+            csv += formatRows($headers.map(grabRow));
+            csv += rowDelim;
+            csv += formatRows($rows.map(grabRow)) + '"';
+
+            // Data URI
+            var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+            // For IE (tested 10+)
+            if (window.navigator.msSaveOrOpenBlob) {
+                var blob = new Blob([decodeURIComponent(encodeURI(csv))], {
+                    type: "text/csv;charset=utf-8;"
+                });
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                $(this)
+                    .attr({
+                        'download': filename
+                        ,'href': csvData
+                        //,'target' : '_blank' //if you want it to open in a new window
+                    });
+            }
+
+            //------------------------------------------------------------
+            // Helper Functions
+            //------------------------------------------------------------
+            // Format the output so it has the appropriate delimiters
+            function formatRows(rows){
+                return rows.get().join(tmpRowDelim)
+                    .split(tmpRowDelim).join(rowDelim)
+                    .split(tmpColDelim).join(colDelim);
+            }
+            // Grab and format a row from the table
+            function grabRow(i,row){
+
+                var $row = $(row);
+                //for some reason $cols = $row.find('td') || $row.find('th') won't work...
+                var $cols = $row.find('td');
+                if(!$cols.length) $cols = $row.find('th');
+
+                return $cols.map(grabCol)
+                    .get().join(tmpColDelim);
+            }
+            // Grab and format a column from the table
+            function grabCol(j,col){
+                var $col = $(col),
+                    $text = $col.text();
+
+                return $text.replace('"', '""'); // escape double quotes
+
+            }
+        }
+
+
+        // This must be a hyperlink
+        $("#export").click(function (event) {
+            var outputFile = 'TableA'
+            outputFile = outputFile.replace('.csv','') + '.csv'
+
+            // CSV
+            exportTableToCSV.apply(this, [$('#table1'), outputFile]);
+
+            // IF CSV, don't do event.preventDefault() or return false
+            // We actually need this to be a typical hyperlink
+        });
+
+        $("#export2").click(function (event) {
+            var outputFile = 'TableB'
+            outputFile = outputFile.replace('.csv','') + '.csv'
+
+            // CSV
+            exportTableToCSV.apply(this, [$('#table2'), outputFile]);
+
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%--
   Page that displays the currently logged in users information.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,13 +13,30 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     <title>SFU</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- Custom styles for this template -->
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <script>
+        var api = '${pageContext.request.contextPath}/user';
+    </script>
 
 </head>
 
@@ -71,6 +89,19 @@
         pageContext.setAttribute("user", user);
     %>
 
+    <script>
+        var loggedInUser = {
+            username : "${user.username}",
+            name : "${user.name}",
+            email : "${user.email}",
+            phoneNumber : "${user.phoneNumber}",
+            preferredCampus : "${user.preferredCampus.toString()}",
+            studentNumber : "${user.studentNumber}",
+            role : "${user.role.toString()}",
+            callSign : "${user.callSign}"
+        };
+    </script>
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
@@ -84,17 +115,26 @@
                         <hr>
                     </div>
                 </center>
+
                 <br><br>
                 <center>
                     <div>
                         <div>
-                            <h1>
+                            <h1 class="row" style="padding-left: 20px">
                                 <b><c:out value="${user.getName()}"/>'s Profile</b>
+                                <button type="button" id="editButton" class="btn"><i class="fa fa-edit"></i></button>
+
+                                <br>
                             </h1>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
+                                <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
                                      width="300">
                             </center>
+                            <label class="control-label"><u>Upload Profile Picture:</u></label>
+                            <div class="file-loading">
+                                <input id="userImage" name="userImage" type="file" accept="image/*">
+                            </div>
+                            <div id="file-error"></div>
 
                         </div>
                         <div>
@@ -138,26 +178,42 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/sidebar_menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
+    $(document).ready(function() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 
-    function switchColors(element) {
-        links = document.getElementsByTagName("tr");
-        for (var i = 0; i < links.length; i++)
-            links.item(i).style.color = 'black';
-        element.style.color = 'orange';
-    };
-
-    $(function () {
-        $("table td").click(function () {
-            event.preventDefault();
-            $('table td').removeClass('current');
-            $(this).addClass("current");
-            var tab = $(this).parent().attr("data-tab");
-            $('.tab-content').hide();
-            $('#' + tab).fadeIn();
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            jqXHR.setRequestHeader(header, token);
         });
+
+        $('#userImage').fileinput({
+            maxFileSize: 1500,
+            browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+            showUpload: false,
+            showPreview: false,
+            showCancel: false,
+            showRemove: false,
+            showCaption: false,
+            allowedFileTypes: ["image"],
+            maxImageWidth: 300,
+            maxImageHeight: 300,
+            resizeImage: true,
+            uploadAsync: true,
+            uploadUrl: "/user/addImage",
+            minFileCount: 1,
+            maxFileCount: 1
+        }).on('filebatchselected', function () {
+            $('#userImage').fileinput('upload');
+        });
+    });
+
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
     });
 </script>
 

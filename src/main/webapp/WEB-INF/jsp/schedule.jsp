@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PrivateAcc
-  Date: 2017-09-29
-  Time: 5:03 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.zeta.Models.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -25,9 +19,11 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+    <script src='resources/js/notify.js'></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
 
@@ -37,6 +33,10 @@
     <%--<script src='resources/lib/moment.min.js'></script>--%>
     <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
 
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("user", user);
+    %>
     <script>
         var api = '${pageContext.request.contextPath}/api';
         var iBURNABY = [];
@@ -45,18 +45,29 @@
         var iALLCAMPUSES = [];
         var iNOCAMPUSES = [];
         <c:forEach items="${BURNABYTASKS}" var="task">
-            iBURNABY.push("${task.taskName}");
+        iBURNABY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${SURREYTASKS}" var="task">
-            iSURREY.push("${task.taskName}");
+        iSURREY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${VANCOUVERTASKS}" var="task">
-            iVANCOUVER.push("${task.taskName}");
+        iVANCOUVER.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${ALLTASKS}" var="task">
-            iALLCAMPUSES.push("${task.taskName}");
+        iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
-        console.log(iBURNABY);
+
+        <%--Fetch the currently logged in user from session--%>
+        var loggedInUser = {
+            username: "${user.username}",
+            name: "${user.name}",
+            email: "${user.email}",
+            phoneNumber: "${user.phoneNumber}",
+            preferredCampus: "${user.preferredCampus.toString()}",
+            studentNumber: "${user.studentNumber}",
+            role: "${user.role.toString()}",
+            callSign: "${user.callSign}"
+        };
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -76,7 +87,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
 
@@ -112,32 +124,32 @@
                     <hr>
                 </div>
 
-                <%--Used for displaying alerts--%>
-                <div id="alertsDiv"></div>
 
-                        <div class="col-sm-12 row">
-                            <div class="radio">
-                                <label>
-                                    <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
-                                </label>
-                                <br>
-                                </div>
-                            <select class="form-control" id="shiftSelect"></select>
-                            <br>
-                        </div>
-                        <hr><br>
+                <div class="col-sm-12 row">
+                    <div class="radio">
+                        <label>
+                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL
+                            CAMPUSES
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">BURNABY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">SURREY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
+                        </label>
+                        <br>
+                    </div>
+                    <select class="form-control" id="shiftSelect"></select>
+                    <br>
+                </div>
+                <hr>
+                <br>
 
                 <%--Calendar--%>
                 <div id='calendar'></div>
@@ -161,17 +173,15 @@
                                         <label class="control-label"><u>Shift:</u> </label>
                                         <div class="controls">
                                             <select class="form-control" name="eventCampus" id="eventCampus">
-                                                <option value='all' id='allCampuses' disabled="true" selected>Select
-                                                    Campus
-                                                </option>
-                                                <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                                <option value="SURREY" class="SURREY">SURREY</option>
-                                                <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                <option value="" disabled selected>Select Campus</option>
+                                                <option value="BURNABY" class="BURNABY">Burnaby</option>
+                                                <option value="SURREY" class="SURREY">Surrey</option>
+                                                <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
                                             </select>
 
                                             <select class="form-control" name="eventTitle" id="eventTitle">
 
-                                                <option value="SURREY" disabled="true" selected="selected">Select Surrey
+                                                <option value="SURREY" disabled selected="selected">Select Surrey
                                                     Shift
                                                 </option>
 
@@ -181,7 +191,7 @@
                                                     </option>
                                                 </c:forEach>
 
-                                                <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                <option value="VANCOUVER" disabled selected="selected">Select
                                                     Vancouver Shift
                                                 </option>
 
@@ -220,6 +230,7 @@
                                             <div class="controls">
                                                 <select class="form-control" name="eventMember" id="eventMember"
                                                         data-tab="${user.getUsername()}">
+                                                    <option value="" disabled selected>Select User</option>
                                                     <c:forEach items="${users}" var="user">
                                                         <option value="${user.getUsername()}">
                                                                 ${user.getUsername()}
@@ -236,9 +247,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Required Training:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1"
-                                                   class="form-control" name="eventMember" id="eventRequiredTraining"
-                                                   placeholder="Enter the Requirements">
+                                            <div class="controls">
+                                                <select class="form-control" id="eventRequiredTraining">
+                                                    <option value="" selected>None</option>
+                                                    <c:forEach items="${TRAININGTYPES}" var="training">
+                                                        <option value="${training}">${training}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -251,15 +267,22 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                <%--AJAX Request to POST to ShiftController--%>
-                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+
+                                <c:choose>
+                                    <c:when test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal -->
+                <!-- Select Event Modal -->
                 <div id="fullCalModal" class="modal fade">
                     <div class="modal-dialog">
 
@@ -278,6 +301,16 @@
                                 <b><u>End:</u> </b><span id="modalEnd"></span><br>
                                 <hr>
 
+                                <b><u>Availability: </u></b>
+                                <select id="availabilitySelect" class="form-control">
+                                    <option value="NO_RESPONSE">No Response</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DECLINED">Declined</option>
+                                </select>
+                                <span id="modalAvailability"></span>
+
+                                <hr>
+
                                 <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
                                 <b><u>Location:</u> </b><span id="modalLocation"></span><br>
                                 <b><u>ID:</u> </b><span id="modalID"></span><br>
@@ -291,7 +324,17 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                    Availability
+                                </button>
+                                <c:choose>
+                                    <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>

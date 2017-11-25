@@ -246,7 +246,7 @@
                                     <b>Profile</b>
                                 </p>
                                 <center>
-                                    <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300"
+                                    <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
                                          width="300">
                                 </center>
                                 <h3><c:out value="${user.name}"/></h3>

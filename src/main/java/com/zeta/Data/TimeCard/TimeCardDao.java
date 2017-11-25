@@ -56,15 +56,18 @@ public class TimeCardDao implements TimeCardData {
 
     // Returns true if user-shift combo record exists
     private boolean timeCardRecordExist(TimeCard timeCard) {
-        String result;
         try {
-            result = jdbcTemplate.queryForObject(
-                    "select Campus from Shift where User = ? and ID = ?",
-                    new Object[]{timeCard.getUsername(), timeCard.getShiftId()},
-                    (resultSet, i) -> resultSet.getString("Campus"));
+            Integer result = jdbcTemplate.queryForObject(
+                    "select exists(select ID from UserTask where User = ? and Shift = ?)",
+                    new Object[]{timeCard.getUsername(), timeCard.getShiftId()}, Integer.class);
 
-            // if record is found then string is obtained, otherwise null
-            return result == null;
+            if (result == 0) {
+                // If doesn't exist
+                return false;
+            } else {
+                // If does exist
+                return true;
+            }
 
         } catch (Exception e) {
             return false;

@@ -101,7 +101,7 @@ $(document).ready(function () {
             $('#fullCalModal').modal();
 
             $('#btnTimecard').off().on('click', function () {
-                $(location).attr('href', contextPath + '/timecard_edit?shift_id=' + event.id + '&username=' + event.username);
+                $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
             });
 
             $('#btnDelete').off().on('click', function (e) {

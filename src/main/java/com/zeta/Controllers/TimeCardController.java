@@ -38,12 +38,13 @@ public class TimeCardController {
 
 
     @RequestMapping(value = "/timecard", method = RequestMethod.GET)
-    public String getTimeCard(Model m, HttpServletRequest request) {
+    public String getTimeCard(Model m, HttpServletRequest request,@RequestParam("shift_id") long shift_id, @RequestParam("username") String username) {
         List<String> shiftId = new ArrayList<String>();
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
+        TimeCard timeCard = timeCardData.getTimeCard(username, shift_id);
+//        HttpSession session = request.getSession();
+//        User u = (User) session.getAttribute("user");
 
-        TimeCard timeCard = new TimeCard();
+
         boolean newCard = true;
         m.addAttribute("timeCard", timeCard);
         m.addAttribute("newCard", newCard);
@@ -66,7 +67,7 @@ public class TimeCardController {
 
 
     @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "save" })
-    public String saveTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
+    public String saveTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
         Task SPTotal = new Task("Smoke Prevention");
         SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
         timeCard.addToTasks(SPTotal);
@@ -93,17 +94,16 @@ public class TimeCardController {
 //        HttpSession session = request.getSession();
 //        User u = (User) session.getAttribute("user" );
 
-        timeCard.setUsername("user3");
-        timeCard.setShiftId(7);
 
 
-        if (!timeCardData.saveTimeCard(timeCard)) {
-            System.out.println("this is not working");
-        }
+
+//        if (!timeCardData.saveTimeCard(timeCard)) {
+//            System.out.println("this is not working");
+//        }
 
         m.addAttribute("timeCard", timeCard);
 
-        return "timecard";
+        return "timecard_list";
     }
 
 
@@ -139,13 +139,13 @@ public class TimeCardController {
         timeCard.setUsername("admin1");
         timeCard.setShiftId(96);
 
-        if (!timeCardData.submitTimeCard(timeCard)) {
-            System.out.println("this is not working");
-        }
+//        if (!timeCardData.submitTimeCard(timeCard)) {
+//            System.out.println("this is not working");
+//        }
 
         m.addAttribute("timeCard", timeCard);
 
-        return "timecard";
+        return "timecard_list";
     }
 
 

@@ -83,6 +83,8 @@
 
                         <form:form modelAttribute="timeCard" method="post">
                             <div class="row form-group">
+                                <%--<form:input path="username" type="hidden" id="username"   />--%>
+                                <form:input path="shiftId" type="hidden" id="shiftId" value="${timeCard.shiftId}"  />
                                 <div class="col-md-4">
                                     <label><form:radiobutton path="campus" name="campus" id="vancouver" value="VANCOUVER"/> Vancouver </label>
                                 </div>

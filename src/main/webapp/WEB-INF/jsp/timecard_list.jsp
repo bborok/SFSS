@@ -89,16 +89,16 @@
                             <c:forEach items="${shifts}" var="shift">
                                 <tr>
                                     <td >
-                                        <a href="${pageContext.request.contextPath}/timecard_edit?user_id=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
+                                        <a href="${pageContext.request.contextPath}/timecard?username=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
                                     <td >
                                             <c:out value="${shift.username}"/>
                                     <td >
                                             <c:out value="${shift.date}"/>
                                     <td >
-                                        <%--<c:choose>--%>
-                                            <%--<c:when test="${$shift.isTimeCardSubmitted == 1}"> Submitted </c:when>--%>
-                                            <%--<c:otherwise> Not Submitted</c:otherwise>--%>
-                                        <%--</c:choose>--%>
+                                        <c:choose>
+                                            <c:when test="${$shift.isTimeCardSubmitted() == true}"> Submitted </c:when>
+                                            <c:otherwise> Not Submitted</c:otherwise>
+                                        </c:choose>
                                     <td >
                                             <c:out value="${shift.start}"/>
                                     <td >

@@ -12,6 +12,7 @@ public interface TimeCardData {
     public boolean submitTimeCard(TimeCard timeCard);
 
     public boolean updateTimeCard(TimeCard timeCard);
+    public boolean timeCardRecordExist(TimeCard timeCard);
 
     public TimeCard getTimeCard(String username, long shiftId);
 }

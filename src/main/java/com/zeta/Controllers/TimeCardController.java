@@ -41,30 +41,19 @@ public class TimeCardController {
     public String getTimeCard(Model m, HttpServletRequest request,@RequestParam("shift_id") long shift_id, @RequestParam("username") String username) {
         List<String> shiftId = new ArrayList<String>();
         TimeCard timeCard = timeCardData.getTimeCard(username, shift_id);
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user");
 
 
         boolean newCard = true;
         m.addAttribute("timeCard", timeCard);
-        m.addAttribute("newCard", newCard);
-        return "timecard";
-    }
-
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.GET)
-    public String getEditTimeCard(Model m, HttpServletRequest request, @RequestParam("shift_id") long shift_id, @RequestParam("username") String username) {
-
-        TimeCard timeCard = timeCardData.getTimeCard(username, shift_id);
-        List<String> shiftId = new ArrayList<String>();
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-
-        boolean timecardSubmitted = timeCard.isTimeCardSubmitted();
-
-        boolean edit = true;
-        m.addAttribute("timeCard", timeCard);
-        m.addAttribute("editCard", edit);
+        if(timeCardData.timeCardRecordExist(timeCard)){
+            newCard = false;
+            m.addAttribute("newCard", newCard);
+        }else{
+            m.addAttribute("newCard", newCard);
+        }
+        boolean timecardSubmitted = timeCard.getIsTimeCardSubmitted();
         m.addAttribute("timecardSubmitted", timecardSubmitted);
+
         return "timecard";
     }
 
@@ -101,7 +90,7 @@ public class TimeCardController {
 
         m.addAttribute("timeCard", timeCard);
 
-        return "timecard_list";
+        return "redirect:/timecard_list";
     }
 
 
@@ -138,11 +127,11 @@ public class TimeCardController {
 
         m.addAttribute("timeCard", timeCard);
 
-        return "timecard_list";
+        return "redirect:/timecard_list";
     }
 
 
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "edit" })
+    @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "edit" })
     public String EditTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
 
         Task SPTotal = new Task("Smoke Prevention");
@@ -168,7 +157,7 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-
+        timeCard.setTimeCardSubmitted(true);
         if (!timeCardData.updateTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
@@ -178,60 +167,20 @@ public class TimeCardController {
         return "redirect:/timecard_list";
     }
 
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "submit" })
-    public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
-
-        Task SPTotal = new Task("Smoke Prevention");
-        SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
-        timeCard.addToTasks(SPTotal);
-        Task TPTotal = new Task("Theft Prevention");
-        TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
-        timeCard.addToTasks(TPTotal);
-
-        Task PCTotal = new Task("Public Contact");
-        PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
-        timeCard.addToTasks(PCTotal);
-
-        Task SWTotal = new Task("Safe Walk");
-        SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
-        timeCard.addToTasks(SWTotal);
-
-        Task HSRTotal = new Task("Hazard/Service Request");
-        HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
-        timeCard.addToTasks(HSRTotal);
-
-        Task ASTotal = new Task("Assist Security");
-        ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
-        timeCard.addToTasks(ASTotal);
-
-
-        if (!timeCardData.submitTimeCard(timeCard)) {
-            System.out.println("this is not working");
-        }
-
-        m.addAttribute("timeCard", timeCard);
-
-        return "timecard_list";
-    }
-
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)
     public String getTimeCardList(Model m, HttpServletRequest request) {
 
         List<Shift> shifts ;
-//        List<Shift> userShifts = shiftData.getShiftsByUser("admin1");
-//        ResponseEntity<List<Shift>>  allShifts = new ResponseEntity<>(shifts, HttpStatus.OK);
         HttpSession session = request.getSession();
         session.setAttribute("user", userData.getUser("user1"));
         User u = (User) session.getAttribute("user" );
 
-//        if (u == null) return "timecard";
         if (u.getRole() == Role.MEMBER) {
             shifts = shiftData.getShiftsByUser(u.getUsername());
         }else{
             shifts = shiftData.getShifts();
         }
 
-//        TimeCard timeCard = timeCardData.getTimeCard(username, shiftId);
 
         m.addAttribute("shifts", shifts);
         return "timecard_list";

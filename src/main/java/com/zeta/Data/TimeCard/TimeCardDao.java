@@ -47,7 +47,7 @@ public class TimeCardDao implements TimeCardData {
 
     private boolean updateRecords(TimeCard timeCard) {
         // If timecard is already submitted it should not be allowed to be saved/submitted again
-        if (timeCard.isTimeCardSubmitted())
+        if (timeCard.getIsTimeCardSubmitted())
             return false;
 
         if (timeCardRecordExist(timeCard))
@@ -57,7 +57,7 @@ public class TimeCardDao implements TimeCardData {
     }
 
     // Returns true if user-shift combo record exists
-    private boolean timeCardRecordExist(TimeCard timeCard) {
+    public boolean timeCardRecordExist(TimeCard timeCard) {
         try {
             Integer result = jdbcTemplate.queryForObject(
                     "select exists(select ID from UserTask where User = ? and Shift = ?)",
@@ -116,7 +116,7 @@ public class TimeCardDao implements TimeCardData {
             PreparedStatement updateShift = con.prepareStatement(shiftSQL);
             updateShift.setString(1, timeCard.getLocation());
             updateShift.setString(2, timeCard.getNotes());
-            updateShift.setBoolean(3, timeCard.isTimeCardSubmitted());
+            updateShift.setBoolean(3, timeCard.getIsTimeCardSubmitted());
             updateShift.setString(4, timeCard.getUsername());
             updateShift.setLong(5, timeCard.getShiftId());
 

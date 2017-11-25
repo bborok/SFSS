@@ -130,7 +130,7 @@ public class Shift {
         this.username = username;
     }
 
-    public boolean isTimeCardSubmitted() {
+    public boolean getIsTimeCardSubmitted() {
         return isTimeCardSubmitted;
     }
 

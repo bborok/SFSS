@@ -120,7 +120,7 @@ public class TimeCard {
         this.date = date;
     }
 
-    public boolean isTimeCardSubmitted() {
+    public boolean getIsTimeCardSubmitted() {
         return isTimeCardSubmitted;
     }
 

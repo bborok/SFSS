@@ -19,6 +19,10 @@ $(document).ready(function () {
                     validators: {
                         notEmpty: {
                             message: 'Username is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: 'Only alphanumeric characters are allowed.'
                         }
                     }
                 },

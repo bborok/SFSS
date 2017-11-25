@@ -172,11 +172,15 @@ public class TimeCardController {
 
         List<Shift> shifts ;
         HttpSession session = request.getSession();
-        session.setAttribute("user", userData.getUser("user1"));
+        session.setAttribute("user", userData.getUser("user4"));
         User u = (User) session.getAttribute("user" );
 
-        if (u.getRole() == Role.MEMBER) {
-            shifts = shiftData.getShiftsByUser(u.getUsername());
+        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
+            if(shiftData.getShiftsByUser(u.getUsername() )== null){
+                shifts = new ArrayList<Shift>();
+            }else{
+                shifts = shiftData.getShiftsByUser(u.getUsername());
+            }
         }else{
             shifts = shiftData.getShifts();
         }

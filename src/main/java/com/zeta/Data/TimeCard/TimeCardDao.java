@@ -33,16 +33,71 @@ public class TimeCardDao implements TimeCardData {
 
     @Override
     public boolean saveTimeCard(TimeCard timeCard) {
-        int isSubmitted = 0;    // saving timecard sets submitted to false
-        return addTimeCard(timeCard, isSubmitted);
+        // 0 is isSubmitted in integer form, needs to be false because timecard should not be submitted before this
+        return updateRecords(timeCard, 0);
     }
 
     @Override
     public boolean submitTimeCard(TimeCard timeCard) {
-        int isSubmitted = 1;    // submitting timecard sets submitted to true
-        return addTimeCard(timeCard, isSubmitted);
+        // 1 is isSumbitted in integer form, needs to be true because we submit the timecard via this method
+        return updateRecords(timeCard, 1);
     }
 
+    private boolean updateRecords(TimeCard timeCard, int isSubmitted) {
+        // If timecard is already submitted it should be able to be submitted again
+        if (timeCard.isTimeCardSubmitted())
+            return false;
+
+        if (timeCardRecordExist(timeCard))
+            return updateTimeCard(timeCard);
+
+        return addNewTimeCard(timeCard, isSubmitted);
+    }
+
+    // Returns true if user-shift combo record exists
+    private boolean timeCardRecordExist(TimeCard timeCard) {
+        String result;
+        try {
+            result = jdbcTemplate.queryForObject(
+                    "select Campus from Shift where User = ? and ID = ?",
+                    new Object[]{timeCard.getUsername(), timeCard.getShiftId()},
+                    (resultSet, i) -> resultSet.getString("Campus"));
+
+            // if record is found then string is obtained, otherwise null
+            return result == null;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean addNewTimeCard(TimeCard timeCard, int isSubmitted) {
+        try {
+            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
+                    "where User = ? and ID = ?";
+            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
+
+            con.setAutoCommit(false);
+
+            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
+            updateShift.setString(1, timeCard.getCampus().toString());
+            updateShift.setString(2, timeCard.getLocation());
+            updateShift.setString(3, timeCard.getNotes());
+            updateShift.setInt(4, isSubmitted);
+            updateShift.setString(5, timeCard.getUsername());
+            updateShift.setLong(6, timeCard.getShiftId());
+
+            updateShift.execute();
+
+            insertTasksIntoUserTask(timeCard, userTaskSQL);
+
+            con.commit();
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public boolean updateTimeCard(TimeCard timeCard) {
@@ -111,34 +166,6 @@ public class TimeCardDao implements TimeCardData {
             return null;
         }
         return timeCard;
-    }
-
-    private boolean addTimeCard(TimeCard timeCard, int isSubmitted) {
-        try {
-            String shiftSQL = "update Shift set Campus = ?, Location = ?, Notes = ?, isTimeCardSubmitted = ? " +
-                    "where User = ? and ID = ?";
-            String userTaskSQL = "insert into UserTask (User, Shift, Task, Count) values (?, ?, ?, ?)";
-
-            con.setAutoCommit(false);
-
-            PreparedStatement updateShift = con.prepareStatement(shiftSQL);
-            updateShift.setString(1, timeCard.getCampus().toString());
-            updateShift.setString(2, timeCard.getLocation());
-            updateShift.setString(3, timeCard.getNotes());
-            updateShift.setInt(4, isSubmitted);
-            updateShift.setString(5, timeCard.getUsername());
-            updateShift.setLong(6, timeCard.getShiftId());
-
-            updateShift.execute();
-
-            insertTasksIntoUserTask(timeCard, userTaskSQL);
-
-            con.commit();
-
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     private void clearRecords(String username, long shiftId) throws SQLException {

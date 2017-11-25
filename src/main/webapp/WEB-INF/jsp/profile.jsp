@@ -87,6 +87,7 @@
             name : "${user.name}",
             email : "${user.email}",
             phoneNumber : "${user.phoneNumber}",
+            altPhoneNumber : "${user.altPhoneNumber}",
             preferredCampus : "${user.preferredCampus}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role}",
@@ -134,10 +135,27 @@
                             <h3>Student Number: ${user.studentNumber}</h3>
                             <h3>Role: ${user.role}</h3>
                             <h3>Email: ${user.email}</h3>
-                            <h3>Phone Number: ${user.phoneNumber}</h3>
-                            <h3>Alternate Phone Number:</h3>
+                            <p id="phoneNum"></p>
+                            <p id="altPhone"></p>
                             <h3>Qualifications:</h3>
                         </div>
+
+                        <script>
+                            var phoneNum = '${user.phoneNumber}';
+                            var cleanPhone = '(' + phoneNum.substring(0,3) + ') ' + phoneNum.substring(3,6)
+                                + '-' + phoneNum.substring(6);
+
+                            $('#phoneNum').html('<h3>Phone Number: ' + cleanPhone + '</h3>');
+
+                            var altNum = '${user.altPhoneNumber}';
+                            if (altNum !== '') {
+                                var cleanAltPhone = '(' + altNum.substring(0, 3) + ') ' + altNum.substring(3, 6)
+                                    + '-' + altNum.substring(6);
+
+                                $('#altPhone').html('<h3>Alternate Phone Number: ' + cleanAltPhone + '</h3>');
+                            }
+
+                        </script>
                     </div>
                 </center>
             </div>

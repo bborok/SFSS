@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String email;
     private Long phoneNumber;
+    private Long altPhoneNumber;
     private Campus preferredCampus;
     private Long studentNumber;
     private Role role;
@@ -29,13 +30,14 @@ public class User {
     public User() {
     } //Required by JPA
 
-    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
-                Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
+    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Long altPhoneNumber,
+                Role role, Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.altPhoneNumber = altPhoneNumber;
         this.role = role;
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
@@ -122,4 +124,8 @@ public class User {
     public Boolean getIsDeactivated() {
         return isDeactivated;
     }
+
+    public Long getAltPhoneNumber() { return altPhoneNumber; }
+
+    public void setAltPhoneNumber(Long altPhoneNumber) { this.altPhoneNumber = altPhoneNumber; }
 }

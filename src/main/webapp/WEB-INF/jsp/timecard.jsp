@@ -230,6 +230,11 @@
                                     <c:choose>
                                         <c:when test="${editCard}">
                                             <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Edit Time Card</form:button>
+                                            <c:choose>
+                                                <c:when test="${!timecardSubmitted}">
+                                                    <form:button type="submit" name="submit"  class="btn btn-success" style="margin-top:1em;margin-right:1em;">Submit Time Card</form:button>
+                                                </c:when>
+                                            </c:choose>
                                         </c:when>
                                         <c:otherwise>
                                             <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>

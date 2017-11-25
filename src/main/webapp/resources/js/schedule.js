@@ -100,8 +100,18 @@ $(document).ready(function () {
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
             $('#fullCalModal').modal();
 
+            if(event.timeCardSubmitted == true){
+                $('#btnTimecard').hide();
+            }else{
+                $('#btnTimecard').show();
+            }
+
             $('#btnTimecard').off().on('click', function () {
-                $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
+                if(event.location == "") {
+                    $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
+                }else{
+                    $(location).attr('href', contextPath + '/timecard_edit?shift_id=' + event.id + '&username=' + event.username);
+                }
             });
 
             $('#btnDelete').off().on('click', function (e) {

@@ -59,9 +59,12 @@ public class TimeCardController {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
 
+        boolean timecardSubmitted = timeCard.isTimeCardSubmitted();
+
         boolean edit = true;
         m.addAttribute("timeCard", timeCard);
         m.addAttribute("editCard", edit);
+        m.addAttribute("timecardSubmitted", timecardSubmitted);
         return "timecard";
     }
 
@@ -91,15 +94,10 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user" );
 
-
-
-
-//        if (!timeCardData.saveTimeCard(timeCard)) {
-//            System.out.println("this is not working");
-//        }
+        if (!timeCardData.saveTimeCard(timeCard)) {
+            System.out.println("this is not working");
+        }
 
         m.addAttribute("timeCard", timeCard);
 
@@ -108,6 +106,79 @@ public class TimeCardController {
 
 
     @RequestMapping(value = "/timecard", method = RequestMethod.POST, params = { "submit" })
+    public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
+
+        Task SPTotal = new Task("Smoke Prevention");
+        SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
+        timeCard.addToTasks(SPTotal);
+        Task TPTotal = new Task("Theft Prevention");
+        TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
+        timeCard.addToTasks(TPTotal);
+
+        Task PCTotal = new Task("Public Contact");
+        PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
+        timeCard.addToTasks(PCTotal);
+
+        Task SWTotal = new Task("Safe Walk");
+        SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
+        timeCard.addToTasks(SWTotal);
+
+        Task HSRTotal = new Task("Hazard/Service Request");
+        HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
+        timeCard.addToTasks(HSRTotal);
+
+        Task ASTotal = new Task("Assist Security");
+        ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
+        timeCard.addToTasks(ASTotal);
+
+
+        if (!timeCardData.submitTimeCard(timeCard)) {
+            System.out.println("this is not working");
+        }
+
+        m.addAttribute("timeCard", timeCard);
+
+        return "timecard_list";
+    }
+
+
+    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "edit" })
+    public String EditTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard) {
+
+        Task SPTotal = new Task("Smoke Prevention");
+        SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
+        timeCard.addToTasks(SPTotal);
+        Task TPTotal = new Task("Theft Prevention");
+        TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
+        timeCard.addToTasks(TPTotal);
+
+        Task PCTotal = new Task("Public Contact");
+        PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
+        timeCard.addToTasks(PCTotal);
+
+        Task SWTotal = new Task("Safe Walk");
+        SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
+        timeCard.addToTasks(SWTotal);
+
+        Task HSRTotal = new Task("Hazard/Service Request");
+        HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
+        timeCard.addToTasks(HSRTotal);
+
+        Task ASTotal = new Task("Assist Security");
+        ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
+        timeCard.addToTasks(ASTotal);
+
+
+        if (!timeCardData.updateTimeCard(timeCard)) {
+            System.out.println("this is not working");
+        }
+
+        m.addAttribute("timeCard", timeCard);
+
+        return "redirect:/timecard_list";
+    }
+
+    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "submit" })
     public String submitTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
 
         Task SPTotal = new Task("Smoke Prevention");
@@ -133,62 +204,14 @@ public class TimeCardController {
         ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
         timeCard.addToTasks(ASTotal);
 
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user" );
 
-        timeCard.setUsername("admin1");
-        timeCard.setShiftId(96);
-
-//        if (!timeCardData.submitTimeCard(timeCard)) {
-//            System.out.println("this is not working");
-//        }
-
-        m.addAttribute("timeCard", timeCard);
-
-        return "timecard_list";
-    }
-
-
-    @RequestMapping(value = "/timecard_edit", method = RequestMethod.POST, params = { "edit" })
-    public String EditTimeCard(Model m, @ModelAttribute("timeCard") TimeCard timeCard, HttpServletRequest request) {
-
-        Task SPTotal = new Task("Smoke Prevention");
-        SPTotal.setCount(Integer.parseInt(timeCard.getSPTotal()));
-        timeCard.addToTasks(SPTotal);
-        Task TPTotal = new Task("Theft Prevention");
-        TPTotal.setCount(Integer.parseInt(timeCard.getTPTotal()));
-        timeCard.addToTasks(TPTotal);
-
-        Task PCTotal = new Task("Public Contact");
-        PCTotal.setCount(Integer.parseInt(timeCard.getPCTotal()));
-        timeCard.addToTasks(PCTotal);
-
-        Task SWTotal = new Task("Safe Walk");
-        SWTotal.setCount(Integer.parseInt(timeCard.getSWTotal()));
-        timeCard.addToTasks(SWTotal);
-
-        Task HSRTotal = new Task("Hazard/Service Request");
-        HSRTotal.setCount(Integer.parseInt(timeCard.getHSRTotal()));
-        timeCard.addToTasks(HSRTotal);
-
-        Task ASTotal = new Task("Assist Security");
-        ASTotal.setCount(Integer.parseInt(timeCard.getASTotal()));
-        timeCard.addToTasks(ASTotal);
-
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user" );
-
-        timeCard.setUsername("admin1");
-        timeCard.setShiftId(96);
-
-
-        if (!timeCardData.updateTimeCard(timeCard)) {
+        if (!timeCardData.submitTimeCard(timeCard)) {
             System.out.println("this is not working");
         }
 
         m.addAttribute("timeCard", timeCard);
 
-        return "redirect:/timecard_list";
+        return "timecard_list";
     }
 
     @RequestMapping(value = "/timecard_list", method = RequestMethod.GET)

@@ -307,7 +307,7 @@ cancel button functionalities
                                 <hr>
 
                                 <b><u>Availability: </u></b>
-                                <select id="availabilitySelect">
+                                <select id="availabilitySelect" class="form-control">
                                     <option value="NO_RESPONSE">No Response</option>
                                     <option value="CONFIRMED">Confirmed</option>
                                     <option value="DECLINED">Declined</option>

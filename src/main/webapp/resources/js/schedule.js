@@ -57,13 +57,31 @@ function initCalendar() {
 
         eventRender: function eventRender(event, element) {
             if (event.campus === 'BURNABY') {
-                element.css('background-color', '#E8502F');
+                element.css('background-color', '#9fa8da');
+            } else if (event.campus === "SURREY") {
+                element.css('background-color', '#9ccc65');
+            } else if (event.campus === "VANCOUVER") {
+                element.css('background-color', '#bbdefb');
             }
-            if (event.campus === "SURREY") {
-                element.css('background-color', '#C5E744');
-            }
-            if (event.campus === "VANCOUVER") {
-                element.css('background-color', '#75C6E7');
+
+            if (event.confirmationStatus === "NO_RESPONSE"){
+                element.css({
+                    "border-style": "solid",
+                    "border-width": "3px",
+                    "border-color": "#ff8f00"
+                })
+            } else if(event.confirmationStatus === "CONFIRMED"){
+                element.css({
+                    "border-style": "solid",
+                    "border-width": "3px",
+                    "border-color": "#00600f"
+                })
+            } else {
+                element.css({
+                    "border-style": "solid",
+                    "border-width": "3px",
+                    "border-color": "#a30000"
+                })
             }
             return filter(event);
         },
@@ -128,7 +146,8 @@ function initCalendar() {
         weekNumbers: true,
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
-        editable: false
+        editable: false,
+        eventTextColor: "#000000"
     };
 
     //Overwrite some settings of the calendarInitObject if a member of volunteer

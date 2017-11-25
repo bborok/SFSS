@@ -107,11 +107,7 @@ $(document).ready(function () {
             }
 
             $('#btnTimecard').off().on('click', function () {
-                if(event.location == "") {
                     $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
-                }else{
-                    $(location).attr('href', contextPath + '/timecard_edit?shift_id=' + event.id + '&username=' + event.username);
-                }
             });
 
             $('#btnDelete').off().on('click', function (e) {

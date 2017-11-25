@@ -96,7 +96,7 @@ public class ShiftDao implements ShiftData {
                     shift.getNotes(),
                     shift.getDate(),
                     shift.getRequiredTraining(),
-                    shift.isTimeCardSubmitted()
+                    shift.getIsTimeCardSubmitted()
             ); //By default, no timecard can be submitted if shift didn't exist already
             return true;
         } catch (Exception e) {

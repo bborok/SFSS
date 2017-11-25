@@ -23,13 +23,13 @@ public class UserDao implements UserData {
     public boolean addUser(User user) {
         try {
              String sql =
-                        "INSERT INTO User (Username, Name, Email, PhoneNumber, PreferredCampus, " +
-                                "StdNum, Role, CallSign, isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        "INSERT INTO User (Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, " +
+                                "StdNum, Role, CallSign, isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
              jdbcTemplate.update(sql, user.getUsername(), user.getName(), user.getEmail(),
-                        (int) user.getPhoneNumber(), user.getPreferredCampus().toString(),
-                        (int) user.getStudentNumber(), user.getRole().toString(),
-                        user.getCallSign(), user.getIsDeactivated());
+                        (int) user.getPhoneNumber(), user.getAltPhoneNumber(),
+                        user.getPreferredCampus().toString(), (int) user.getStudentNumber(),
+                        user.getRole().toString(), user.getCallSign(), user.getIsDeactivated());
         } catch (Exception e)
         {
             return false;
@@ -40,11 +40,11 @@ public class UserDao implements UserData {
     @Override
     public boolean updateUser(User user) {
        try {
-               String sql = "UPDATE User SET Name = ?, Email = ?, PhoneNumber = ?, PreferredCampus = ? , StdNum = ?, " +
-                       "Role = ?, CallSign = ? WHERE Username = ?";
+               String sql = "UPDATE User SET Name = ?, Email = ?, PhoneNumber = ?, AltPhoneNumber = ?, " +
+                       "PreferredCampus = ? , StdNum = ?, Role = ?, CallSign = ? WHERE Username = ?";
 
-               jdbcTemplate.update(sql, user.getName(), user.getEmail(),
-                       user.getPhoneNumber(), user.getPreferredCampus().toString(), user.getStudentNumber(),
+               jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPhoneNumber(),
+                       user.getAltPhoneNumber(), user.getPreferredCampus().toString(), user.getStudentNumber(),
                        user.getRole().toString(), user.getCallSign(), user.getUsername());
        } catch (Exception e) {
            return false;
@@ -96,7 +96,7 @@ public class UserDao implements UserData {
     public User getUser(String username) {
         User user;
         try {
-                String userSQL = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
+                String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
                         "CallSign, isDeactivated from User where Username = ? and " +
                         "(select 1 from User where Username = ?) and isDeactivated = 0";
                 user = jdbcTemplate.queryForObject(userSQL, new Object[] {username, username}, new UserRowMapper());
@@ -118,7 +118,7 @@ public class UserDao implements UserData {
     public List<User> getAllUsers() {
         List<User> users;
         try {
-            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
+            String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
                     "CallSign, isDeactivated from User where isDeactivated = 0";
 
             users = jdbcTemplate.query(sql, new UserRowMapper());

@@ -3,6 +3,7 @@ package com.zeta.Models;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonDeserializers.CustomEmptyStringToNullDeserializer;
 import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
 import com.zeta.Configurations.JsonDeserializers.CustomDateTimeDeserializer;
 import com.zeta.Configurations.JsonSerializers.CustomDateTimeSerializer;
@@ -29,6 +30,9 @@ public class Shift {
 
     private String location;
     private String notes;
+
+    @JsonDeserialize(using = CustomEmptyStringToNullDeserializer.class)
+
     private String requiredTraining;
     private boolean isTimeCardSubmitted = false; //By default is false
     private String username;

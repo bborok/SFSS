@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%--
   Page that displays the currently logged in users information.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +20,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
@@ -31,7 +32,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <script src='resources/js/users.js'></script>
 
     <script>
         var api = '${pageContext.request.contextPath}/user';
@@ -109,89 +109,6 @@
                     </div>
                 </center>
 
-                <div id="userModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <%--Modal Content--%>
-
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
-                                </button>
-                                <h4 id="myModalLabel1"><b>Edit User</b></h4>
-                            </div>
-
-                            <%--Modal Body--%>
-                            <div class="modal-body">
-                                <form id="userForm" class="form-horizontal" data-toggle="validator">
-                                    <div style="padding-left: 15px;padding-right: 15px">
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Username:</u></label>
-                                            <div class="input-group">
-                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
-                                                <span class="input-group-addon">@sfu.ca</span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Full Name:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Role:</u></label>
-                                            <div class="controls">
-                                                <select class="form-control" name="role" id="userRole" required>
-                                                    <option value="" disabled="disabled" selected="selected">Select A Role
-                                                        <c:forEach items="${roles}" var="role">
-                                                    <option value="${role.name()}">
-                                                            ${role.name()}
-                                                    </option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row-fluid">
-                                            <label class="control-label"><u>Preferred Campus:</u></label>
-                                            <br>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="campus" id="BURNABY" value="BURNABY" required>Burnaby
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="campus" id="SURREY" value="SURREY" required>Surrey
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="campus" id="VANCOUVER" value="VANCOUVER" required>Vancouver
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Call Sign:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-
-                                        <%--AJAX Request to POST to ShiftController--%>
-                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <br><br>
                 <center>
                     <div>
@@ -203,9 +120,14 @@
                                 <br>
                             </h1>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
+                                <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
                                      width="300">
                             </center>
+                            <label class="control-label"><u>Upload Profile Picture:</u></label>
+                            <div class="file-loading">
+                                <input id="userImage" name="userImage" type="file" accept="image/*">
+                            </div>
+                            <div id="file-error"></div>
 
                         </div>
                         <div>
@@ -248,20 +170,42 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
+    $(document).ready(function() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            jqXHR.setRequestHeader(header, token);
+        });
+
+        $('#userImage').fileinput({
+            maxFileSize: 1500,
+            browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+            showUpload: false,
+            showPreview: false,
+            showCancel: false,
+            showRemove: false,
+            showCaption: false,
+            allowedFileTypes: ["image"],
+            maxImageWidth: 300,
+            maxImageHeight: 300,
+            resizeImage: true,
+            uploadAsync: true,
+            uploadUrl: "/user/addImage",
+            minFileCount: 1,
+            maxFileCount: 1
+        }).on('filebatchselected', function () {
+            $('#userImage').fileinput('upload');
+        });
+    });
+
     $("#menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
-    });
-
-    $('#userModal').on('hidden.bs.modal', function () {
-        $(this).find("input,select").val('').end()
-            .find('[id="username"]').prop('disabled', false).end()
-            .data('bootstrapValidator').resetForm();
-        $('input[name="campus"]:checked').prop('checked', false);
     });
 </script>
 

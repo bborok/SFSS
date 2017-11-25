@@ -64,6 +64,14 @@ $(document).ready(function () {
                         }
                     }
                 },
+                altPhoneNumber: {
+                    validators: {
+                        phone: {
+                            country: 'US',
+                            message: 'Please enter a valid phone number.'
+                        }
+                    }
+                },
                 role: {
                     validators: {
                         notEmpty: {
@@ -101,6 +109,7 @@ $(document).ready(function () {
             var header = $("meta[name='_csrf_header']").attr("content");
 
             var phone  = $('#userPhoneNumber').val().replace(/^\D+/g,"");
+            var altPhone  = $('#userAltPhoneNumber').val().replace(/^\D+/g,"");
 
             var campus = $('input[name="campus"]:checked').attr('id');
 
@@ -110,6 +119,7 @@ $(document).ready(function () {
                 "name": $('#userFullName').val(),
                 "email": $('#userEmail').val(),
                 "phoneNumber": phone,
+                "altPhoneNumber": altPhone,
                 "role": $('#userRole').val(),
                 "preferredCampus": campus,
                 "callSign": $('#userCallsign').val(),
@@ -177,6 +187,7 @@ $(document).ready(function () {
             .find('[id="userFullName"]').val(user['name']).end()
             .find('[id="userEmail"]').val(user['email']).end()
             .find('[id="userPhoneNumber"]').val(user['phoneNumber']).end()
+            .find('[id="userAltPhoneNumber"]').val(user['altPhoneNumber']).end()
             .find('[id="userRole"]').val(user['role']).end()
             .find('#' + user['preferredCampus']).prop('checked', true).end()
             .find('[id="userCallsign"]').val(user['callSign']).end()

@@ -44,7 +44,7 @@ public class TimeCardDao implements TimeCardData {
     }
 
     private boolean updateRecords(TimeCard timeCard, int isSubmitted) {
-        // If timecard is already submitted it should be able to be submitted again
+        // If timecard is already submitted it should not be allowed to be saved/submitted again
         if (timeCard.isTimeCardSubmitted())
             return false;
 
@@ -101,7 +101,6 @@ public class TimeCardDao implements TimeCardData {
 
     @Override
     public boolean updateTimeCard(TimeCard timeCard) {
-        int isSubmitted = 1; // only able to update timecard after it has been submitted
         try {
 
             String shiftSQL = "update Shift set Location = ?, Notes = ?, isTimeCardSubmitted = ? where User = ? and ID = ?";
@@ -112,15 +111,16 @@ public class TimeCardDao implements TimeCardData {
             PreparedStatement updateShift = con.prepareStatement(shiftSQL);
             updateShift.setString(1, timeCard.getLocation());
             updateShift.setString(2, timeCard.getNotes());
-            updateShift.setInt(3, isSubmitted);
+            updateShift.setBoolean(3, timeCard.isTimeCardSubmitted());
             updateShift.setString(4, timeCard.getUsername());
             updateShift.setLong(5, timeCard.getShiftId());
 
             updateShift.execute();
 
-            // Remove data for that specific user and shift
-            clearRecords(timeCard.getUsername(), timeCard.getShiftId());
+            // Remove data for that specific user-shift combination
+            clearUserTaskRecords(timeCard.getUsername(), timeCard.getShiftId());
 
+            // Enter new records for that user-shift combination
             insertTasksIntoUserTask(timeCard, userTaskSQL);
 
             con.commit();
@@ -168,7 +168,7 @@ public class TimeCardDao implements TimeCardData {
         return timeCard;
     }
 
-    private void clearRecords(String username, long shiftId) throws SQLException {
+    private void clearUserTaskRecords(String username, long shiftId) throws SQLException {
 
         String sql = "delete from UserTask where User = ? and Shift = ?";
 

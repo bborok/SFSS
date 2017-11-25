@@ -27,27 +27,24 @@
                 </ul>
             </li>
             <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/payroll"><span class="fa-stack fa-lg pull-left"><i class="fa fa-credit-card fa-stack-1x "></i></span>Payroll</a>
-            </li>
-            <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/timecard"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
             </li>
             <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
             </li>
-            <li class="sidebar-item" style="padding-top: 180px">
+            <li class="sidebar-item">
                 <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow">Sign Out</b></a>
             </li>
 
-            <li class="sidebar-item" style="padding-top: 50px">
-                <span class="fa-stack fa-lg pull-left"></span><img src="resources/img/etc/dog.jpg" style="width: 150px;height: 160px">
-            </li>
 
-            <li class="sidebar-item">
-                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white"> (778)-782-5425</b></a>
+            <li class="sidebar-item" style="padding-left: 40px;padding-top: 350px">
+                <span class="fa-stack fa-lg pull-left" style="color: white"></span><b style="font-size: 15px;color: white"><u>Contact</u></b>
             </li>
             <li class="sidebar-item">
-                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-envelope-o fa-stack-1x "></i></span><b style="font-size: 15px;color: white"> sfucsp@sfu.ca</b></a>
+                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> (778)-782-5425</b></a>
+            </li>
+            <li class="sidebar-item">
+                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-envelope-o fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> sfucsp@sfu.ca</b></a>
             </li>
         </ul>
 

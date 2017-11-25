@@ -183,16 +183,21 @@
         $('#userImage').fileinput({
             maxFileSize: 1500,
             browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+            showUpload: false,
             showPreview: false,
             showCancel: false,
             showRemove: false,
             showCaption: false,
-            allowedFileExtensions: ["jpg", "png", "gif"],
+            allowedFileTypes: ["image"],
             maxImageWidth: 300,
             maxImageHeight: 300,
             resizeImage: true,
+            uploadAsync: true,
             uploadUrl: "/user/addImage",
+            minFileCount: 1,
             maxFileCount: 1
+        }).on('filebatchselected', function () {
+            $('#userImage').fileinput('upload');
         });
     });
 

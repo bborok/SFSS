@@ -100,7 +100,7 @@ $(document).ready(function () {
             $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
             $('#fullCalModal').modal();
 
-            if(event.timeCardSubmitted == true){
+            if(event.isTimeCardSubmitted == true){
                 $('#btnTimecard').hide();
             }else{
                 $('#btnTimecard').show();

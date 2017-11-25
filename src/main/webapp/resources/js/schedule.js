@@ -1,16 +1,14 @@
 var dateFormat = "YYYY-MM-DD HH:mm:ss";
-var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
+// var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
-var alertsDiv;
 var startTimeInput;
 var endTimeInput;
 
 $(document).ready(function () {
     csrfAndAjaxSetup();
 
-    alertsDiv = $('#alertsDiv');
     startTimeInput = $('#startTime');
     endTimeInput = $('#endTime');
     initCalendar();
@@ -30,13 +28,11 @@ function initCalendar() {
         eventSources: [
             api + '/shifts'
         ],
-        // put your options and callbacks here
         customButtons: {
             add_event: {
                 text: 'Add a Shift',
-                click: function (start, end) {
-                    // startTimeInput.val(moment(start).format(dateTimeInputFormat));
-                    // endTimeInput.val(moment(end).format(dateTimeInputFormat));
+                click: function () {
+                    resetFormFields();
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -60,66 +56,24 @@ function initCalendar() {
 
         selectable: true,
 
-        eventRender: function eventRender(event, element, view) {
-            if (event.campus === 'BURNABY') {
-                element.css('background-color', '#E8502F');
-            }
-            if (event.campus === "SURREY") {
-                element.css('background-color', '#C5E744');
-            }
-            if (event.campus === "VANCOUVER") {
-                element.css('background-color', '#75C6E7');
-            }
-            return filter(event);
-        },
+        eventRender: eventRenderHandler,
 
-        eventAfterRender: function (event, element, view) {
+        eventAfterRender: function (event, element) {
             $(element).css('width', '80%');
         },
 
         //Selecting an empty area
-        select: function (start, end) {
-            var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
-            var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-            // console.log(myStart);
-            // console.log(myEnd);
-            startTimeInput.val(myStart);
-            endTimeInput.val(myEnd);
-            $('#createEventModal').modal('show'); //popup modal
-        },
+        select: selectEventHandler,
 
         //Selecting a scheduled event
-        eventClick: function (event) {
-            // console.log(event);
-            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-            $('#modalTitle').html(event.title);
-            $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-            $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.username);
-            $('#modalCampus').html(event.campus);
-            $('#modalID').html(event.id);
-            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-            $('#modalLocation').html(event.location);
-            $('#modalNotes').html(event.notes);
-            $('#modalTraining').html(event.requiredTraining);
-            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-
-            $('#fullCalModal').modal();
-
-            $('#btnDelete').off().on('click', function (e) {
-                e.preventDefault();
-                //AJAX DELETE REQUEST
-                // console.log('Deleting shift ' + event.id);
-                deleteShift(event);
-                $('#fullCalModal').modal('hide');
-            })
-        },
+        eventClick: eventClickHandler,
 
         navLinks: true, // can click day/week names to navigate views
         weekNumbers: true,
         weekNumbersWithinDays: true,
         weekNumberCalculation: 'ISO',
-        editable: false
+        editable: false,
+        eventTextColor: "#000000"
     };
 
     //Overwrite some settings of the calendarInitObject if a member of volunteer
@@ -187,7 +141,91 @@ function initEventHandlers() {
         var options = $(this).data('options').filter('[value=' + id + ']');
         $('#eventTitle').html(options);
     });
+
+
 }
+
+var eventRenderHandler = function (event, element) {
+    if (event.campus === 'BURNABY') {
+        element.css('background-color', '#9fa8da');
+    } else if (event.campus === "SURREY") {
+        element.css('background-color', '#9ccc65');
+    } else if (event.campus === "VANCOUVER") {
+        element.css('background-color', '#bbdefb');
+    }
+
+    if (event.confirmationStatus === "NO_RESPONSE") {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#ff8f00"
+        })
+    } else if (event.confirmationStatus === "CONFIRMED") {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#00600f"
+        })
+    } else {
+        element.css({
+            "border-style": "solid",
+            "border-width": "3px",
+            "border-color": "#a30000"
+        })
+    }
+    return filter(event);
+};
+
+var selectEventHandler = function (start, end) {
+    var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
+    var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
+    startTimeInput.val(myStart);
+    endTimeInput.val(myEnd);
+    resetFormFields();
+    $('#createEventModal').modal('show'); //popup modal
+};
+
+var eventClickHandler = function (event) {
+    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
+    $('#modalTitle').html(event.title);
+    $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
+    $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
+    $('#modalMember').html(event.username);
+    $('#modalCampus').html(event.campus);
+    $('#modalID').html(event.id);
+    $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
+    $('#modalLocation').html(event.location);
+    $('#modalNotes').html(event.notes);
+    $('#modalTraining').html(event.requiredTraining);
+    $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
+    $('#availabilitySelect').val(event.confirmationStatus);
+    $('#modalAvailability').text(_.replace(event.confirmationStatus, '_', ' '));
+
+    $('#fullCalModal').modal();
+
+    $('#btnDelete').off().on('click', function (e) {
+        e.preventDefault();
+        deleteShift(event);
+        $('#fullCalModal').modal('hide');
+    });
+
+    $("#btnConfirmAvailability").off().on('click', function () {
+        updateShiftConfirmation(event.id, $("#availabilitySelect").val());
+        $('#fullCalModal').modal('hide');
+    });
+
+    var eventStart = moment(event.start).format(dateFormat);
+    var currentDate = moment().format(dateFormat);
+
+    //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
+    if (moment(eventStart).isAfter(currentDate)) {
+        $("#availabilitySelect").show();
+        $("#modalAvailability").hide();
+    } else {
+        $("#availabilitySelect").hide();
+        $("#modalAvailability").show();
+    }
+};
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
@@ -212,9 +250,14 @@ function doSubmit() {
     saveShift(shift);
 }
 
+function resetFormFields() {
+    $('#eventCampus').val("");
+    $('#eventMember').val("");
+    $('#eventRequiredTraining').val("");
+}
+
 //Sends a requests via AJAX to save a shift
-var saveShift = function (shift) {
-    // console.log(shift);
+function saveShift(shift) {
     var url = api + '/shift/save';
     $.ajax({
         headers: {
@@ -225,17 +268,17 @@ var saveShift = function (shift) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(shift),
         success: function () {
-            displaySuccessAlert('Saved ' + shift.title + '.');
+            $.notify("Saved shift.", "success");
             calendar.fullCalendar('refetchEvents');
         },
         error: function () {
-            displayErrorAlert('Error saving ' + shift.title + ' to database.');
+            $.notify("Error saving shift", "warn");
         }
     });
-};
+}
 
 //Sends a request via AJAX to delete a shift
-var deleteShift = function (event) {
+function deleteShift(event) {
     $.ajax({
         type: 'DELETE',
         headers: {
@@ -243,35 +286,37 @@ var deleteShift = function (event) {
         },
         url: api + '/shift/delete/' + event.id,
         success: function () {
-            // console.log('Deleted shift' + event.id);
-            displaySuccessAlert('Deleted ' + event.title + '.');
+            $.notify("Deleted shift.", "success");
             calendar.fullCalendar('refetchEvents');
         },
-        fail: function () {
-            displayErrorAlert('Error deleting ' + event.title + 'to database.');
+        error: function () {
+            $.notify("Error deleting shift", "warn");
         }
     });
-};
+}
 
-//Displays a Bootstrap error alert at the top of the page
-var displayErrorAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Danger! </strong> " + msg +
-        "</div>"
-    );
-};
-
-//Displays a Bootstrap success alert at the top of the page
-var displaySuccessAlert = function (msg) {
-    alertsDiv.append(
-        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Success! </strong> " + msg +
-        "</div>"
-    );
-};
+function updateShiftConfirmation(shiftId, status) {
+    var payload = {
+        shift_id: shiftId,
+        confirmation_status: status
+    };
+    $.ajax({
+        type: 'POST',
+        headers: {
+            Accept: "text/plain",
+        },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        url: api + '/shift/updateConfirmation',
+        data: $.param(payload),
+        success: function () {
+            $.notify("Updated availability.", "success");
+            calendar.fullCalendar('refetchEvents');
+        },
+        error: function () {
+            $.notify("Error updating availability", "warn");
+        }
+    });
+}
 
 function filter(calEvent) {
     var vals = [];

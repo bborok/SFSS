@@ -1,6 +1,7 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.Shift.ShiftData;
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Role;
 import com.zeta.Models.Shift;
 import com.zeta.Models.User;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +35,6 @@ public class ShiftsController {
         this.shiftData = shiftData;
     }
 
-
     /**
      * Use this to get a list of all Shifts in the database as a Shift object.
      *
@@ -47,15 +48,19 @@ public class ShiftsController {
     ) {
         List<Shift> shifts;
 
-        //TODO: uncomment when deploying to server
-        //Filter by roles
+        //Filter the shifts according to the logged in user
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         if (u == null) return ResponseEntity.badRequest().build();
+
         if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
+            //Get the Members/Volunteers shifts
             shifts = shiftData.getShiftsWithUsername(u.getUsername());
         } else {
             shifts = shiftData.getShifts();
+            if (u.getRole() == Role.TEAM_LEADER) {
+                shifts = shifts.stream().filter(shift -> shift.getCampus() == u.getPreferredCampus()).collect(Collectors.toList());
+            }
         }
 
         //Filter by start and end query parameters (if available)
@@ -81,6 +86,17 @@ public class ShiftsController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("shift/updateConfirmation")
+    public ResponseEntity<Object> updateConfirmation(
+            @RequestParam("shift_id") long shiftId,
+            @RequestParam("confirmation_status") ConfirmationStatus confirmationStatus
+    ) {
+        if (shiftData.updateAvailability(shiftId, confirmationStatus))
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Success");
+        else
+            return ResponseEntity.badRequest().build();
     }
 
 

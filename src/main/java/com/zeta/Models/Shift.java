@@ -3,6 +3,7 @@ package com.zeta.Models;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonDeserializers.CustomEmptyStringToNullDeserializer;
 import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
 import com.zeta.Configurations.JsonDeserializers.CustomDateTimeDeserializer;
 import com.zeta.Configurations.JsonSerializers.CustomDateTimeSerializer;
@@ -29,14 +30,18 @@ public class Shift {
 
     private String location;
     private String notes;
+
+    @JsonDeserialize(using = CustomEmptyStringToNullDeserializer.class)
+
     private String requiredTraining;
     private boolean isTimeCardSubmitted = false; //By default is false
     private String username;
+    private ConfirmationStatus confirmationStatus;
 
     public Shift() {
     }
 
-    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username) {
+    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username, ConfirmationStatus confirmationStatus) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -48,6 +53,7 @@ public class Shift {
         this.requiredTraining = requiredTraining;
         this.isTimeCardSubmitted = isTimeCardSubmitted;
         this.username = username;
+        this.confirmationStatus = confirmationStatus;
     }
 
     public Long getId() {
@@ -138,6 +144,14 @@ public class Shift {
         isTimeCardSubmitted = timeCardSubmitted;
     }
 
+    public ConfirmationStatus getConfirmationStatus() {
+        return confirmationStatus;
+    }
+
+    public void setConfirmationStatus(ConfirmationStatus confirmationStatus) {
+        this.confirmationStatus = confirmationStatus;
+    }
+
     @Override
     public String toString() {
         return "Shift{" +
@@ -150,7 +164,9 @@ public class Shift {
                 ", location='" + location + '\'' +
                 ", notes='" + notes + '\'' +
                 ", requiredTraining='" + requiredTraining + '\'' +
+                ", isTimeCardSubmitted=" + isTimeCardSubmitted +
                 ", username='" + username + '\'' +
+                ", confirmationStatus=" + confirmationStatus +
                 '}';
     }
 }

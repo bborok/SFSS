@@ -1,5 +1,6 @@
 package com.zeta.Data.Shift;
 
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,11 +49,23 @@ public class ShiftDao implements ShiftData {
     @Override
     public List<Shift> getShiftsByUser(String username) {
         try {
-            String sql = "select * from Shift where User = ? order by Date desc";
-            return jdbcTemplate.query(sql, new Object[] {username}, new ShiftRowMapper());
+            String sql = "SELECT * FROM Shift WHERE User = ? ORDER BY Date DESC";
+            return jdbcTemplate.query(sql, new Object[]{username}, new ShiftRowMapper());
 
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    @Override
+    public boolean updateAvailability(long id, ConfirmationStatus confirmationStatus) {
+        String sql = "UPDATE  Shift SET Confirmed = ? WHERE ID = ?";
+        try {
+            jdbcTemplate.update(sql, confirmationStatus.toString(), id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -110,7 +123,7 @@ public class ShiftDao implements ShiftData {
                     shift.getDate(),
                     shift.getRequiredTraining(),
                     shift.isTimeCardSubmitted()
-            ); //By default, no timecard can be submitted if shift didn't exist already
+            );
             return true;
         } catch (Exception e) {
             e.printStackTrace();

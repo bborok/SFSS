@@ -1,5 +1,6 @@
 package com.zeta.Controllers;
 
+import com.zeta.Data.Training.TrainingData;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import com.zeta.Models.Role;
@@ -37,12 +38,14 @@ public class IndexController {
     private UserData userData;
     private AnnouncementsData announcementsData;
     private TaskData taskData;
+    private TrainingData trainingData;
 
     @Autowired
-    public IndexController(UserData userData, TaskData taskData, AnnouncementsData announcementsData) {
+    public IndexController(UserData userData, TaskData taskData, AnnouncementsData announcementsData, TrainingData trainingData) {
         this.userData = userData;
         this.taskData = taskData;
         this.announcementsData = announcementsData;
+        this.trainingData = trainingData;
     }
 
     @RequestMapping(value = "/login")
@@ -95,20 +98,26 @@ public class IndexController {
     @GetMapping("/schedule")
     public String schedule(HttpServletRequest request, Model m) {
         List<User> usersForSelection;
+
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if (u == null) return "users"; //Exit the request if user info can't get fetched
-        //Filter the list users depending on the currently logged in users role.
+
+        //Exit the request if user info can't get fetched
+        if (u == null) return "index";
+        //TODO: This shouldn't even be possible. Maybe delete in production?
+
+        //Filter the list users  depending on the currently logged in users role.
         if (u.getRole() == Role.TEAM_LEADER) {
             //Filter the users based on the team leaders preferred campus.
             usersForSelection = userData.getAllUsers().stream()
                     .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
                     .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
                     .collect(Collectors.toList());
-        } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR){
+        } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR) {
             usersForSelection = userData.getAllUsers();
         } else {
-            usersForSelection = new ArrayList<>(); //this is members/volunteer
+            //At this point the currently logged in User must be a MEMBER/VOLUNTEER
+            usersForSelection = new ArrayList<>();
         }
         m.addAttribute("users", usersForSelection);
 
@@ -122,6 +131,7 @@ public class IndexController {
         m.addAttribute("SURREYTASKS", surreyTasks);
         m.addAttribute("VANCOUVERTASKS", vancouverTasks);
         m.addAttribute("BURNABYTASKS", burnabyTasks);
+        m.addAttribute("TRAININGTYPES", trainingData.getListOfTraining());
 
         return "schedule";
     }

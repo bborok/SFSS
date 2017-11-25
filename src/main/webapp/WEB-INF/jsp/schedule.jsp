@@ -20,9 +20,11 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+    <script src='resources/js/notify.js'></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
 
@@ -56,20 +58,17 @@
         iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
 
-        <%--TODO: uncomment below on deploy--%>
         <%--Fetch the currently logged in user from session--%>
         var loggedInUser = {
-        username : "${user.username}",
-        name : "${user.name}",
-        email : "${user.email}",
-        phoneNumber : "${user.phoneNumber}",
-        preferredCampus : "${user.preferredCampus.toString()}",
-        studentNumber : "${user.studentNumber}",
-        role : "${user.role.toString()}",
-        callSign : "${user.callSign}"
+            username: "${user.username}",
+            name: "${user.name}",
+            email: "${user.email}",
+            phoneNumber: "${user.phoneNumber}",
+            preferredCampus: "${user.preferredCampus.toString()}",
+            studentNumber: "${user.studentNumber}",
+            role: "${user.role.toString()}",
+            callSign: "${user.callSign}"
         };
-
-//        console.log(loggedInUser);
     </script>
     <script src='resources/js/schedule.js'></script>
 
@@ -134,8 +133,6 @@ cancel button functionalities
                     <hr>
                 </div>
 
-                <%--Used for displaying alerts--%>
-                <div id="alertsDiv"></div>
 
                 <div class="col-sm-12 row">
                     <div class="radio">
@@ -185,17 +182,15 @@ cancel button functionalities
                                         <label class="control-label"><u>Shift:</u> </label>
                                         <div class="controls">
                                             <select class="form-control" name="eventCampus" id="eventCampus">
-                                                <option value='all' id='allCampuses' disabled="true" selected>Select
-                                                    Campus
-                                                </option>
-                                                <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                                <option value="SURREY" class="SURREY">SURREY</option>
-                                                <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                <option value="" disabled selected>Select Campus</option>
+                                                <option value="BURNABY" class="BURNABY">Burnaby</option>
+                                                <option value="SURREY" class="SURREY">Surrey</option>
+                                                <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
                                             </select>
 
                                             <select class="form-control" name="eventTitle" id="eventTitle">
 
-                                                <option value="SURREY" disabled="true" selected="selected">Select Surrey
+                                                <option value="SURREY" disabled selected="selected">Select Surrey
                                                     Shift
                                                 </option>
 
@@ -205,7 +200,7 @@ cancel button functionalities
                                                     </option>
                                                 </c:forEach>
 
-                                                <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                <option value="VANCOUVER" disabled selected="selected">Select
                                                     Vancouver Shift
                                                 </option>
 
@@ -244,6 +239,7 @@ cancel button functionalities
                                             <div class="controls">
                                                 <select class="form-control" name="eventMember" id="eventMember"
                                                         data-tab="${user.getUsername()}">
+                                                    <option value="" disabled selected>Select User</option>
                                                     <c:forEach items="${users}" var="user">
                                                         <option value="${user.getUsername()}">
                                                                 ${user.getUsername()}
@@ -260,9 +256,14 @@ cancel button functionalities
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Required Training:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1"
-                                                   class="form-control" name="eventMember" id="eventRequiredTraining"
-                                                   placeholder="Enter the Requirements">
+                                            <div class="controls">
+                                                <select class="form-control" id="eventRequiredTraining">
+                                                    <option value="" selected>None</option>
+                                                    <c:forEach items="${TRAININGTYPES}" var="training">
+                                                        <option value="${training}">${training}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -309,6 +310,16 @@ cancel button functionalities
                                 <b><u>End:</u> </b><span id="modalEnd"></span><br>
                                 <hr>
 
+                                <b><u>Availability: </u></b>
+                                <select id="availabilitySelect" class="form-control">
+                                    <option value="NO_RESPONSE">No Response</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DECLINED">Declined</option>
+                                </select>
+                                <span id="modalAvailability"></span>
+
+                                <hr>
+
                                 <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
                                 <b><u>Location:</u> </b><span id="modalLocation"></span><br>
                                 <b><u>ID:</u> </b><span id="modalID"></span><br>
@@ -322,9 +333,12 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                    Availability
+                                </button>
                                 <c:choose>
                                     <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
-                                        <button class="btn btn-primary" id="btnConfirmAvailability">Update Availability</button>
+
                                     </c:when>
                                     <c:otherwise>
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zeta.Models.User" %><%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>
@@ -75,6 +75,11 @@
 </style>
 
 <body>
+
+<%
+    User user = (User) session.getAttribute("user");
+    pageContext.setAttribute("loggedInUser", user.getUsername());
+%>
 
 <script>
     var users = {
@@ -337,6 +342,12 @@
             var tab = $(this).parent().attr("data-tab");
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
+
+            if ('${loggedInUser}' === tab) {
+                $('#removeButton').hide();
+            } else {
+                $('#removeButton').show();
+            }
         });
 
         $("#filter input").click(function () {

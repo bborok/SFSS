@@ -30,8 +30,7 @@ public class UserController {
     //Tested with URL:
     //localhost:8080/user/add?studentNumber=36&name=Eric&email=eric@sfu.ca&phoneNumber=656456789&role=team_lead&campus=surrey&accountCode=654
     @PostMapping("/add")
-    public ResponseEntity addUserToDatabase(@RequestBody User user, @RequestParam("file")MultipartFile file) {
-        uploadImage(file, user.getUsername());
+    public ResponseEntity addUserToDatabase(@RequestBody User user) {
         if (userData.getUser(user.getUsername()) == null) {
             if (userData.addUser(user)) {
                 return new ResponseEntity(HttpStatus.OK);

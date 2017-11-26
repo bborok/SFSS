@@ -40,4 +40,6 @@ public interface UserData {
 
     // Removes record of training for particular user and training
     public boolean removeTraining(String username, String training);
+
+    public boolean updateVolunteerHours(String username, int hours);
 }

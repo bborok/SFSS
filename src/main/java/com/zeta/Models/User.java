@@ -18,6 +18,7 @@ public class User {
     private String callSign;
     private List<Training> training;
     private Boolean isDeactivated;
+    private int volunteerHours;
 
     //TODO: Uncomment and implement this
     //private List<User> contacts = new ArrayList<User>();
@@ -31,7 +32,8 @@ public class User {
     } //Required by JPA
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Long altPhoneNumber,
-                Role role, Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
+                Role role, Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated,
+                int volunteerHours) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -43,6 +45,7 @@ public class User {
         this.callSign = callSign;
         this.training = training;
         this.isDeactivated = isDeactivated;
+        this.volunteerHours = volunteerHours;
     }
 
     public String getUsername() {
@@ -128,4 +131,8 @@ public class User {
     public Long getAltPhoneNumber() { return altPhoneNumber; }
 
     public void setAltPhoneNumber(Long altPhoneNumber) { this.altPhoneNumber = altPhoneNumber; }
+
+    public int getVolunteerHours() { return volunteerHours; }
+
+    public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
 }

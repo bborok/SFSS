@@ -97,7 +97,7 @@ public class UserDao implements UserData {
         User user;
         try {
                 String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                        "CallSign, isDeactivated from User where Username = ? and " +
+                        "CallSign, isDeactivated, TotalVolunteerHours from User where Username = ? and " +
                         "(select 1 from User where Username = ?) and isDeactivated = 0";
                 user = jdbcTemplate.queryForObject(userSQL, new Object[] {username, username}, new UserRowMapper());
 
@@ -170,6 +170,17 @@ public class UserDao implements UserData {
             String sql = "delete from UserTraining where User = ?, Training = ?";
             jdbcTemplate.update(sql, username, training);
 
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateVolunteerHours(String username, int hours) {
+        try {
+            String sql = "update User set VolunteerHours = ? where User = ?";
+            jdbcTemplate.update(sql, hours, username);
         } catch (Exception e) {
             return false;
         }

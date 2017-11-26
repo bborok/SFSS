@@ -35,6 +35,7 @@ public class UserRowMapper implements RowMapper<User> {
 
         user.setCallSign(rs.getString("CallSign"));
         user.setIsDeactivated(rs.getBoolean("isDeactivated"));
+        user.setVolunteerHours(rs.getInt("TotalVolunteerHours"));
 
         return user;
     }

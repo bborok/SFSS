@@ -72,6 +72,9 @@
     .click a {
         color: chocolate;
     }
+
+    #userimage:hover {opacity: 0.7;}
+
 </style>
 
 <body>
@@ -119,8 +122,9 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Add User</button>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
+                <br>
 
                 <div id="userModal" class="modal fade">
                     <div class="modal-dialog">
@@ -239,7 +243,7 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" data-toggle="modal" data-target="#details" class="img-responsive" height="300"
+                                <img src="resources/img/etc/annonymous.jpg" id="userimage" data-toggle="modal" data-target="#details" class="img-responsive" height="300"
                                      width="300">
                             </center>
 
@@ -296,7 +300,7 @@
                             </div>
                         </c:forEach>
 
-                        <div>
+                        <div class="row">
                             <button type="button" class="btn btn-primary" id="editButton">Edit User</button>
                             <button type="button" class="btn btn-primary" id="removeButton">Remove User</button>
                         </div>

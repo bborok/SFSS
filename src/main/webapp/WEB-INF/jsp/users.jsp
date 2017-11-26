@@ -255,16 +255,17 @@
                                             <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
                                         </div>
                                         <br>
-                                        <div style="float: left">
-                                            <b><u>Username:</u></b><c:out value="${user.username}"/><br>
-                                            <b><u>Student Number:</u></b><c:out value="${user.studentNumber}"/><br>
-                                            <b><u>Full Name:</u></b><c:out value="${user.name}"/><br>
-                                            <b><u>Email:</u></b><c:out value="${user.email}"/><br>
-                                            <b><u>Phone Number:</u></b><c:out value="${user.phoneNumber}"/><br>
+                                        <div align="left" style="padding-left: 15px">
+                                            <b><u>Username: </u></b><c:out value="${user.username}"/><br>
+                                            <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
+                                            <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
+                                            <b><u>Email: </u></b><c:out value="${user.email}"/><br>
+                                            <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
                                             <hr>
-                                            <b><u>Role:</u></b><c:out value="${user.preferredCampus}"/><br>
-                                            <b><u>Call Sign:</u></b><c:out value="${user.callSign}"/><br>
-                                            <hr>
+                                            <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
+                                            <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
+                                            <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+
                                         </div>
 
                                         <div class="modal-footer">

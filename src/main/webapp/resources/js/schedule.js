@@ -1,16 +1,24 @@
-var dateFormat = "YYYY-MM-DD HH:mm:ss";
-// var dateTimeInputFormat = "YYYY-MM-DD'T'HH:mm:ss";
+var dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
+var dateFormat = "YYYY-MM-DD";
+var timeFormat = "HH:mm:ss";
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
-var startTimeInput;
-var endTimeInput;
 
 $(document).ready(function () {
-    csrfAndAjaxSetup();
 
-    startTimeInput = $('#startTime');
-    endTimeInput = $('#endTime');
+    var timePickerOptions = {
+        format: 'LT',
+        stepping: 15
+    };
+
+    $('#date').datetimepicker({
+        format: 'LL'
+    });
+    $('#startTime').datetimepicker(timePickerOptions);
+    $('#endTime').datetimepicker(timePickerOptions);
+
+    csrfAndAjaxSetup();
     initCalendar();
     initEventHandlers();
 });
@@ -177,10 +185,9 @@ var eventRenderHandler = function (event, element) {
 };
 
 var selectEventHandler = function (start, end) {
-    var myStart = moment(start).format("YYYY-MM-DD[T]HH:mm:ss");
-    var myEnd = moment(end).format("YYYY-MM-DD[T]HH:mm:ss");
-    startTimeInput.val(myStart);
-    endTimeInput.val(myEnd);
+    $('#date').data("DateTimePicker").date(start);
+    $('#startTime').data("DateTimePicker").date(start);
+    $('#endTime').data("DateTimePicker").date(end);
     resetFormFields();
     $('#createEventModal').modal('show'); //popup modal
 };
@@ -214,8 +221,8 @@ var eventClickHandler = function (event) {
         $('#fullCalModal').modal('hide');
     });
 
-    var eventStart = moment(event.start).format(dateFormat);
-    var currentDate = moment().format(dateFormat);
+    var eventStart = moment(event.start).format(dateTimeFormat);
+    var currentDate = moment().format(dateTimeFormat);
 
     //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
     if (moment(eventStart).isAfter(currentDate)) {
@@ -232,15 +239,15 @@ function doSubmit() {
     var eventTitleElement = $('#eventTitle');
     $("#createEventModal").modal('hide');
 
-    var start = moment(new Date($('#startTime').val())).format(dateFormat);
-    var end = moment(new Date($('#endTime').val())).format(dateFormat);
-    var date = moment(new Date($('#startTime').val())).format("YYYY-MM-DD");
+    var date = $('#date').data("DateTimePicker").date().format(dateFormat);
+    var startTime = $('#startTime').data("DateTimePicker").date().format(timeFormat);
+    var endTime = $('#endTime').data("DateTimePicker").date().format(timeFormat);
 
     var shift = {
         title: eventTitleElement.find(":selected").attr("class"),
         date: date,
-        start: start,
-        end: end,
+        start: convertToDateFormat(date, startTime),
+        end: convertToDateFormat(date, endTime),
         campus: $('#eventCampus').val(),
         username: $('#eventMember').val(),
         location: $('#eventLocation').val(),
@@ -346,4 +353,8 @@ function filter(calEvent) {
     }
 
     return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+}
+
+function convertToDateFormat(start, end) {
+    return start + ' ' + end;
 }

@@ -52,8 +52,8 @@
     %>
 
     <script>
-        var user = "${user.username}";
-//          var user = "bobaec"; // for local use
+        <%--var user = "${user.username}";--%>
+          var user = "bobaec"; // for local use
 
         var announce = {
             <c:forEach items="${announcements}" var = "announcement">
@@ -64,10 +64,10 @@
                 date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />',
                 campus : '${announcement.campus}',
-                id : ${announcement.id},
+                role : ${user.role},
+                id : ${announcement.id}
 
-                role : ${user.role}
-            },
+        },
             </c:forEach>
         };
 

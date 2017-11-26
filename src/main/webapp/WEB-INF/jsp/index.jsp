@@ -64,6 +64,8 @@
                 date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />',
                 campus : '${announcement.campus}',
+                id : ${announcement.id},
+
                 role : ${user.role}
             },
             </c:forEach>
@@ -205,7 +207,7 @@
                             </div>
                         </div>
                         <div class="controls" id = "sortAnnounce" style="width:65%;">
-
+                            <div id="alertsDiv"></div>
                             <c:forEach items="${announcements}" var = "announcement">
                                 <div class = "check" id = "${announcement.id}">
                                 <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
@@ -218,10 +220,10 @@
                                     <div class = "panel-body" id = "announceDate">Date:
                                         <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />
-                                    </div>                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                    </div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
                                         <button type="button" class="btn btn-primary editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
                                         <button type="button" class="btn btn-primary removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
-
                                     </div>
                                 </div>
                                 </div>
@@ -230,7 +232,7 @@
                         </div>
 
                     </div>
-                <hr><br>
+                <hr><br><br>
                 <div class="col-sm-3">
                     <center>
                         <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
@@ -349,27 +351,24 @@
                     "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
 
                     filterArray[index].date +
-                    <%--"<fmt:formatDate type = 'both' dateStyle = 'medium' timeStyle = 'medium' value = '" +--%>
-                    <%--filterArray[index].date + "'/>'"--%>
                      "</div>" +
-
-
                     "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
-                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + "onclick='doEdit('" +
-                    filterArray[index].id + "," + filterArray[index].title + "," + filterArray[index].message + "," + filterArray[index].campus + "," +
-                    "')>Edit Announcement</button>" +
-                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + "onclick='doRemove('" +
-                    filterArray[index].id + "," + "')>Remove Announcement</button>" +
+                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + " onclick='doEdit(" + filterArray[index].id +
+                    ',"' + filterArray[index].title + '"' + ',"' + filterArray[index].message + '"' + ',"' + filterArray[index].campus + '"' +
+                ")'>Edit Announcement</button>" +
+                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + " onclick='doRemove(" + filterArray[index].id +
+                ")'>Remove Announcement</button>" +
                     "</div></div></div>"
 
         }
+
         console.log(filterArray);
         if (htmlAdd.length == 0) {
             var emptyAdd = "";
             emptyAdd += "<div class ='empty'>" +
                     "<div class = 'panel panel-primary' style='text-align:left'>" +
                     "<div class = 'panel-heading'>" + "No announcements to show" +
-                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"
+                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>" + "<hr>" + "<br>";
 
             $('#sortAnnounce').empty();
             $('#sortAnnounce').append(emptyAdd);
@@ -380,7 +379,6 @@
         }
 
     });
-
 
     function doEdit(id, title, message, campus) {
 
@@ -405,6 +403,7 @@
                 "message": $('#announceSaveMessage').val(),
                 "campus": $('#announceSaveCampus').val().toUpperCase().toString()
             };
+            $('#editAnnouncementModal').modal('hide');
 
             $.ajax({
                 type: 'POST',
@@ -414,13 +413,13 @@
                 url: api + '/announcements/add',
                 data: JSON.stringify(announcement),
                 success: function() {
-                    alert("Saved successfully");
-                    location.reload();
+                    displaySuccessAlert('Saving edited ' + announcement.title + ' to database...');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                 },
-                error: function(e) {
-                    alert(e);
-
-                    alert("error editing announcement to DB");
+                error: function() {
+                    displayErrorAlert(('Failed to save ' + announcement.title + ' to database.'));
                 },
                 contentType: "application/json; charset=utf-8"
             });
@@ -441,11 +440,13 @@
              data: JSON.stringify(ID),
 
              success: function() {
-                 alert("Removed successfully");
-                 location.reload();
+                 displaySuccessAlert('Removing ' + ID + ' from database...');
+                 setTimeout(function() {
+                     location.reload();
+                 }, 3000);
              },
              error: function() {
-                 alert("error removing " + ID + "from db");
+                 displayErrorAlert(('Failed to remove ' + ID + ' from database.'));
              },
              contentType: "application/json; charset=utf-8"
          });

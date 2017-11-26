@@ -79,10 +79,10 @@
 
 <body>
 
-<%--<%--%>
-    <%--User user = (User) session.getAttribute("user");--%>
-    <%--pageContext.setAttribute("loggedInUser", user.getUsername());--%>
-<%--%>--%>
+<%
+    User user = (User) session.getAttribute("user");
+    pageContext.setAttribute("loggedInUser", user.getUsername());
+%>
 
 <script>
     var users = {
@@ -167,16 +167,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
-                                            <%--<div class="controls">--%>
-                                                <%--<select class="form-control" name="role" id="userRole" required>--%>
-                                                    <%--<option value="" disabled="disabled" selected="selected">Select A Role--%>
-                                                    <%--<c:forEach items="${roles}" var="role">--%>
-                                                        <%--<option value="${role.name()}">--%>
-                                                            <%--${role.name()}--%>
-                                                        <%--</option>--%>
-                                                    <%--</c:forEach>--%>
-                                                <%--</select>--%>
-                                            <%--</div>--%>
+                                            <div class="controls">
+                                                <select class="form-control" name="role" id="userRole" required>
+                                                    <option value="" disabled="disabled" selected="selected">Select A Role
+                                                    <c:forEach items="${roles}" var="role">
+                                                        <option value="${role.name()}">
+                                                            ${role.name()}
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="form-group row-fluid">
                                             <label class="control-label"><u>Preferred Campus:</u></label>

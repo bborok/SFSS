@@ -255,10 +255,15 @@
                                             <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
                                         </div>
                                         <br>
-                                        <div style="padding-left: 15px">
-                                            <b><u>Date:</u> </b><span id="modalDate"></span><br>
-                                            <b><u>Start:</u> </b><span id="modalStart"></span><br>
-                                            <b><u>End:</u> </b><span id="modalEnd"></span><br>
+                                        <div style="float: left">
+                                            <b><u>Username:</u></b><c:out value="${user.username}"/><br>
+                                            <b><u>Student Number:</u></b><c:out value="${user.studentNumber}"/><br>
+                                            <b><u>Full Name:</u></b><c:out value="${user.name}"/><br>
+                                            <b><u>Email:</u></b><c:out value="${user.email}"/><br>
+                                            <b><u>Phone Number:</u></b><c:out value="${user.phoneNumber}"/><br>
+                                            <hr>
+                                            <b><u>Role:</u></b><c:out value="${user.preferredCampus}"/><br>
+                                            <b><u>Call Sign:</u></b><c:out value="${user.callSign}"/><br>
                                             <hr>
                                         </div>
 

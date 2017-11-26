@@ -76,10 +76,10 @@
 
 <body>
 
-<%
-    User user = (User) session.getAttribute("user");
-    pageContext.setAttribute("loggedInUser", user.getUsername());
-%>
+<%--<%--%>
+    <%--User user = (User) session.getAttribute("user");--%>
+    <%--pageContext.setAttribute("loggedInUser", user.getUsername());--%>
+<%--%>--%>
 
 <script>
     var users = {
@@ -163,16 +163,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
-                                            <div class="controls">
-                                                <select class="form-control" name="role" id="userRole" required>
-                                                    <option value="" disabled="disabled" selected="selected">Select A Role
-                                                    <c:forEach items="${roles}" var="role">
-                                                        <option value="${role.name()}">
-                                                            ${role.name()}
-                                                        </option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
+                                            <%--<div class="controls">--%>
+                                                <%--<select class="form-control" name="role" id="userRole" required>--%>
+                                                    <%--<option value="" disabled="disabled" selected="selected">Select A Role--%>
+                                                    <%--<c:forEach items="${roles}" var="role">--%>
+                                                        <%--<option value="${role.name()}">--%>
+                                                            <%--${role.name()}--%>
+                                                        <%--</option>--%>
+                                                    <%--</c:forEach>--%>
+                                                <%--</select>--%>
+                                            <%--</div>--%>
                                         </div>
                                         <div class="form-group row-fluid">
                                             <label class="control-label"><u>Preferred Campus:</u></label>
@@ -239,9 +239,37 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
+                                <img src="resources/img/etc/annonymous.jpg" data-toggle="modal" data-target="#details" class="img-responsive" height="300"
                                      width="300">
                             </center>
+
+                            <div id="details" class="modal fade">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span>
+                                                <span class="sr-only">close</span></button>
+                                            <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
+                                        </div>
+                                        <br>
+                                        <div style="padding-left: 15px">
+                                            <b><u>Date:</u> </b><span id="modalDate"></span><br>
+                                            <b><u>Start:</u> </b><span id="modalStart"></span><br>
+                                            <b><u>End:</u> </b><span id="modalEnd"></span><br>
+                                            <hr>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <h3>User Profile</h3>
                             <h5>Select User from the list</h5>
                         </div>

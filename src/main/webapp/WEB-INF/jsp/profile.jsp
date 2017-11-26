@@ -137,6 +137,7 @@
                             <h3>Email: ${user.email}</h3>
                             <p id="phoneNum"></p>
                             <p id="altPhone"></p>
+                            <h3>Volunteer Hours: ${user.volunteerHours}</h3>
                             <h3>Qualifications:</h3>
                         </div>
 
@@ -148,7 +149,7 @@
                             $('#phoneNum').html('<h3>Phone Number: ' + cleanPhone + '</h3>');
 
                             var altNum = '${user.altPhoneNumber}';
-                            if (altNum !== '') {
+                            if (altNum !== '0') {
                                 var cleanAltPhone = '(' + altNum.substring(0, 3) + ') ' + altNum.substring(3, 6)
                                     + '-' + altNum.substring(6);
 

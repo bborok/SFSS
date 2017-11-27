@@ -19,19 +19,16 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%--Lodash--%>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
-    <script src='resources/js/notify.js'></script>
+    <%--Moment.js--%>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
+    <%--Notify.js--%>
+    <script src='resources/js/notify.js'></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
-
-    <!-- FullCalendar Resources -->
-    <%--<link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>--%>
-    <%--<script src='resources/lib/jquery.min.js'></script>--%>
-    <%--<script src='resources/lib/moment.min.js'></script>--%>
-    <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
     <%
         User user = (User) session.getAttribute("user");
@@ -73,8 +70,14 @@
 
     <!-- Bootstrap core CSS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 
+    <%--FullCalendar--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"></script>--%>
     <!-- Custom styles for this template -->
 
     <%--fullCalendarCSS.css was throwing errors in Chrome dev console--%>
@@ -216,15 +219,35 @@
                                     </div>
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group">
-
-                                            <label class="control-label" id="addShiftTime">
-                                                <u>Date:</u>
-                                            </label>
-                                            <div class="controls">
-                                                Start: <input type="datetime-local" id="startTime"/><br>
-                                                End: <input type="datetime-local" id="endTime"/>
+                                            <label><u>Date:</u></label>
+                                            <div class='input-group date' id='date'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label><u>Start:</u></label>
+                                            <div class='input-group date' id='startTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label id="addShiftTime"><u>End:</u></label>
+                                            <div class='input-group date' id='endTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="control-label"><u>Member:</u></label>
                                             <div class="controls">
@@ -256,7 +279,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="control-label">Notes: </label>
                                             <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px"

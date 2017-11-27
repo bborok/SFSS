@@ -1,9 +1,13 @@
+var alertsDiv;
+
 $(document).ready(function() {
 
     $('#submitButton').on('click', function (e) {
         e.preventDefault();
         doSubmit();
     });
+
+    alertsDiv = $('#alertsDiv');
 
     $('#sortAnnounce #sortAnnounce2').sort(sortDescending).appendTo('#sortAnnounce');
 
@@ -29,26 +33,24 @@ $(document).ready(function() {
             url: api + '/announcements/add',
             data: JSON.stringify(announcement),
             success: function() {
-                alert("Saved successfully");
-                location.reload();
+                displaySuccessAlert('Successfully added ' + announcement.title + ' to database.');
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+
             },
             error: function() {
-                alert("error saving announcement to DB");
+                displayErrorAlert(('Failed to add ' + announcement.title + ' to database.'));
             },
             contentType: "application/json; charset=utf-8"
         });
     }
-
-
-
     $('#createAnnouncement').on('click', function () {
         $('#createAnnouncementModal').modal('show');
     });
 });
 
 function sortDescending(a, b) {
-
-    // console.log(burnabySort);
     var date1 = $(a).find("#announceDate").text();
     date1 = date1.split('-');
 
@@ -76,3 +78,21 @@ function allOrNone(a) {
             checkBox[i].checked = a.checked;
     }
 }
+
+var displayErrorAlert = function (msg) {
+    alertsDiv.append(
+        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Danger! </strong> " + msg +
+        "</div>"
+    );
+};
+
+var displaySuccessAlert = function (msg) {
+    alertsDiv.append(
+        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
+        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+        "    <strong>Success! </strong> " + msg +
+        "</div>"
+    );
+};

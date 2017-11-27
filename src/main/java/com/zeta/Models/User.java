@@ -20,6 +20,7 @@ public class User {
     private int driversLicenseLevel;
     private Date driversLicenseExpirationDate;
     private List<Training> training;
+    private List<String> languages;
     private Boolean isDeactivated;
 
     public User() {
@@ -27,7 +28,7 @@ public class User {
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
                 Role role, Campus preferredCampus, String callSign, int driversLicenseLevel, Date driversLicenseExpirationDate,
-                List<Training> training, Boolean isDeactivated) {
+                List<Training> training, List<String> languages, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -40,6 +41,7 @@ public class User {
         this.driversLicenseLevel = driversLicenseLevel;
         this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
+        this.languages = languages;
         this.isDeactivated = isDeactivated;
     }
 
@@ -137,6 +139,14 @@ public class User {
 
     public void setTraining(List<Training> training) {
         this.training = training;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 
     public void setIsDeactivated(Boolean isDeactivated) {

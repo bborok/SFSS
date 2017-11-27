@@ -26,6 +26,8 @@ public interface UserData {
     // Returns user if username exists
     public User getUser(String Username);
 
+    public List<String> getUserLanguages(User user);
+
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
 

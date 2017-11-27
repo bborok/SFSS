@@ -1,5 +1,6 @@
 package com.zeta.Models;
 
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -11,34 +12,33 @@ public class User {
     private String name;
     private String email;
     private Long phoneNumber;
+    private int altPhoneNumber;
     private Campus preferredCampus;
     private Long studentNumber;
     private Role role;
     private String callSign;
+    private int driversLicenseLevel;
+    private Date driversLicenseExpirationDate;
     private List<Training> training;
     private Boolean isDeactivated;
-
-    //TODO: Uncomment and implement this
-    //private List<User> contacts = new ArrayList<User>();
-
-
-
-//    @Column(name = "AccountCode", nullable = true)
-//    private Long accountCode;
 
     public User() {
     } //Required by JPA
 
-    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
-                Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
+    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
+                Role role, Campus preferredCampus, String callSign, int driversLicenseLevel, Date driversLicenseExpirationDate,
+                List<Training> training, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.altPhoneNumber = altPhoneNumber;
         this.role = role;
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
+        this.driversLicenseLevel = driversLicenseLevel;
+        this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
         this.isDeactivated = isDeactivated;
     }
@@ -83,6 +83,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public int getAltPhoneNumber() {
+        return altPhoneNumber;
+    }
+
+    public void setAltPhoneNumber(int altPhoneNumber) {
+        this.altPhoneNumber = altPhoneNumber;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -105,6 +113,22 @@ public class User {
 
     public void setCallSign(String callSign) {
         this.callSign = callSign;
+    }
+
+    public int getDriversLicenseLevel() {
+        return driversLicenseLevel;
+    }
+
+    public void setDriversLicenseLevel(int driversLicenseLevel) {
+        this.driversLicenseLevel = driversLicenseLevel;
+    }
+
+    public Date getDriversLicenseExpirationDate() {
+        return driversLicenseExpirationDate;
+    }
+
+    public void setDriversLicenseExpirationDate(Date driversLicenseExpirationDate) {
+        this.driversLicenseExpirationDate = driversLicenseExpirationDate;
     }
 
     public List<Training> getTraining() {

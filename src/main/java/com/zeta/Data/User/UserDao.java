@@ -24,6 +24,7 @@ public class UserDao implements UserData {
     @Autowired
     public UserDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+
         try {
             this.con = dataSource.getConnection();
         } catch (SQLException e) {
@@ -33,13 +34,12 @@ public class UserDao implements UserData {
 
     @Override
     public boolean addUser(User user) {
+        boolean activeUser = true;  // User is active when created
         try {
             String addUserSQL =
                     "INSERT INTO User (Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, " +
                             "StdNum, Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationLevel" +
                             "isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            String addUserLanguageSQL = "insert into UserLanguage (User, Language) values (?, ?)";
 
             con.setAutoCommit(false);
 
@@ -55,25 +55,28 @@ public class UserDao implements UserData {
             addUser.setString(9, user.getCallSign());
             addUser.setLong(10, user.getDriversLicenseLevel());
             addUser.setDate(11, (Date) user.getDriversLicenseExpirationDate());
-            addUser.setBoolean(12, user.getIsDeactivated());
+            addUser.setBoolean(12, activeUser);
 
             addUser.execute();
 
-            addUserLanguage(user, addUserLanguageSQL);
+            addUserLanguage(user);
 
             con.commit();
+
+            return true;
 
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
-    private void addUserLanguage(User user, String sql) throws SQLException {
+    private void addUserLanguage(User user) throws SQLException {
+
+        String addUserLanguageSQL = "insert into UserLanguage (User, Language) values (?, ?)";
 
         for (String language : user.getLanguages()) {
 
-            PreparedStatement insertUserLanguage = con.prepareStatement(sql);
+            PreparedStatement insertUserLanguage = con.prepareStatement(addUserLanguageSQL);
             insertUserLanguage.setString(1, user.getUsername());
             insertUserLanguage.setString(2, language);
 
@@ -98,8 +101,6 @@ public class UserDao implements UserData {
                     "PreferredCampus = ?, StdNum = ?, Role = ?, CallSign = ?, DriversLicenseLevel = ?, " +
                     "DriversLicenseExpirationDate = ? WHERE Username = ?";
 
-            String addUserLanguageSQL = "insert into UserLanguage (User, Language) values (?, ?)";
-
             PreparedStatement updateUser = con.prepareStatement(updateUserSQL);
             updateUser.setString(1, user.getName());
             updateUser.setString(2, user.getEmail());
@@ -117,14 +118,15 @@ public class UserDao implements UserData {
 
             clearUserLanguage(user);
 
-            addUserLanguage(user, addUserLanguageSQL);
+            addUserLanguage(user);
 
             con.commit();
+
+            return true;
 
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
@@ -132,10 +134,11 @@ public class UserDao implements UserData {
         try {
             String sql = "UPDATE User SET isDeactivated = 1 WHERE Username = ?";
             jdbcTemplate.update(sql, username);
+            return true;
+
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
@@ -143,24 +146,24 @@ public class UserDao implements UserData {
         try {
             String sql = "UPDATE User SET isDeactivated = 0 WHERE Username = ?";
             jdbcTemplate.update(sql, username);
+            return true;
+
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
     public List<User> getDeactivatedUsers() {
-        List<User> users;
         try {
-            String sql = "select Username, Name, Email, PhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, isDeactivated from User where isDeactivated = 1";
+            String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
+                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
+                    "from User where isDeactivated = 1";
 
-            users = jdbcTemplate.query(sql, new UserRowMapper());
+            return jdbcTemplate.query(sql, new UserRowMapper());
         } catch (Exception e) {
             return null;
         }
-        return users;
     }
 
     @Override
@@ -170,12 +173,11 @@ public class UserDao implements UserData {
 
     @Override
     public User getUser(String username) {
-        User user;
         try {
             String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, " +
                     "Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
                     "from User where Username = ? and (select 1 from User where Username = ?) and isDeactivated = 0";
-            user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
+            User user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
 
             user.setTraining(getUserTraining(user));
 
@@ -183,10 +185,10 @@ public class UserDao implements UserData {
 
             user.setCertificates(getUserCertificates(user));
 
+            return user;
         } catch (Exception e) {
             return null;
         }
-        return user;
     }
 
     @Override
@@ -202,30 +204,27 @@ public class UserDao implements UserData {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users;
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
                     "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
                     "from User where isDeactivated = 0";
 
-            users = jdbcTemplate.query(sql, new UserRowMapper());
+            return jdbcTemplate.query(sql, new UserRowMapper());
+
         } catch (Exception e) {
             return null;
         }
-        return users;
     }
 
     @Override
     public List<Training> getUserTraining(User user) {
-        List<Training> list;
         try {
             String sql = "select Training, Hours, Date from UserTraining where User = ?";
-            list = jdbcTemplate.query(sql, new Object[]{user.getUsername()}, new UserTrainingRowMapper());
+            return jdbcTemplate.query(sql, new Object[]{user.getUsername()}, new UserTrainingRowMapper());
 
         } catch (Exception e) {
             return null;
         }
-        return list;
     }
 
     @Override
@@ -233,11 +232,11 @@ public class UserDao implements UserData {
         try {
             String sql = "insert into UserTraining (User, Training, Date, Hours) values (?, ?, ?, ?)";
             jdbcTemplate.update(sql, username, training, date, hours);
+            return true;
 
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
@@ -245,10 +244,11 @@ public class UserDao implements UserData {
         try {
             String sql = "update UserTraining set Date = ?, Hours = ? where User = ? and Training = ?";
             jdbcTemplate.update(sql, date, hours, username, training);
+            return true;
+
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
@@ -256,20 +256,20 @@ public class UserDao implements UserData {
         try {
             String sql = "delete from UserTraining where User = ?, Training = ?";
             jdbcTemplate.update(sql, username, training);
+            return true;
 
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     @Override
     public List<Certificate> getUserCertificates(User user) {
         try {
             String sql = "select CertificateName, Level, Number, ExpirationDate from UserCertificate where User = ?";
-            return jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new UserCertificateRowMapper());
+            return jdbcTemplate.query(sql, new Object[]{user.getUsername()}, new UserCertificateRowMapper());
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -293,7 +293,6 @@ public class UserDao implements UserData {
     @Override
     public boolean updateUserCertificates(User user) {
         try {
-
             con.setAutoCommit(false);
 
             clearCertificates(user);
@@ -301,7 +300,6 @@ public class UserDao implements UserData {
             addUserCertificates(user);
 
             con.commit();
-
             return true;
 
         } catch (Exception e) {

@@ -27,8 +27,6 @@ public interface UserData {
     // Returns user if username exists
     public User getUser(String Username);
 
-    public List<Certificate> getUserCertificates(User user);
-
     public List<String> getUserLanguages(User user);
 
     // Returns list of all active users, ones that have access to program
@@ -45,4 +43,12 @@ public interface UserData {
 
     // Removes record of training for particular user and training
     public boolean removeTraining(String username, String training);
+
+    public List<Certificate> getUserCertificates(User user);
+
+    public boolean addUserCertificate(User user, Certificate certificate);
+
+    public boolean updateUserCertificates(User user);
+
+    public boolean removeUserCertificate(User user, String CertificateName);
 }

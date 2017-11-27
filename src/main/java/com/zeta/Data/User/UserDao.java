@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.security.spec.ECField;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -182,21 +181,12 @@ public class UserDao implements UserData {
 
             user.setLanguages(getUserLanguages(user));
 
+            user.setCertificates(getUserCertificates(user));
+
         } catch (Exception e) {
             return null;
         }
         return user;
-    }
-
-    @Override
-    public List<Certificate> getUserCertificates(User user) {
-        try {
-            String sql = "select CertificateName, Level, Number, ExpirationDate from UserCertificate where User = ?";
-            return jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new UserCertificateRowMapper());
-
-        } catch(Exception e) {
-            return null;
-        }
     }
 
     @Override
@@ -271,5 +261,93 @@ public class UserDao implements UserData {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Certificate> getUserCertificates(User user) {
+        try {
+            String sql = "select CertificateName, Level, Number, ExpirationDate from UserCertificate where User = ?";
+            return jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new UserCertificateRowMapper());
+
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean addUserCertificate(User user, Certificate certificate) {
+        try {
+            String sql = "insert into UserCertificate (User, CertificateName, Level, Number, ExpirationDate) " +
+                    "values (?, ?, ?, ?)";
+
+            jdbcTemplate.update(sql, user.getUsername(), certificate.getName(), certificate.getLevel(),
+                    certificate.getNumber(), certificate.getExpirationDate());
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateUserCertificates(User user) {
+        try {
+
+            con.setAutoCommit(false);
+
+            clearCertificates(user);
+
+            addUserCertificates(user);
+
+            con.commit();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // To be used in a PreparedStatement
+    private void clearCertificates(User user) throws SQLException {
+
+        String sql = "delete from UserCertificate where User = ?";
+
+        PreparedStatement removeCertificates = con.prepareStatement(sql);
+        removeCertificates.setString(1, user.getUsername());
+
+        removeCertificates.execute();
+    }
+
+    // To be used in PreparedStatement
+    private void addUserCertificates(User user) throws SQLException {
+        String sql = "insert into UserCertificate(User, CertificateName, Level, Number, ExpirationDate) values " +
+                "(?, ?, ?, ?, ?)";
+
+        for (Certificate certificate : user.getCertificates()) {
+
+            PreparedStatement addCertificate = con.prepareStatement(sql);
+            addCertificate.setString(1, user.getUsername());
+            addCertificate.setString(2, certificate.getName());
+            addCertificate.setString(3, certificate.getLevel());
+            addCertificate.setInt(4, certificate.getNumber());
+            addCertificate.setDate(5, (Date) certificate.getExpirationDate());
+
+            addCertificate.execute();
+        }
+    }
+
+    @Override
+    public boolean removeUserCertificate(User user, String certificateName) {
+        try {
+            String sql = "delete from UserCertificate where User = ? and CertificateName = ?";
+
+            jdbcTemplate.update(sql, user.getUsername(), certificateName);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

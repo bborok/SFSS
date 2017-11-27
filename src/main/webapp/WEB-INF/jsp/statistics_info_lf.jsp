@@ -15,46 +15,93 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+
     <title>SFU</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
-    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link href="/resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/css/form-elements.css">
     <link rel="stylesheet" href="/resources/css/style.css">
     <link rel="stylesheet" href="/resources/datatables/css/datatables.min.css">
 </head>
 
-<style>
-    #side-container{
-    }
-
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
-
-</style>
-
 <body>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
 
-    <jsp:include page="partfiles/sidebar.jsp"/>
+<div id="wrapper" style="padding-top: 56px">
+
+    <%--<jsp:include page="partfiles/sidebar.jsp"/>--%>
+        <div id="sidebar-wrapper" style="padding-top: 0px">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x "></i></span> Home</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/schedule"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span> Schedule</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/profile"><span class="fa-stack fa-lg pull-left"><i class="fa fa-user fa-stack-1x "></i></span> Profile</a>
+                </li>
+                <li class="sidebar-item active">
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span> Statistics</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li class="active"><a href="${pageContext.request.contextPath}/statistics/info_lf"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Lost & Found</a></li>
+                        <li><a href="${pageContext.request.contextPath}/statistics/public_contact"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Public Contact</a></li>
+
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/timecard"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow">Sign Out</b></a>
+                </li>
+
+
+                <li class="sidebar-item" style="padding-left: 40px;padding-top: 350px">
+                    <span class="fa-stack fa-lg pull-left" style="color: white"></span><b style="font-size: 15px;color: white"><u>Contact</u></b>
+                </li>
+                <li class="sidebar-item">
+                    <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> (778)-782-5425</b></a>
+                </li>
+                <li class="sidebar-item">
+                    <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-envelope-o fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> sfucsp@sfu.ca</b></a>
+                </li>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description">
                     <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
+
                     <div class="row">
                         <div class="col-md-8">
                             <ul class="pagination">
@@ -62,7 +109,7 @@
                                     <a href="#">Lost & Found</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/statistics_public_contact">Public Contact</a>
+                                    <a href="${pageContext.request.contextPath}/statistics/public_contact">Public Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -79,13 +126,13 @@
             <center>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Burnaby
+                        <input type="radio" name="options" id="option1" autocomplete="off" value="Burnaby"> Burnaby
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Surrey
+                        <input type="radio" name="options" id="option2" autocomplete="off" value="Surrey"> Surrey
                     </label>
                     <label class="btn btn-success">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Vancouver
+                        <input type="radio" name="options" id="option3" autocomplete="off" value="Vancouver"> Vancouver
                     </label>
                 </div>
             </center>
@@ -117,22 +164,25 @@
 <script src="/resources/bootstrap/js/bootstrap.js"></script>
 <script src="/resources/datatables/js/datatables.min.js"></script>
 <script src="/resources/js/echarts.common.min.js"></script>
-<script type="text/javascript">
+<script src="resources/js/sidebar_menu.js"></script>
 
+
+<script type="text/javascript">
+    var CAMPUS = "Burnaby";
 	//get chart element
     var myChart = echarts.init(document.getElementById('chart1'));
 
 	var table_title = [
-		"2017", "DEC16", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" 
+		"2017", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 	];
 	
 	var table1_data =  [
-		["Directions", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Lost&Found", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Payments", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["PhoneService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["KeyService", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-		["Others", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		["Directions", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Lost&Found", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Payments", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["PhoneService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["KeyService", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+		["Others", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
 	];
 	
 	var table2_data = [
@@ -166,7 +216,6 @@
 				{title: table_title[10], width: "20px"},
 				{title: table_title[11], width: "20px"},
 				{title: table_title[12], width: "20px"},
-				{title: table_title[13], width: "20px"},
 				{defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
 			],
 			autoWidth: false,
@@ -226,12 +275,97 @@
 			$(".save-btn").click();
 			setTimeout(300);
 			tmp_data = table1.rows().data();
+            var post_data = "[";
+            for (var i = 0; i < 6; i++) {
+                for (var j = 0; j < 12; j++) {
+                    post_data += tmp_data[i][j+1];
+                    if (i != 5 || j != 11) {
+                        post_data += ",";
+                    }
+                }
+            }
+            post_data += "]";
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                }
+            });
+            $.post("/statistics/info_lf/data/post",
+                {
+                    campus: CAMPUS,
+                    data: post_data
+                },
+                function(data,status){
+                    if (data.result == "success") {
+                        alert("update success");
+                    } else {
+                        alert("update failed");
+                    }
+                }
+            );
 			showChart(tmp_data);
 		});
-		
+
+        $("input:radio").change(function(){
+            $(".save-btn").click();
+            if ($(this).is(":checked")) {
+                CAMPUS = $(this).val();
+                getData();
+            }
+        });
+
 		showChart(table1_data);
+        getData();
+        $("#option1").click();
 	});
-	
+
+    function getData() {
+        $.get("/statistics/info_lf/data/get?campus=" + CAMPUS,
+            function(data,status){
+                table_title = data.title;
+                strs = ["directions", "lost & found", "payments", "phone services", "key services", "other inquiries"];
+                for(var i = 0; i < 12; i++) {
+                    table1_data[0][i+1] = "" + data[strs[0]][i];
+                    table1_data[1][i+1] = "" + data[strs[1]][i];
+                    table1_data[2][i+1] = "" + data[strs[2]][i];
+                    table1_data[3][i+1] = "" + data[strs[3]][i];
+                    table1_data[4][i+1] = "" + data[strs[4]][i];
+                    table1_data[5][i+1] = "" + data[strs[5]][i];
+                }
+                table1.destroy();
+                table1 = $('#table1').DataTable({
+                    data: table1_data,
+                    columns: [
+                        {title: table_title[0], width: "20px"},
+                        {title: table_title[1], width: "20px"},
+                        {title: table_title[2], width: "20px"},
+                        {title: table_title[3], width: "20px"},
+                        {title: table_title[4], width: "20px"},
+                        {title: table_title[5], width: "20px"},
+                        {title: table_title[6], width: "20px"},
+                        {title: table_title[7], width: "20px"},
+                        {title: table_title[8], width: "20px"},
+                        {title: table_title[9], width: "20px"},
+                        {title: table_title[10], width: "20px"},
+                        {title: table_title[11], width: "20px"},
+                        {title: table_title[12], width: "20px"},
+                        {defaultContent: "<button class='edit-btn'  type='button' hidden='true'>edit</button>"}
+                    ],
+                    autoWidth: false,
+                    ordering: false,
+                    bPaginate: false,
+                    bFilter: false,
+                    scrollX: true
+                });
+                showChart(table1_data);
+            }
+        );
+    }
+
 	function showChart(tmp_data){
 		data_to_show = [];
 		total_sum = 0;
@@ -383,6 +517,7 @@
 </script>
 
 <!-- Menu Toggle Script -->
+
 <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();

@@ -1,17 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PrivateAcc
-  Date: 2017-09-29
-  Time: 5:03 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.zeta.Models.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -26,18 +19,21 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%--Lodash--%>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+    <%--Moment.js--%>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <%--Notify.js--%>
+    <script src='resources/js/notify.js'></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
-    <!-- FullCalendar Resources -->
-    <%--<link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>--%>
-    <%--<script src='resources/lib/jquery.min.js'></script>--%>
-    <%--<script src='resources/lib/moment.min.js'></script>--%>
-    <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
-
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("user", user);
+    %>
     <script>
         var contextPath = '${pageContext.request.contextPath}';
         var api = contextPath +'/api';
@@ -47,73 +43,83 @@
         var iALLCAMPUSES = [];
         var iNOCAMPUSES = [];
         <c:forEach items="${BURNABYTASKS}" var="task">
-            iBURNABY.push("${task.taskName}");
+        iBURNABY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${SURREYTASKS}" var="task">
-            iSURREY.push("${task.taskName}");
+        iSURREY.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${VANCOUVERTASKS}" var="task">
-            iVANCOUVER.push("${task.taskName}");
+        iVANCOUVER.push("${task.taskName}");
         </c:forEach>
         <c:forEach items="${ALLTASKS}" var="task">
-            iALLCAMPUSES.push("${task.taskName}");
+        iALLCAMPUSES.push("${task.taskName}");
         </c:forEach>
-        console.log(iBURNABY);
+
+        <%--Fetch the currently logged in user from session--%>
+        var loggedInUser = {
+            username: "${user.username}",
+            name: "${user.name}",
+            email: "${user.email}",
+            phoneNumber: "${user.phoneNumber}",
+            preferredCampus: "${user.preferredCampus.toString()}",
+            studentNumber: "${user.studentNumber}",
+            role: "${user.role.toString()}",
+            callSign: "${user.callSign}"
+        };
     </script>
     <script src='resources/js/schedule.js'></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 
+    <%--FullCalendar--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"></script>--%>
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <%--fullCalendarCSS.css was throwing errors in Chrome dev console--%>
     <%--<link rel="stylesheet" href="resources/css/fullCalendarCSS.css">--%>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
-<style>
-    #side-container {
-    }
-
-    #side-contact {
-        position: absolute;
-        color: #ffffff;
-        bottom: 0;
-    }
-
-</style>
 
 <body>
 
-<%--mla189
-TODO:
-Adjustable Time
-Resolve error assigning shift but getting error on db
-cancel button functionalities
-"required training"?
---%>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+<div id="wrapper" style="padding-top: 56px">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
-
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
-
                 <div class="description">
                     <center>
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
@@ -122,32 +128,32 @@ cancel button functionalities
                     <hr>
                 </div>
 
-                <%--Used for displaying alerts--%>
-                <div id="alertsDiv"></div>
 
-                        <div class="col-sm-12 row">
-                            <div class="radio">
-                                <label>
-                                    <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
-                                </label>
-                                <br>
-                                <label>
-                                    <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
-                                </label>
-                                <br>
-                                </div>
-                            <select class="form-control" id="shiftSelect"></select>
-                            <br>
-                        </div>
-                        <hr><br>
+                <div class="col-sm-12 row">
+                    <div class="radio">
+                        <label>
+                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL
+                            CAMPUSES
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">BURNABY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">SURREY
+                        </label>
+                        <br>
+                        <label>
+                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
+                        </label>
+                        <br>
+                    </div>
+                    <select class="form-control" id="shiftSelect"></select>
+                    <br>
+                </div>
+                <hr>
+                <br>
 
                 <%--Calendar--%>
                 <div id='calendar'></div>
@@ -171,17 +177,15 @@ cancel button functionalities
                                         <label class="control-label"><u>Shift:</u> </label>
                                         <div class="controls">
                                             <select class="form-control" name="eventCampus" id="eventCampus">
-                                                <option value='all' id='allCampuses' disabled="true" selected>Select
-                                                    Campus
-                                                </option>
-                                                <option value="BURNABY" class="BURNABY">BURNABY</option>
-                                                <option value="SURREY" class="SURREY">SURREY</option>
-                                                <option value="VANCOUVER" class="VANCOUVER">VANCOUVER</option>
+                                                <option value="" disabled selected>Select Campus</option>
+                                                <option value="BURNABY" class="BURNABY">Burnaby</option>
+                                                <option value="SURREY" class="SURREY">Surrey</option>
+                                                <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
                                             </select>
 
                                             <select class="form-control" name="eventTitle" id="eventTitle">
 
-                                                <option value="SURREY" disabled="true" selected="selected">Select Surrey
+                                                <option value="SURREY" disabled selected="selected">Select Surrey
                                                     Shift
                                                 </option>
 
@@ -191,7 +195,7 @@ cancel button functionalities
                                                     </option>
                                                 </c:forEach>
 
-                                                <option value="VANCOUVER" disabled="true" selected="selected">Select
+                                                <option value="VANCOUVER" disabled selected="selected">Select
                                                     Vancouver Shift
                                                 </option>
 
@@ -216,20 +220,41 @@ cancel button functionalities
                                     </div>
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group">
-
-                                            <label class="control-label" id="addShiftTime">
-                                                <u>Date:</u>
-                                            </label>
-                                            <div class="controls">
-                                                Start: <input type="datetime-local" id="startTime"/><br>
-                                                End: <input type="datetime-local" id="endTime"/>
+                                            <label><u>Date:</u></label>
+                                            <div class='input-group date' id='date'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label><u>Start:</u></label>
+                                            <div class='input-group date' id='startTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label id="addShiftTime"><u>End:</u></label>
+                                            <div class='input-group date' id='endTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="control-label"><u>Member:</u></label>
                                             <div class="controls">
                                                 <select class="form-control" name="eventMember" id="eventMember"
                                                         data-tab="${user.getUsername()}">
+                                                    <option value="" disabled selected>Select User</option>
                                                     <c:forEach items="${users}" var="user">
                                                         <option value="${user.getUsername()}">
                                                                 ${user.getUsername()}
@@ -246,11 +271,15 @@ cancel button functionalities
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Required Training:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1"
-                                                   class="form-control" name="eventMember" id="eventRequiredTraining"
-                                                   placeholder="Enter the Requirements">
+                                            <div class="controls">
+                                                <select class="form-control" id="eventRequiredTraining">
+                                                    <option value="" selected>None</option>
+                                                    <c:forEach items="${TRAININGTYPES}" var="training">
+                                                        <option value="${training}">${training}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="control-label">Notes: </label>
                                             <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px"
@@ -261,9 +290,16 @@ cancel button functionalities
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                <%--AJAX Request to POST to ShiftController--%>
-                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+
+                                <c:choose>
+                                    <c:when test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
+                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -288,6 +324,16 @@ cancel button functionalities
                                 <b><u>End:</u> </b><span id="modalEnd"></span><br>
                                 <hr>
 
+                                <b><u>Availability: </u></b>
+                                <select id="availabilitySelect" class="form-control">
+                                    <option value="NO_RESPONSE">No Response</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DECLINED">Declined</option>
+                                </select>
+                                <span id="modalAvailability"></span>
+
+                                <hr>
+
                                 <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
                                 <b><u>Location:</u> </b><span id="modalLocation"></span><br>
                                 <b><u>ID:</u> </b><span id="modalID"></span><br>
@@ -301,6 +347,17 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                    Availability
+                                </button>
+                                <c:choose>
+                                    <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                    </c:otherwise>
+                                </c:choose>
                                 <button class="btn btn-primary" id="btnDelete">Remove</button>
                                 <button class="btn btn-primary" id="btnTimecard">Timecard</button>
 
@@ -317,10 +374,6 @@ cancel button functionalities
 <!-- /#wrapper -->
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
     $('#createEventModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
@@ -332,9 +385,9 @@ cancel button functionalities
     //    });
 
 
-
-
 </script>
+
+<!-- Bootstrap core JavaScript -->
 
 </body>
 

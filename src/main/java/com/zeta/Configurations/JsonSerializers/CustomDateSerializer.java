@@ -1,16 +1,15 @@
-package com.zeta.Configurations;
+package com.zeta.Configurations.JsonSerializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomDateTimeSerializer extends JsonSerializer<Date> {
-    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+public class CustomDateSerializer extends JsonSerializer<Date> {
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {

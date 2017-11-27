@@ -1,4 +1,6 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%@ page import="com.zeta.Models.Announcement" %>
+<%@ page import="java.sql.Date" %><%--
   Created by IntelliJ IDEA.
   model.User: PrivateAcc
   Date: 2017-09-29
@@ -7,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,29 +20,43 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>SFU</title>
-    <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+
 </head>
+
+
 <script>
     var api = '${pageContext.request.contextPath}';
 </script>
-<style>
-    #side-container{
-    }
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
-</style>
+
 <body>
-<div id="wrapper" class="toggled">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+        <div class="nav pull-right" style="padding-top: 10px;padding-right: 10px">
+            <%--<button type="button" class="btn btn-default" href="${pageContext.request.contextPath}/logout" style="height: 37px;font-size: 15px;padding-bottom: 30px"><b>Sign Out</b></button>--%>
+        </div>
+    </div>
+
+</nav>
+<div id="wrapper" style="padding-top: 56px">
+
     <jsp:include page="partfiles/sidebar.jsp"/>
 
     <%
@@ -49,12 +66,29 @@
 
     <script>
         var user = "${user.username}";
+//          var user = "bobaec"; // for local use
+
+        var announce = {
+            <c:forEach items="${announcements}" var = "announcement">
+            "${announcement.id}" : {
+                user : '${announcement.username}',
+                title : '${announcement.title}',
+                message : '${announcement.message}',
+                date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
+                                                        value = "${announcement.date}" />',
+                campus : '${announcement.campus}',
+                role : ${user.role},
+                id : ${announcement.id}
+
+        },
+            </c:forEach>
+        };
+
     </script>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
                 <div class="description">
                     <%--This contains all of the relevant info about announcement--%>
@@ -77,7 +111,7 @@
                                             <h4 id="myModalLabel1" style="text-align:left"><b>Create an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br><br>
                                             <div class="controls">
                                                 <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
                                                 </input>
@@ -109,82 +143,136 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id = "editAnnouncementModal" class = "modal fade">
+                                <div class = "modal-dialog">
+                                    <div class = "modal-content">
+                                        <div class = "modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+                                            </button>
+                                            <h4 id="myModalLabel2" style="text-align:left"><b>Edit an Announcement</b></h4>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <div class="controls">
+                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                </input>
+                                            </div>
+
+                                            <br><br>
+
+                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus">
+                                                <option value='all' id='allSaveCampus' disabled="true" selected>Select Teams
+                                                </option>
+                                                <option value ="BURNABY" class = "BURNABY">BURNABY</option>
+                                                <option value ="SURREY" class = "SURREY">SURREY</option>
+                                                <option value ="VANCOUVER" class = "VANCOUVER">VANCOUVER</option>
+
+                                            </select>
+
+                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
+                                            <div class="controls">
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message."></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class = "modal-footer">
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+                                            <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
                             <div class="panel-heading" id = "announceFilter">Filter</div>
                             <div class="panel-body" id = campusLead>
                                 <div class="col-sm-12 row">
-                                    <div class="radio">
+                                    <div class="radio" id = "filter">
                                         <label>
-                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" checked>ALL CAMPUSES
+                                            <input class='allOrNone' type="checkbox" value="ALLCAMPUSES" id="ALLCAMPUSES" onclick="allOrNone(this)" checked>ALL CAMPUSES
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class = "others">BURNABY
+                                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY">BURNABY
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class = "others">SURREY
+                                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY">SURREY
                                         </label>
                                         <br>
                                         <label>
-                                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class = "others">VANCOUVER
+                                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER">VANCOUVER
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="SUPERVISOR" id="SUPERVISOR">SUPERVISOR
+                                        </label>
+                                        <br>
+                                        <label>
+                                            <input class='campusFilter' type="checkbox" value="ADMINISTRATOR" id="ADMINISTRATOR">ADMINISTRATOR
                                         </label>
                                         <br>
                                     </div>
-                                    <select class="form-control" id="shiftSelect"></select>
-                                    <br>
                                 </div>
                             </div>
                         </div>
-                        <div class="controls" style="width:65%;">
+                        <div class="controls" id = "sortAnnounce" style="width:65%;">
+                            <div id="alertsDiv"></div>
                             <c:forEach items="${announcements}" var = "announcement">
-                                <div class="panel panel-primary" style ="text-align:left"> <%--for demonstration purposes, should be deleted later--%>
-                                    <div class="panel-heading" id = "announceTitle">${announcement.getTitle()}</div>
+                                <div class = "check" id = "${announcement.id}">
+                                <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
+                                    <div class="panel-heading" id = "announceTitle">${announcement.title} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
+                                    </div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
-                                        ${announcement.getMessage()}
+                                        ${announcement.message}
                                     </div><hr>
-                                    <div class = "panel-body" id = "announceDate">Date: ${announcement.getDate()}</div>
-                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}</div>
+                                    <div class = "panel-body" id = "announceDate">Date:
+                                        <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
+                                                        value = "${announcement.date}" />
+                                    </div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                        <button type="button" class="btn btn-primary editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
+                                        <button type="button" class="btn btn-primary removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
+                                    </div>
+                                </div>
                                 </div>
                             </c:forEach>
+
                         </div>
+
                     </div>
-
-
-
-
-                <hr><br>
+                <hr><br><br>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
-                        <h3><b>Cidric Butac</b></h3>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="140px" width="140px">
+                        <h4><b>Cidric Butac</b></h4>
                         <h4>Supervisor</h4>
                         <p>sfucsp@sfu.ca</p>
-                        <p>778-782-5425</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Miriam Sise Odaa</b></h4>
                         <h4>Burnaby Team Lead</h4>
                         <p>ssepbur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Kitty Lo</b></h3>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Kitty Lo</b></h4>
                         <h4>Surrey Team Lead</h4>
                         <p>ssepsur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Satpal Samra</b></h3>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Satpal Samra</b></h4>
                         <h4>Vancouver Team Lead</h4>
                         <p>ssepvan@sfu.ca</p>
                     </center>
@@ -192,7 +280,6 @@
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
@@ -200,30 +287,180 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src='resources/js/announcements.js'></script>
+<script src="resources/js/sidebar_menu.js"></script>
+
 
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
-    var top = $('.thisone').offset().top;
-    $('.trigger').click(function () {
-        $('.thisone').css('position','');
-        $('.left2').toggle('slow',function(){
-            top = $('.thisone').offset().top;
+//    $('.empty').hide();
+
+//    $("#menu-toggle").click(function(e) {
+//        e.preventDefault();
+//        $("#wrapper").toggleClass("toggled");
+//    });
+//
+//    var top = $('.thisone').offset().top;
+//    $('.trigger').click(function () {
+//        $('.thisone').css('position','');
+//        $('.left2').toggle('slow',function(){
+//            top = $('.thisone').offset().top;
+//        });
+//    });
+//
+//    $(document).scroll(function(){
+//        $('.thisone').css('position','');
+//        top = $('.thisone').offset().top;
+//        $('.thisone').css('position','absolute');
+//        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+//    });
+
+    $("#filter input").click(function() {
+        var burnabyCheck = $('#BURNABY').is(":checked");
+        var surreyCheck = $('#SURREY').is(":checked");
+        var vancouverCheck = $('#VANCOUVER').is(":checked");
+        var supervisorCheck = $('#SUPERVISOR').is(":checked");
+        var administratorCheck = $('#ADMINISTRATOR').is(":checked");
+
+        var filterArray = [];
+        for (var campus in announce) {
+            if (announce[campus].campus.toUpperCase() == "BURNABY" && burnabyCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].campus.toUpperCase() == "SURREY" && surreyCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].campus.toUpperCase() == "VANCOUVER" && vancouverCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].role.toUpperCase() == "SUPERVISOR" && supervisorCheck) {
+                filterArray.push(announce[campus]);
+            }
+            if (announce[campus].role.toUpperCase() == "ADMINISTRATOR" && administratorCheck) {
+                filterArray.push(announce[campus]);
+            }
+        }
+
+        filterArray.sort(function(firstCampus, comparingCampus) {
+            if (firstCampus.date > comparingCampus.date) {
+                return -1;
+            }
+            if (firstCampus.date < comparingCampus.date) {
+                return 1;
+            }
+            return 0;
         });
 
+        var htmlAdd = "";
+        for (var index in filterArray) {
+            htmlAdd += "<div class = 'check'>" +
+                    "<div class = 'panel panel-primary' id = 'sortAnnounce2' style = 'text-align:left'>" +
+                    "<div class = 'panel-heading' id = 'announceTitle'>" + filterArray[index].title +
+                    "<a id = 'sortCampus' style='color:white;'>" + " | " + filterArray[index].campus + "</a>" +
+                    "</div>" + "<hr>" +
+                    "<div class = 'panel-body' id = 'announceBody'>" + filterArray[index].message + "</div>" + "<hr>" +
+                    "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
+
+                    filterArray[index].date +
+                     "</div>" +
+                    "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
+                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + " onclick='doEdit(" + filterArray[index].id +
+                    ',"' + filterArray[index].title + '"' + ',"' + filterArray[index].message + '"' + ',"' + filterArray[index].campus + '"' +
+                ")'>Edit Announcement</button>" +
+                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + " onclick='doRemove(" + filterArray[index].id +
+                ")'>Remove Announcement</button>" +
+                    "</div></div></div>"
+
+        }
+
+        console.log(filterArray);
+        if (htmlAdd.length == 0) {
+            var emptyAdd = "";
+            emptyAdd += "<div class ='empty'>" +
+                    "<div class = 'panel panel-primary' style='text-align:left'>" +
+                    "<div class = 'panel-heading'>" + "No announcements to show" +
+                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>" + "<hr>" + "<br>";
+
+            $('#sortAnnounce').empty();
+            $('#sortAnnounce').append(emptyAdd);
+        } else {
+            $('#sortAnnounce').empty();
+            $('#sortAnnounce').append(htmlAdd);
+        }
 
     });
 
-    $(document).scroll(function(){
-        $('.thisone').css('position','');
-        top = $('.thisone').offset().top;
-        $('.thisone').css('position','absolute');
-        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
-    });
+    function doEdit(id, title, message, campus) {
+
+        $('#announceSaveTitle').val(title);
+        $('#announceSaveMessage').val(message);
+        $('#announceSaveCampus').val(campus);
+
+        $('#editAnnouncementModal').modal('show');
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $('#saveButton').on('click', function (e) {
+            e.preventDefault();
+            save();
+        });
+        function save() {
+            var announcement = {
+                "id" : parseInt(id),
+                "username": user.trim(),
+                "title": $('#announceSaveTitle').val().trim(),
+                "message": $('#announceSaveMessage').val(),
+                "campus": $('#announceSaveCampus').val().toUpperCase().toString()
+            };
+            $('#editAnnouncementModal').modal('hide');
+
+            $.ajax({
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                url: api + '/announcements/add',
+                data: JSON.stringify(announcement),
+                success: function() {
+                    displaySuccessAlert('Saving edited ' + announcement.title + ' to database...');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+                },
+                error: function() {
+                    displayErrorAlert(('Failed to save ' + announcement.title + ' to database.'));
+                },
+                contentType: "application/json; charset=utf-8"
+            });
+        }
+
+    };
+
+    function doRemove(ID) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+         $.ajax({
+             type: 'POST',
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             url: api + '/announcements/remove',
+             data: JSON.stringify(ID),
+
+             success: function() {
+                 displaySuccessAlert('Removing ' + ID + ' from database...');
+                 setTimeout(function() {
+                     location.reload();
+                 }, 3000);
+             },
+             error: function() {
+                 displayErrorAlert(('Failed to remove ' + ID + ' from database.'));
+             },
+             contentType: "application/json; charset=utf-8"
+         });
+    }
 
 </script>
 </body>

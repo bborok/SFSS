@@ -5,24 +5,86 @@ import com.zeta.Models.Campus;
 import com.zeta.Models.Task;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class StatisticsDao implements StatisticsData{
 
     private JdbcTemplate jdbcTemplate;
 
     public StatisticsDao() {
-        PersistenceConfig config = new PersistenceConfig();
         this.jdbcTemplate = new JdbcTemplate(new PersistenceConfig().dataSource());
+    }
+
+    @Override
+    public void updateDataForInfoLF(String area, String title, int[] data) {
+        try {
+            jdbcTemplate.update("update InfoLostFound set M_JAN=?," +
+                            "M_FEB=?," +
+                            "M_MAR=?," +
+                            "M_APR=?," +
+                            "M_MAY=?," +
+                            "M_JUN=?," +
+                            "M_JUL=?," +
+                            "M_AUG=?," +
+                            "M_SEP=?," +
+                            "M_OCT=?," +
+                            "M_NOV=?," +
+                            "M_DEC=? " +
+                            "where CAMPUS=? and TITLE=?",
+                    new PreparedStatementSetter() {
+                        @Override
+                        public void setValues(PreparedStatement ps) throws SQLException {
+                            for (int i = 0; i < 12; i++) {
+                                ps.setInt(i + 1, data[i]);
+                            }
+                            ps.setString(13, area);
+                            ps.setString(14, title);
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int[][] getDataForInfoLF(String area, String[] strs) {
+        String sql = "select * from InfoLostFound where CAMPUS = ?";
+        int[][] arr = new int[6][12];
+        try {
+            arr = jdbcTemplate.query(sql, new Object[]{area} , new ResultSetExtractor<int[][]>() {
+                public int[][] extractData(ResultSet rs) throws SQLException, DataAccessException {
+                    int[][] ret_list = new int[6][12];
+                    String[] mons = {   "M_JAN", "M_FEB", "M_MAR",
+                                        "M_APR", "M_MAY", "M_JUN",
+                                        "M_JUL", "M_AUG", "M_SEP",
+                                        "M_OCT", "M_NOV", "M_DEC" };
+                    while (rs.next()) {
+                        for (int t = 0; t < 6; t++) {
+                            if (rs.getString("TITLE").equals(strs[t])) {
+                                for (int i = 0; i < 12; i++) {
+                                    ret_list[t][i] = rs.getInt(mons[i]);
+                                }
+                            }
+                        }
+                    }
+                    return ret_list;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return arr;
+        }
+        return arr;
     }
 
     @Override
@@ -38,7 +100,7 @@ public class StatisticsDao implements StatisticsData{
                         Date d = rs.getDate("Date");
                         int tmpc = rs.getInt("Count");
                         String tmpa = rs.getString("Campus");
-                        //System.out.println(rs.getString("Task") + tmpa + d.toString() + String.valueOf(tmpc));
+                        System.out.println(rs.getString("Task") + tmpa + d.toString() + String.valueOf(tmpc));
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(d);
 //                        System.out.println(calendar.get(Calendar.YEAR));
@@ -57,9 +119,62 @@ public class StatisticsDao implements StatisticsData{
             });
 
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         }
         return count;
+    }
+
+    @Override
+    public int[][] getDataForPublicContact(String area, String[] strs) {
+        int[][] list = new int[6][12];
+        String sql = "select UserTask.Task, Shift.Date, Shift.Campus, UserTask.Count from UserTask inner join Shift on UserTask.Shift = Shift.ID ";
+        try {
+            list = jdbcTemplate.query(sql, new Object[]{} , new ResultSetExtractor<int[][]>() {
+                public int[][] extractData(ResultSet rs) throws SQLException, DataAccessException {
+                    Date currDate = new Date();
+                    Calendar ca = Calendar.getInstance();
+                    ca.setTime(currDate);
+                    int currYear = ca.get(Calendar.YEAR);
+                    int[][] ret_list = new int[6][12];
+                    while (rs.next()) {
+                        Date d = rs.getDate("Date");
+                        int tmpc = rs.getInt("Count");
+                        String tmpa = rs.getString("Campus");
+                        System.out.println(rs.getString("Task") + tmpa + d.toString() + String.valueOf(tmpc));
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(d);
+                        for (int i = 0; i < 6; i++) {
+                            if (rs.getString("Task").equals(strs[i])) {
+                                for (int j = 0; j < 12; j++) {
+                                    String str=String.valueOf(currYear) + "-" + String.valueOf(j+1) + "-01";
+                                    SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+                                    Date date = null;
+                                    try {
+                                        date =sdf.parse(str);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    Calendar calendar_tmp = Calendar.getInstance();
+                                    calendar_tmp.setTime(date);
+
+                                    if ( calendar.get(Calendar.YEAR) == calendar_tmp.get(Calendar.YEAR) &&
+                                            calendar.get(Calendar.MONTH) == calendar_tmp.get(Calendar.MONTH) && area.toLowerCase().equals(tmpa.toLowerCase())) {
+                                        ret_list[i][j] += tmpc;
+                                        System.out.println(ret_list[i][j]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return ret_list;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return list;
+        }
+        return list;
     }
 
     @Override
@@ -75,7 +190,7 @@ public class StatisticsDao implements StatisticsData{
                         Date d = rs.getDate("Date");
                         int tmpc = rs.getInt("Count");
                         String tmpa = rs.getString("Campus");
-                        //System.out.println(rs.getString("Task") + tmpa + d.toString() + String.valueOf(tmpc));
+                        System.out.println(rs.getString("Task") + tmpa + d.toString() + String.valueOf(tmpc));
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(d);
 //                        System.out.println(calendar.get(Calendar.YEAR));
@@ -93,8 +208,8 @@ public class StatisticsDao implements StatisticsData{
                     return count;
                 }
             });
-
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         }
         return count;

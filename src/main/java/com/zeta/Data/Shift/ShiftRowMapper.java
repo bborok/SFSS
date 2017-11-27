@@ -1,6 +1,7 @@
 package com.zeta.Data.Shift;
 
 import com.zeta.Models.Campus;
+import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Shift;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -23,6 +24,7 @@ public class ShiftRowMapper implements RowMapper<Shift> {
         sr.setNotes(rs.getString("Notes"));
         sr.setRequiredTraining(rs.getString("RequiredTraining"));
         sr.setTimeCardSubmitted(rs.getBoolean("isTimeCardSubmitted"));
+        sr.setConfirmationStatus(ConfirmationStatus.valueOf(rs.getString("Confirmed").toUpperCase()));
         return sr;
     }
 }

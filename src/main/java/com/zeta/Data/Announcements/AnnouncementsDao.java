@@ -6,14 +6,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @Repository
 public class AnnouncementsDao implements AnnouncementsData {
     private JdbcTemplate jdbcTemplate;
+    private Connection con;
+
 
     @Autowired
     public AnnouncementsDao(DataSource dataSource) {
@@ -22,7 +29,6 @@ public class AnnouncementsDao implements AnnouncementsData {
 
     @Override
     public boolean addAnnouncement(Announcement announcement) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
 
@@ -38,6 +44,33 @@ public class AnnouncementsDao implements AnnouncementsData {
         return true;
     }
 
+    @Override
+    public boolean removeAnnouncement(int ID) {
+        Object[] params = {ID};
+        int[] types = {Types.INTEGER};
+        System.out.println("dao" + ID);
+        try {
+
+            String sql = "DELETE FROM Announcement WHERE ID = ?";
+            jdbcTemplate.update(sql, params, types);
+        } catch (Exception e) {
+            System.out.println(e + "exceptsasaaion" + ID);
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean editAnnouncement(Announcement announcement) {
+        try {
+            System.out.println("edit");
+            String sql = "UPDATE Announcement SET Title = ?, Message = ?, Campus = ? WHERE ID = ?";
+            jdbcTemplate.update(sql, announcement.getTitle(), announcement.getMessage(), announcement.getCampus().toString(), announcement.getId());
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
     @Override
     public Announcement showAnnouncements(int ID) {
         Announcement announcement = null;
@@ -62,6 +95,14 @@ public class AnnouncementsDao implements AnnouncementsData {
 
             return null;
         }
+
+        Collections.sort(list, new Comparator<Announcement>() {
+            @Override
+            public int compare(Announcement o1, Announcement o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
         return list;
     }
 }

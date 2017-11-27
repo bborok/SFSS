@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -69,8 +68,7 @@
     </script>
     <script src='resources/js/schedule.js'></script>
 
-
-    <!-- Bootstrap -->
+    <!-- Bootstrap core CSS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
@@ -81,8 +79,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
     <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"></script>--%>
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
+    <%--fullCalendarCSS.css was throwing errors in Chrome dev console--%>
+    <%--<link rel="stylesheet" href="resources/css/fullCalendarCSS.css">--%>
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -93,38 +94,31 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
-<style>
-    #side-container {
-    }
-
-    #side-contact {
-        position: absolute;
-        color: #ffffff;
-        bottom: 0;
-    }
-
-</style>
 
 <body>
 
-<%--mla189
-TODO:
-Adjustable Time
-Resolve error assigning shift but getting error on db
-cancel button functionalities
-"required training"?
---%>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+<div id="wrapper" style="padding-top: 56px">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
-
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
-
                 <div class="description">
                     <center>
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
@@ -376,10 +370,6 @@ cancel button functionalities
 <!-- /#wrapper -->
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
     $('#createEventModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
@@ -392,6 +382,8 @@ cancel button functionalities
 
 
 </script>
+
+<!-- Bootstrap core JavaScript -->
 
 </body>
 

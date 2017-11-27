@@ -17,40 +17,40 @@
     <meta name="author" content="">
 
     <title>SFU</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
 
     <!-- jQuery Resources -->
+    <script src="resources/js/sidebar_menu.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src= 'resources/js/timecard.js'></script>
 </head>
 
-<style>
-    #side-container{
-    }
-
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
-
-</style>
-
 <body>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="wrapper" style="padding-top: 52px">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
@@ -58,7 +58,6 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
             <div class="col-sm-12 text">
                 <div class="description" style="margin-bottom: 2em;">
                     <center>
@@ -256,13 +255,9 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 
+
 <!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+
 
 </body>
 </html>

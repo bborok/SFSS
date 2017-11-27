@@ -21,8 +21,8 @@
             <li class="sidebar-item">
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span> Statistics</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                    <li><a href="${pageContext.request.contextPath}/statistics_info_lf"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Lost & Found</a></li>
-                    <li><a href="${pageContext.request.contextPath}/statistics_public_contact"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Public Contact</a></li>
+                    <li><a href="${pageContext.request.contextPath}/statistics/info_lf"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Lost & Found</a></li>
+                    <li><a href="${pageContext.request.contextPath}/statistics/public_contact"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Public Contact</a></li>
 
                 </ul>
             </li>

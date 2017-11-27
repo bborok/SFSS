@@ -1,5 +1,6 @@
 package com.zeta.Data.User;
 
+import com.zeta.Models.Certificate;
 import com.zeta.Models.Login;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
@@ -25,6 +26,8 @@ public interface UserData {
 
     // Returns user if username exists
     public User getUser(String Username);
+
+    public List<Certificate> getUserCertificates(User user);
 
     public List<String> getUserLanguages(User user);
 

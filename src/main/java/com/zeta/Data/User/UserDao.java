@@ -1,5 +1,6 @@
 package com.zeta.Data.User;
 
+import com.zeta.Models.Certificate;
 import com.zeta.Models.Login;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
@@ -8,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.security.spec.ECField;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -184,6 +186,17 @@ public class UserDao implements UserData {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public List<Certificate> getUserCertificates(User user) {
+        try {
+            String sql = "select CertificateName, Level, Number, ExpirationDate from UserCertificate where User = ?";
+            return jdbcTemplate.query(sql, new Object[] {user.getUsername()}, new UserCertificateRowMapper());
+
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     @Override

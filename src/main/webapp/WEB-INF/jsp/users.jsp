@@ -64,6 +64,9 @@
     .click a {
         color: chocolate;
     }
+
+    #userimage:hover {opacity: 0.7;}
+
 </style>
 
 <body>
@@ -118,8 +121,9 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Add User</button>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
+                <br>
 
                 <div id="userModal" class="modal fade">
                     <div class="modal-dialog">
@@ -238,9 +242,43 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
+                                <img src="resources/img/etc/annonymous.jpg" id="userimage" data-toggle="modal" data-target="#details" class="img-responsive" height="300"
                                      width="300">
                             </center>
+
+                            <div id="details" class="modal fade">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span>
+                                                <span class="sr-only">close</span></button>
+                                            <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
+                                        </div>
+                                        <br>
+                                        <div align="left" style="padding-left: 15px">
+                                            <b><u>Username: </u></b><c:out value="${user.username}"/><br>
+                                            <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
+                                            <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
+                                            <b><u>Email: </u></b><c:out value="${user.email}"/><br>
+                                            <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
+                                            <hr>
+                                            <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
+                                            <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
+                                            <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <h3>User Profile</h3>
                             <h5>Select User from the list</h5>
                         </div>
@@ -261,7 +299,7 @@
                             </div>
                         </c:forEach>
 
-                        <div>
+                        <div class="row">
                             <button type="button" class="btn btn-primary" id="editButton">Edit User</button>
                             <button type="button" class="btn btn-primary" id="removeButton">Remove User</button>
                         </div>

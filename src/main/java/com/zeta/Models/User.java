@@ -21,6 +21,7 @@ public class User {
     private Date driversLicenseExpirationDate;
     private List<Training> training;
     private List<String> languages;
+    private List<Certificate> certificates;
     private Boolean isDeactivated;
 
     public User() {
@@ -28,7 +29,7 @@ public class User {
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
                 Role role, Campus preferredCampus, String callSign, int driversLicenseLevel, Date driversLicenseExpirationDate,
-                List<Training> training, List<String> languages, Boolean isDeactivated) {
+                List<Training> training, List<String> languages, List<Certificate> certificates, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -42,6 +43,7 @@ public class User {
         this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
         this.languages = languages;
+        this.certificates = certificates;
         this.isDeactivated = isDeactivated;
     }
 
@@ -147,6 +149,14 @@ public class User {
 
     public void setLanguages(List<String> languages) {
         this.languages = languages;
+    }
+
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
     }
 
     public void setIsDeactivated(Boolean isDeactivated) {

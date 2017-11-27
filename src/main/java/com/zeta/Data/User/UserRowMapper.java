@@ -5,7 +5,6 @@ import com.zeta.Models.Role;
 import com.zeta.Models.User;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

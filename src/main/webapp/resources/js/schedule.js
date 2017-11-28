@@ -320,7 +320,7 @@ function updateShiftConfirmation(shiftId, status) {
     $.ajax({
         type: 'POST',
         headers: {
-            Accept: "text/plain",
+            Accept: "text/plain"
         },
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         url: api + '/shift/updateConfirmation',
@@ -335,23 +335,6 @@ function updateShiftConfirmation(shiftId, status) {
     });
 }
 
-function displayErrorAlert(msg) {
-    alertsDiv.append(
-        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Danger! </strong> " + msg +
-        "</div>"
-    );
-}
-
-function displaySuccessAlert(msg) {
-    alertsDiv.append(
-        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Success! </strong> " + msg +
-        "</div>"
-    );
-}
 function filter(calEvent) {
     var vals = [];
     $('input:checkbox.campusFilter:checked').each(function () {

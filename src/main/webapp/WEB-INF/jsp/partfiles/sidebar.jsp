@@ -27,11 +27,11 @@
                 </ul>
             </li>
             <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/timecard_list"><i class="fa fa-clock-o"></i> Time Card</a>
+                <a href="${pageContext.request.contextPath}/timecard_list"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
             </li>
             <c:if test="${sessionScope.user.role == 'ADMIN' || sessionScope.user.role == 'SUPERVISOR'}">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
+                    <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
                 </li>
             </c:if>
             <li class="sidebar-item">

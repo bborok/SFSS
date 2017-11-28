@@ -90,7 +90,7 @@ public class TimeCardController {
 
         m.addAttribute("timeCard", timeCard);
 
-        return "redirect:/timecard_list";
+        return "redirect:/schedule";
     }
 
 
@@ -127,7 +127,7 @@ public class TimeCardController {
 
         m.addAttribute("timeCard", timeCard);
 
-        return "redirect:/timecard_list";
+        return "redirect:/schedule";
     }
 
 

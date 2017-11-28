@@ -101,9 +101,12 @@
                                                     <c:out value="${shift.date}"/>
                                             <td >
                                                 <c:choose>
-                                                <c:when test="${$shift.isTimeCardSubmitted() == true}"> Submitted </c:when>
-                                                <c:otherwise> Not Submitted</c:otherwise>
+                                                <c:when test="${shift.isTimeCardSubmitted }"> <c:out value="Submitted"/> </c:when>
+                                                <c:when test="${!shift.isTimeCardSubmitted  }"> <c:out value="Not Submitted"/> </c:when>
                                                 </c:choose>
+                                                    <%--<c:if test="${refreshSent}">--%>
+                                                    <%--your code...--%>
+                                                    <%--</c:if>--%>
                                             <td >
                                                     <c:out value="${shift.start}"/>
                                             <td >

@@ -358,7 +358,6 @@
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>
                                     </c:otherwise>
                                 </c:choose>
-                                <button class="btn btn-primary" id="btnDelete">Remove</button>
                                 <button class="btn btn-primary" id="btnTimecard">Timecard</button>
 
                             </div>

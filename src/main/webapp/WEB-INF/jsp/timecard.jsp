@@ -229,7 +229,7 @@
                                 <div class="pull-right">
                                     <c:choose>
                                         <c:when test="${timecardSubmitted}">
-                                            <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Edit Time Card</form:button>
+                                            <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Update Time Card</form:button>
                                         </c:when>
                                         <c:otherwise>
                                             <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>

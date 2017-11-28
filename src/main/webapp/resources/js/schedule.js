@@ -243,7 +243,7 @@ function conditionallyRender(start, end, isTimeCardSubmitted) {
     if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER') {
         $('#btnDelete').hide();
         disableAllInputElementsInForm();
-        hideAllCondtionalButtons();
+        hideAllConditionalButtons();
 
         var eventStart = moment(start).format(dateTimeFormat);
         var eventEnd = moment(end).format(dateTimeFormat);
@@ -372,7 +372,7 @@ function showAllConditionalButtons() {
     $('#submitButton').show();
 }
 
-function hideAllCondtionalButtons() {
+function hideAllConditionalButtons() {
     $('#btnTimecard').hide();
     $('#btnDelete').hide();
     $('#submitButton').hide();

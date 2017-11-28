@@ -108,11 +108,13 @@ public class IndexController {
 
         //Filter the list users  depending on the currently logged in users role.
         if (u.getRole() == Role.TEAM_LEADER) {
-            //Filter the users based on the team leaders preferred campus.
-            usersForSelection = userData.getAllUsers().stream()
-                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
-                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
-                    .collect(Collectors.toList());
+//            //Filter the users based on the team leaders preferred campus.
+//            usersForSelection = userData.getAllUsers().stream()
+//                    .filter(user -> user.getPreferredCampus() == u.getPreferredCampus())
+//                    .filter(user -> (user.getRole() == Role.MEMBER || user.getRole() == Role.VOLUNTEER))
+//                    .collect(Collectors.toList());
+            usersForSelection = userData.getAllUsers();
+
         } else if (u.getRole() == Role.ADMIN || u.getRole() == Role.SUPERVISOR) {
             usersForSelection = userData.getAllUsers();
         } else {

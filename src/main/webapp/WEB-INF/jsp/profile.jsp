@@ -138,6 +138,7 @@
                             <p id="phoneNum"></p>
                             <p id="altPhone"></p>
                             <h3>Volunteer Hours: ${user.volunteerHours}</h3>
+                            <div id="serviceRecognition"></div>
                             <h3>Qualifications:</h3>
                         </div>
 
@@ -156,6 +157,31 @@
                                 $('#altPhone').html('<h3>Alternate Phone Number: ' + cleanAltPhone + '</h3>');
                             }
 
+                            var hours = ${user.volunteerHours};
+                            var ranks = [80, 160, 240, 320, 400, 480];
+                            var imgSrc = 'resources/img/service_recognition';
+                            var options = 'style="background:transparent"';
+
+                            if (hours >= ranks[0]) {
+                                var serviceRank = '/one_star.png';
+                                if (hours >= ranks[1]) {
+                                    serviceRank = '/two_star.png';
+                                }
+                                if (hours >= ranks[2]) {
+                                    serviceRank = '/three_star.png';
+                                }
+                                if (hours >= ranks[3]) {
+                                    serviceRank = '/bronze_star.png';
+                                }
+                                if (hours >= ranks[4]) {
+                                    serviceRank = '/silver_star.png';
+                                }
+                                if (hours >= ranks[5]) {
+                                    serviceRank = '/gold_star.png';
+                                }
+
+                                $('#serviceRecognition').html('<img src="' + imgSrc + serviceRank + '"' + options + '>')
+                            }
                         </script>
                     </div>
                 </center>

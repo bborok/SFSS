@@ -5,56 +5,52 @@
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
 
-<!-- Sidebar -->
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-            <p>SFU SSEP</p>
-        </li>
-        <li class="sidebar-item" >
-            <a href="${pageContext.request.contextPath}/"><i class="fa fa-home"></i> Home</a>
-        </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/schedule"><i class="fa fa-calendar"></i> Schedule</a>
-        </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i> Profile</a>
-        </li>
-        <li id="stats" class="sidebar-item stats">
-            <a href="${pageContext.request.contextPath}/statistics/info_lf"><i class="fa fa-area-chart"></i> Statistics</a>
-        </li>
-        <li class="sidebar-item stats">
-            <a href="${pageContext.request.contextPath}/statistics/public_contact" ></a>
-        </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/payroll"><i class="fa fa-credit-card"></i> Payroll</a>
-        </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/log"><i class="fa fa-book"></i> Log</a>
-        </li>
-        <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/timecard"><i class="fa fa-clock-o"></i> Time Card</a>
-        </li>
-        <c:if test="${sessionScope.user.role == 'ADMIN' || sessionScope.user.role == 'SUPERVISOR'}">
-            <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
-            </li>
-        </c:if>
-    </ul>
-    <div id="side-container">
-        <div id="side-contact" style="text-align:center; margin-bottom:10px;">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" style="padding-top: 0px">
+        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
 
-            <p style="text-align:center; font-size:20px">
-                <a style=" color: yellow" class="fa fa-sign-out fa-x" href="${pageContext.request.contextPath}/logout">Sign Out</a>
-            </p>
-            <br>
-            <p style="font-weight: bold; text-decoration: underline;">Contact: </p>
-            <p class="fa fa-phone "> (778)-782-5425</p>
-            <p class="fa fa-envelope-o col-sm-12"> sfucsp@sfu.ca</p>
-            <%--https://www.sfu.ca/srs/security/contact-us.html--%>
-        </div>
-    </div>
-</div>
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-home fa-stack-1x "></i></span> Home</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/schedule"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span> Schedule</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/profile"><span class="fa-stack fa-lg pull-left"><i class="fa fa-user fa-stack-1x "></i></span> Profile</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span> Statistics</a>
+                <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                    <li><a href="${pageContext.request.contextPath}/statistics/info_lf"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Lost & Found</a></li>
+                    <li><a href="${pageContext.request.contextPath}/statistics/public_contact"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x "></i></span>Public Contact</a></li>
+
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/timecard_list"><i class="fa fa-clock-o"></i> Time Card</a>
+            </li>
+            <c:if test="${sessionScope.user.role == 'ADMIN' || sessionScope.user.role == 'SUPERVISOR'}">
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/users"><i class="fa fa-users"></i> Users</a>
+                </li>
+            </c:if>
+            <li class="sidebar-item">
+                <a href="${pageContext.request.contextPath}/logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sign-out fa-stack-1x "></i></span><b style="color: yellow">Sign Out</b></a>
+            </li>
+
+
+            <li class="sidebar-item" style="padding-left: 40px;padding-top: 350px">
+                <span class="fa-stack fa-lg pull-left" style="color: white"></span><b style="font-size: 15px;color: white"><u>Contact</u></b>
+            </li>
+            <li class="sidebar-item">
+                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-phone fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> (778)-782-5425</b></a>
+            </li>
+            <li class="sidebar-item">
+                <span class="fa-stack fa-lg pull-left" style="color: white"><i class="fa fa-envelope-o fa-stack-1x "></i></span><b style="font-size: 15px;color: white;padding-left: 15px"> sfucsp@sfu.ca</b></a>
+            </li>
+        </ul>
+
+    </div><!-- /#sidebar-wrapper -->
 
 <!-- /#sidebar-wrapper -->
 
@@ -72,3 +68,4 @@
         })
     });
 </script>
+<script src="resources/js/sidebar_menu.js"></script>

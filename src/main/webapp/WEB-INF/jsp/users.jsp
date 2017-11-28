@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zeta.Models.User" %><%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>
@@ -17,15 +17,15 @@
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <title>SFU</title>
-
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -41,14 +41,6 @@
 </head>
 
 <style>
-    #side-container {
-    }
-
-    #side-contact {
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
 
     tr {
         width: 100%;
@@ -72,10 +64,28 @@
     .click a {
         color: chocolate;
     }
+
+    #userimage:hover {opacity: 0.7;}
+
 </style>
 
 <body>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+<div id="wrapper" style="padding-top: 56px">
 <script>
     var users = {
         <c:forEach items="${users}" var="user">
@@ -97,12 +107,9 @@
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
-
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
                 <center>
                     <div class="description">
@@ -114,8 +121,9 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal">Add User</button>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
+                <br>
 
                 <div id="userModal" class="modal fade">
                     <div class="modal-dialog">
@@ -234,9 +242,43 @@
                                 <b>Profile</b>
                             </p>
                             <center>
-                                <img src="resources/img/etc/annonymous.jpg" class="img-responsive" height="300"
+                                <img src="resources/img/etc/annonymous.jpg" id="userimage" data-toggle="modal" data-target="#details" class="img-responsive" height="300"
                                      width="300">
                             </center>
+
+                            <div id="details" class="modal fade">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span>
+                                                <span class="sr-only">close</span></button>
+                                            <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
+                                        </div>
+                                        <br>
+                                        <div align="left" style="padding-left: 15px">
+                                            <b><u>Username: </u></b><c:out value="${user.username}"/><br>
+                                            <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
+                                            <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
+                                            <b><u>Email: </u></b><c:out value="${user.email}"/><br>
+                                            <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
+                                            <hr>
+                                            <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
+                                            <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
+                                            <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <h3>User Profile</h3>
                             <h5>Select User from the list</h5>
                         </div>
@@ -247,7 +289,7 @@
                                     <b>Profile</b>
                                 </p>
                                 <center>
-                                    <img src="resources/img/etc/dog.jpg" class="img-responsive" height="300"
+                                    <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
                                          width="300">
                                 </center>
                                 <h3><c:out value="${user.name}"/></h3>
@@ -257,7 +299,7 @@
                             </div>
                         </c:forEach>
 
-                        <div>
+                        <div class="row">
                             <button type="button" class="btn btn-primary" id="editButton">Edit User</button>
                             <button type="button" class="btn btn-primary" id="removeButton">Remove User</button>
                         </div>
@@ -293,14 +335,13 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/js/sidebar_menu.js"></script>
+
+
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
     function switchColors(element) {
         links = document.getElementsByTagName("tr");
@@ -337,6 +378,12 @@
             var tab = $(this).parent().attr("data-tab");
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
+
+            if ('${loggedInUser}' === tab) {
+                $('#removeButton').hide();
+            } else {
+                $('#removeButton').show();
+            }
         });
 
         $("#filter input").click(function () {
@@ -381,6 +428,12 @@
                 var tab = $(this).parent().attr("data-tab");
                 $('.tab-content').hide();
                 $('#' + tab).fadeIn();
+
+                if ('${loggedInUser}' === tab) {
+                    $('#removeButton').hide();
+                } else {
+                    $('#removeButton').show();
+                }
             });
         });
     });
@@ -392,8 +445,6 @@
         $('input[name="campus"]:checked').prop('checked', false);
     });
 </script>
-
 </body>
-
 </html>
 

@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TrainingRowMapper implements RowMapper<Training> {
+public class UserTrainingRowMapper implements RowMapper<Training> {
 
     @Override
     public Training mapRow(ResultSet rs, int i) throws SQLException {

@@ -20,31 +20,43 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>SFU</title>
-    <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+
 </head>
+
 
 <script>
     var api = '${pageContext.request.contextPath}';
 </script>
-<style>
-    #side-container{
-    }
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
-</style>
+
 <body>
-<div id="wrapper" class="toggled">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+        <div class="nav pull-right" style="padding-top: 10px;padding-right: 10px">
+            <%--<button type="button" class="btn btn-default" href="${pageContext.request.contextPath}/logout" style="height: 37px;font-size: 15px;padding-bottom: 30px"><b>Sign Out</b></button>--%>
+        </div>
+    </div>
+
+</nav>
+<div id="wrapper" style="padding-top: 56px">
+
     <jsp:include page="partfiles/sidebar.jsp"/>
 
     <%
@@ -76,8 +88,7 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
                 <div class="description">
                     <%--This contains all of the relevant info about announcement--%>
@@ -100,7 +111,7 @@
                                             <h4 id="myModalLabel1" style="text-align:left"><b>Create an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br><br>
                                             <div class="controls">
                                                 <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title." required>
                                                 </input>
@@ -236,33 +247,32 @@
                 <hr><br><br>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
-                        <h3><b>Cidric Butac</b></h3>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="140px" width="140px">
+                        <h4><b>Cidric Butac</b></h4>
                         <h4>Supervisor</h4>
                         <p>sfucsp@sfu.ca</p>
-                        <p>778-782-5425</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Miriam Sise Odaa</b></h4>
                         <h4>Burnaby Team Lead</h4>
                         <p>ssepbur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Kitty Lo</b></h3>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Kitty Lo</b></h4>
                         <h4>Surrey Team Lead</h4>
                         <p>ssepsur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Satpal Samra</b></h3>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Satpal Samra</b></h4>
                         <h4>Vancouver Team Lead</h4>
                         <p>ssepvan@sfu.ca</p>
                     </center>
@@ -270,16 +280,15 @@
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src='resources/js/announcements.js'></script>
+<script src="resources/js/sidebar_menu.js"></script>
+
 
 <!-- Menu Toggle Script -->
 <script>

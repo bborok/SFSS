@@ -2,10 +2,11 @@ package com.zeta.Models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.zeta.Configurations.CustomDateDeserializer;
-import com.zeta.Configurations.CustomDateSerializer;
-import com.zeta.Configurations.CustomDateTimeDeserializer;
-import com.zeta.Configurations.CustomDateTimeSerializer;
+import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonDeserializers.CustomEmptyStringToNullDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
+import com.zeta.Configurations.JsonDeserializers.CustomDateTimeDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateTimeSerializer;
 
 import java.util.Date;
 
@@ -29,14 +30,18 @@ public class Shift {
 
     private String location;
     private String notes;
+
+    @JsonDeserialize(using = CustomEmptyStringToNullDeserializer.class)
+
     private String requiredTraining;
     private boolean isTimeCardSubmitted = false; //By default is false
     private String username;
+    private ConfirmationStatus confirmationStatus;
 
     public Shift() {
     }
 
-    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username) {
+    public Shift(Long id, String title, Date date, Date start, Date end, Campus campus, String location, String notes, String requiredTraining, boolean isTimeCardSubmitted, String username, ConfirmationStatus confirmationStatus) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -48,6 +53,7 @@ public class Shift {
         this.requiredTraining = requiredTraining;
         this.isTimeCardSubmitted = isTimeCardSubmitted;
         this.username = username;
+        this.confirmationStatus = confirmationStatus;
     }
 
     public Long getId() {
@@ -130,12 +136,20 @@ public class Shift {
         this.username = username;
     }
 
-    public boolean isTimeCardSubmitted() {
+    public boolean getIsTimeCardSubmitted() {
         return isTimeCardSubmitted;
     }
 
     public void setTimeCardSubmitted(boolean timeCardSubmitted) {
         isTimeCardSubmitted = timeCardSubmitted;
+    }
+
+    public ConfirmationStatus getConfirmationStatus() {
+        return confirmationStatus;
+    }
+
+    public void setConfirmationStatus(ConfirmationStatus confirmationStatus) {
+        this.confirmationStatus = confirmationStatus;
     }
 
     @Override
@@ -150,7 +164,9 @@ public class Shift {
                 ", location='" + location + '\'' +
                 ", notes='" + notes + '\'' +
                 ", requiredTraining='" + requiredTraining + '\'' +
+                ", isTimeCardSubmitted=" + isTimeCardSubmitted +
                 ", username='" + username + '\'' +
+                ", confirmationStatus=" + confirmationStatus +
                 '}';
     }
 }

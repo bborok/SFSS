@@ -104,6 +104,11 @@
 
 </script>
 
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("loggedInUser", user.getUsername());
+    %>
+
 <div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>

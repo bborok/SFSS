@@ -47,26 +47,23 @@ public class ShiftsController {
             @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end
     ) {
         List<Shift> shifts;
-        shifts = shiftData.getShifts();
+        //Filter the shifts according to the logged in user
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) return ResponseEntity.badRequest().build();
 
-//
-//        //Filter the shifts according to the logged in user
-//        HttpSession session = request.getSession();
-//        User u = (User) session.getAttribute("user");
-//        if (u == null) return ResponseEntity.badRequest().build();
-//
-//        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
-//            //Get the Members/Volunteers shifts
-//            shifts = shiftData.getShiftsWithUsername(u.getUsername());
-//        } else {
-//            shifts = shiftData.getShifts();
-//            if (u.getRole() == Role.TEAM_LEADER) {
-//                shifts = shifts.stream().filter(shift -> shift.getCampus() == u.getPreferredCampus()).collect(Collectors.toList());
-//            }
-//        }
+        if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
+            //Get the Members/Volunteers shifts
+            shifts = shiftData.getShiftsWithUsername(u.getUsername());
+        } else {
+            shifts = shiftData.getShifts();
+            if (u.getRole() == Role.TEAM_LEADER) {
+                shifts = shifts.stream().filter(shift -> shift.getCampus() == u.getPreferredCampus()).collect(Collectors.toList());
+            }
+        }
 
-        //Filter by start and end query parameters (if available)
-//        shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());
+//        Filter by start and end query parameters (if available)
+        shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());
         return new ResponseEntity<>(shifts, HttpStatus.OK);
     }
 

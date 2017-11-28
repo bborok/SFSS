@@ -205,7 +205,6 @@ var selectEmptyAreaEventHandler = function (start, end) {
 };
 
 var selectScheduledEventHandler = function (event) {
-    console.log(event);
     $('#modalTitle').text('Edit Shift');
 
     $('#shiftID').val(event.id);
@@ -233,7 +232,6 @@ var selectScheduledEventHandler = function (event) {
 
 
 function conditionallyRender(start, end, isTimeCardSubmitted) {
-    console.log(isTimeCardSubmitted);
     //Condtionally Render
     if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR') {
         showAllConditionalButtons();
@@ -251,17 +249,13 @@ function conditionallyRender(start, end, isTimeCardSubmitted) {
         var eventEnd = moment(end).format(dateTimeFormat);
         var currentDate = moment().format(dateTimeFormat);
 
-        console.log(currentDate);
-        console.log(eventStart);
         //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
         if (moment(currentDate).isBefore(eventStart)) {
-            console.log('showing save button');
             $("#availabilitySelect").prop('disabled', false);
             $("#submitButton").show();
         }
         //Condtionally render timecard
         if (moment(currentDate).isAfter(eventStart) && isTimeCardSubmitted === false) {
-            console.log('showing timecard');
             $("#btnTimecard").show();
         }
     }
@@ -289,7 +283,6 @@ function doSubmit() {
         requiredTraining: $('#eventRequiredTraining').val(),
         confirmationStatus: $('#availabilitySelect').val()
     };
-    console.log(shift);
     saveShift(shift);
     $("#createEventModal").modal('hide');
 }

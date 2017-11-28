@@ -146,6 +146,7 @@
                                 </div>
                             </dl>
                             <dl>
+                            <c:if test="${not empty user.languages}">
                                 <dt><u>Languages Spoken:</u></dt>
                                 <div class="row" style="overflow-y:scroll; width: 200px; height:115px">
                                     <table class="table table-striped" style="text-align:center">
@@ -159,32 +160,36 @@
                                     </table>
                                 </div>
                             </dl>
-                            <dl>
-                                <dt><u>Certificates:</u></dt>
-                                <div class="row" style="overflow-y: scroll; width:700px; height: 200px">
-                                    <table class="table table-striped" style="text-align: left">
-                                        <thead>
-                                            <tr style="text-align: center">
-                                                <th width="35%">Name</th>
-                                                <th width="25%">ID</th>
-                                                <th width="10%">Level</th>
-                                                <th width="30%">Expiration Date</th>
-                                            </tr>
-                                        </thead>
+                            </c:if>
 
-                                        <tbody style="color: black">
-                                            <c:forEach items="${user.certificates}" var="certificate">
+                            <c:if test="${not empty user.certificates}">
+                                <dl>
+                                    <dt><u>Certificates:</u></dt>
+                                    <div class="row" style="overflow-y: scroll; width:700px; height: 200px">
+                                        <table class="table table-striped" style="text-align: left">
+                                            <thead>
                                                 <tr style="text-align: center">
-                                                    <td width="35%"><c:out value="${certificate.name}"/>
-                                                    <td width="25%"><c:out value="${certificate.number}"/>
-                                                    <td width="10%"><c:out value="${certificate.level}"/>
-                                                    <td width="30%"><c:out value="${certificate.expirationDate}"/>
+                                                    <th width="35%">Name</th>
+                                                    <th width="25%">ID</th>
+                                                    <th width="10%">Level</th>
+                                                    <th width="30%">Expiration Date</th>
                                                 </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </dl>
+                                            </thead>
+
+                                            <tbody style="color: black">
+                                                <c:forEach items="${user.certificates}" var="certificate">
+                                                    <tr style="text-align: center">
+                                                        <td width="35%"><c:out value="${certificate.name}"/>
+                                                        <td width="25%"><c:out value="${certificate.number}"/>
+                                                        <td width="10%"><c:out value="${certificate.level}"/>
+                                                        <td width="30%"><c:out value="${certificate.expirationDate}"/>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </dl>
+                            </c:if>
                         </div>
 
                         <script>

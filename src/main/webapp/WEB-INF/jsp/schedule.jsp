@@ -234,13 +234,10 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Member</label>
                                             <div class="controls col-sm-10">
-                                                <select class="form-control" name="eventMember" id="eventMember"
-                                                        data-tab="${user.getUsername()}">
+                                                <select class="form-control" id="memberSelect">
                                                     <option value="" disabled selected>Select User</option>
                                                     <c:forEach items="${users}" var="user">
-                                                        <option value="${user.getUsername()}">
-                                                                ${user.getUsername()}
-                                                        </option>
+                                                        <option value="${user.username}">${user.username}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

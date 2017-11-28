@@ -195,61 +195,68 @@ var eventRenderHandler = function (event, element) {
 };
 
 var selectEmptyAreaEventHandler = function (start, end) {
-    showAllConditionalButtons();
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
     $('#startTime').data("DateTimePicker").date(start);
     $('#endTime').data("DateTimePicker").date(end);
-
-
-
-
+    $('#availabilitySelect').val("NO_RESPONSE");
+    conditionallyRender(start, end);
+    // $('#createEventModal').modal('show');
 };
 
-function popupCreateEventModal(){
-    resetFormFields();
+function conditionallyRender(start, end) {
+    // resetFormFields();
     //Condtionally Render
 
-    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR'){
+    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR') {
         showAllConditionalButtons();
         enableAllInputElementsInForm();
+        $('#createEventModal').modal(); //popup modal
         return;
     }
 
-    if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER'){
+    if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER') {
         $('#btnDelete').hide();
         disableAllInputElementsInForm();
-        // if () TODO: complete this
-        $('#availabilitySelect').prop('disabled', false);
-    }
-    $('#btnTimecard').hide();
-    $('#availabilitySelect').val("NO_RESPONSE");
+        hideAllCondtiionalButtons();
 
-    $('#createEventModal').modal('show'); //popup modal
+
+        var eventStart = moment(start).format(dateTimeFormat);
+        var eventEnd = moment(end).format(dateTimeFormat);
+        var currentDate = moment().format(dateTimeFormat);
+        //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
+        if (moment(currentDate).isBefore(eventStart)) {
+            $("#availabilitySelect").prop('disabled', false);
+            $("#saveButton").show();
+        }
+        //Condtionally render timecard
+        if (moment(currentDate).isAfter(eventStart)) {
+            $("#btnTimecard").show();
+        }
+    }
+
+    $('#createEventModal').modal(); //popup modal
 }
 
 var selectScheduledEventHandler = function (event) {
-    showAllConditionalButtons();
-    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-    $('#campusSelect').val(event.campus);
-    $('#campusSelect').trigger('change');
+    console.log(event);
+    $('#campusSelect').val(event.campus).trigger('change');
 
     $('#eventShiftSelect').val(event.title);
 
-    $('#date').data("DateTimePicker").date(event.date);
+    $('#date').data("DateTimePicker").date(moment(event.date));
+    console.log(event.date);
     $('#startTime').data("DateTimePicker").date(event.start);
     $('#endTime').data("DateTimePicker").date(event.end);
 
     $('#eventLocation').val(event.location);
     $('#eventRequiredTraining').val(event.requiredTraining);
 
-    $('#eventMember').val(event.username);
+    $('#memberSelect').val(event.username);
 
     $('#eventNotes').val(event.notes);
 
     $('#availabilitySelect').val(event.confirmationStatus);
-
-    $('#createEventModal').modal();
 
     $('#btnDelete').off().on('click', function (e) {
         e.preventDefault();
@@ -257,36 +264,8 @@ var selectScheduledEventHandler = function (event) {
         $('#createEventModal').modal('hide');
     });
 
-    $("#btnUpdateAvailability").off().on('click', function () {
-        updateShiftConfirmation(event.id, $("#availabilitySelect").val());
-        $('#createEventModal').modal('hide');
-    });
+    conditionallyRender(event.start, event.end);
 
-    if (event.isTimeCardSubmitted) {
-        $('#btnTimecard').hide();
-    } else {
-        $('#btnTimecard').show();
-    }
-
-    $('#btnTimecard').off().on('click', function () {
-        $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
-    });
-
-    var eventStart = moment(event.start).format(dateTimeFormat);
-    var currentDate = moment().format(dateTimeFormat);
-
-    //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
-    if (moment(eventStart).isAfter(currentDate)) {
-        $("#availabilitySelect").show();
-        $("#btnUpdateAvailability").show();
-        $("#modalAvailability").hide();
-
-    } else {
-        $("#availabilitySelect").hide();
-        $("#btnUpdateAvailability").hide();
-        $("#modalAvailability").show();
-
-    }
 };
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
@@ -304,7 +283,7 @@ function doSubmit() {
         start: convertToDateFormat(date, startTime),
         end: convertToDateFormat(date, endTime),
         campus: $('#eventCampus').val(),
-        username: $('#eventMember').val(),
+        username: $('#memberSelect').val(),
         location: $('#eventLocation').val(),
         notes: $('#eventNotes').val(),
         requiredTraining: $('#eventRequiredTraining').val()
@@ -314,7 +293,7 @@ function doSubmit() {
 
 function resetFormFields() {
     $('#eventCampus').val("");
-    $('#eventMember').val("");
+    $('#memberSelect').val("");
     $('#eventRequiredTraining').val("");
 }
 
@@ -414,21 +393,22 @@ function convertToDateFormat(start, end) {
     return start + ' ' + end;
 }
 
-function showAllConditionalButtons(){
+function showAllConditionalButtons() {
     $('#btnTimecard').show();
     $('#btnDelete').show();
     $('#submitButton').show();
 }
 
-function hideAllCondtiionalButtons(){
+function hideAllCondtiionalButtons() {
     $('#btnTimecard').hide();
     $('#btnDelete').hide();
     $('#submitButton').hide();
 }
 
-function enableAllInputElementsInForm(){
-    $('#createAppointmentForm,input').prop('disabled', true);
-}
-function disableAllInputElementsInForm() {
+function enableAllInputElementsInForm() {
     $('#createAppointmentForm,input').prop('disabled', false);
+}
+
+function disableAllInputElementsInForm() {
+    $('#createAppointmentForm,input').prop('disabled', true);
 }

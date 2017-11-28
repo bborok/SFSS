@@ -113,6 +113,24 @@ public class ShiftDao implements ShiftData {
             String sqlCheck = "SELECT COUNT(*) FROM Shift WHERE ID=?";
             Integer cnt = jdbcTemplate.queryForObject(sqlCheck, Integer.class, shift.getId());
             if (cnt != null && cnt > 0) {
+                String sql = "UPDATE Shift " +
+                        "SET Name = ?, User = ?, Date = ?, StartTime = ?, EndTime = ?, " +
+                        "Campus = ?, Location = ?, Notes = ?, RequiredTraining = ?, Confirmed = ? " +
+                        "WHERE ID = ?";
+                jdbcTemplate.update(sql,
+                        shift.getTitle(),
+                        shift.getUsername(),
+                        shift.getDate(),
+                        shift.getStart(),
+                        shift.getEnd(),
+                        shift.getCampus().toString(),
+                        shift.getLocation(),
+                        shift.getNotes(),
+                        shift.getRequiredTraining(),
+                        shift.getConfirmationStatus().toString(),
+                        shift.getId()
+                );
+            } else {
                 String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 jdbcTemplate.update(sql,
@@ -126,22 +144,6 @@ public class ShiftDao implements ShiftData {
                         shift.getDate(),
                         shift.getRequiredTraining(),
                         shift.getIsTimeCardSubmitted()
-                );
-            } else {
-                String sql = "UPDATE Shift SET Name = ?, User = ?, Date = ?, StartTime = ?, EndTime = ?, " +
-                        "Campus = ?, Location = ?, Notes = ?, RequiredTraining = ?, Confirmed = ? WHERE ID = ?";
-                jdbcTemplate.update(sql,
-                        shift.getTitle(),
-                        shift.getUsername(),
-                        shift.getDate(),
-                        shift.getStart(),
-                        shift.getEnd(),
-                        shift.getCampus(),
-                        shift.getLocation(),
-                        shift.getNotes(),
-                        shift.getRequiredTraining(),
-                        shift.getConfirmationStatus(),
-                        shift.getId()
                 );
             }
             return true;

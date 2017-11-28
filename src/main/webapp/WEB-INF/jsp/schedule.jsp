@@ -182,7 +182,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Campus</label>
                                             <div class="controls col-sm-10">
-                                                <select class="form-control" name="eventCampus" id="campusSelect">
+                                                <select class="form-control" id="campusSelect">
                                                     <option value="" disabled selected>Select Campus</option>
                                                     <option value="BURNABY" class="BURNABY">Burnaby</option>
                                                     <option value="SURREY" class="SURREY">Surrey</option>
@@ -196,7 +196,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Shift</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="eventTitle" id="eventShiftSelect">
+                                                <select class="form-control" id="eventShiftSelect">
                                                 </select>
                                             </div>
                                         </div>
@@ -283,6 +283,7 @@
 
                                 </form>
                             </div>
+                            <input id="shiftID" value="" hidden/>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" id="btnTimecard">Timecard</button>
                                 <button class="btn btn-primary" id="btnDelete">Remove</button>

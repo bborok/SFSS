@@ -17,7 +17,6 @@ $(document).ready(function () {
     });
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
-
     csrfAndAjaxSetup();
     initCalendar();
     initEventHandlers();
@@ -149,7 +148,6 @@ function initEventHandlers() {
         }
 
         selectedCampus = selectedCampus.toUpperCase();
-        console.log(selectedCampus);
 
         var shiftsToDisplay;
         if (selectedCampus === 'BURNABY') shiftsToDisplay = iBURNABY;
@@ -201,13 +199,10 @@ var selectEmptyAreaEventHandler = function (start, end) {
     $('#endTime').data("DateTimePicker").date(end);
     $('#availabilitySelect').val("NO_RESPONSE");
     conditionallyRender(start, end);
-    // $('#createEventModal').modal('show');
 };
 
 function conditionallyRender(start, end) {
-    // resetFormFields();
     //Condtionally Render
-
     if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR') {
         showAllConditionalButtons();
         enableAllInputElementsInForm();
@@ -218,8 +213,7 @@ function conditionallyRender(start, end) {
     if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER') {
         $('#btnDelete').hide();
         disableAllInputElementsInForm();
-        hideAllCondtiionalButtons();
-
+        hideAllCondtionalButtons();
 
         var eventStart = moment(start).format(dateTimeFormat);
         var eventEnd = moment(end).format(dateTimeFormat);
@@ -239,13 +233,12 @@ function conditionallyRender(start, end) {
 }
 
 var selectScheduledEventHandler = function (event) {
-    console.log(event);
+    $('#shiftID').val(event.id);
     $('#campusSelect').val(event.campus).trigger('change');
 
     $('#eventShiftSelect').val(event.title);
 
     $('#date').data("DateTimePicker").date(moment(event.date));
-    console.log(event.date);
     $('#startTime').data("DateTimePicker").date(event.start);
     $('#endTime').data("DateTimePicker").date(event.end);
 
@@ -265,12 +258,11 @@ var selectScheduledEventHandler = function (event) {
     });
 
     conditionallyRender(event.start, event.end);
-
 };
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
-    var selectedShiftElement = $('#eventShiftSelect');
+    var selectedShiftElement =
     $("#createEventModal").modal('hide');
 
     var date = $('#date').data("DateTimePicker").date().format(dateFormat);
@@ -278,16 +270,19 @@ function doSubmit() {
     var endTime = $('#endTime').data("DateTimePicker").date().format(timeFormat);
 
     var shift = {
-        title: selectedShiftElement.find(":selected").attr("class"),
+        id: $('#shiftID').val(),
+        title: $('#eventShiftSelect').val(),
         date: date,
         start: convertToDateFormat(date, startTime),
         end: convertToDateFormat(date, endTime),
-        campus: $('#eventCampus').val(),
+        campus: $('#campusSelect').val(),
         username: $('#memberSelect').val(),
         location: $('#eventLocation').val(),
         notes: $('#eventNotes').val(),
-        requiredTraining: $('#eventRequiredTraining').val()
+        requiredTraining: $('#eventRequiredTraining').val(),
+        confirmationStatus: $('#availabilitySelect').val()
     };
+    console.log(shift);
     saveShift(shift);
 }
 
@@ -336,29 +331,6 @@ function deleteShift(event) {
     });
 }
 
-function updateShiftConfirmation(shiftId, status) {
-    var payload = {
-        shift_id: shiftId,
-        confirmation_status: status
-    };
-    $.ajax({
-        type: 'POST',
-        headers: {
-            Accept: "text/plain"
-        },
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        url: api + '/shift/updateConfirmation',
-        data: $.param(payload),
-        success: function () {
-            $.notify("Updated availability.", "success");
-            calendar.fullCalendar('refetchEvents');
-        },
-        error: function () {
-            $.notify("Error updating availability", "warn");
-        }
-    });
-}
-
 function filter(calEvent) {
     var vals = [];
     $('input:checkbox.campusFilter:checked').each(function () {
@@ -399,7 +371,7 @@ function showAllConditionalButtons() {
     $('#submitButton').show();
 }
 
-function hideAllCondtiionalButtons() {
+function hideAllCondtionalButtons() {
     $('#btnTimecard').hide();
     $('#btnDelete').hide();
     $('#submitButton').hide();
@@ -407,8 +379,12 @@ function hideAllCondtiionalButtons() {
 
 function enableAllInputElementsInForm() {
     $('#createAppointmentForm,input').prop('disabled', false);
+    $('#createAppointmentForm,select').prop('disabled', false);
+    $('#createAppointmentForm,textarea').prop('disabled', false);
 }
 
 function disableAllInputElementsInForm() {
     $('#createAppointmentForm,input').prop('disabled', true);
+    $('#createAppointmentForm,select').prop('disabled', true);
+    $('#createAppointmentForm,textarea').prop('disabled', true);
 }

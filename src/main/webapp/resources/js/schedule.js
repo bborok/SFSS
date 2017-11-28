@@ -74,40 +74,6 @@ function initCalendar() {
         select: selectEventHandler,
 
         //Selecting a scheduled event
-        eventClick: function (event) {
-            console.log(event);
-            //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-            $('#modalTitle').html(event.title);
-            $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-            $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-            $('#modalMember').html(event.username);
-            $('#modalCampus').html(event.campus);
-            $('#modalID').html(event.id);
-            $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-            $('#modalLocation').html(event.location);
-            $('#modalNotes').html(event.notes);
-            $('#modalTraining').html(event.requiredTraining);
-            $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-            $('#fullCalModal').modal();
-
-            if(event.isTimeCardSubmitted == true){
-                $('#btnTimecard').hide();
-            }else{
-                $('#btnTimecard').show();
-            }
-
-            $('#btnTimecard').off().on('click', function () {
-                    $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
-            });
-
-            $('#btnDelete').off().on('click', function (e) {
-                e.preventDefault();
-                //AJAX DELETE REQUEST
-                console.log('Deleting shift ' + event.id);
-                deleteShift(event);
-                $('#fullCalModal').modal('hide');
-            })
-        },
         eventClick: eventClickHandler,
 
         navLinks: true, // can click day/week names to navigate views
@@ -344,7 +310,7 @@ function updateShiftConfirmation(shiftId, status) {
     $.ajax({
         type: 'POST',
         headers: {
-            Accept: "text/plain",
+            Accept: "text/plain"
         },
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         url: api + '/shift/updateConfirmation',
@@ -359,23 +325,6 @@ function updateShiftConfirmation(shiftId, status) {
     });
 }
 
-function displayErrorAlert(msg) {
-    alertsDiv.append(
-        "<div id=\"errorAlert\" class=\"alert alert-danger alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Danger! </strong> " + msg +
-        "</div>"
-    );
-}
-
-function displaySuccessAlert(msg) {
-    alertsDiv.append(
-        "<div id=\"successAlert\" class=\"alert alert-success alert-dismissable fade in\">" +
-        "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
-        "    <strong>Success! </strong> " + msg +
-        "</div>"
-    );
-}
 function filter(calEvent) {
     var vals = [];
     $('input:checkbox.campusFilter:checked').each(function () {

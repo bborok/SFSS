@@ -347,7 +347,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                <button class="btn btn-primary" id="btnUpdateAvailability">Update
                                     Availability
                                 </button>
                                 <c:choose>

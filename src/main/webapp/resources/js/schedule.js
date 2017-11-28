@@ -216,7 +216,7 @@ var eventClickHandler = function (event) {
         $('#fullCalModal').modal('hide');
     });
 
-    $("#btnConfirmAvailability").off().on('click', function () {
+    $("#btnUpdateAvailability").off().on('click', function () {
         updateShiftConfirmation(event.id, $("#availabilitySelect").val());
         $('#fullCalModal').modal('hide');
     });
@@ -237,10 +237,14 @@ var eventClickHandler = function (event) {
     //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
     if (moment(eventStart).isAfter(currentDate)) {
         $("#availabilitySelect").show();
+        $("#btnUpdateAvailability").show();
         $("#modalAvailability").hide();
+
     } else {
         $("#availabilitySelect").hide();
+        $("#btnUpdateAvailability").hide();
         $("#modalAvailability").show();
+
     }
 };
 

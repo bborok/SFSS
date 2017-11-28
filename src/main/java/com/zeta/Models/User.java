@@ -22,15 +22,17 @@ public class User {
     private List<Training> training;
     private List<String> languages;
     private List<Certificate> certificates;
-    private Boolean isDeactivated;
     private int volunteerHours;
+    private int parkingHours;
+    private Boolean isDeactivated;
 
     public User() {
     } //Required by JPA
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
-                Role role, Campus preferredCampus, String callSign, int volunteerHours, int driversLicenseLevel, Date driversLicenseExpirationDate,
-                List<Training> training, List<String> languages, List<Certificate> certificates, Boolean isDeactivated) {
+                Role role, Campus preferredCampus, String callSign, int driversLicenseLevel,
+                Date driversLicenseExpirationDate, List<Training> training, List<String> languages,
+                List<Certificate> certificates, int volunteerHours, int parkingHours, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -46,6 +48,7 @@ public class User {
         this.training = training;
         this.languages = languages;
         this.certificates = certificates;
+        this.parkingHours = parkingHours;
         this.isDeactivated = isDeactivated;
     }
 
@@ -161,6 +164,18 @@ public class User {
         this.certificates = certificates;
     }
 
+    public int getVolunteerHours() { return volunteerHours; }
+
+    public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
+
+    public int getParkingHours() {
+        return parkingHours;
+    }
+
+    public void setParkingHours(int parkingHours) {
+        this.parkingHours = parkingHours;
+    }
+
     public void setIsDeactivated(Boolean isDeactivated) {
         this.isDeactivated = isDeactivated;
     }
@@ -168,8 +183,4 @@ public class User {
     public Boolean getIsDeactivated() {
         return isDeactivated;
     }
-
-    public int getVolunteerHours() { return volunteerHours; }
-
-    public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
 }

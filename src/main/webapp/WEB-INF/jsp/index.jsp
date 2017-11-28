@@ -20,30 +20,43 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>SFU</title>
-    <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
+
+
 </head>
+
 
 <script>
     var api = '${pageContext.request.contextPath}';
 </script>
-<style>
-    #side-container{
-    }
-    #side-contact{
-        position: absolute;
-        bottom: 0;
-        color: #ffffff;
-    }
-</style>
+
 <body>
-<div id="wrapper" class="toggled">
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+        <div class="nav pull-right" style="padding-top: 10px;padding-right: 10px">
+            <%--<button type="button" class="btn btn-default" href="${pageContext.request.contextPath}/logout" style="height: 37px;font-size: 15px;padding-bottom: 30px"><b>Sign Out</b></button>--%>
+        </div>
+    </div>
+
+</nav>
+<div id="wrapper" style="padding-top: 56px">
+
     <jsp:include page="partfiles/sidebar.jsp"/>
 
     <%
@@ -64,8 +77,10 @@
                 date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />',
                 campus : '${announcement.campus}',
-                role : ${user.role}
-            },
+                role : '${user.role}',
+                id : ${announcement.id}
+
+        },
             </c:forEach>
         };
 
@@ -73,8 +88,7 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
                 <div class="description">
                     <%--This contains all of the relevant info about announcement--%>
@@ -83,7 +97,7 @@
                             <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                         <div id="nav">
                             <ul>
-                                <li><button type="button" id = "createAnnouncement" style = "background:#901d33">Add an Announcement</button></li>
+                               <button type="button" class = "btn btn-primary" id = "createAnnouncement">Add an Announcement</button></li>
                             </ul>
                         </div>
                         <hr>
@@ -97,16 +111,16 @@
                                             <h4 id="myModalLabel1" style="text-align:left"><b>Create an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br><br>
                                             <div class="controls">
-                                                <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title." required>
                                                 </input>
                                             </div>
 
                                             <br><br>
 
                                             <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
-                                            <select class="form-control" name="announceCampusModal" id="announceCampusModal">
+                                            <select class="form-control" name="announceCampusModal" id="announceCampusModal" required>
                                                 <option value='all' id='allCampuses' disabled="true" selected>Select Teams
                                                 </option>
                                                 <option value ="BURNABY" class = "BURNABY">BURNABY</option>
@@ -117,7 +131,7 @@
 
                                             <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
                                             <div class="controls">
-                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceMessageModal" placeholder="Enter a message."></textarea>
+                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceMessageModal" placeholder="Enter a message." required></textarea>
                                             </div>
                                         </div>
 
@@ -138,16 +152,16 @@
                                             <h4 id="myModalLabel2" style="text-align:left"><b>Edit an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" id ="title" style="float:left;"><u>Title: </u> </label><br>
                                             <div class="controls">
-                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title." required>
                                                 </input>
                                             </div>
 
                                             <br><br>
 
-                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
-                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus">
+                                            <label class="control-label" id="campus" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus" required>
                                                 <option value='all' id='allSaveCampus' disabled="true" selected>Select Teams
                                                 </option>
                                                 <option value ="BURNABY" class = "BURNABY">BURNABY</option>
@@ -156,9 +170,9 @@
 
                                             </select>
 
-                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
+                                            <label class="control-label" id="message" style="float:left;" ><u>Message: </u> </label><br>
                                             <div class="controls">
-                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message."></textarea>
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message." required></textarea>
                                             </div>
                                         </div>
 
@@ -205,7 +219,7 @@
                             </div>
                         </div>
                         <div class="controls" id = "sortAnnounce" style="width:65%;">
-
+                            <div id="alertsDiv"></div>
                             <c:forEach items="${announcements}" var = "announcement">
                                 <div class = "check" id = "${announcement.id}">
                                 <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
@@ -218,10 +232,10 @@
                                     <div class = "panel-body" id = "announceDate">Date:
                                         <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />
-                                    </div>                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
+                                    </div>
+                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
                                         <button type="button" class="btn btn-primary editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
                                         <button type="button" class="btn btn-primary removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
-
                                     </div>
                                 </div>
                                 </div>
@@ -230,36 +244,35 @@
                         </div>
 
                     </div>
-                <hr><br>
+                <hr><br><br>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="200px" width="200px">
-                        <h3><b>Cidric Butac</b></h3>
+                        <img src="resources/img/stole_from_sfu/cidric.png" alt="" class="img-circle" height="140px" width="140px">
+                        <h4><b>Cidric Butac</b></h4>
                         <h4>Supervisor</h4>
                         <p>sfucsp@sfu.ca</p>
-                        <p>778-782-5425</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Miriam Sise Odaa</b></h3>
+                        <img src="resources/img/stole_from_sfu/miriam.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Miriam Sise Odaa</b></h4>
                         <h4>Burnaby Team Lead</h4>
                         <p>ssepbur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Kitty Lo</b></h3>
+                        <img src="resources/img/stole_from_sfu/kitty.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Kitty Lo</b></h4>
                         <h4>Surrey Team Lead</h4>
                         <p>ssepsur@sfu.ca</p>
                     </center>
                 </div>
                 <div class="col-sm-3">
                     <center>
-                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="200px" width="200px">
-                        <h3><b>Satpal Samra</b></h3>
+                        <img src="resources/img/stole_from_sfu/satpal.png" class="img-circle" height="140px" width="140px">
+                        <h4><b>Satpal Samra</b></h4>
                         <h4>Vancouver Team Lead</h4>
                         <p>ssepvan@sfu.ca</p>
                     </center>
@@ -267,40 +280,18 @@
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
-
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src='resources/js/announcements.js'></script>
+<script src="resources/js/sidebar_menu.js"></script>
+
 
 <!-- Menu Toggle Script -->
 <script>
-
-//    $('.empty').hide();
-
-//    $("#menu-toggle").click(function(e) {
-//        e.preventDefault();
-//        $("#wrapper").toggleClass("toggled");
-//    });
-//
-//    var top = $('.thisone').offset().top;
-//    $('.trigger').click(function () {
-//        $('.thisone').css('position','');
-//        $('.left2').toggle('slow',function(){
-//            top = $('.thisone').offset().top;
-//        });
-//    });
-//
-//    $(document).scroll(function(){
-//        $('.thisone').css('position','');
-//        top = $('.thisone').offset().top;
-//        $('.thisone').css('position','absolute');
-//        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
-//    });
 
     $("#filter input").click(function() {
         var burnabyCheck = $('#BURNABY').is(":checked");
@@ -349,38 +340,33 @@
                     "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
 
                     filterArray[index].date +
-                    <%--"<fmt:formatDate type = 'both' dateStyle = 'medium' timeStyle = 'medium' value = '" +--%>
-                    <%--filterArray[index].date + "'/>'"--%>
                      "</div>" +
-
-
                     "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
-                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + "onclick='doEdit('" +
-                    filterArray[index].id + "," + filterArray[index].title + "," + filterArray[index].message + "," + filterArray[index].campus + "," +
-                    "')>Edit Announcement</button>" +
-                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + "onclick='doRemove('" +
-                    filterArray[index].id + "," + "')>Remove Announcement</button>" +
+                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + " onclick='doEdit(" + filterArray[index].id +
+                    ',"' + filterArray[index].title + '"' + ',"' + filterArray[index].message + '"' + ',"' + filterArray[index].campus + '"' +
+                ")'>Edit Announcement</button>" +
+                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + " onclick='doRemove(" + filterArray[index].id +
+                ")'>Remove Announcement</button>" +
                     "</div></div></div>"
 
         }
+
         console.log(filterArray);
         if (htmlAdd.length == 0) {
             var emptyAdd = "";
             emptyAdd += "<div class ='empty'>" +
                     "<div class = 'panel panel-primary' style='text-align:left'>" +
                     "<div class = 'panel-heading'>" + "No announcements to show" +
-                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"
+                "</div>" + "</div>" + "</div>" + "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>"+ "<br>" + "<hr>" + "<br>";
 
             $('#sortAnnounce').empty();
             $('#sortAnnounce').append(emptyAdd);
         } else {
             $('#sortAnnounce').empty();
-
             $('#sortAnnounce').append(htmlAdd);
         }
 
     });
-
 
     function doEdit(id, title, message, campus) {
 
@@ -405,6 +391,7 @@
                 "message": $('#announceSaveMessage').val(),
                 "campus": $('#announceSaveCampus').val().toUpperCase().toString()
             };
+            $('#editAnnouncementModal').modal('hide');
 
             $.ajax({
                 type: 'POST',
@@ -414,13 +401,13 @@
                 url: api + '/announcements/add',
                 data: JSON.stringify(announcement),
                 success: function() {
-                    alert("Saved successfully");
-                    location.reload();
+                    displaySuccessAlert('Saving edited ' + announcement.title + ' to database...');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                 },
-                error: function(e) {
-                    alert(e);
-
-                    alert("error editing announcement to DB");
+                error: function() {
+                    displayErrorAlert(('Failed to save ' + announcement.title + ' to database.'));
                 },
                 contentType: "application/json; charset=utf-8"
             });
@@ -441,11 +428,13 @@
              data: JSON.stringify(ID),
 
              success: function() {
-                 alert("Removed successfully");
-                 location.reload();
+                 displaySuccessAlert('Removing ' + ID + ' from database...');
+                 setTimeout(function() {
+                     location.reload();
+                 }, 3000);
              },
              error: function() {
-                 alert("error removing " + ID + "from db");
+                 displayErrorAlert(('Failed to remove ' + ID + ' from database.'));
              },
              contentType: "application/json; charset=utf-8"
          });

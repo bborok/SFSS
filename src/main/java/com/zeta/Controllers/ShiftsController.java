@@ -121,7 +121,7 @@ public class ShiftsController {
      */
     @DeleteMapping("/shift/delete/{id}")
     public ResponseEntity<Object> deleteShift(@PathVariable long id) {
-        if (shiftData.deleteShift(id)) return ResponseEntity.ok().build();
+        if (shiftData.deleteShift(id)) return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Success");
         else return ResponseEntity.badRequest().build();
     }
 }

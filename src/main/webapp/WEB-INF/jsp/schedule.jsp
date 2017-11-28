@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -20,26 +19,24 @@
 
     <!-- jQuery Resources -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%--Lodash--%>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
-    <script src='resources/js/notify.js'></script>
+    <%--Moment.js--%>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
+    <%--Notify.js--%>
+    <script src='resources/js/notify.js'></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"/>
-
-    <!-- FullCalendar Resources -->
-    <%--<link rel='stylesheet' href='resources/fullcalendar/fullcalendar.css'/>--%>
-    <%--<script src='resources/lib/jquery.min.js'></script>--%>
-    <%--<script src='resources/lib/moment.min.js'></script>--%>
-    <%--<script src='resources/fullcalendar/fullcalendar.js'></script>--%>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
     <%
         User user = (User) session.getAttribute("user");
         pageContext.setAttribute("user", user);
     %>
     <script>
-        var api = '${pageContext.request.contextPath}/api';
+        var contextPath = '${pageContext.request.contextPath}';
+        var api = contextPath +'/api';
         var iBURNABY = [];
         var iSURREY = [];
         var iVANCOUVER = [];
@@ -73,16 +70,21 @@
     <script src='resources/js/schedule.js'></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 
+    <%--FullCalendar--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script>
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css"></script>--%>
     <!-- Custom styles for this template -->
-    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 
     <%--fullCalendarCSS.css was throwing errors in Chrome dev console--%>
     <%--<link rel="stylesheet" href="resources/css/fullCalendarCSS.css">--%>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link href="resources/css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -93,38 +95,31 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 </head>
 
-<style>
-    #side-container {
-    }
-
-    #side-contact {
-        position: absolute;
-        color: #ffffff;
-        bottom: 0;
-    }
-
-</style>
 
 <body>
 
-<%--mla189
-TODO:
-Adjustable Time
-Resolve error assigning shift but getting error on db
-cancel button functionalities
-"required training"?
---%>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
-<div id="wrapper" class="toggled">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
+<div id="wrapper" style="padding-top: 56px">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
-
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
-
                 <div class="description">
                     <center>
                         <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
@@ -225,15 +220,35 @@ cancel button functionalities
                                     </div>
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group">
-
-                                            <label class="control-label" id="addShiftTime">
-                                                <u>Date:</u>
-                                            </label>
-                                            <div class="controls">
-                                                Start: <input type="datetime-local" id="startTime"/><br>
-                                                End: <input type="datetime-local" id="endTime"/>
+                                            <label><u>Date:</u></label>
+                                            <div class='input-group date' id='date'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label><u>Start:</u></label>
+                                            <div class='input-group date' id='startTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label id="addShiftTime"><u>End:</u></label>
+                                            <div class='input-group date' id='endTime'>
+                                                <input type='text' class="form-control input-sm"
+                                                       style="border-width:1px;border-color: #a9b7d1"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="control-label"><u>Member:</u></label>
                                             <div class="controls">
@@ -265,7 +280,6 @@ cancel button functionalities
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="control-label">Notes: </label>
                                             <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px"
@@ -333,7 +347,7 @@ cancel button functionalities
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                <button class="btn btn-primary" id="btnUpdateAvailability">Update
                                     Availability
                                 </button>
                                 <c:choose>
@@ -344,6 +358,8 @@ cancel button functionalities
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>
                                     </c:otherwise>
                                 </c:choose>
+                                <button class="btn btn-primary" id="btnTimecard">Timecard</button>
+
                             </div>
                         </div>
                     </div>
@@ -357,10 +373,6 @@ cancel button functionalities
 <!-- /#wrapper -->
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
     $('#createEventModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end();
@@ -373,6 +385,8 @@ cancel button functionalities
 
 
 </script>
+
+<!-- Bootstrap core JavaScript -->
 
 </body>
 

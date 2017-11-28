@@ -122,7 +122,7 @@ public class ShiftDao implements ShiftData {
                     shift.getNotes(),
                     shift.getDate(),
                     shift.getRequiredTraining(),
-                    shift.isTimeCardSubmitted()
+                    shift.getIsTimeCardSubmitted()
             );
             return true;
         } catch (Exception e) {

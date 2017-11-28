@@ -171,7 +171,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
                                 </button>
-                                <h4 id="myModalLabel1"><b>Assign a shift</b></h4>
+                                <h4 id="modalTitle"><b>Assign a shift</b></h4>
                             </div>
 
                             <%--Modal Body--%>

@@ -158,7 +158,9 @@ function initEventHandlers() {
         })
     });
 
-
+    $("#btnTimecard").off().on('click', function () {
+        $(location).attr('href', contextPath + '/timecard?shift_id=' + $('#shiftID').val() + '&username=' + $('#memberSelect').val());
+    });
 }
 
 var eventRenderHandler = function (event, element) {
@@ -193,15 +195,45 @@ var eventRenderHandler = function (event, element) {
 };
 
 var selectEmptyAreaEventHandler = function (start, end) {
+    $('#modalTitle').text('Assign a Shift');
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
     $('#startTime').data("DateTimePicker").date(start);
     $('#endTime').data("DateTimePicker").date(end);
     $('#availabilitySelect').val("NO_RESPONSE");
-    conditionallyRender(start, end);
+    conditionallyRender(start, end, false);
 };
 
-function conditionallyRender(start, end) {
+var selectScheduledEventHandler = function (event) {
+    console.log(event);
+    $('#modalTitle').text('Edit Shift');
+
+    $('#shiftID').val(event.id);
+    $('#campusSelect').val(event.campus).trigger('change');
+    $('#eventShiftSelect').val(event.title);
+
+    $('#date').data("DateTimePicker").date(moment(event.date));
+    $('#startTime').data("DateTimePicker").date(event.start);
+    $('#endTime').data("DateTimePicker").date(event.end);
+
+    $('#eventLocation').val(event.location);
+    $('#eventRequiredTraining').val(event.requiredTraining);
+    $('#memberSelect').val(event.username);
+    $('#eventNotes').val(event.notes);
+    $('#availabilitySelect').val(event.confirmationStatus);
+
+    $('#btnDelete').off().on('click', function (e) {
+        e.preventDefault();
+        deleteShift(event);
+        $('#createEventModal').modal('hide');
+    });
+
+    conditionallyRender(event.start, event.end, event.isTimeCardSubmitted);
+};
+
+
+function conditionallyRender(start, end, isTimeCardSubmitted) {
+    console.log(isTimeCardSubmitted);
     //Condtionally Render
     if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR') {
         showAllConditionalButtons();
@@ -218,13 +250,18 @@ function conditionallyRender(start, end) {
         var eventStart = moment(start).format(dateTimeFormat);
         var eventEnd = moment(end).format(dateTimeFormat);
         var currentDate = moment().format(dateTimeFormat);
+
+        console.log(currentDate);
+        console.log(eventStart);
         //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
         if (moment(currentDate).isBefore(eventStart)) {
+            console.log('showing save button');
             $("#availabilitySelect").prop('disabled', false);
-            $("#saveButton").show();
+            $("#submitButton").show();
         }
         //Condtionally render timecard
-        if (moment(currentDate).isAfter(eventStart)) {
+        if (moment(currentDate).isAfter(eventStart) && isTimeCardSubmitted === false) {
+            console.log('showing timecard');
             $("#btnTimecard").show();
         }
     }
@@ -232,39 +269,9 @@ function conditionallyRender(start, end) {
     $('#createEventModal').modal(); //popup modal
 }
 
-var selectScheduledEventHandler = function (event) {
-    $('#shiftID').val(event.id);
-    $('#campusSelect').val(event.campus).trigger('change');
-
-    $('#eventShiftSelect').val(event.title);
-
-    $('#date').data("DateTimePicker").date(moment(event.date));
-    $('#startTime').data("DateTimePicker").date(event.start);
-    $('#endTime').data("DateTimePicker").date(event.end);
-
-    $('#eventLocation').val(event.location);
-    $('#eventRequiredTraining').val(event.requiredTraining);
-
-    $('#memberSelect').val(event.username);
-
-    $('#eventNotes').val(event.notes);
-
-    $('#availabilitySelect').val(event.confirmationStatus);
-
-    $('#btnDelete').off().on('click', function (e) {
-        e.preventDefault();
-        deleteShift(event);
-        $('#createEventModal').modal('hide');
-    });
-
-    conditionallyRender(event.start, event.end);
-};
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
-    var selectedShiftElement =
-    $("#createEventModal").modal('hide');
-
     var date = $('#date').data("DateTimePicker").date().format(dateFormat);
     var startTime = $('#startTime').data("DateTimePicker").date().format(timeFormat);
     var endTime = $('#endTime').data("DateTimePicker").date().format(timeFormat);
@@ -284,6 +291,7 @@ function doSubmit() {
     };
     console.log(shift);
     saveShift(shift);
+    $("#createEventModal").modal('hide');
 }
 
 function resetFormFields() {
@@ -378,13 +386,13 @@ function hideAllCondtionalButtons() {
 }
 
 function enableAllInputElementsInForm() {
-    $('#createAppointmentForm,input').prop('disabled', false);
-    $('#createAppointmentForm,select').prop('disabled', false);
-    $('#createAppointmentForm,textarea').prop('disabled', false);
+    $('#createAppointmentForm input').prop('disabled', false);
+    $('#createAppointmentForm select').prop('disabled', false);
+    $('#createAppointmentForm textarea').prop('disabled', false);
 }
 
 function disableAllInputElementsInForm() {
-    $('#createAppointmentForm,input').prop('disabled', true);
-    $('#createAppointmentForm,select').prop('disabled', true);
-    $('#createAppointmentForm,textarea').prop('disabled', true);
+    $('#createAppointmentForm input').prop('disabled', true);
+    $('#createAppointmentForm select').prop('disabled', true);
+    $('#createAppointmentForm textarea').prop('disabled', true);
 }

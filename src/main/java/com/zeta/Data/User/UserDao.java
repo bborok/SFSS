@@ -1,7 +1,6 @@
 package com.zeta.Data.User;
 
 import com.zeta.Models.Certificate;
-import com.zeta.Models.Login;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -262,6 +261,7 @@ public class UserDao implements UserData {
         try {
             String sql = "update User set VolunteerHours = ? where User = ?";
             jdbcTemplate.update(sql, hours, username);
+            return true;
         } catch (Exception e) {
             return false;
         }

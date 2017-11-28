@@ -82,6 +82,9 @@
 
                         <form:form modelAttribute="timeCard" method="post">
                             <div class="row form-group">
+                                <%--<form:input path="username" type="hidden" id="username"   />--%>
+                                <form:input path="shiftId" type="hidden" id="shiftId" value="${timeCard.shiftId}"  />
+
                                 <div class="col-md-4">
                                     <label><form:radiobutton path="campus" name="campus" id="vancouver" value="VANCOUVER"/> Vancouver </label>
                                 </div>
@@ -225,8 +228,8 @@
 
                                 <div class="pull-right">
                                     <c:choose>
-                                        <c:when test="${editCard}">
-                                            <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Edit Time Card</form:button>
+                                        <c:when test="${timecardSubmitted}">
+                                            <form:button type="submit" name="edit"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Update Time Card</form:button>
                                         </c:when>
                                         <c:otherwise>
                                             <form:button type="submit" name="save"  class="btn btn-info" style="margin-top:1em;margin-right:1em;">Save Time Card</form:button>

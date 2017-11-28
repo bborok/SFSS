@@ -216,9 +216,19 @@ var eventClickHandler = function (event) {
         $('#fullCalModal').modal('hide');
     });
 
-    $("#btnConfirmAvailability").off().on('click', function () {
+    $("#btnUpdateAvailability").off().on('click', function () {
         updateShiftConfirmation(event.id, $("#availabilitySelect").val());
         $('#fullCalModal').modal('hide');
+    });
+
+    if(event.isTimeCardSubmitted){
+        $('#btnTimecard').hide();
+    }else{
+        $('#btnTimecard').show();
+    }
+
+    $('#btnTimecard').off().on('click', function () {
+        $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
     });
 
     var eventStart = moment(event.start).format(dateTimeFormat);
@@ -227,10 +237,14 @@ var eventClickHandler = function (event) {
     //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
     if (moment(eventStart).isAfter(currentDate)) {
         $("#availabilitySelect").show();
+        $("#btnUpdateAvailability").show();
         $("#modalAvailability").hide();
+
     } else {
         $("#availabilitySelect").hide();
+        $("#btnUpdateAvailability").hide();
         $("#modalAvailability").show();
+
     }
 };
 
@@ -310,7 +324,7 @@ function updateShiftConfirmation(shiftId, status) {
     $.ajax({
         type: 'POST',
         headers: {
-            Accept: "text/plain",
+            Accept: "text/plain"
         },
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         url: api + '/shift/updateConfirmation',

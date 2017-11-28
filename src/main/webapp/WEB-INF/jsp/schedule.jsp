@@ -35,7 +35,8 @@
         pageContext.setAttribute("user", user);
     %>
     <script>
-        var api = '${pageContext.request.contextPath}/api';
+        var contextPath = '${pageContext.request.contextPath}';
+        var api = contextPath +'/api';
         var iBURNABY = [];
         var iSURREY = [];
         var iVANCOUVER = [];
@@ -346,7 +347,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnConfirmAvailability">Update
+                                <button class="btn btn-primary" id="btnUpdateAvailability">Update
                                     Availability
                                 </button>
                                 <c:choose>
@@ -357,6 +358,8 @@
                                         <button class="btn btn-primary" id="btnDelete">Remove</button>
                                     </c:otherwise>
                                 </c:choose>
+                                <button class="btn btn-primary" id="btnTimecard">Timecard</button>
+
                             </div>
                         </div>
                     </div>

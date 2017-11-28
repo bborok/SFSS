@@ -120,6 +120,7 @@ public class IndexController {
         } else {
             //At this point the currently logged in User must be a MEMBER/VOLUNTEER
             usersForSelection = new ArrayList<>();
+            usersForSelection.add(u);
         }
         m.addAttribute("users", usersForSelection);
 

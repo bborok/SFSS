@@ -36,7 +36,7 @@
     %>
     <script>
         var contextPath = '${pageContext.request.contextPath}';
-        var api = contextPath +'/api';
+        var api = contextPath + '/api';
         var iBURNABY = [];
         var iSURREY = [];
         var iVANCOUVER = [];
@@ -57,14 +57,14 @@
 
         <%--Fetch the currently logged in user from session--%>
         var loggedInUser = {
-            username: "${user.username}",
-            name: "${user.name}",
-            email: "${user.email}",
-            phoneNumber: "${user.phoneNumber}",
-            preferredCampus: "${user.preferredCampus.toString()}",
-            studentNumber: "${user.studentNumber}",
-            role: "${user.role.toString()}",
-            callSign: "${user.callSign}"
+            username: "test",
+            name: "testname",
+            email: "test@gmail.com",
+            phoneNumber: "6044564561",
+            preferredCampus: "BURNABY",
+            studentNumber: "2565891",
+            role: "ADMIN",
+            callSign: "LCK56"
         };
     </script>
     <script src='resources/js/schedule.js'></script>
@@ -101,15 +101,19 @@
 <nav class="navbar navbar-default no-margin navbar-fixed-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header fixed-brand">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
         </button>
-        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png"
+                                              width="220px"></a>
     </div><!-- navbar-header-->
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+            <li class="active">
+                <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"><span
+                        class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button>
+            </li>
         </ul>
     </div>
 </nav>
@@ -173,55 +177,33 @@
                             <%--Modal Body--%>
                             <div class="modal-body">
                                 <form id="createAppointmentForm" class="form-horizontal">
-                                    <div class="control-group">
-                                        <label class="control-label"><u>Shift:</u> </label>
-                                        <div class="controls">
-                                            <select class="form-control" name="eventCampus" id="eventCampus">
-                                                <option value="" disabled selected>Select Campus</option>
-                                                <option value="BURNABY" class="BURNABY">Burnaby</option>
-                                                <option value="SURREY" class="SURREY">Surrey</option>
-                                                <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
-                                            </select>
 
-                                            <select class="form-control" name="eventTitle" id="eventTitle">
-
-                                                <option value="SURREY" disabled selected="selected">Select Surrey
-                                                    Shift
-                                                </option>
-
-                                                <c:forEach items="${SURREYTASKS}" var="task">
-                                                    <option value="SURREY" class="${task.taskName}">
-                                                            ${task.taskName}
-                                                    </option>
-                                                </c:forEach>
-
-                                                <option value="VANCOUVER" disabled selected="selected">Select
-                                                    Vancouver Shift
-                                                </option>
-
-                                                <c:forEach items="${VANCOUVERTASKS}" var="task">
-                                                    <option value="VANCOUVER" class="${task.taskName}">
-                                                            ${task.taskName}
-                                                    </option>
-                                                </c:forEach>
-
-                                                <option value="BURNABY" disabled="true" selected="selected">Select
-                                                    Burnaby Shift
-                                                </option>
-
-                                                <c:forEach items="${BURNABYTASKS}" var="task">
-                                                    <option value="BURNABY" class="${task.taskName}">
-                                                            ${task.taskName}
-                                                    </option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-
-                                    </div>
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group">
-                                            <label><u>Date:</u></label>
-                                            <div class='input-group date' id='date'>
+                                            <label class="col-sm-2 control-label">Campus</label>
+                                            <div class="controls col-sm-10">
+                                                <select class="form-control" name="eventCampus" id="campusSelect">
+                                                    <option value="" disabled selected>Select Campus</option>
+                                                    <option value="BURNABY" class="BURNABY">Burnaby</option>
+                                                    <option value="SURREY" class="SURREY">Surrey</option>
+                                                    <option value="VANCOUVER" class="VANCOUVER">Vancouver</option>
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Shift</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" name="eventTitle" id="eventShiftSelect">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Date</label>
+                                            <div class='input-group date col-sm-10' id='date'>
                                                 <input type='text' class="form-control input-sm"
                                                        style="border-width:1px;border-color: #a9b7d1"/>
                                                 <span class="input-group-addon"><span
@@ -230,8 +212,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label><u>Start:</u></label>
-                                            <div class='input-group date' id='startTime'>
+                                            <label class="col-sm-2 control-label">Start</label>
+                                            <div class='input-group date col-sm-10>' id='startTime'>
                                                 <input type='text' class="form-control input-sm"
                                                        style="border-width:1px;border-color: #a9b7d1"/>
                                                 <span class="input-group-addon"><span
@@ -240,8 +222,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label id="addShiftTime"><u>End:</u></label>
-                                            <div class='input-group date' id='endTime'>
+                                            <label class="col-sm-2 control-label">End</label>
+                                            <div class='input-group date col-sm-10' id='endTime'>
                                                 <input type='text' class="form-control input-sm"
                                                        style="border-width:1px;border-color: #a9b7d1"/>
                                                 <span class="input-group-addon"><span
@@ -250,8 +232,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label"><u>Member:</u></label>
-                                            <div class="controls">
+                                            <label class="col-sm-2 control-label">Member</label>
+                                            <div class="controls col-sm-10">
                                                 <select class="form-control" name="eventMember" id="eventMember"
                                                         data-tab="${user.getUsername()}">
                                                     <option value="" disabled selected>Select User</option>
@@ -264,14 +246,27 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label"><u>Location:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1"
-                                                   class="form-control" name="eventMember" id="eventLocation"
-                                                   placeholder="Enter the Location">
+                                            <label class="col-sm-2 control-label">Location</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1"
+                                                       class="form-control" id="eventLocation"
+                                                       placeholder="Enter the Location">
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label"><u>Required Training:</u></label>
-                                            <div class="controls">
+
+                                            <label class="col-sm-2 control-label">Availability</label>
+                                            <div class="col-sm-10">
+                                                <select id="availabilitySelect" class="form-control">
+                                                    <option value="NO_RESPONSE">No Response</option>
+                                                    <option value="CONFIRMED">Confirmed</option>
+                                                    <option value="DECLINED">Declined</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Required Training</label>
+                                            <div class="controls col-sm-10">
                                                 <select class="form-control" id="eventRequiredTraining">
                                                     <option value="" selected>None</option>
                                                     <c:forEach items="${TRAININGTYPES}" var="training">
@@ -281,89 +276,27 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">Notes: </label>
-                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px"
-                                                      class="form-control" rows="8" id="eventNotes"></textarea>
+                                            <label class="col-sm-2 control-label">Notes</label>
+                                            <div class="controls col-sm-10">
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px"
+                                                          class="form-control" rows="8" id="eventNotes"></textarea>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </form>
                             </div>
                             <div class="modal-footer">
-
-                                <c:choose>
-                                    <c:when test="${!(user.role eq 'MEMBER' or user.role eq 'VOLUNTEER')}">
-                                        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Select Event Modal -->
-                <div id="fullCalModal" class="modal fade">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">&times;</span>
-                                    <span class="sr-only">close</span></button>
-                                <h4><b>Title: <span id="modalTitle" class="modal-title"></span></b></h4>
-                            </div>
-                            <br>
-                            <div style="padding-left: 15px">
-                                <b><u>Date:</u> </b><span id="modalDate"></span><br>
-                                <b><u>Start:</u> </b><span id="modalStart"></span><br>
-                                <b><u>End:</u> </b><span id="modalEnd"></span><br>
-                                <hr>
-
-                                <b><u>Availability: </u></b>
-                                <select id="availabilitySelect" class="form-control">
-                                    <option value="NO_RESPONSE">No Response</option>
-                                    <option value="CONFIRMED">Confirmed</option>
-                                    <option value="DECLINED">Declined</option>
-                                </select>
-                                <span id="modalAvailability"></span>
-
-                                <hr>
-
-                                <b><u>Campus:</u> </b><span id="modalCampus"></span><br>
-                                <b><u>Location:</u> </b><span id="modalLocation"></span><br>
-                                <b><u>ID:</u> </b><span id="modalID"></span><br>
-                                <hr>
-
-                                <b><u>Member:</u> </b><span id="modalMember"></span><br>
-                                <b><u>Notes:</u> </b><span id="modalNotes"></span><br>
-                                <b><u>Required Training:</u> </b><span id="modalTraining"></span><br>
-                                <b><u>TimeCard Submitted: </u></b> <span id="modalTimeCard"></span><br><br>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="btnUpdateAvailability">Update
-                                    Availability
-                                </button>
-                                <c:choose>
-                                    <c:when test="${user.role eq 'MEMBER' or user.role eq 'VOLUNTEER'}">
-
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button class="btn btn-primary" id="btnDelete">Remove</button>
-                                    </c:otherwise>
-                                </c:choose>
                                 <button class="btn btn-primary" id="btnTimecard">Timecard</button>
+                                <button class="btn btn-primary" id="btnDelete">Remove</button>
+                                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
 
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Select Event Modal -->
             </div>
         </div>
     </div>

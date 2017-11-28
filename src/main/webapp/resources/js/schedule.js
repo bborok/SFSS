@@ -71,10 +71,10 @@ function initCalendar() {
         },
 
         //Selecting an empty area
-        select: selectEventHandler,
+        select: selectEmptyAreaEventHandler,
 
         //Selecting a scheduled event
-        eventClick: eventClickHandler,
+        eventClick: selectScheduledEventHandler,
 
         navLinks: true, // can click day/week names to navigate views
         weekNumbers: true,
@@ -140,14 +140,24 @@ function initEventHandlers() {
         }
     });
 
-    $("#eventCampus").on('change', function () {
-        if ($(this).data('options') === undefined) {
-            /*Taking an array of all options-2 and kind of embedding it on the select1*/
-            $(this).data('options', $('#eventTitle option').clone());
+    $("#campusSelect").on('change', function () {
+        $('#eventShiftSelect').empty();
+        var selectedCampus = $("#campusSelect").val();
+        if (selectedCampus === null) {
+            $('#eventShiftSelect').append($("<option></option>").val('').attr('disabled', 'disabled').attr('selected', 'selected').text('Please Select a Campus'));
+            return;
         }
-        var id = $(this).val();
-        var options = $(this).data('options').filter('[value=' + id + ']');
-        $('#eventTitle').html(options);
+
+        selectedCampus = selectedCampus.toUpperCase();
+        console.log(selectedCampus);
+
+        var shiftsToDisplay;
+        if (selectedCampus === 'BURNABY') shiftsToDisplay = iBURNABY;
+        else if (selectedCampus === 'SURREY') shiftsToDisplay = iSURREY;
+        else if (selectedCampus === 'VANCOUVER') shiftsToDisplay = iVANCOUVER;
+        shiftsToDisplay.forEach(function (shift) {
+            $('#eventShiftSelect').append($("<option></option>").val(shift).text(shift));
+        })
     });
 
 
@@ -184,46 +194,77 @@ var eventRenderHandler = function (event, element) {
     return filter(event);
 };
 
-var selectEventHandler = function (start, end) {
+var selectEmptyAreaEventHandler = function (start, end) {
+    showAllConditionalButtons();
+    $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
     $('#startTime').data("DateTimePicker").date(start);
     $('#endTime').data("DateTimePicker").date(end);
-    resetFormFields();
-    $('#createEventModal').modal('show'); //popup modal
+
+
+
+
 };
 
-var eventClickHandler = function (event) {
-    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-    $('#modalTitle').html(event.title);
-    $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-    $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-    $('#modalMember').html(event.username);
-    $('#modalCampus').html(event.campus);
-    $('#modalID').html(event.id);
-    $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-    $('#modalLocation').html(event.location);
-    $('#modalNotes').html(event.notes);
-    $('#modalTraining').html(event.requiredTraining);
-    $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-    $('#availabilitySelect').val(event.confirmationStatus);
-    $('#modalAvailability').text(_.replace(event.confirmationStatus, '_', ' '));
+function popupCreateEventModal(){
+    resetFormFields();
+    //Condtionally Render
 
-    $('#fullCalModal').modal();
+    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR'){
+        showAllConditionalButtons();
+        enableAllInputElementsInForm();
+        return;
+    }
+
+    if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER'){
+        $('#btnDelete').hide();
+        disableAllInputElementsInForm();
+        // if () TODO: complete this
+        $('#availabilitySelect').prop('disabled', false);
+    }
+    $('#btnTimecard').hide();
+    $('#availabilitySelect').val("NO_RESPONSE");
+
+    $('#createEventModal').modal('show'); //popup modal
+}
+
+var selectScheduledEventHandler = function (event) {
+    showAllConditionalButtons();
+    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
+    $('#campusSelect').val(event.campus);
+    $('#campusSelect').trigger('change');
+
+    $('#eventShiftSelect').val(event.title);
+
+    $('#date').data("DateTimePicker").date(event.date);
+    $('#startTime').data("DateTimePicker").date(event.start);
+    $('#endTime').data("DateTimePicker").date(event.end);
+
+    $('#eventLocation').val(event.location);
+    $('#eventRequiredTraining').val(event.requiredTraining);
+
+    $('#eventMember').val(event.username);
+
+    $('#eventNotes').val(event.notes);
+
+    $('#availabilitySelect').val(event.confirmationStatus);
+
+    $('#createEventModal').modal();
 
     $('#btnDelete').off().on('click', function (e) {
         e.preventDefault();
         deleteShift(event);
-        $('#fullCalModal').modal('hide');
+        $('#createEventModal').modal('hide');
     });
 
     $("#btnUpdateAvailability").off().on('click', function () {
         updateShiftConfirmation(event.id, $("#availabilitySelect").val());
-        $('#fullCalModal').modal('hide');
+        $('#createEventModal').modal('hide');
     });
 
-    if(event.isTimeCardSubmitted){
+    if (event.isTimeCardSubmitted) {
         $('#btnTimecard').hide();
-    }else{
+    } else {
         $('#btnTimecard').show();
     }
 
@@ -250,7 +291,7 @@ var eventClickHandler = function (event) {
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
-    var eventTitleElement = $('#eventTitle');
+    var selectedShiftElement = $('#eventShiftSelect');
     $("#createEventModal").modal('hide');
 
     var date = $('#date').data("DateTimePicker").date().format(dateFormat);
@@ -258,7 +299,7 @@ function doSubmit() {
     var endTime = $('#endTime').data("DateTimePicker").date().format(timeFormat);
 
     var shift = {
-        title: eventTitleElement.find(":selected").attr("class"),
+        title: selectedShiftElement.find(":selected").attr("class"),
         date: date,
         start: convertToDateFormat(date, startTime),
         end: convertToDateFormat(date, endTime),
@@ -371,4 +412,23 @@ function filter(calEvent) {
 
 function convertToDateFormat(start, end) {
     return start + ' ' + end;
+}
+
+function showAllConditionalButtons(){
+    $('#btnTimecard').show();
+    $('#btnDelete').show();
+    $('#submitButton').show();
+}
+
+function hideAllCondtiionalButtons(){
+    $('#btnTimecard').hide();
+    $('#btnDelete').hide();
+    $('#submitButton').hide();
+}
+
+function enableAllInputElementsInForm(){
+    $('#createAppointmentForm,input').prop('disabled', true);
+}
+function disableAllInputElementsInForm() {
+    $('#createAppointmentForm,input').prop('disabled', false);
 }

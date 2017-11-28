@@ -54,20 +54,13 @@
         display: inline-table;
     }
 
-    table {
-        height: 300px;
-    }
-
-    tbody {
-        overflow-y: scroll;
-        height: 500px;
-        position: absolute;
+    th {
+        text-align: center;
     }
 
     .click a {
         color: chocolate;
     }
-
 
 </style>
 
@@ -91,7 +84,11 @@
             preferredCampus : "${user.preferredCampus}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role}",
-            callSign : "${user.callSign}"
+            callSign : "${user.callSign}",
+            driversLicenseLevel : "${user.driversLicenseLevel}",
+            driversLicenseExpirationDate : "${user.driversLicenseExpirationDate}",
+            languages : ${user.languages},
+            certificates : ${user.certificates}
         };
     </script>
 
@@ -139,6 +136,55 @@
                             <p id="altPhone"></p>
                             <h3>Volunteer Hours: ${user.volunteerHours}</h3>
                             <div id="serviceRecognition"></div>
+                            <h3>Qualifications: </h3>
+                            <dl>
+                                <dt><u>Driver's License:</u></dt>
+                                <div class="row">
+                                    <dd>
+                                        Class ${user.driversLicenseLevel} / Expires: ${user.driversLicenseExpirationDate}
+                                    </dd>
+                                </div>
+                            </dl>
+                            <dl>
+                                <dt><u>Languages Spoken:</u></dt>
+                                <div class="row" style="overflow-y:scroll; width: 200px; height:115px">
+                                    <table class="table table-striped" style="text-align:center">
+                                        <tbody style="color:black">
+                                            <c:forEach items="${user.languages}" var="language">
+                                                <tr>
+                                                    <td class="col-sm-6"><c:out value="${language}"/></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </dl>
+                            <dl>
+                                <dt><u>Certificates:</u></dt>
+                                <div class="row" style="overflow-y: scroll; width:700px; height: 200px">
+                                    <table class="table table-striped" style="text-align: left">
+                                        <thead>
+                                            <tr style="text-align: center">
+                                                <th width="35%">Name</th>
+                                                <th width="25%">ID</th>
+                                                <th width="10%">Level</th>
+                                                <th width="30%">Expiration Date</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody style="color: black">
+                                            <c:forEach items="${user.certificates}" var="certificate">
+                                                <tr style="text-align: center">
+                                                    <td width="35%"><c:out value="${certificate.name}"/>
+                                                    <td width="25%"><c:out value="${certificate.number}"/>
+                                                    <td width="10%"><c:out value="${certificate.level}"/>
+                                                    <td width="30%"><c:out value="${certificate.expirationDate}"/>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </dl>
                         </div>
 
                         <script>

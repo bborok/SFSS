@@ -47,20 +47,13 @@
         display: inline-table;
     }
 
-    table {
-        height: 300px;
-    }
-
-    tbody {
-        overflow-y: scroll;
-        height: 500px;
-        position: absolute;
+    th {
+        text-align: center;
     }
 
     .click a {
         color: chocolate;
     }
-
 
 </style>
 
@@ -95,10 +88,15 @@
             name : "${user.name}",
             email : "${user.email}",
             phoneNumber : "${user.phoneNumber}",
-            preferredCampus : "${user.preferredCampus.toString()}",
+            altPhoneNumber : "${user.altPhoneNumber}",
+            preferredCampus : "${user.preferredCampus}",
             studentNumber : "${user.studentNumber}",
-            role : "${user.role.toString()}",
-            callSign : "${user.callSign}"
+            role : "${user.role}",
+            callSign : "${user.callSign}",
+            driversLicenseLevel : "${user.driversLicenseLevel}",
+            driversLicenseExpirationDate : "${user.driversLicenseExpirationDate}",
+            languages : ${user.languages},
+            certificates : ${user.certificates}
         };
     </script>
 
@@ -121,9 +119,7 @@
                     <div>
                         <div>
                             <h1 class="row" style="padding-left: 20px">
-                                <b><c:out value="${user.getName()}"/>'s Profile</b>
-                                <button type="button" id="editButton" class="btn"><i class="fa fa-edit"></i></button>
-
+                                <b><c:out value="${user.name}"/>'s Profile</b>
                                 <br>
                             </h1>
                             <center>
@@ -137,34 +133,113 @@
                             <div id="file-error"></div>
 
                         </div>
+
                         <div>
-                            <h3>Username: ${user.getUsername()}</h3>
-                            <h3>Student Number: ${user.getStudentNumber()}</h3>
-                            <h3>Role: ${user.getRole()}</h3>
-                            <%--Info to display if role is MEMBER --%>
-                            <c:if test="${user.getRole() eq 'MEMBER'}">
-                                <h3>Campus: ${user.getPreferredCampus()}</h3>
-                                <h3>Training:</h3>
-                                <c:choose>
-                                    <c:when test="${empty user.getTraining()}">
-                                        Currently not trained for any task
-                                    </c:when>
-                                    <c:otherwise>
-                                        <dl>
-                                            <c:set var="totalHours" value="${0}" />
-                                            <c:forEach var="training" items="${user.getTraining()}"
-                                                       varStatus="status">
-                                                <dt>${training.getTask()}:</dt>
-                                                <dd>${training.getHours()} hours</dd>
-                                                <c:set var="totalHours" value="${totalHours + training.getHours()}" />
+                            <h3>Username: ${user.username}</h3>
+                            <h3>Student Number: ${user.studentNumber}</h3>
+                            <h3>Role: ${user.role}</h3>
+                            <h3>Email: ${user.email}</h3>
+                            <p id="phoneNum"></p>
+                            <p id="altPhone"></p>
+                            <h3>Volunteer Hours: ${user.volunteerHours}</h3>
+                            <div id="serviceRecognition"></div>
+                            <h3>Qualifications: </h3>
+                            <dl>
+                                <dt><u>Driver's License:</u></dt>
+                                <div class="row">
+                                    <dd>
+                                        Class ${user.driversLicenseLevel} / Expires: ${user.driversLicenseExpirationDate}
+                                    </dd>
+                                </div>
+                            </dl>
+                            <dl>
+                            <c:if test="${not empty user.languages}">
+                                <dt><u>Languages Spoken:</u></dt>
+                                <div class="row" style="overflow-y:scroll; width: 200px; height:115px">
+                                    <table class="table table-striped" style="text-align:center">
+                                        <tbody style="color:black">
+                                            <c:forEach items="${user.languages}" var="language">
+                                                <tr>
+                                                    <td class="col-sm-6"><c:out value="${language}"/></td>
+                                                </tr>
                                             </c:forEach>
-                                            <dt>Total Hours:</dt>
-                                            <dd>${totalHours} hours</dd>
-                                        </dl>
-                                    </c:otherwise>
-                                </c:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </dl>
+                            </c:if>
+
+                            <c:if test="${not empty user.certificates}">
+                                <dl>
+                                    <dt><u>Certificates:</u></dt>
+                                    <div class="row" style="overflow-y: scroll; width:700px; height: 200px">
+                                        <table class="table table-striped" style="text-align: left">
+                                            <thead>
+                                                <tr style="text-align: center">
+                                                    <th width="35%">Name</th>
+                                                    <th width="25%">ID</th>
+                                                    <th width="10%">Level</th>
+                                                    <th width="30%">Expiration Date</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody style="color: black">
+                                                <c:forEach items="${user.certificates}" var="certificate">
+                                                    <tr style="text-align: center">
+                                                        <td width="35%"><c:out value="${certificate.name}"/>
+                                                        <td width="25%"><c:out value="${certificate.number}"/>
+                                                        <td width="10%"><c:out value="${certificate.level}"/>
+                                                        <td width="30%"><c:out value="${certificate.expirationDate}"/>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </dl>
                             </c:if>
                         </div>
+
+                        <script>
+                            var phoneNum = '${user.phoneNumber}';
+                            var cleanPhone = '(' + phoneNum.substring(0,3) + ') ' + phoneNum.substring(3,6)
+                                + '-' + phoneNum.substring(6);
+
+                            $('#phoneNum').html('<h3>Phone Number: ' + cleanPhone + '</h3>');
+
+                            var altNum = '${user.altPhoneNumber}';
+                            if (altNum !== '0') {
+                                var cleanAltPhone = '(' + altNum.substring(0, 3) + ') ' + altNum.substring(3, 6)
+                                    + '-' + altNum.substring(6);
+
+                                $('#altPhone').html('<h3>Alternate Phone Number: ' + cleanAltPhone + '</h3>');
+                            }
+
+                            var hours = ${user.volunteerHours};
+                            var ranks = [80, 160, 240, 320, 400, 480];
+                            var imgSrc = 'resources/img/service_recognition';
+                            var options = 'style="background:transparent"';
+
+                            if (hours >= ranks[0]) {
+                                var serviceRank = '/one_star.png';
+                                if (hours >= ranks[1]) {
+                                    serviceRank = '/two_star.png';
+                                }
+                                if (hours >= ranks[2]) {
+                                    serviceRank = '/three_star.png';
+                                }
+                                if (hours >= ranks[3]) {
+                                    serviceRank = '/bronze_star.png';
+                                }
+                                if (hours >= ranks[4]) {
+                                    serviceRank = '/silver_star.png';
+                                }
+                                if (hours >= ranks[5]) {
+                                    serviceRank = '/gold_star.png';
+                                }
+
+                                $('#serviceRecognition').html('<img src="' + imgSrc + serviceRank + '"' + options + '>')
+                            }
+                        </script>
                     </div>
                 </center>
             </div>

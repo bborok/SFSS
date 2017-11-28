@@ -94,6 +94,7 @@
             name : "${user.name}",
             email : "${user.email}",
             phoneNumber : "${user.phoneNumber}",
+            altPhoneNumber : "${user.altPhoneNumber}",
             preferredCampus : "${user.preferredCampus.toString()}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role.toString()}",
@@ -168,6 +169,10 @@
                                         <div class="form-group">
                                             <label class="control-label"><u>Phone Number:</u></label>
                                             <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label"><u>Alternate Phone Number:</u></label>
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>

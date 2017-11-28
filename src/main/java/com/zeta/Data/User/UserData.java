@@ -1,5 +1,6 @@
 package com.zeta.Data.User;
 
+import com.zeta.Models.Certificate;
 import com.zeta.Models.Login;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
@@ -21,10 +22,10 @@ public interface UserData {
 
     public List<User> getDeactivatedUsers();
 
-    public User getUserByLogin(Login login);
-
     // Returns user if username exists
     public User getUser(String Username);
+
+    public List<String> getUserLanguages(User user);
 
     // Returns list of all active users, ones that have access to program
     public List<User> getAllUsers();
@@ -42,4 +43,12 @@ public interface UserData {
     public boolean removeTraining(String username, String training);
 
     public boolean updateVolunteerHours(String username, int hours);
+
+    public List<Certificate> getUserCertificates(User user);
+
+    public boolean addUserCertificate(User user, Certificate certificate);
+
+    public boolean updateUserCertificates(User user);
+
+    public boolean removeUserCertificate(User user, String CertificateName);
 }

@@ -66,6 +66,7 @@ public class IndexController {
                 session.setAttribute("user", user);
             }
         }
+        session.setAttribute("user", userData.getUser("adhothar"));
         return "index";
     }
 

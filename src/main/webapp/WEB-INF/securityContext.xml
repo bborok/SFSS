@@ -15,7 +15,7 @@
         <sec:intercept-url pattern="/logout" access="permitAll()" />
         <sec:intercept-url pattern="/statistics/info_lf/data/post" access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR')" />
         <sec:intercept-url pattern="/api/*" access="permitAll()" />
-        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<sec:intercept-url pattern="/**" access="isAuthenticated()" />-->
         <sec:logout invalidate-session="true" />
         <sec:custom-filter position="CAS_FILTER" ref="casFilter" />
         <sec:custom-filter before="CAS_FILTER" ref="singleLogoutFilter" />
@@ -47,7 +47,7 @@
 
     <bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
         <!-- Change with your own host name -->
-        <property name="service" value="https://cmpt373-1177z.cmpt.sfu.ca/login" />
+        <property name="service" value="localhost/login" />
         <property name="sendRenew" value="false" />
     </bean>
 

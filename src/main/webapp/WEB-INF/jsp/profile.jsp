@@ -139,7 +139,6 @@
                             <p id="altPhone"></p>
                             <h3>Volunteer Hours: ${user.volunteerHours}</h3>
                             <div id="serviceRecognition"></div>
-                            <h3>Qualifications:</h3>
                         </div>
 
                         <script>

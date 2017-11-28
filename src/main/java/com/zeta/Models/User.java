@@ -1,5 +1,6 @@
 package com.zeta.Models;
 
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -11,35 +12,40 @@ public class User {
     private String name;
     private String email;
     private Long phoneNumber;
+    private int altPhoneNumber;
     private Campus preferredCampus;
     private Long studentNumber;
     private Role role;
     private String callSign;
+    private int driversLicenseLevel;
+    private Date driversLicenseExpirationDate;
     private List<Training> training;
+    private List<String> languages;
+    private List<Certificate> certificates;
     private Boolean isDeactivated;
-
-    //TODO: Uncomment and implement this
-    //private List<User> contacts = new ArrayList<User>();
-
-
-
-//    @Column(name = "AccountCode", nullable = true)
-//    private Long accountCode;
+    private int volunteerHours;
 
     public User() {
     } //Required by JPA
 
-    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, Role role,
-                Campus preferredCampus, String callSign, List<Training> training, Boolean isDeactivated) {
+    public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
+                Role role, Campus preferredCampus, String callSign, int volunteerHours, int driversLicenseLevel, Date driversLicenseExpirationDate,
+                List<Training> training, List<String> languages, List<Certificate> certificates, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.altPhoneNumber = altPhoneNumber;
         this.role = role;
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
+        this.volunteerHours = volunteerHours;
+        this.driversLicenseLevel = driversLicenseLevel;
+        this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
+        this.languages = languages;
+        this.certificates = certificates;
         this.isDeactivated = isDeactivated;
     }
 
@@ -83,6 +89,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public int getAltPhoneNumber() {
+        return altPhoneNumber;
+    }
+
+    public void setAltPhoneNumber(int altPhoneNumber) {
+        this.altPhoneNumber = altPhoneNumber;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -107,12 +121,44 @@ public class User {
         this.callSign = callSign;
     }
 
+    public int getDriversLicenseLevel() {
+        return driversLicenseLevel;
+    }
+
+    public void setDriversLicenseLevel(int driversLicenseLevel) {
+        this.driversLicenseLevel = driversLicenseLevel;
+    }
+
+    public Date getDriversLicenseExpirationDate() {
+        return driversLicenseExpirationDate;
+    }
+
+    public void setDriversLicenseExpirationDate(Date driversLicenseExpirationDate) {
+        this.driversLicenseExpirationDate = driversLicenseExpirationDate;
+    }
+
     public List<Training> getTraining() {
         return training;
     }
 
     public void setTraining(List<Training> training) {
         this.training = training;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
     }
 
     public void setIsDeactivated(Boolean isDeactivated) {
@@ -122,4 +168,8 @@ public class User {
     public Boolean getIsDeactivated() {
         return isDeactivated;
     }
+
+    public int getVolunteerHours() { return volunteerHours; }
+
+    public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
 }

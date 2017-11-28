@@ -19,6 +19,10 @@ $(document).ready(function () {
                     validators: {
                         notEmpty: {
                             message: 'Username is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: 'Only alphanumeric characters are allowed.'
                         }
                     }
                 },
@@ -54,6 +58,14 @@ $(document).ready(function () {
                         notEmpty: {
                             message: 'Phone number is required and cannot be empty.'
                         },
+                        phone: {
+                            country: 'US',
+                            message: 'Please enter a valid phone number.'
+                        }
+                    }
+                },
+                altPhoneNumber: {
+                    validators: {
                         phone: {
                             country: 'US',
                             message: 'Please enter a valid phone number.'
@@ -96,7 +108,8 @@ $(document).ready(function () {
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
-            var phone  = $('#userPhoneNumber').val().replace(/^\D+/g,"");
+            var phone  = $('#userPhoneNumber').val().replace(/\D+/g,"");
+            var altPhone  = $('#userAltPhoneNumber').val().replace(/\D+/g,"");
 
             var campus = $('input[name="campus"]:checked').attr('id');
 
@@ -106,6 +119,7 @@ $(document).ready(function () {
                 "name": $('#userFullName').val(),
                 "email": $('#userEmail').val(),
                 "phoneNumber": phone,
+                "altPhoneNumber": altPhone,
                 "role": $('#userRole').val(),
                 "preferredCampus": campus,
                 "callSign": $('#userCallsign').val(),
@@ -166,6 +180,11 @@ $(document).ready(function () {
             user = loggedInUser;
         }
 
+        var altNum = user['altPhoneNumber'];
+        if (altNum === '0') {
+            altNum = '';
+        }
+
         $('#userModal')
             .find('[id="myModalLabel1"]').html('<b>Edit User</b>').end()
             .find('[id="username"]').val(user['username']).prop('disabled', true).end()
@@ -173,6 +192,7 @@ $(document).ready(function () {
             .find('[id="userFullName"]').val(user['name']).end()
             .find('[id="userEmail"]').val(user['email']).end()
             .find('[id="userPhoneNumber"]').val(user['phoneNumber']).end()
+            .find('[id="userAltPhoneNumber"]').val(altNum).end()
             .find('[id="userRole"]').val(user['role']).end()
             .find('#' + user['preferredCampus']).prop('checked', true).end()
             .find('[id="userCallsign"]').val(user['callSign']).end()

@@ -24,6 +24,7 @@
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
+
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
@@ -64,7 +65,7 @@
                 date : '<fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
                                                         value = "${announcement.date}" />',
                 campus : '${announcement.campus}',
-                role : ${user.role},
+                role : '${user.role}',
                 id : ${announcement.id}
 
         },
@@ -85,7 +86,7 @@
                             <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
                         <div id="nav">
                             <ul>
-                                <li><button type="button" id = "createAnnouncement" style = "background:#901d33">Add an Announcement</button></li>
+                               <button type="button" class = "btn btn-primary" id = "createAnnouncement">Add an Announcement</button></li>
                             </ul>
                         </div>
                         <hr>
@@ -101,14 +102,14 @@
                                         <div class = "modal-body">
                                             <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
                                             <div class="controls">
-                                                <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                <input class="form-control" name="announceTitleModal" id="announceTitleModal" style="width:100%;float:left;" placeholder="Enter a title." required>
                                                 </input>
                                             </div>
 
                                             <br><br>
 
                                             <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
-                                            <select class="form-control" name="announceCampusModal" id="announceCampusModal">
+                                            <select class="form-control" name="announceCampusModal" id="announceCampusModal" required>
                                                 <option value='all' id='allCampuses' disabled="true" selected>Select Teams
                                                 </option>
                                                 <option value ="BURNABY" class = "BURNABY">BURNABY</option>
@@ -119,7 +120,7 @@
 
                                             <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
                                             <div class="controls">
-                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceMessageModal" placeholder="Enter a message."></textarea>
+                                            <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceMessageModal" placeholder="Enter a message." required></textarea>
                                             </div>
                                         </div>
 
@@ -140,16 +141,16 @@
                                             <h4 id="myModalLabel2" style="text-align:left"><b>Edit an Announcement</b></h4>
                                         </div>
                                         <div class = "modal-body">
-                                            <label class="control-label" style="float:left;"><u>Title: </u> </label><br>
+                                            <label class="control-label" id ="title" style="float:left;"><u>Title: </u> </label><br>
                                             <div class="controls">
-                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title.">
+                                                <input class="form-control" name="announceTitleModal" id="announceSaveTitle" style="width:100%;float:left;" placeholder="Enter a title." required>
                                                 </input>
                                             </div>
 
                                             <br><br>
 
-                                            <label class="control-label" style="float:left;"><u>Specific Team:</u></label>
-                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus">
+                                            <label class="control-label" id="campus" style="float:left;"><u>Specific Team:</u></label>
+                                            <select class="form-control" name="announceCampusModal" id="announceSaveCampus" required>
                                                 <option value='all' id='allSaveCampus' disabled="true" selected>Select Teams
                                                 </option>
                                                 <option value ="BURNABY" class = "BURNABY">BURNABY</option>
@@ -158,9 +159,9 @@
 
                                             </select>
 
-                                            <label class="control-label" style="float:left;" ><u>Message: </u> </label><br>
+                                            <label class="control-label" id="message" style="float:left;" ><u>Message: </u> </label><br>
                                             <div class="controls">
-                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message."></textarea>
+                                                <textarea style="border-width:1px;border-color: #a9b7d1;height: 100px" class="form-control" rows="8" id = "announceSaveMessage" placeholder="Enter a message." required></textarea>
                                             </div>
                                         </div>
 
@@ -274,6 +275,7 @@
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
 <script src="resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
@@ -281,28 +283,6 @@
 
 <!-- Menu Toggle Script -->
 <script>
-
-//    $('.empty').hide();
-
-//    $("#menu-toggle").click(function(e) {
-//        e.preventDefault();
-//        $("#wrapper").toggleClass("toggled");
-//    });
-//
-//    var top = $('.thisone').offset().top;
-//    $('.trigger').click(function () {
-//        $('.thisone').css('position','');
-//        $('.left2').toggle('slow',function(){
-//            top = $('.thisone').offset().top;
-//        });
-//    });
-//
-//    $(document).scroll(function(){
-//        $('.thisone').css('position','');
-//        top = $('.thisone').offset().top;
-//        $('.thisone').css('position','absolute');
-//        $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
-//    });
 
     $("#filter input").click(function() {
         var burnabyCheck = $('#BURNABY').is(":checked");

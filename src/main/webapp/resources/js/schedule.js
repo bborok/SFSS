@@ -233,7 +233,7 @@ var selectScheduledEventHandler = function (event) {
 
 function conditionallyRender(start, end, isTimeCardSubmitted) {
     //Condtionally Render
-    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR') {
+    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR' || loggedInUser.role === 'TEAM_LEADER') {
         showAllConditionalButtons();
         enableAllInputElementsInForm();
         $('#createEventModal').modal(); //popup modal

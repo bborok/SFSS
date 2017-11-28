@@ -34,6 +34,7 @@
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src= 'resources/js/timecard.js'></script>
+    <script src= 'resources/js/sorttable.js'></script>
 </head>
 
 <style>
@@ -76,17 +77,17 @@
                                 No TimeCards on Record!
                             </c:when>
                             <c:otherwise>
-                                <table class="table table-striped" style="text-align:left; ">
+                                <table class="table table-striped sortable" style="text-align:left; ">
                                     <thead>
                                     <tr>
-                                        <th width="18%">Name</th>
-                                        <th width="10%">User</th>
+                                        <th width="15%">Name</th>
+                                        <th width="4%">User</th>
                                         <th width="14%">Date</th>
-                                        <th width="15%">Time Card</th>
-                                        <th width="14%">Start Time</th>
-                                        <th width="14%">End Time</th>
-                                        <th width="5%">Campus</th>
-                                        <th width="10%">Location</th>
+                                        <th width="22%">Time Card</th>
+                                        <th width="19%">Start Time</th>
+                                        <th width="16%">End Time</th>
+                                        <th width="4%">Campus</th>
+                                        <th width="6%">Location</th>
                                     </tr>
                                     </thead>
 

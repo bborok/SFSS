@@ -186,7 +186,7 @@
                             </div>
                     </center>
                         <div class="panel panel-primary" id = "fixed" data-spy="affix" style ="width:25%;text-align:left;float:right">
-                            <div class="panel-heading" id = "announceFilter">Filter</div>
+                            <div class="panel-heading" id = "announceFilter" style="font-weight:bold;">Filter</div>
                             <div class="panel-body" id = campusLead>
                                 <div class="col-sm-12 row">
                                     <div class="radio" id = "filter">
@@ -223,19 +223,19 @@
                             <c:forEach items="${announcements}" var = "announcement">
                                 <div class = "check" id = "${announcement.id}">
                                 <div class="panel panel-primary" id = "sortAnnounce2" style ="text-align:left">
-                                    <div class="panel-heading" id = "announceTitle">${announcement.title} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
+                                    <div class="panel-heading" id = "announceTitle" style="font-weight:bold;">${announcement.title} <a id = "sortCampus" style="color:white;">| ${announcement.getCampus()}</a>
                                     </div>
                                     <hr>
                                     <div class="panel-body" id = announceBody>
                                         ${announcement.message}
                                     </div><hr>
-                                    <div class = "panel-body" id = "announceDate">Date:
-                                        <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
-                                                        value = "${announcement.date}" />
+                                    <div class = "panel-body" id = "announceDate" style="font-weight:bold;">Date:
+                                        <a style="color:black;font-weight:normal;"><fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium"
+                                                        value = "${announcement.date}" /></a>
                                     </div>
-                                    <div class = "panel-body" id = "announceAuthor">Author: ${announcement.getUsername()}
-                                        <button type="button" class="btn btn-primary editButton" style="float:right;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit Announcement</button>
-                                        <button type="button" class="btn btn-primary removeButton" style="float:right;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove Announcement</button>
+                                    <div class = "panel-body" id = "announceAuthor" style="font-weight:bold;">Author: <a style="color:black;font-weight:normal;">${announcement.getUsername()}</a>
+                                        <button type="button" class="btn btn-primary editButton" style="float:right;margin-left:2%;width:10%;" id = "${announcement.getId()}" onclick="doEdit(${announcement.id}, '${announcement.title}', '${announcement.message}', '${announcement.campus}')">Edit</button>
+                                        <button type="button" class="btn btn-primary removeButton" style="float:right;width:10%;" id = "${announcement.getId()}" onclick="doRemove(${announcement.id})">Remove</button>
                                     </div>
                                 </div>
                                 </div>
@@ -318,7 +318,6 @@
                 filterArray.push(announce[campus]);
             }
         }
-
         filterArray.sort(function(firstCampus, comparingCampus) {
             if (firstCampus.date > comparingCampus.date) {
                 return -1;
@@ -333,20 +332,20 @@
         for (var index in filterArray) {
             htmlAdd += "<div class = 'check'>" +
                     "<div class = 'panel panel-primary' id = 'sortAnnounce2' style = 'text-align:left'>" +
-                    "<div class = 'panel-heading' id = 'announceTitle'>" + filterArray[index].title +
+                    "<div class = 'panel-heading' id = 'announceTitle' style='font-weight:bold;'>" + filterArray[index].title +
                     "<a id = 'sortCampus' style='color:white;'>" + " | " + filterArray[index].campus + "</a>" +
                     "</div>" + "<hr>" +
                     "<div class = 'panel-body' id = 'announceBody'>" + filterArray[index].message + "</div>" + "<hr>" +
-                    "<div class = 'panel-body' id = 'announceDate'>" + "Date: " +
+                    "<div class = 'panel-body' id = 'announceDate' style='font-weight:bold;'>" + "Date: " +
 
-                    filterArray[index].date +
+                    "<a style='color:black;font-weight:normal;'>" + filterArray[index].date + "</a>" +
                      "</div>" +
-                    "<div class = 'panel-body' id = 'announceAuthor'>Author: " + filterArray[index].user +
-                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;' id = '" + filterArray[index].id + "'" + " onclick='doEdit(" + filterArray[index].id +
+                    "<div class = 'panel-body' id = 'announceAuthor' style='font-weight:bold;'>Author: " +"<a style='color:black;font-weight:normal;'>" + filterArray[index].user + "</a>" +
+                    "<button type = 'button' class = 'btn btn-primary editButton' style='float:right;margin-left:2%;width:10%;' id = '" + filterArray[index].id + "'" + " onclick='doEdit(" + filterArray[index].id +
                     ',"' + filterArray[index].title + '"' + ',"' + filterArray[index].message + '"' + ',"' + filterArray[index].campus + '"' +
-                ")'>Edit Announcement</button>" +
-                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;' id = '" + filterArray[index].id + "'" + " onclick='doRemove(" + filterArray[index].id +
-                ")'>Remove Announcement</button>" +
+                ")'>Edit</button>" +
+                    "<button type = 'button' class = 'btn btn-primary removeButton' style = 'float:right;width:10%;' id = '" + filterArray[index].id + "'" + " onclick='doRemove(" + filterArray[index].id +
+                ")'>Remove</button>" +
                     "</div></div></div>"
 
         }

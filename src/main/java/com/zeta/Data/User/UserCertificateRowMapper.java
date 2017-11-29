@@ -12,8 +12,8 @@ public class UserCertificateRowMapper implements RowMapper<Certificate> {
         Certificate certificate = new Certificate();
 
         certificate.setName(resultSet.getString("CertificateName"));
-        certificate.setLevel(resultSet.getString("Level"));
-        certificate.setNumber(resultSet.getInt("Number"));
+        certificate.setLevel(resultSet.getInt("Level"));
+        certificate.setId(resultSet.getString("Number"));
         certificate.setExpirationDate(resultSet.getDate("ExpirationDate"));
 
         return certificate;

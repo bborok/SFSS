@@ -369,7 +369,12 @@
                                 <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
                                 <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
                                 <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+                            </div>
 
+                            <div class="modal-body">
+                                <p>
+                                    <a href="#" data-toggle="modal" data-target="#certForm" class="button"><i class="fa fa-plus"></i> Upload new certificate</a>
+                                </p>
                             </div>
 
                             <div class="modal-footer">
@@ -377,6 +382,56 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div id="certForm" class="modal" tabindex="-1" role="dialog" aria-labelledby="uploadCertificateTitle" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="uploadCertificateTitle">Upload new certificate</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createCertificate" data-toggle="validator" class="form-horizontal" role="form">
+                                    <label class="control-label">Certificate Name:</label>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certName" id="certName" placeholder="Certificate Name">
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Level</span>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certLevel" id="certLevel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Cert ID</span>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certID" id="certID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Expires</span>
+                                                <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='certExpire'>
+                                                    <input type='text' id="certExpireDate" name="certExpire" class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                    <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn" id="btnCertCancel">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div>
             </div>
         </div>
@@ -398,6 +453,10 @@
 
 <!-- Menu Toggle Script -->
 <script>
+
+    $('#btnCertCancel').click(function(){
+        $('#certForm').modal('toggle');
+    });
 
     function switchColors(element) {
         links = document.getElementsByTagName("tr");

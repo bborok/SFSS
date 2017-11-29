@@ -1,21 +1,29 @@
 package com.zeta.Models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
+
 import java.util.Date;
 
 public class Certificate {
 
     private String name;
-    private String level;
-    private Integer number;
+    private Integer level;
+    private String id;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     private Date expirationDate;
 
     public Certificate() {
     }
 
-    public Certificate(String name, String level, Integer number, Date expirationDate) {
+    public Certificate(String name, Integer level, String id, Date expirationDate) {
         this.name = name;
         this.level = level;
-        this.number = number;
+        this.id = id;
         this.expirationDate = expirationDate;
     }
 
@@ -27,20 +35,20 @@ public class Certificate {
         this.name = name;
     }
 
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
-    public Integer getNumber() {
-        return number;
+    public String getId() {
+        return id;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Date getExpirationDate() {

@@ -49,7 +49,7 @@ function initCalendar() {
             add_event: {
                 text: 'Add a Shift',
                 click: function () {
-                    resetFormFields();
+                    emptyDateAndTimeInputFields();
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -149,6 +149,7 @@ function initEventHandlers() {
         }
     });
 
+    //Change the dropdown options when selecting a campus in the Assign/Edit a Shift form.
     $("#campusSelect").on('change', function () {
         $('#eventShiftSelect').empty();
         var selectedCampus = $("#campusSelect").val();
@@ -208,22 +209,23 @@ var selectEmptyAreaEventHandler = function (start, end) {
     $('#modalTitle').text('Assign a Shift');
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
-    $('#startTime').data("DateTimePicker").date(start);
-    $('#endTime').data("DateTimePicker").date(end);
+    $('#startTime').data("DateTimePicker").date(null);
+    $('#endTime').data("DateTimePicker").date(null);
     $('#availabilitySelect').val("NO_RESPONSE");
-    conditionallyRender(start, end, false);
+    conditionallyRenderButtonsAndInputs(start, end, false);
 };
 
 var selectScheduledEventHandler = function (event) {
     $('#modalTitle').text('Edit Shift');
-
+    console.log(event.end);
+    console.log(moment(event.end).format(dateTimeFormat));
     $('#shiftID').val(event.id);
     $('#campusSelect').val(event.campus).trigger('change');
     $('#eventShiftSelect').val(event.title);
 
     $('#date').data("DateTimePicker").date(moment(event.date));
-    $('#startTime').data("DateTimePicker").date(event.start);
-    $('#endTime').data("DateTimePicker").date(event.end);
+    $('#startTime').data("DateTimePicker").date(moment(event.start));
+    $('#endTime').data("DateTimePicker").date(moment(event.end));
 
     $('#eventLocation').val(event.location);
     $('#eventRequiredTraining').val(event.requiredTraining);
@@ -237,11 +239,11 @@ var selectScheduledEventHandler = function (event) {
         $('#createEventModal').modal('hide');
     });
 
-    conditionallyRender(event.start, event.end, event.isTimeCardSubmitted);
+    conditionallyRenderButtonsAndInputs(event.start, event.end, event.isTimeCardSubmitted);
 };
 
 
-function conditionallyRender(startDateTime, endDateTime, isTimeCardSubmitted) {
+function conditionallyRenderButtonsAndInputs(startDateTime, endDateTime, isTimeCardSubmitted) {
 
     var shiftStartDateTime = moment(startDateTime).format(dateTimeFormat);
     var shiftEndDateTime = moment(endDateTime).format(dateTimeFormat);
@@ -304,7 +306,7 @@ function doSubmit() {
     $("#createEventModal").modal('hide');
 }
 
-function resetFormFields() {
+function emptyDateAndTimeInputFields() {
     $('#eventCampus').val("");
     $('#memberSelect').val("");
     $('#eventRequiredTraining').val("");

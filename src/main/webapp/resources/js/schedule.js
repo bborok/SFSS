@@ -231,35 +231,40 @@ var selectScheduledEventHandler = function (event) {
 };
 
 
-function conditionallyRender(start, end, isTimeCardSubmitted) {
-    //Condtionally Render
+function conditionallyRender(startDateTime, endDateTime, isTimeCardSubmitted) {
+
+    var shiftStartDateTime = moment(startDateTime).format(dateTimeFormat);
+    var shiftEndDateTime = moment(endDateTime).format(dateTimeFormat);
+    var currentDateTime = moment().format(dateTimeFormat);
+    //Conditionally Render
     if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR' || loggedInUser.role === 'TEAM_LEADER') {
         showAllConditionalButtons();
         enableAllInputElementsInForm();
+
+        //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
+        if (currentDateTime.isAfter(shiftEndDateTime)) {
+            $('#startTime').prop('disabled', true);
+            $('#endTime').prop('disabled', true);
+        }
+
         $('#createEventModal').modal(); //popup modal
         return;
     }
 
     if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER') {
-        $('#btnDelete').hide();
+        //Start with disabling all forms of input and buttons
         disableAllInputElementsInForm();
         hideAllConditionalButtons();
-
-        var eventStart = moment(start).format(dateTimeFormat);
-        var eventEnd = moment(end).format(dateTimeFormat);
-        var currentDate = moment().format(dateTimeFormat);
-
-        //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
-        if (moment(currentDate).isBefore(eventStart)) {
+        //Enable the availability dropdown if the shift hasn't started yet
+        if (moment(currentDateTime).isBefore(shiftStartDateTime)) {
             $("#availabilitySelect").prop('disabled', false);
             $("#submitButton").show();
         }
-        //Condtionally render timecard
-        if (moment(currentDate).isAfter(eventStart) && isTimeCardSubmitted === false) {
+        //Render timecard button if the start of the shift has already passed and the timecard has not yet been submitted
+        if (moment(currentDateTime).isAfter(shiftStartDateTime) && isTimeCardSubmitted === false) {
             $("#btnTimecard").show();
         }
     }
-
     $('#createEventModal').modal(); //popup modal
 }
 

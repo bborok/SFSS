@@ -269,11 +269,11 @@ function conditionallyRenderButtonsAndInputs(startDateTime, endDateTime, isTimeC
         enableAllInputElementsInForm();
 
         // //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
-        if (moment(currentDateTime).isAfter(shiftEndDateTime)) {
-            $('#date input').prop('disabled', true);
-            $('#startTime input').prop('disabled', true);
-            $('#endTime input').prop('disabled', true);
-        }
+        // if (moment(currentDateTime).isAfter(shiftEndDateTime)) {
+        //     $('#date input').prop('disabled', true);
+        //     $('#startTime input').prop('disabled', true);
+        //     $('#endTime input').prop('disabled', true);
+        // }
 
         $('#createEventModal').modal(); //popup modal
         return;
@@ -400,13 +400,13 @@ function convertToDateFormat(start, end) {
 }
 
 function showAllConditionalButtons() {
-    $('#btnTimecard').show();
+    // $('#btnTimecard').show();
     $('#btnDelete').show();
     $('#submitButton').show();
 }
 
 function hideAllConditionalButtons() {
-    $('#btnTimecard').hide();
+    // $('#btnTimecard').hide();
     $('#btnDelete').hide();
     $('#submitButton').hide();
 }

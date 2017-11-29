@@ -20,6 +20,8 @@
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     <!-- Custom styles for this template -->
 
@@ -55,7 +57,7 @@
         height: 300px;
     }
 
-    tbody {
+    #userList tbody {
         overflow-y: scroll;
         height: 500px;
         position: absolute;
@@ -63,6 +65,11 @@
 
     .click a {
         color: chocolate;
+    }
+
+    .datepicker,
+    .table-condensed {
+        width: 300px;
     }
 
     #userimage:hover {opacity: 0.7;}
@@ -145,7 +152,7 @@
 
                             <%--Modal Body--%>
                             <div class="modal-body">
-                                <form id="userForm" class="form-horizontal" data-toggle="validator">
+                                <form id="userForm" data-toggle="validator">
                                     <div style="padding-left: 15px;padding-right: 15px">
                                         <div class="form-group row">
                                             <div class="col-md-6">
@@ -210,6 +217,39 @@
                                             <label class="control-label"><u>Call Sign:</u></label>
                                             <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
                                         </div>
+                                        <label class="control-label"><u>Driver's License</u></label>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Class</span>
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="licenseClass" id="licenseClass">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Expires</span>
+                                                    <div class='input-group date' id='licenseExpire'>
+                                                        <div class='input-group date' id='date'>
+                                                            <input type='text' class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1"/>
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="control">
+                                                    <select class="form-control" name="languages[]" id="languages" multiple required>
+                                                        <c:forEach items="${languages}" var="language">
+                                                            <option value="${language}">
+                                                                    ${language}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="modal-footer">
@@ -230,7 +270,7 @@
                             <b>Users</b>
                         </p>
 
-                        <table class="table table-striped" style="text-align:left; ">
+                        <table id="userList" class="table table-striped" style="text-align:left; ">
                             <thead>
                                 <tr>
                                     <th width="40%">Name</th>
@@ -352,9 +392,12 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/sidebar_menu.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>

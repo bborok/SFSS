@@ -1,5 +1,16 @@
 $(document).ready(function () {
 
+    $('#licenseExpire').datepicker({
+        autoclose: true,
+    });
+
+    $('#languages').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        dropUp: true
+    });
+    $('#languages').multiselect('select', 'English');
+
     $('#removeButton').on('click', function (e) {
         e.preventDefault();
         doRemove();

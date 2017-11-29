@@ -290,6 +290,7 @@
                                 <h4><c:out value="${user.role}"/></h4>
                                 <p><c:out value="${user.email}"/></p>
                                 <h5><c:out value="${user.preferredCampus}"/></h5>
+                                <h5><u>Call Sign:</u><c:out value="${user.callSign}"/></h5>
                             </div>
                         </c:forEach>
 

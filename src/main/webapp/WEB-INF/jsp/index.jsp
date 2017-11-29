@@ -31,7 +31,6 @@
 </head>
 
 
-<script src="resources/jquery/jquery.min.js"></script>
 
 <script>
     var api = '${pageContext.request.contextPath}';
@@ -293,6 +292,8 @@
 </div>
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
+<script src="resources/jquery/jquery.min.js"></script>
+
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src='resources/js/announcements.js'></script>

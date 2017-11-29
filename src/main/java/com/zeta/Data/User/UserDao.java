@@ -266,19 +266,19 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public int getParkingMinutes(User user) throws SQLException{
+    public int getParkingMinutes(String username) throws SQLException{
         String sql = "Select ParkingMinutes from User where Username = ?";
 
-        return jdbcTemplate.queryForObject(sql, new Object[]{user.getUsername()},
+        return jdbcTemplate.queryForObject(sql, new Object[]{username},
                 (resultSet, i) -> resultSet.getInt("ParkingMinutes"));
     }
 
     @Override
-    public boolean updateParkingMinutes(User user) {
+    public boolean updateParkingMinutes(String username, int updatedMinutes) {
         try {
             String sql = "update User set ParkingMinutes = ? where Username = ?";
 
-            jdbcTemplate.update(sql, user.getParkingMinutes(), user.getUsername());
+            jdbcTemplate.update(sql, updatedMinutes, username);
             return true;
 
         } catch (Exception e) {

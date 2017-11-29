@@ -180,6 +180,7 @@ public class IndexController {
             languages.add(language);
         }
 
+        Collections.sort(languages);
         return languages;
     }
 }

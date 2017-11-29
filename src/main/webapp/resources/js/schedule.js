@@ -171,6 +171,7 @@ function initEventHandlers() {
 
     $("#btnTimecard").off().on('click', function () {
         $(location).attr('href', contextPath + '/timecard?shift_id=' + $('#shiftID').val() + '&username=' + $('#memberSelect').val());
+        $('#createEventModal').modal('hide');
     });
 }
 
@@ -209,8 +210,8 @@ var selectEmptyAreaEventHandler = function (start, end) {
     $('#modalTitle').text('Assign a Shift');
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
-    $('#startTime').data("DateTimePicker").date(null);
-    $('#endTime').data("DateTimePicker").date(null);
+    $('#startTime').data("DateTimePicker").date(start);
+    $('#endTime').data("DateTimePicker").date(end);
     $('#availabilitySelect').val("NO_RESPONSE");
     conditionallyRenderButtonsAndInputs(start, end, false);
 };

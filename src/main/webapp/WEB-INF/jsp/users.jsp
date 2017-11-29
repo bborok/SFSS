@@ -497,11 +497,21 @@
         });
     });
 
+    $('#userModal').on('shown.bs.modal', function () {
+        $('#languages').multiselect('rebuild');
+        $('#languages').multiselect('select', 'English');
+        $('#languages').multiselect('updateButtonText', false);
+        $('#languages').multiselect('refresh');
+    })
+
     $('#userModal').on('hidden.bs.modal', function () {
-        $(this).find("input,select").val('').end()
+        $(this).find("input").val('').end()
             .find('[id="username"]').prop('disabled', false).end()
             .data('bootstrapValidator').resetForm();
         $('input[name="campus"]:checked').prop('checked', false);
+
+        $('#languages').multiselect('deselectAll', false);
+        $('#languages').multiselect('refresh');
     });
 </script>
 </body>

@@ -1,8 +1,6 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.Training.TrainingData;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import com.zeta.Models.Role;
 import com.zeta.Data.Announcements.AnnouncementsData;
 import com.zeta.Models.Announcement;
@@ -12,26 +10,18 @@ import com.zeta.Models.Task;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.zeta.Data.Statistics.StatisticsDao;
-import com.zeta.Data.Statistics.StatisticsData;
 import com.zeta.Data.User.UserData;
 import com.zeta.Models.User;
-import com.zeta.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static javax.swing.JOptionPane.showMessageDialog;
-
 
 @Controller
 public class IndexController {
@@ -145,6 +135,9 @@ public class IndexController {
 
     @GetMapping("/logout")
     public String logout() {
+        if (!(userData.closeConnection())) {
+            // TODO: Handle this
+        }
         return "logout";
     }
 

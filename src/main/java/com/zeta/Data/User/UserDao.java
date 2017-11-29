@@ -29,6 +29,17 @@ public class UserDao implements UserData {
     }
 
     @Override
+    public boolean closeConnection() {
+        try {
+            con.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean addUser(User user) {
         boolean activeUser = true;  // User is active when created
         try {

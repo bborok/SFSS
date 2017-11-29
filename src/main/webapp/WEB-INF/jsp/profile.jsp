@@ -141,7 +141,7 @@
                             <h3>Email: ${user.email}</h3>
                             <p id="phoneNum"></p>
                             <p id="altPhone"></p>
-                            <h3>Volunteer Hours: ${user.VolunteerMinutes}</h3>
+                            <h3>Volunteer Hours: ${user.volunteerMinutes}</h3>
                             <div id="serviceRecognition"></div>
                             <h3>Qualifications: </h3>
                             <dl>

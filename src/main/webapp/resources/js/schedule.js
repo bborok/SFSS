@@ -54,6 +54,8 @@ function initCalendar() {
                     $('#startTime').data("DateTimePicker").date(moment());
                     $('#endTime').data("DateTimePicker").date(moment().add('1', 'hours'));
 
+                    hideAllConditionalButtons();
+                    $('#submitButton').show();
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -230,6 +232,10 @@ var selectEmptyAreaEventHandler = function (start, end) {
     }
     $('#availabilitySelect').val("NO_RESPONSE");
     conditionallyRenderButtonsAndInputs(start, end, false);
+
+    hideAllConditionalButtons();
+    $('#submitButton').show();
+    $('#createEventModal').modal('show'); //popup modal
 };
 
 var selectScheduledEventHandler = function (event) {
@@ -400,13 +406,13 @@ function convertToDateFormat(start, end) {
 }
 
 function showAllConditionalButtons() {
-    // $('#btnTimecard').show();
+    $('#btnTimecard').show();
     $('#btnDelete').show();
     $('#submitButton').show();
 }
 
 function hideAllConditionalButtons() {
-    // $('#btnTimecard').hide();
+    $('#btnTimecard').hide();
     $('#btnDelete').hide();
     $('#submitButton').hide();
 }

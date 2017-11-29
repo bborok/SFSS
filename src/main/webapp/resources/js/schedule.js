@@ -19,7 +19,6 @@ $(document).ready(function () {
     $('#date').datetimepicker({
         format: 'LL'
     });
-    $('#date').data("DateTimePicker").minDate(moment().startOf('day'));
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
 
@@ -51,6 +50,7 @@ function initCalendar() {
                 click: function () {
                     emptyDateAndTimeInputFields();
                     $('#date').data("DateTimePicker").date(moment());
+                    $('#date').data("DateTimePicker").minDate(moment().startOf('day'));
                     $('#startTime').data("DateTimePicker").date(moment());
                     $('#endTime').data("DateTimePicker").date(moment().add('1', 'hours'));
 
@@ -211,6 +211,11 @@ var eventRenderHandler = function (event, element) {
 };
 
 var selectEmptyAreaEventHandler = function (start, end) {
+    if (start.isBefore(moment().startOf('day').subtract(1, 'days'))) {
+        $.notify("Cannot create shift in the past.", "info");
+        return;
+    }
+
     $('#modalTitle').text('Assign a Shift');
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
@@ -228,14 +233,14 @@ var selectEmptyAreaEventHandler = function (start, end) {
 };
 
 var selectScheduledEventHandler = function (event) {
+    $('#date').data("DateTimePicker").minDate(false);
     $('#modalTitle').text('Edit Shift');
     $('#shiftID').val(event.id);
     $('#campusSelect').val(event.campus).trigger('change');
     $('#eventShiftSelect').val(event.title);
-
-    $('#date').data("DateTimePicker").date(moment(event.date));
-    $('#startTime').data("DateTimePicker").date(moment(event.start));
-    $('#endTime').data("DateTimePicker").date(moment(event.end));
+    $('#date').data("DateTimePicker").date(moment(event.date, dateFormat));
+    $('#startTime').data("DateTimePicker").date(moment(event.start, timeFormat));
+    $('#endTime').data("DateTimePicker").date(moment(event.end, timeFormat));
 
     $('#eventLocation').val(event.location);
     $('#eventRequiredTraining').val(event.requiredTraining);
@@ -263,8 +268,7 @@ function conditionallyRenderButtonsAndInputs(startDateTime, endDateTime, isTimeC
         showAllConditionalButtons();
         enableAllInputElementsInForm();
 
-
-        //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
+        // //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
         if (moment(currentDateTime).isAfter(shiftEndDateTime)) {
             $('#date input').prop('disabled', true);
             $('#startTime input').prop('disabled', true);

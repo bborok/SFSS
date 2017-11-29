@@ -132,7 +132,7 @@
                 <br>
 
                 <div id="userModal" class="modal fade">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <%--Modal Content--%>
 
                         <div class="modal-content">
@@ -147,32 +147,38 @@
                             <div class="modal-body">
                                 <form id="userForm" class="form-horizontal" data-toggle="validator">
                                     <div style="padding-left: 15px;padding-right: 15px">
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Username:</u></label>
-                                            <div class="input-group">
-                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
-                                                <span class="input-group-addon">@sfu.ca</span>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Username:</u></label>
+                                                <div class="input-group">
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
+                                                    <span class="input-group-addon">@sfu.ca</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Student Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Full Name:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Email:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Full Name:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Alternate Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Alternate Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
@@ -187,7 +193,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row-fluid">
+                                        <div class="form-group">
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
                                             <label class="radio-inline">

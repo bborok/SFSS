@@ -463,6 +463,11 @@
         $('#certForm').modal('toggle');
     });
 
+    function cleanPhone(number) {
+        return '(' + number.substring(0,3) + ') ' + number.substring(3,6)
+            + '-' + number.substring(6);
+    };
+
     function switchColors(element) {
         links = document.getElementsByTagName("tr");
         for (var i = 0; i < links.length; i++)
@@ -513,8 +518,8 @@
             document.getElementById('detailsStuNum').innerHTML = '<b><u>Student Number: </u></b>' + users[tab]['studentNumber'];
             document.getElementById('detailsFullName').innerHTML = '<b><u>Full Name: </u></b>' + users[tab]['name'];
             document.getElementById('detailsEmail').innerHTML = '<b><u>Email: </u></b>' + users[tab]['email'];
-            document.getElementById('detailsPhoneNumber').innerHTML = '<b><u>Phone Number: </u></b>' + users[tab]['phoneNumber'];
-            document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + users[tab]['altPhoneNumber'];
+            document.getElementById('detailsPhoneNumber').innerHTML = '<b><u>Phone Number: </u></b>' + cleanPhone(users[tab]['phoneNumber']);
+            document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + cleanPhone(users[tab]['altPhoneNumber']);
             document.getElementById('detailsCampus').innerHTML = '<b><u>Preferred Campus: </u></b>' + users[tab]['preferredCampus'];
             document.getElementById('detailsRole').innerHTML = '<b><u>Role: </u></b>' + users[tab]['role'];
             document.getElementById('detailsCallSign').innerHTML = '<b><u>Call Sign: </u></b>' + users[tab]['callSign'];

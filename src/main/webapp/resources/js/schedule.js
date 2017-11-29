@@ -241,10 +241,12 @@ function conditionallyRender(startDateTime, endDateTime, isTimeCardSubmitted) {
         showAllConditionalButtons();
         enableAllInputElementsInForm();
 
+
         //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
-        if (currentDateTime.isAfter(shiftEndDateTime)) {
-            $('#startTime').prop('disabled', true);
-            $('#endTime').prop('disabled', true);
+        if (moment(currentDateTime).isAfter(shiftEndDateTime)) {
+            $('#date input').prop('disabled', true);
+            $('#startTime input').prop('disabled', true);
+            $('#endTime input').prop('disabled', true);
         }
 
         $('#createEventModal').modal(); //popup modal

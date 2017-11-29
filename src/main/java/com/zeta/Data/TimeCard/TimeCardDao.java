@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -192,5 +193,20 @@ public class TimeCardDao implements TimeCardData {
 
             insertUserTask.execute();
         }
+    }
+
+    private int getShiftMinutes(long shift_id) throws SQLException{
+        String sql = "select StartTime, EndTime from Shift where ID = ?";
+
+        double difference = jdbcTemplate.queryForObject(sql, new Object[]{shift_id}, (resultSet, i) -> {
+            Date startTime = (resultSet.getDate("StartTime"));
+            Date endTime = (resultSet.getDate("EndTime"));
+
+            return (double) (endTime.getTime() - startTime.getTime()) * 1000;    // difference in seconds
+        });
+
+        int minutes = (int) difference / 60;   // convert seconds to minutes
+
+        return minutes;
     }
 }

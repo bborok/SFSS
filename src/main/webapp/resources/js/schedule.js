@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('#date').datetimepicker({
         format: 'LL'
     });
-    $('#date').data("DateTimePicker").minDate(moment());
+    $('#date').data("DateTimePicker").minDate(moment().startOf('day'));
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
 
@@ -50,6 +50,10 @@ function initCalendar() {
                 text: 'Add a Shift',
                 click: function () {
                     emptyDateAndTimeInputFields();
+                    $('#date').data("DateTimePicker").date(moment());
+                    $('#startTime').data("DateTimePicker").date(moment());
+                    $('#endTime').data("DateTimePicker").date(moment().add('1', 'hours'));
+
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -211,15 +215,20 @@ var selectEmptyAreaEventHandler = function (start, end) {
     $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
     $('#startTime').data("DateTimePicker").date(start);
-    $('#endTime').data("DateTimePicker").date(end);
+
+    var momentStart = moment(moment(start).format(timeFormat), timeFormat);
+    var momentEnd = moment(moment(end).format(timeFormat), timeFormat);
+    if (momentStart.isSame(momentEnd)) {
+        $('#endTime').data("DateTimePicker").date(moment(end).add('1', 'hours'));
+    } else {
+        $('#endTime').data("DateTimePicker").date(moment(end));
+    }
     $('#availabilitySelect').val("NO_RESPONSE");
     conditionallyRenderButtonsAndInputs(start, end, false);
 };
 
 var selectScheduledEventHandler = function (event) {
     $('#modalTitle').text('Edit Shift');
-    console.log(event.end);
-    console.log(moment(event.end).format(dateTimeFormat));
     $('#shiftID').val(event.id);
     $('#campusSelect').val(event.campus).trigger('change');
     $('#eventShiftSelect').val(event.title);

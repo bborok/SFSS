@@ -123,7 +123,7 @@
                             <h3>Email: ${user.email}</h3>
                             <p id="phoneNum"></p>
                             <p id="altPhone"></p>
-                            <h3>Volunteer Hours: ${user.volunteerMinutes}</h3>
+                            <p id="volunteerHours"></p>
                             <div id="serviceRecognition"></div>
                             <h3>Qualifications: </h3>
                             <dl>
@@ -196,7 +196,9 @@
                                 $('#altPhone').html('<h3>Alternate Phone Number: ' + cleanAltPhone + '</h3>');
                             }
 
-                            var hours = ${user.VolunteerMinutes};
+                            var hours = ${user.volunteerMinutes} / 60;
+                            $('#volunteerHours').html('<h3>Volunteer Hours: ' + hours + '</h3>');
+
                             var ranks = [80, 160, 240, 320, 400, 480];
                             var imgSrc = 'resources/img/service_recognition';
                             var options = 'style="background:transparent"';

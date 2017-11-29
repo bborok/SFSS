@@ -19,6 +19,8 @@
     <title>SFU</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     <!-- Custom styles for this template -->
 
@@ -53,7 +55,7 @@
         height: 300px;
     }
 
-    tbody {
+    #userList tbody {
         overflow-y: scroll;
         height: 500px;
         position: absolute;
@@ -61,6 +63,11 @@
 
     .click a {
         color: chocolate;
+    }
+
+    .bootstrap-datetimepicker-widget {
+        height: 250px;
+        width: 250px;
     }
 
     #userimage:hover {opacity: 0.7;}
@@ -96,7 +103,9 @@
             preferredCampus : "${user.preferredCampus.toString()}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role.toString()}",
-            callSign : "${user.callSign}"
+            callSign : "${user.callSign}",
+            licenseClass : "${user.driversLicenseLevel}",
+            licenseExpire : "${user.driversLicenseExpirationDate}",
         },
         </c:forEach>
     }
@@ -123,7 +132,7 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
+                    <button type="button" id="addUser" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
                 <br>
 
@@ -148,7 +157,7 @@
                 </div>
 
                 <div id="userModal" class="modal fade">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <%--Modal Content--%>
 
                         <div class="modal-content">
@@ -161,34 +170,40 @@
 
                             <%--Modal Body--%>
                             <div class="modal-body">
-                                <form id="userForm" class="form-horizontal" data-toggle="validator">
+                                <form id="userForm" data-toggle="validator">
                                     <div style="padding-left: 15px;padding-right: 15px">
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Username:</u></label>
-                                            <div class="input-group">
-                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
-                                                <span class="input-group-addon">@sfu.ca</span>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Username:</u></label>
+                                                <div class="input-group">
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
+                                                    <span class="input-group-addon">@sfu.ca</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Student Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Full Name:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Email:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Full Name:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Alternate Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Alternate Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
@@ -203,7 +218,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row-fluid">
+                                        <div class="form-group">
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
                                             <label class="radio-inline">
@@ -219,6 +234,37 @@
                                         <div class="form-group">
                                             <label class="control-label"><u>Call Sign:</u></label>
                                             <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
+                                        </div>
+                                        <label class="control-label"><u>Driver's License</u></label>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Class</span>
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="licenseClass" id="licenseClass">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Expires</span>
+                                                    <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='licenseExpire'>
+                                                        <input type='text' id="expireDate" class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="control">
+                                                    <select class="form-control" name="languages[]" id="languages" multiple required>
+                                                        <c:forEach items="${languages}" var="language">
+                                                            <option value="${language}">
+                                                                    ${language}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -240,7 +286,7 @@
                             <b>Users</b>
                         </p>
 
-                        <table class="table table-striped" style="text-align:left; ">
+                        <table id="userList" class="table table-striped" style="text-align:left; ">
                             <thead>
                                 <tr>
                                     <th width="40%">Name</th>
@@ -343,9 +389,12 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/sidebar_menu.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
@@ -445,11 +494,25 @@
         });
     });
 
+    $('#addUser').on('click', function () {
+        $('#userModal').find('[id="myModalLabel1"]').html('<b>Add a User</b>').end();
+    })
+
+    $('#userModal').on('shown.bs.modal', function () {
+        $('#languages').multiselect('rebuild');
+        $('#languages').multiselect('select', 'English');
+        $('#languages').multiselect('updateButtonText', false);
+        $('#languages').multiselect('refresh');
+    })
+
     $('#userModal').on('hidden.bs.modal', function () {
-        $(this).find("input,select").val('').end()
+        $(this).find("input").val('').end()
             .find('[id="username"]').prop('disabled', false).end()
             .data('bootstrapValidator').resetForm();
         $('input[name="campus"]:checked').prop('checked', false);
+
+        $('#languages').multiselect('deselectAll', false);
+        $('#languages').multiselect('refresh');
     });
 </script>
 </body>

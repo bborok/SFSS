@@ -1,5 +1,8 @@
 package com.zeta.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zeta.Data.Training.TrainingData;
 import com.zeta.Models.Role;
 import com.zeta.Data.Announcements.AnnouncementsData;
@@ -19,9 +22,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Controller
 public class IndexController {
@@ -36,11 +43,6 @@ public class IndexController {
         this.taskData = taskData;
         this.announcementsData = announcementsData;
         this.trainingData = trainingData;
-    }
-
-    @RequestMapping(value = "/login")
-    public String login() {
-        return "index";
     }
 
     @GetMapping("/")
@@ -81,7 +83,6 @@ public class IndexController {
         User user = userData.getUser(username);
         session.setAttribute("user", user);
 
-        m.addAttribute("roles", Role.values());
         return "profile";
     }
 
@@ -142,7 +143,7 @@ public class IndexController {
     }
 
     @GetMapping("/users")
-    public String users(HttpServletRequest request, Model m) {
+    public String users(HttpServletRequest request, Model m) throws IOException {
         List<User> users;
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
@@ -158,8 +159,30 @@ public class IndexController {
             users = userData.getAllUsers();
         }
 
+        List<String> languages = getLanguages();
+
         m.addAttribute("users", users);
         m.addAttribute("roles", Role.values());
+        m.addAttribute("languages", languages);
         return "users";
+    }
+
+    private List<String> getLanguages() throws IOException {
+        String requestURL = "http://ws.detectlanguage.com/0.2/languages";
+        URL url = new URL(requestURL);
+        InputStream inputStream = url.openStream();
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode[] objectNode = mapper.readValue(inputStream, ObjectNode[].class);
+
+        List<String> languages = new ArrayList<String>();
+        for (JsonNode jNode : objectNode) {
+            String language = jNode.get("name").asText().toLowerCase();
+            language = language.substring(0,1).toUpperCase() + language.substring(1);
+            languages.add(language);
+        }
+
+        Collections.sort(languages);
+        return languages;
     }
 }

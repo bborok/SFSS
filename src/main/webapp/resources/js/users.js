@@ -209,18 +209,17 @@ $(document).ready(function () {
     }
     
     function doEdit() {
-        var user;
-        if (window.location.pathname === '/users') {
-            var username = $('.tab-content:visible').attr('id');
-            user = users[username];
-        } else {
-            user = loggedInUser;
-        }
+        var username = $('.tab-content:visible').attr('id');
+        var user = users[username];
 
         var altNum = user['altPhoneNumber'];
         if (altNum === '0') {
             altNum = '';
         }
+
+        const [year, month, day] = user['licenseExpire'].split('-');
+        $('#licenseExpire').data("DateTimePicker").date(new Date(year, month-1, day));
+
 
         $('#userModal')
             .find('[id="myModalLabel1"]').html('<b>Edit User</b>').end()
@@ -233,6 +232,7 @@ $(document).ready(function () {
             .find('[id="userRole"]').val(user['role']).end()
             .find('#' + user['preferredCampus']).prop('checked', true).end()
             .find('[id="userCallsign"]').val(user['callSign']).end()
+            .find('[id="licenseClass"]').val(user['licenseClass']).end()
         .modal('show');
     }
 });

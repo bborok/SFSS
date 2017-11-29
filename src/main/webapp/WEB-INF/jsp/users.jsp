@@ -105,7 +105,9 @@
             preferredCampus : "${user.preferredCampus.toString()}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role.toString()}",
-            callSign : "${user.callSign}"
+            callSign : "${user.callSign}",
+            licenseClass : "${user.driversLicenseLevel}",
+            licenseExpire : "${user.driversLicenseExpirationDate}",
         },
         </c:forEach>
     }
@@ -229,7 +231,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Expires</span>
                                                     <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='licenseExpire'>
-                                                        <input type='text' class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                        <input type='text' id="expireDate" class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>

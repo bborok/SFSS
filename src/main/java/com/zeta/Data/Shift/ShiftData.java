@@ -3,6 +3,7 @@ package com.zeta.Data.Shift;
 import com.zeta.Models.ConfirmationStatus;
 import com.zeta.Models.Shift;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -29,4 +30,5 @@ public interface ShiftData {
 
     List<Shift> getShiftsWithSubmittedTimeCards();
 
+    public int getShiftMinutes(long shift_id) throws SQLException;
 }

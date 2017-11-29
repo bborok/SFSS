@@ -1,6 +1,10 @@
 package com.zeta.Data.TimeCard;
 
+import com.zeta.Data.Shift.ShiftDao;
+import com.zeta.Data.Shift.ShiftData;
 import com.zeta.Data.Task.TaskRowMapper;
+import com.zeta.Data.User.UserDao;
+import com.zeta.Data.User.UserData;
 import com.zeta.Models.Task;
 import com.zeta.Models.TimeCard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +46,13 @@ public class TimeCardDao implements TimeCardData {
     public boolean submitTimeCard(TimeCard timeCard) {
         // TimeCard IS being submitted by this method
         timeCard.setTimeCardSubmitted(true);
-        return updateRecords(timeCard);
+
+        // If submitted successfully update user's parking minutes
+        if (updateRecords(timeCard))
+            if (updateUserParkingMinutes(timeCard))
+                return true;
+
+        return false;
     }
 
     private boolean updateRecords(TimeCard timeCard) {
@@ -191,6 +201,26 @@ public class TimeCardDao implements TimeCardData {
             insertUserTask.setInt(4, task.getCount());
 
             insertUserTask.execute();
+        }
+    }
+
+    private boolean updateUserParkingMinutes(TimeCard timeCard) {
+        UserData userData = new UserDao(jdbcTemplate.getDataSource());
+        ShiftData shiftData = new ShiftDao(jdbcTemplate.getDataSource());
+
+        try {
+            int numMinutesInShift = shiftData.getShiftMinutes(timeCard.getShiftId());
+            int currentTotalParkingMinutes = userData.getParkingMinutes(timeCard.getUsername());
+
+            int newTotalMinutes = numMinutesInShift + currentTotalParkingMinutes;
+
+            userData.updateParkingMinutes(timeCard.getUsername(), newTotalMinutes);
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

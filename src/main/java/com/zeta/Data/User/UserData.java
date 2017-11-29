@@ -1,10 +1,10 @@
 package com.zeta.Data.User;
 
 import com.zeta.Models.Certificate;
-import com.zeta.Models.Login;
 import com.zeta.Models.Training;
 import com.zeta.Models.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 // Every method will return false/null if query fails.
@@ -42,7 +42,12 @@ public interface UserData {
     // Removes record of training for particular user and training
     public boolean removeTraining(String username, String training);
 
-    public boolean updateVolunteerHours(String username, int hours);
+    public boolean updateVolunteerMinutes(String username, int minutes);
+
+    // Throws exception is something went wrong with DB request
+    public int getParkingMinutes(String username) throws SQLException;
+
+    public boolean updateParkingMinutes(String username, int updatedMinutes);
 
     public List<Certificate> getUserCertificates(User user);
 

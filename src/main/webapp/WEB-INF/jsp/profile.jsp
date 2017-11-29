@@ -169,7 +169,7 @@
                                                 <c:forEach items="${user.certificates}" var="certificate">
                                                     <tr style="text-align: center">
                                                         <td width="35%"><c:out value="${certificate.name}"/>
-                                                        <td width="25%"><c:out value="${certificate.number}"/>
+                                                        <td width="25%"><c:out value="${certificate.id}"/>
                                                         <td width="10%"><c:out value="${certificate.level}"/>
                                                         <td width="30%"><c:out value="${certificate.expirationDate}"/>
                                                     </tr>

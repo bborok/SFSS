@@ -15,6 +15,7 @@ $(document).ready(function () {
     $('#date').datetimepicker({
         format: 'LL'
     });
+    $('#date').data("DateTimePicker").minDate(moment());
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
     csrfAndAjaxSetup();

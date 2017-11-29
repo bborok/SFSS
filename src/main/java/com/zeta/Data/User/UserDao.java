@@ -48,6 +48,8 @@ public class UserDao implements UserData {
                             "StdNum, Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationLevel" +
                             "isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+            java.sql.Date expireDate = new java.sql.Date(user.getDriversLicenseExpirationDate().getTime());
+
             con.setAutoCommit(false);
 
             PreparedStatement addUser = con.prepareStatement(addUserSQL);
@@ -61,7 +63,7 @@ public class UserDao implements UserData {
             addUser.setString(8, user.getRole().toString());
             addUser.setString(9, user.getCallSign());
             addUser.setLong(10, user.getDriversLicenseLevel());
-            addUser.setDate(11, (Date) user.getDriversLicenseExpirationDate());
+            addUser.setDate(11, expireDate);
             addUser.setBoolean(12, activeUser);
 
             addUser.execute();
@@ -108,6 +110,10 @@ public class UserDao implements UserData {
                     "PreferredCampus = ?, StdNum = ?, Role = ?, CallSign = ?, DriversLicenseLevel = ?, " +
                     "DriversLicenseExpirationDate = ? WHERE Username = ?";
 
+            java.sql.Date expireDate = new java.sql.Date(user.getDriversLicenseExpirationDate().getTime());
+
+            con.setAutoCommit(false);
+
             PreparedStatement updateUser = con.prepareStatement(updateUserSQL);
             updateUser.setString(1, user.getName());
             updateUser.setString(2, user.getEmail());
@@ -118,7 +124,7 @@ public class UserDao implements UserData {
             updateUser.setString(7, user.getRole().toString());
             updateUser.setString(8, user.getCallSign());
             updateUser.setInt(9, user.getDriversLicenseLevel());
-            updateUser.setDate(10, (Date) user.getDriversLicenseExpirationDate());
+            updateUser.setDate(10, expireDate);
             updateUser.setString(11, user.getUsername());
 
             updateUser.execute();
@@ -180,6 +186,7 @@ public class UserDao implements UserData {
                     "Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, VolunteerMinutes, " +
                     "ParkingMinutes, isDeactivated from User where Username = ? and " +
                     "(select 1 from User where Username = ?) and isDeactivated = 0";
+
             User user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
 
             user.setTraining(getUserTraining(user));
@@ -312,10 +319,12 @@ public class UserDao implements UserData {
     public boolean addUserCertificate(User user, Certificate certificate) {
         try {
             String sql = "insert into UserCertificate (User, CertificateName, Level, Number, ExpirationDate) " +
-                    "values (?, ?, ?, ?)";
+                    "values (?, ?, ?, ?, ?)";
+
+            java.sql.Date expireDate = new java.sql.Date(certificate.getExpirationDate().getTime());
 
             jdbcTemplate.update(sql, user.getUsername(), certificate.getName(), certificate.getLevel(),
-                    certificate.getNumber(), certificate.getExpirationDate());
+                    certificate.getId(), expireDate);
 
             return true;
 
@@ -362,8 +371,8 @@ public class UserDao implements UserData {
             PreparedStatement addCertificate = con.prepareStatement(sql);
             addCertificate.setString(1, user.getUsername());
             addCertificate.setString(2, certificate.getName());
-            addCertificate.setString(3, certificate.getLevel());
-            addCertificate.setInt(4, certificate.getNumber());
+            addCertificate.setInt(3, certificate.getLevel());
+            addCertificate.setString(4, certificate.getId());
             addCertificate.setDate(5, (Date) certificate.getExpirationDate());
 
             addCertificate.execute();

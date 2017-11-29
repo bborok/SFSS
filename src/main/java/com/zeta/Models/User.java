@@ -1,5 +1,10 @@
 package com.zeta.Models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,13 +23,17 @@ public class User {
     private Role role;
     private String callSign;
     private int driversLicenseLevel;
-    private Date driversLicenseExpirationDate;
     private List<Training> training;
     private List<String> languages;
     private List<Certificate> certificates;
     private int volunteerMinutes;
     private int parkingMinutes;
     private Boolean isDeactivated;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private Date driversLicenseExpirationDate;
+
 
     public User() {
     } //Required by JPA
@@ -43,12 +52,12 @@ public class User {
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
         this.volunteerMinutes = volunteerMinutes;
+        this.parkingMinutes = parkingMinutes;
         this.driversLicenseLevel = driversLicenseLevel;
         this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
         this.languages = languages;
         this.certificates = certificates;
-        this.parkingMinutes = parkingMinutes;
         this.isDeactivated = isDeactivated;
     }
 

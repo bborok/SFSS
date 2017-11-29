@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>
@@ -19,6 +20,8 @@
     <title>SFU</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     <!-- Custom styles for this template -->
 
@@ -53,7 +56,7 @@
         height: 300px;
     }
 
-    tbody {
+    #userList tbody {
         overflow-y: scroll;
         height: 500px;
         position: absolute;
@@ -63,7 +66,12 @@
         color: chocolate;
     }
 
-    #userimage:hover {opacity: 0.7;}
+    img:hover {opacity: 0.7;}
+
+    .bootstrap-datetimepicker-widget {
+        height: 250px;
+        width: 250px;
+    }
 
 </style>
 
@@ -96,7 +104,9 @@
             preferredCampus : "${user.preferredCampus.toString()}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role.toString()}",
-            callSign : "${user.callSign}"
+            callSign : "${user.callSign}",
+            licenseClass : "${user.driversLicenseLevel}",
+            licenseExpire : "${user.driversLicenseExpirationDate}",
         },
         </c:forEach>
     }
@@ -123,7 +133,7 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
+                    <button type="button" id="addUser" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
                 <br>
 
@@ -148,7 +158,7 @@
                 </div>
 
                 <div id="userModal" class="modal fade">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <%--Modal Content--%>
 
                         <div class="modal-content">
@@ -161,34 +171,40 @@
 
                             <%--Modal Body--%>
                             <div class="modal-body">
-                                <form id="userForm" class="form-horizontal" data-toggle="validator">
+                                <form id="userForm" data-toggle="validator">
                                     <div style="padding-left: 15px;padding-right: 15px">
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Username:</u></label>
-                                            <div class="input-group">
-                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
-                                                <span class="input-group-addon">@sfu.ca</span>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Username:</u></label>
+                                                <div class="input-group">
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="username" id="username" placeholder="Enter Username">
+                                                    <span class="input-group-addon">@sfu.ca</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Student Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Student Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="studentNumber" id="studentNumber" placeholder="Enter Student Number">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Full Name:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Email:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Full Name:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="name" id="userFullName" placeholder="Enter Full Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Email:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="email" id="userEmail" placeholder="Enter Alternate Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><u>Alternate Phone Number:</u></label>
-                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="phoneNumber" id="userPhoneNumber" placeholder="555-555-1234">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label"><u>Alternate Phone Number:</u></label>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="altPhoneNumber" id="userAltPhoneNumber" placeholder="Optional">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><u>Role:</u></label>
@@ -203,7 +219,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row-fluid">
+                                        <div class="form-group">
                                             <label class="control-label"><u>Preferred Campus:</u></label>
                                             <br>
                                             <label class="radio-inline">
@@ -219,6 +235,37 @@
                                         <div class="form-group">
                                             <label class="control-label"><u>Call Sign:</u></label>
                                             <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="callSign" id="userCallsign" placeholder="Enter Call Sign">
+                                        </div>
+                                        <label class="control-label"><u>Driver's License</u></label>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Class</span>
+                                                    <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="licenseClass" id="licenseClass">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Expires</span>
+                                                    <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='licenseExpire'>
+                                                        <input type='text' id="expireDate" class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="control">
+                                                    <select class="form-control" name="languages[]" id="languages" multiple required>
+                                                        <c:forEach items="${languages}" var="language">
+                                                            <option value="${language}">
+                                                                    ${language}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -240,7 +287,7 @@
                             <b>Users</b>
                         </p>
 
-                        <table class="table table-striped" style="text-align:left; ">
+                        <table id="userList" class="table table-striped" style="text-align:left; ">
                             <thead>
                                 <tr>
                                     <th width="40%">Name</th>
@@ -290,6 +337,7 @@
                                 <h4><c:out value="${user.role}"/></h4>
                                 <p><c:out value="${user.email}"/></p>
                                 <h5><c:out value="${user.preferredCampus}"/></h5>
+                                <h5><u>Call Sign:</u><c:out value="${user.callSign}"/></h5>
                             </div>
                         </c:forEach>
 
@@ -313,16 +361,25 @@
                             </div>
                             <br>
                             <div align="left" style="padding-left: 15px">
-                                <b><u>Username: </u></b><c:out value="${user.username}"/><br>
-                                <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
-                                <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
-                                <b><u>Email: </u></b><c:out value="${user.email}"/><br>
-                                <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
+                                <div id="detailsUsername"></div>
+                                <div id="detailsStuNum"></div>
+                                <div id="detailsFullName"></div>
+                                <div id="detailsEmail"></div>
+                                <div id="detailsPhoneNumber"></div>
+                                <div id="detailsAltPhoneNumber"></div>
                                 <hr>
-                                <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
-                                <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
-                                <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+                                <div id="detailsCampus"></div>
+                                <div id="detailsRole"></div>
+                                <div id="detailsCallSign"></div>
+                                <hr>
+                                <div id="detailsLicenseClass"></div>
+                                <div id="detailsLicenseExpire"></div>
+                            </div>
 
+                            <div class="modal-body">
+                                <p>
+                                    <a href="#" data-toggle="modal" data-target="#certForm" class="button"><i class="fa fa-plus"></i> Upload new certificate</a>
+                                </p>
                             </div>
 
                             <div class="modal-footer">
@@ -330,6 +387,56 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div id="certForm" class="modal" tabindex="-1" role="dialog" aria-labelledby="uploadCertificateTitle" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="uploadCertificateTitle">Upload new certificate</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createCertificate" data-toggle="validator" class="form-horizontal" role="form">
+                                    <label class="control-label">Certificate Name:</label>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certName" id="certName" placeholder="Certificate Name">
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Level</span>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certLevel" id="certLevel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Cert ID</span>
+                                                <input type="text" style="border-width:1px;border-color: #a9b7d1" class="form-control" name="certID" id="certID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Expires</span>
+                                                <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='certExpire'>
+                                                    <input type='text' id="certExpireDate" name="certExpire" class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                    <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn" id="btnCertCancel">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div>
             </div>
         </div>
@@ -342,12 +449,24 @@
 <script src="resources/popper/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/sidebar_menu.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 
 <!-- Menu Toggle Script -->
 <script>
+
+    $('#btnCertCancel').click(function(){
+        $('#certForm').modal('toggle');
+    });
+
+    function cleanPhone(number) {
+        return '(' + number.substring(0,3) + ') ' + number.substring(3,6)
+            + '-' + number.substring(6);
+    };
 
     function switchColors(element) {
         links = document.getElementsByTagName("tr");
@@ -381,7 +500,7 @@
             event.preventDefault();
             $('table td').removeClass('current');
             $(this).addClass("current");
-            var tab = $(this).parent().attr("data-tab");
+            tab = $(this).parent().attr("data-tab");
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
 
@@ -390,7 +509,27 @@
             } else {
                 $('#removeButton').show();
             }
+
+            writeToDetails();
         });
+
+        function writeToDetails() {
+            document.getElementById('detailsUsername').innerHTML = '<b><u>Username: </u></b>' + users[tab]['username'];
+            document.getElementById('detailsStuNum').innerHTML = '<b><u>Student Number: </u></b>' + users[tab]['studentNumber'];
+            document.getElementById('detailsFullName').innerHTML = '<b><u>Full Name: </u></b>' + users[tab]['name'];
+            document.getElementById('detailsEmail').innerHTML = '<b><u>Email: </u></b>' + users[tab]['email'];
+            document.getElementById('detailsPhoneNumber').innerHTML = '<b><u>Phone Number: </u></b>' + cleanPhone(users[tab]['phoneNumber']);
+            if (users[tab]['altPhoneNumber'] !== '0') {
+                document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + cleanPhone(users[tab]['altPhoneNumber']);
+            }
+            document.getElementById('detailsCampus').innerHTML = '<b><u>Preferred Campus: </u></b>' + users[tab]['preferredCampus'];
+            document.getElementById('detailsRole').innerHTML = '<b><u>Role: </u></b>' + users[tab]['role'];
+            document.getElementById('detailsCallSign').innerHTML = '<b><u>Call Sign: </u></b>' + users[tab]['callSign'];
+            if (users[tab]['licenseClass'] !== '0') {
+                document.getElementById('detailsLicenseClass').innerHTML = '<b><u>License Class: </u></b>' + users[tab]['licenseClass'];
+                document.getElementById('detailsLicenseExpire').innerHTML = '<b><u>License Expiration Date: </u></b>' + users[tab]['licenseExpire'];
+            }
+        }
 
         $("#filter input").click(function () {
            var checked_name = $("#filter_name").is(":checked");
@@ -444,11 +583,25 @@
         });
     });
 
+    $('#addUser').on('click', function () {
+        $('#userModal').find('[id="myModalLabel1"]').html('<b>Add a User</b>').end();
+    })
+
+    $('#userModal').on('shown.bs.modal', function () {
+        $('#languages').multiselect('rebuild');
+        $('#languages').multiselect('select', 'English');
+        $('#languages').multiselect('updateButtonText', false);
+        $('#languages').multiselect('refresh');
+    })
+
     $('#userModal').on('hidden.bs.modal', function () {
-        $(this).find("input,select").val('').end()
+        $(this).find("input").val('').end()
             .find('[id="username"]').prop('disabled', false).end()
             .data('bootstrapValidator').resetForm();
         $('input[name="campus"]:checked').prop('checked', false);
+
+        $('#languages').multiselect('deselectAll', false);
+        $('#languages').multiselect('refresh');
     });
 </script>
 </body>

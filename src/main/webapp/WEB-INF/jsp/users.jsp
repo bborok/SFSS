@@ -18,14 +18,12 @@
 
     <title>SFU</title>
     <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- Custom styles for this template -->
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
-
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -105,10 +103,10 @@
 
 </script>
 
-    <%--<%--%>
-        <%--User user = (User) session.getAttribute("user");--%>
-        <%--pageContext.setAttribute("loggedInUser", user.getUsername());--%>
-    <%--%>--%>
+    <%
+        User user = (User) session.getAttribute("user");
+        pageContext.setAttribute("loggedInUser", user.getUsername());
+    %>
 
     <jsp:include page="partfiles/sidebar.jsp"/>
     <!-- Page Content -->

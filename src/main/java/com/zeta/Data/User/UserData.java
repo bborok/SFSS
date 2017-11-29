@@ -10,6 +10,8 @@ import java.util.List;
 // Every method will return false/null if query fails.
 public interface UserData {
 
+    public boolean closeConnection();
+
     // Set argument to null if no data
     public boolean addUser(User user);
 

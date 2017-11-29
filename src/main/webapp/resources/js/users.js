@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var tab = '';
+
     $('#licenseExpire').datetimepicker({
         format: 'YYYY/MM/DD',
         useCurrent: true,

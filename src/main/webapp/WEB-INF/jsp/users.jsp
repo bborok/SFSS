@@ -1,4 +1,5 @@
-<%@ page import="com.zeta.Models.User" %><%--
+<%@ page import="com.zeta.Models.User" %>
+<%--
   Page that displays the users. Users displayed will be based on the
   List<User> found in the users function of the IndexController
 --%>
@@ -65,12 +66,12 @@
         color: chocolate;
     }
 
+    img:hover {opacity: 0.7;}
+
     .bootstrap-datetimepicker-widget {
         height: 250px;
         width: 250px;
     }
-
-    #userimage:hover {opacity: 0.7;}
 
 </style>
 
@@ -360,16 +361,19 @@
                             </div>
                             <br>
                             <div align="left" style="padding-left: 15px">
-                                <b><u>Username: </u></b><c:out value="${user.username}"/><br>
-                                <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
-                                <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
-                                <b><u>Email: </u></b><c:out value="${user.email}"/><br>
-                                <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
+                                <div id="detailsUsername"></div>
+                                <div id="detailsStuNum"></div>
+                                <div id="detailsFullName"></div>
+                                <div id="detailsEmail"></div>
+                                <div id="detailsPhoneNumber"></div>
+                                <div id="detailsAltPhoneNumber"></div>
                                 <hr>
-                                <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
-                                <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
-                                <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
-
+                                <div id="detailsCampus"></div>
+                                <div id="detailsRole"></div>
+                                <div id="detailsCallSign"></div>
+                                <hr>
+                                <div id="detailsLicenseClass"></div>
+                                <div id="detailsLicenseExpire"></div>
                             </div>
 
                             <div class="modal-footer">
@@ -431,7 +435,7 @@
             event.preventDefault();
             $('table td').removeClass('current');
             $(this).addClass("current");
-            var tab = $(this).parent().attr("data-tab");
+            tab = $(this).parent().attr("data-tab");
             $('.tab-content').hide();
             $('#' + tab).fadeIn();
 
@@ -440,7 +444,23 @@
             } else {
                 $('#removeButton').show();
             }
+
+            writeToDetails();
         });
+
+        function writeToDetails() {
+            document.getElementById('detailsUsername').innerHTML = '<b><u>Username: </u></b>' + users[tab]['username'];
+            document.getElementById('detailsStuNum').innerHTML = '<b><u>Student Number: </u></b>' + users[tab]['studentNumber'];
+            document.getElementById('detailsFullName').innerHTML = '<b><u>Full Name: </u></b>' + users[tab]['name'];
+            document.getElementById('detailsEmail').innerHTML = '<b><u>Email: </u></b>' + users[tab]['email'];
+            document.getElementById('detailsPhoneNumber').innerHTML = '<b><u>Phone Number: </u></b>' + users[tab]['phoneNumber'];
+            document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + users[tab]['altPhoneNumber'];
+            document.getElementById('detailsCampus').innerHTML = '<b><u>Preferred Campus: </u></b>' + users[tab]['preferredCampus'];
+            document.getElementById('detailsRole').innerHTML = '<b><u>Role: </u></b>' + users[tab]['role'];
+            document.getElementById('detailsCallSign').innerHTML = '<b><u>Call Sign: </u></b>' + users[tab]['callSign'];
+            document.getElementById('detailsLicenseClass').innerHTML = '<b><u>License Class: </u></b>' + users[tab]['licenseClass'];
+            document.getElementById('detailsLicenseExpire').innerHTML = '<b><u>License Expiration Date: </u></b>' + users[tab]['licenseExpire'];
+        }
 
         $("#filter input").click(function () {
            var checked_name = $("#filter_name").is(":checked");

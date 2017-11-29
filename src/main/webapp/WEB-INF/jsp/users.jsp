@@ -63,7 +63,7 @@
         color: chocolate;
     }
 
-    #userimage:hover {opacity: 0.7;}
+    img:hover {opacity: 0.7;}
 
 </style>
 
@@ -96,7 +96,9 @@
             preferredCampus : "${user.preferredCampus.toString()}",
             studentNumber : "${user.studentNumber}",
             role : "${user.role.toString()}",
-            callSign : "${user.callSign}"
+            callSign : "${user.callSign}",
+            licenseClass : "${user.driversLicenseLevel}",
+            licenseExpire : "${user.driversLicenseExpirationDate}",
         },
         </c:forEach>
     }
@@ -323,6 +325,9 @@
                                 <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
                                 <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
                                 <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+                                <hr>
+                                <b><u>Driver's License Class:  </u></b><c:out value="${user.driversLicenseLevel}"/><br>
+                                <b><u>Expiration Date:  </u></b><c:out value="${user.driversLicenseExpirationDate}"/><br>
 
                             </div>
 

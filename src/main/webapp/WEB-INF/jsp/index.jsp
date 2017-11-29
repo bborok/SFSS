@@ -72,8 +72,8 @@
     %>
 
     <script>
-        <%--var user = "${user.username}";--%>
-          var user = "bobaec"; // for local use
+        var user = "${user.username}";
+//          var user = "bobaec"; // for local use
 
         var announce = {
             <c:forEach items="${announcements}" var = "announcement">

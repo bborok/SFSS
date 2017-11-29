@@ -50,9 +50,23 @@
 </style>
 
 <body>
+<nav class="navbar navbar-default no-margin navbar-fixed-top">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="resources/img/stole_from_sfu/sfu_official_logo.png" width="220px"></a>
+    </div><!-- navbar-header-->
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+        </ul>
+    </div>
+</nav>
 
-<div id="wrapper" class="toggled">
+<div id="wrapper" style="padding-top: 50px" >
 
     <jsp:include page="partfiles/sidebar.jsp"/>
 
@@ -60,14 +74,14 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <i class="fa fa-bars fa-2x sidebar-brand" id="menu-toggle"></i>
+        <div class="container-fluid xyz">
             <div class="col-sm-12 text">
-                <div class="description" style="margin-bottom: 2em;">
+                <div class="description">
                     <center>
-                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px">
-
+                        <img src="resources/img/logo_made/logo_2.png" class="img-responsive"
+                             style="height:100px;width:500px">
                     </center>
+                    <hr>
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">List of Timecards</div>
@@ -95,7 +109,22 @@
                                     <c:forEach items="${shifts}" var="shift">
                                         <tr>
                                             <td >
-                                                <a href="${pageContext.request.contextPath}/timecard?username=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
+                                                <c:choose>
+                                                    <c:when test="${!isAdmin}">
+                                                        <c:choose>
+                                                            <c:when test="${shift.isTimeCardSubmitted }">
+                                                                <c:out value="${shift.title}"/>
+                                                            </c:when>
+                                                            <c:when test="${!shift.isTimeCardSubmitted }">
+                                                                <a href="${pageContext.request.contextPath}/timecard?username=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="${pageContext.request.contextPath}/timecard?username=${shift.username}&shift_id=${shift.id}"><c:out value="${shift.title}"/></a>
+                                                    </c:otherwise>
+                                                </c:choose>
+
                                             <td >
                                                     <c:out value="${shift.username}"/>
                                             <td >

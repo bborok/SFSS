@@ -175,17 +175,20 @@ public class TimeCardController {
 //        session.setAttribute("user", userData.getUser("admin1"));
         User u = (User) session.getAttribute("user" );
 
+        boolean isAdmin = false;
         if (u.getRole() == Role.MEMBER || u.getRole() == Role.VOLUNTEER) {
             if(shiftData.getShiftsByUser(u.getUsername() )== null){
                 shifts = new ArrayList<Shift>();
             }else{
                 shifts = shiftData.getShiftsByUser(u.getUsername());
+                isAdmin = false;
             }
         }else{
+            isAdmin = true;
             shifts = shiftData.getShifts();
         }
 
-
+        m.addAttribute("isAdmin", isAdmin);
         m.addAttribute("shifts", shifts);
         return "timecard_list";
     }

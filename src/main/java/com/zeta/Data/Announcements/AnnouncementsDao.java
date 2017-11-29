@@ -6,11 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.Types;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,7 +15,6 @@ import java.util.List;
 @Repository
 public class AnnouncementsDao implements AnnouncementsData {
     private JdbcTemplate jdbcTemplate;
-    private Connection con;
 
 
     @Autowired

@@ -30,7 +30,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
 @Controller
 public class IndexController {
     private UserData userData;
@@ -137,6 +136,9 @@ public class IndexController {
 
     @GetMapping("/logout")
     public String logout() {
+        if (!(userData.closeConnection())) {
+            // TODO: Handle this
+        }
         return "logout";
     }
 

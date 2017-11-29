@@ -197,7 +197,6 @@
                             }
 
                             var hours = ${user.volunteerMinutes} / 60;
-
                             $('#volunteerHours').html('<h3>Volunteer Hours: ' + hours + '</h3>');
 
                             var ranks = [80, 160, 240, 320, 400, 480];

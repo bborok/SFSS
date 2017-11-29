@@ -131,6 +131,26 @@
                 </div>
                 <br>
 
+                <div class="col-sm-12 row">
+                    <div class="radio" id="filter">
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="NAME" id="filter_name">NAME
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="NAME" id="filter_stu">STU#
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="BURNABY" id="filter_burnaby" checked>BURNABY
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="SURREY" id="filter_surrey" checked>SURREY
+                        </label>
+                        <label class="col-sm-2">
+                            <input type="checkbox" value="VANCOUVER" id="filter_vancouver" checked>VANCOUVER
+                        </label>
+                    </div>
+                </div>
+
                 <div id="userModal" class="modal fade">
                     <div class="modal-dialog">
                         <%--Modal Content--%>
@@ -316,25 +336,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 row">
-                    <div class="radio" id="filter">
-                        <label class="col-sm-2">
-                            <input type="checkbox" value="NAME" id="filter_name">NAME
-                        </label>
-                        <label class="col-sm-2">
-                            <input type="checkbox" value="NAME" id="filter_stu">STU#
-                        </label>
-                        <label class="col-sm-2">
-                            <input type="checkbox" value="BURNABY" id="filter_burnaby" checked>BURNABY
-                        </label>
-                        <label class="col-sm-2">
-                            <input type="checkbox" value="SURREY" id="filter_surrey" checked>SURREY
-                        </label>
-                        <label class="col-sm-2">
-                            <input type="checkbox" value="VANCOUVER" id="filter_vancouver" checked>VANCOUVER
-                        </label>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

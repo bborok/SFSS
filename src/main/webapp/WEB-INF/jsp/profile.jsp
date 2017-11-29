@@ -82,24 +82,6 @@
         pageContext.setAttribute("user", user);
     %>
 
-    <script>
-        var loggedInUser = {
-            username : "${user.username}",
-            name : "${user.name}",
-            email : "${user.email}",
-            phoneNumber : "${user.phoneNumber}",
-            altPhoneNumber : "${user.altPhoneNumber}",
-            preferredCampus : "${user.preferredCampus}",
-            studentNumber : "${user.studentNumber}",
-            role : "${user.role}",
-            callSign : "${user.callSign}",
-            driversLicenseLevel : "${user.driversLicenseLevel}",
-            driversLicenseExpirationDate : "${user.driversLicenseExpirationDate}",
-            languages : ${user.languages},
-            certificates : ${user.certificates}
-        };
-    </script>
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">

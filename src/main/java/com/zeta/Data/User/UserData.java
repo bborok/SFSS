@@ -42,7 +42,7 @@ public interface UserData {
     // Removes record of training for particular user and training
     public boolean removeTraining(String username, String training);
 
-    public boolean updateVolunteerHours(String username, int hours);
+    public boolean updateVolunteerMinutes(String username, int minutes);
 
     // Throws exception is something went wrong with DB request
     public int getParkingMinutes(String username) throws SQLException;

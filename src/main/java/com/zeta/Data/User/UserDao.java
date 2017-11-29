@@ -153,7 +153,7 @@ public class UserDao implements UserData {
     public List<User> getDeactivatedUsers() {
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, TotalVolunteerHours, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
+                    "CallSign, VolunteerMinutes, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
                     "from User where isDeactivated = 1";
 
             return jdbcTemplate.query(sql, new UserRowMapper());
@@ -166,7 +166,7 @@ public class UserDao implements UserData {
     public User getUser(String username) {
         try {
             String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, " +
-                    "Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, TotalVolunteerHours, " +
+                    "Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, VolunteerMinutes, " +
                     "ParkingMinutes, isDeactivated from User where Username = ? and " +
                     "(select 1 from User where Username = ?) and isDeactivated = 0";
             User user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
@@ -198,7 +198,7 @@ public class UserDao implements UserData {
     public List<User> getAllUsers() {
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, TotalVolunteerHours, , ParkingMinutes, " +
+                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, VolunteerMinutes, , ParkingMinutes, " +
                     "isDeactivated from User where isDeactivated = 0";
 
             return jdbcTemplate.query(sql, new UserRowMapper());
@@ -255,10 +255,10 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public boolean updateVolunteerHours(String username, int hours) {
+    public boolean updateVolunteerMinutes(String username, int minutes) {
         try {
-            String sql = "update User set VolunteerHours = ? where User = ?";
-            jdbcTemplate.update(sql, hours, username);
+            String sql = "update User set VolunteerMinutes = ? where User = ?";
+            jdbcTemplate.update(sql, minutes, username);
             return true;
         } catch (Exception e) {
             return false;

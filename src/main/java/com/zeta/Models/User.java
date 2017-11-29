@@ -23,7 +23,7 @@ public class User {
     private List<String> languages;
     private List<Certificate> certificates;
     private int volunteerHours;
-    private int parkingHours;
+    private int parkingMinutes;
     private Boolean isDeactivated;
 
     public User() {
@@ -32,7 +32,7 @@ public class User {
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
                 Role role, Campus preferredCampus, String callSign, int driversLicenseLevel,
                 Date driversLicenseExpirationDate, List<Training> training, List<String> languages,
-                List<Certificate> certificates, int volunteerHours, int parkingHours, Boolean isDeactivated) {
+                List<Certificate> certificates, int volunteerHours, int parkingMinutes, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
         this.name = name;
@@ -48,7 +48,7 @@ public class User {
         this.training = training;
         this.languages = languages;
         this.certificates = certificates;
-        this.parkingHours = parkingHours;
+        this.parkingMinutes = parkingMinutes;
         this.isDeactivated = isDeactivated;
     }
 
@@ -168,12 +168,12 @@ public class User {
 
     public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
 
-    public int getParkingHours() {
-        return parkingHours;
+    public int getParkingMinutes() {
+        return parkingMinutes;
     }
 
-    public void setParkingHours(int parkingHours) {
-        this.parkingHours = parkingHours;
+    public void setParkingMinutes(int parkingMinutes) {
+        this.parkingMinutes = parkingMinutes;
     }
 
     public void setIsDeactivated(Boolean isDeactivated) {

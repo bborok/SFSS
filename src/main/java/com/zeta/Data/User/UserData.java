@@ -45,9 +45,9 @@ public interface UserData {
     public boolean updateVolunteerHours(String username, int hours);
 
     // Throws exception is something went wrong with DB request
-    public int getParkingHours(User user) throws SQLException;
+    public int getParkingMinutes(User user) throws SQLException;
 
-    public boolean updateVolunteerHours(User user);
+    public boolean updateParkingMinutes(User user);
 
     public List<Certificate> getUserCertificates(User user);
 

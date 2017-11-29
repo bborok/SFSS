@@ -37,7 +37,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setDriversLicenseLevel(rs.getInt("DriversLicenseLevel"));
         user.setDriversLicenseExpirationDate(rs.getDate("DriversLicenseExpirationDate"));
         user.setVolunteerHours(rs.getInt("TotalVolunteerHours"));
-        user.setParkingHours(rs.getInt("ParkingHours"));
+        user.setParkingMinutes(rs.getInt("ParkingMinutes"));
         user.setIsDeactivated(rs.getBoolean("isDeactivated"));
 
         return user;

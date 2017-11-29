@@ -167,7 +167,7 @@ public class UserDao implements UserData {
         try {
             String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, " +
                     "Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, TotalVolunteerHours, " +
-                    "ParkingHours, isDeactivated from User where Username = ? and " +
+                    "ParkingMinutes, isDeactivated from User where Username = ? and " +
                     "(select 1 from User where Username = ?) and isDeactivated = 0";
             User user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
 
@@ -198,7 +198,7 @@ public class UserDao implements UserData {
     public List<User> getAllUsers() {
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, TotalVolunteerHours, , ParkingHours, " +
+                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, TotalVolunteerHours, , ParkingMinutes, " +
                     "isDeactivated from User where isDeactivated = 0";
 
             return jdbcTemplate.query(sql, new UserRowMapper());
@@ -266,19 +266,19 @@ public class UserDao implements UserData {
     }
 
     @Override
-    public int getParkingHours(User user) throws SQLException{
-        String sql = "Select ParkingHours from User where Username = ?";
+    public int getParkingMinutes(User user) throws SQLException{
+        String sql = "Select ParkingMinutes from User where Username = ?";
 
         return jdbcTemplate.queryForObject(sql, new Object[]{user.getUsername()},
-                (resultSet, i) -> resultSet.getInt("ParkingHours"));
+                (resultSet, i) -> resultSet.getInt("ParkingMinutes"));
     }
 
     @Override
-    public boolean updateVolunteerHours(User user) {
+    public boolean updateParkingMinutes(User user) {
         try {
-            String sql = "update User set ParkingHours = ? where Username = ?";
+            String sql = "update User set ParkingMinutes = ? where Username = ?";
 
-            jdbcTemplate.update(sql, user.getParkingHours(), user.getUsername());
+            jdbcTemplate.update(sql, user.getParkingMinutes(), user.getUsername());
             return true;
 
         } catch (Exception e) {

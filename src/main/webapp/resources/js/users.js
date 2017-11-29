@@ -2,6 +2,18 @@ $(document).ready(function () {
 
     var tab = '';
 
+    $('#licenseExpire').datetimepicker({
+        format: 'YYYY/MM/DD',
+        useCurrent: true,
+    });
+
+    $('#languages').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        dropUp: true
+    });
+    $('#languages').multiselect('select', 'English');
+
     $('#removeButton').on('click', function (e) {
         e.preventDefault();
         doRemove();
@@ -98,6 +110,22 @@ $(document).ready(function () {
                             message: 'The title can only consist of capital letters and numbers'
                         }
                     }
+                },
+                licenseClass: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Not a valid license class'
+                        }
+                    }
+                },
+                licenseExpire: {
+                    validators: {
+                        date: {
+                            format: 'YYYY/MM/DD',
+                            message: 'Not a valid date'
+                        }
+                    }
                 }
             }
         })
@@ -115,6 +143,12 @@ $(document).ready(function () {
 
             var campus = $('input[name="campus"]:checked').attr('id');
 
+            var dateFormat = 'YYYY-MM-DD';
+            var expireDate = $('#licenseExpire').data("DateTimePicker").date().format(dateFormat);
+
+            var languagesObj = $('#languages option:selected').map(function(a, item){return item.value;});
+            var languages = languagesObj.toArray();
+
             var user = {
                 "username": $('#username').val().toLowerCase(),
                 "studentNumber": $('#studentNumber').val(),
@@ -125,6 +159,9 @@ $(document).ready(function () {
                 "role": $('#userRole').val(),
                 "preferredCampus": campus,
                 "callSign": $('#userCallsign').val(),
+                "driversLicenseLevel": $('#licenseClass').val(),
+                "driversLicenseExpirationDate": expireDate,
+                "languages": languages,
                 "training": [],
                 "isDeactivated": false
             };
@@ -174,18 +211,17 @@ $(document).ready(function () {
     }
     
     function doEdit() {
-        var user;
-        if (window.location.pathname === '/users') {
-            var username = $('.tab-content:visible').attr('id');
-            user = users[username];
-        } else {
-            user = loggedInUser;
-        }
+        var username = $('.tab-content:visible').attr('id');
+        var user = users[username];
 
         var altNum = user['altPhoneNumber'];
         if (altNum === '0') {
             altNum = '';
         }
+
+        const [year, month, day] = user['licenseExpire'].split('-');
+        $('#licenseExpire').data("DateTimePicker").date(new Date(year, month-1, day));
+
 
         $('#userModal')
             .find('[id="myModalLabel1"]').html('<b>Edit User</b>').end()
@@ -198,6 +234,7 @@ $(document).ready(function () {
             .find('[id="userRole"]').val(user['role']).end()
             .find('#' + user['preferredCampus']).prop('checked', true).end()
             .find('[id="userCallsign"]').val(user['callSign']).end()
+            .find('[id="licenseClass"]').val(user['licenseClass']).end()
         .modal('show');
     }
 });

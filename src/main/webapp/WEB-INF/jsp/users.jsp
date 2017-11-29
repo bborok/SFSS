@@ -519,12 +519,16 @@
             document.getElementById('detailsFullName').innerHTML = '<b><u>Full Name: </u></b>' + users[tab]['name'];
             document.getElementById('detailsEmail').innerHTML = '<b><u>Email: </u></b>' + users[tab]['email'];
             document.getElementById('detailsPhoneNumber').innerHTML = '<b><u>Phone Number: </u></b>' + cleanPhone(users[tab]['phoneNumber']);
-            document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + cleanPhone(users[tab]['altPhoneNumber']);
+            if (users[tab]['altPhoneNumber'] !== '0') {
+                document.getElementById('detailsAltPhoneNumber').innerHTML = '<b><u>Alternate Phone Number: </u></b>' + cleanPhone(users[tab]['altPhoneNumber']);
+            }
             document.getElementById('detailsCampus').innerHTML = '<b><u>Preferred Campus: </u></b>' + users[tab]['preferredCampus'];
             document.getElementById('detailsRole').innerHTML = '<b><u>Role: </u></b>' + users[tab]['role'];
             document.getElementById('detailsCallSign').innerHTML = '<b><u>Call Sign: </u></b>' + users[tab]['callSign'];
-            document.getElementById('detailsLicenseClass').innerHTML = '<b><u>License Class: </u></b>' + users[tab]['licenseClass'];
-            document.getElementById('detailsLicenseExpire').innerHTML = '<b><u>License Expiration Date: </u></b>' + users[tab]['licenseExpire'];
+            if (users[tab]['licenseClass'] !== '0') {
+                document.getElementById('detailsLicenseClass').innerHTML = '<b><u>License Class: </u></b>' + users[tab]['licenseClass'];
+                document.getElementById('detailsLicenseExpire').innerHTML = '<b><u>License Expiration Date: </u></b>' + users[tab]['licenseExpire'];
+            }
         }
 
         $("#filter input").click(function () {

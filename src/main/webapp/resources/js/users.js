@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var tab = '';
+
     $('#removeButton').on('click', function (e) {
         e.preventDefault();
         doRemove();

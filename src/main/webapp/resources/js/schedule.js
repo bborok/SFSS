@@ -121,39 +121,49 @@ function initEventHandlers() {
         doSubmit();
     });
 
-    $('.campusFilter').prop("checked", true);// everything is checked
+    $('.campusFilter').prop("checked", true);// everything is checked on page load
+    populateShiftSelectFilter();
 
     $('input:checkbox.allOrNone').on('change', function () {
         calendar.fullCalendar('rerenderEvents');
     });
 
-
     $('input:checkbox.campusFilter').on('change', function () {
-        calendar.fullCalendar('rerenderEvents');
+        populateShiftSelectFilter();
     });
 
     $('#shiftSelect').on('change', function () {
         calendar.fullCalendar('rerenderEvents');
     });
 
-    $(function () {
-        $("input:checked").each(function () {
-            addItemsFromArray(eval("i" + this.id));
-        });
-        $("input:checkbox").change(function () {
-            $("#shiftSelect").html("");
-            $("input:checked").each(function () {
-                addItemsFromArray(eval("i" + this.id));
-            });
-        });
 
-        function addItemsFromArray(arr) {
-            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
-            $.each(arr, function (i, v) {
-                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
-            });
+    $('.allOrNone').on('click', function () { //allOrNone is the ALL CAMPUSES Checkbox
+        if ($('.allOrNone').is(':checked')) {
+            $('.campusFilter').prop("checked", true) //Checkmark all CampusFilters
+        } else {
+            $('.campusFilter').prop("checked", false); //Disable all campus filters
         }
+        $('.campusFilter').trigger('change');
     });
+
+    // $(function () {
+    //     $("input:checked").each(function () {
+    //         addItemsFromArray(eval("i" + this.id));
+    //     });
+    //     $("input:checkbox").change(function () {
+    //         $("#shiftSelect").html("");
+    //         $("input:checked").each(function () {
+    //             addItemsFromArray(eval("i" + this.id));
+    //         });
+    //     });
+    //
+    //     function addItemsFromArray(arr) {
+    //         $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+    //         $.each(arr, function (i, v) {
+    //             $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
+    //         });
+    //     }
+    // });
 
     //Change the dropdown options when selecting a campus in the Assign/Edit a Shift form.
     $("#campusSelect").on('change', function () {
@@ -179,6 +189,8 @@ function initEventHandlers() {
         $(location).attr('href', contextPath + '/timecard?shift_id=' + $('#shiftID').val() + '&username=' + $('#memberSelect').val());
         $('#createEventModal').modal('hide');
     });
+
+
 }
 
 var eventRenderHandler = function (event, element) {
@@ -372,33 +384,21 @@ function deleteShift(event) {
 }
 
 function filter(calEvent) {
-    var vals = [];
+    var filter_selectedCampuses = [];
     $('input:checkbox.campusFilter:checked').each(function () {
-        vals.push($(this).val());
+        filter_selectedCampuses.push($(this).val());
     });
 
-    var vals2 = [];
+    var filter_selectedOption = [];
     $('#shiftSelect option:selected').each(function () {
-        vals2.push($(this).val());
+        filter_selectedOption.push($(this).val());
     });
 
-    $('.allOrNone').on('click', function () { //
-        if ($('.allOrNone').is(':checked')) {
-            $('.campusFilter').prop("checked", true)
-
-        } else {
-            $('.campusFilter').prop("checked", false);
-        }
-    });
-
-    if ($('#shiftSelect').val() === null) {
-        return vals.indexOf(calEvent.campus) !== -1;
-    }
-    if ($('#shiftSelect option:selected').val() === "all") {
-        return vals.indexOf(calEvent.campus) !== -1;
+    if ($('#shiftSelect').val() === null || $('#shiftSelect option:selected').val() === "all") {
+        return filter_selectedCampuses.indexOf(calEvent.campus) !== -1;
     }
 
-    return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+    return filter_selectedCampuses.indexOf(calEvent.campus) !== -1 && filter_selectedOption.indexOf(calEvent.title) !== -1;
 }
 
 function convertToDateFormat(start, end) {
@@ -427,4 +427,33 @@ function disableAllInputElementsInForm() {
     $('#createAppointmentForm input').prop('disabled', true);
     $('#createAppointmentForm select').prop('disabled', true);
     $('#createAppointmentForm textarea').prop('disabled', true);
+}
+
+function populateShiftSelectFilter() {
+    $('#shiftSelect').empty();
+    var filter_checkCampuses = [];
+    //Find all the check campus filters and add their values to  an array
+    $('input:checkbox:checked.campusFilter').each(function () {
+        filter_checkCampuses.push($(this).val());
+    });
+
+    var shiftsToDisplay = [];
+    if (filter_checkCampuses.includes('SURREY')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iSURREY);
+    }
+    if (filter_checkCampuses.includes('BURNABY')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iBURNABY);
+
+    }
+    if (filter_checkCampuses.includes('VANCOUVER')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iVANCOUVER);
+    }
+
+    $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+
+    shiftsToDisplay.forEach(function (shift) {
+        $('#shiftSelect').append($("<option></option>").val(shift).text(shift));
+    });
+    calendar.fullCalendar('rerenderEvents');
+
 }

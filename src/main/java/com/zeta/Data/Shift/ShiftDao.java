@@ -162,4 +162,18 @@ public class ShiftDao implements ShiftData {
             return false;
         }
     }
+
+    @Override
+    public int getShiftMinutes(long shift_id) throws SQLException{
+        String sql = "select StartTime, EndTime from Shift where ID = ?";
+
+        double difference = jdbcTemplate.queryForObject(sql, new Object[]{shift_id}, (resultSet, i) -> {
+            Date startTime = (resultSet.getDate("StartTime"));
+            Date endTime = (resultSet.getDate("EndTime"));
+
+            return (double) (endTime.getTime() - startTime.getTime()) * 1000;    // difference in seconds
+        });
+
+        return (int) difference / 60;   // Converts to minutes
+    }
 }

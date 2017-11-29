@@ -110,8 +110,6 @@
         <%--pageContext.setAttribute("loggedInUser", user.getUsername());--%>
     <%--%>--%>
 
-<div id="wrapper" class="toggled">
-
     <jsp:include page="partfiles/sidebar.jsp"/>
     <!-- Page Content -->
     <div id="page-content-wrapper">

@@ -49,7 +49,8 @@ public class TimeCardDao implements TimeCardData {
 
         // If submitted successfully update user's parking minutes
         if (updateRecords(timeCard))
-            updateUserParkingMinutes(timeCard);
+            if (updateUserParkingMinutes(timeCard))
+                return true;
 
         return false;
     }

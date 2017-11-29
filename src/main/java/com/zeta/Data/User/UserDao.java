@@ -40,6 +40,8 @@ public class UserDao implements UserData {
                             "StdNum, Role, CallSign, DriversLicenseLevel, DriversLicenseExpirationLevel" +
                             "isDeactivated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+            java.sql.Date expireDate = new java.sql.Date(user.getDriversLicenseExpirationDate().getTime());
+
             con.setAutoCommit(false);
 
             PreparedStatement addUser = con.prepareStatement(addUserSQL);
@@ -53,7 +55,7 @@ public class UserDao implements UserData {
             addUser.setString(8, user.getRole().toString());
             addUser.setString(9, user.getCallSign());
             addUser.setLong(10, user.getDriversLicenseLevel());
-            addUser.setDate(11, (Date) user.getDriversLicenseExpirationDate());
+            addUser.setDate(11, expireDate);
             addUser.setBoolean(12, activeUser);
 
             addUser.execute();
@@ -100,6 +102,10 @@ public class UserDao implements UserData {
                     "PreferredCampus = ?, StdNum = ?, Role = ?, CallSign = ?, DriversLicenseLevel = ?, " +
                     "DriversLicenseExpirationDate = ? WHERE Username = ?";
 
+            java.sql.Date expireDate = new java.sql.Date(user.getDriversLicenseExpirationDate().getTime());
+
+            con.setAutoCommit(false);
+
             PreparedStatement updateUser = con.prepareStatement(updateUserSQL);
             updateUser.setString(1, user.getName());
             updateUser.setString(2, user.getEmail());
@@ -110,7 +116,7 @@ public class UserDao implements UserData {
             updateUser.setString(7, user.getRole().toString());
             updateUser.setString(8, user.getCallSign());
             updateUser.setInt(9, user.getDriversLicenseLevel());
-            updateUser.setDate(10, (Date) user.getDriversLicenseExpirationDate());
+            updateUser.setDate(10, expireDate);
             updateUser.setString(11, user.getUsername());
 
             updateUser.execute();
@@ -169,7 +175,7 @@ public class UserDao implements UserData {
     public User getUser(String username) {
         try {
             String userSQL = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, " +
-                    "Role, CallSign, TotalVolunteerHours, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
+                    "Role, CallSign, VolunteerMinutes, ParkingMinutes, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
                     "from User where Username = ? and (select 1 from User where Username = ?) and isDeactivated = 0";
             User user = jdbcTemplate.queryForObject(userSQL, new Object[]{username, username}, new UserRowMapper());
 
@@ -200,7 +206,7 @@ public class UserDao implements UserData {
     public List<User> getAllUsers() {
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, TotalVolunteerHours, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
+                    "CallSign, VolunteerMinutes, ParkingMinutes, DriversLicenseLevel, DriversLicenseExpirationDate, isDeactivated " +
                     "from User where isDeactivated = 0";
 
             return jdbcTemplate.query(sql, new UserRowMapper());

@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
-    $('#licenseExpire').datepicker({
-        autoclose: true,
+    $('#licenseExpire').datetimepicker({
+        format: 'YYYY/MM/DD',
+        useCurrent: true,
     });
 
     $('#languages').multiselect({
@@ -119,6 +120,7 @@ $(document).ready(function () {
                 licenseExpire: {
                     validators: {
                         date: {
+                            format: 'YYYY/MM/DD',
                             message: 'Not a valid date'
                         }
                     }
@@ -139,6 +141,12 @@ $(document).ready(function () {
 
             var campus = $('input[name="campus"]:checked').attr('id');
 
+            var dateFormat = 'YYYY-MM-DD';
+            var expireDate = $('#licenseExpire').data("DateTimePicker").date().format(dateFormat);
+
+            var languagesObj = $('#languages option:selected').map(function(a, item){return item.value;});
+            var languages = languagesObj.toArray();
+
             var user = {
                 "username": $('#username').val().toLowerCase(),
                 "studentNumber": $('#studentNumber').val(),
@@ -149,6 +157,9 @@ $(document).ready(function () {
                 "role": $('#userRole').val(),
                 "preferredCampus": campus,
                 "callSign": $('#userCallsign').val(),
+                "driversLicenseLevel": $('#licenseClass').val(),
+                "driversLicenseExpirationDate": expireDate,
+                "languages": languages,
                 "training": [],
                 "isDeactivated": false
             };

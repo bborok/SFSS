@@ -1,5 +1,10 @@
 package com.zeta.Models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zeta.Configurations.JsonDeserializers.CustomDateDeserializer;
+import com.zeta.Configurations.JsonSerializers.CustomDateSerializer;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,18 +23,22 @@ public class User {
     private Role role;
     private String callSign;
     private int driversLicenseLevel;
-    private Date driversLicenseExpirationDate;
     private List<Training> training;
     private List<String> languages;
     private List<Certificate> certificates;
     private Boolean isDeactivated;
-    private int volunteerHours;
+    private int volunteerMinutes;
+    private int parkingMinutes;
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    private Date driversLicenseExpirationDate;
 
     public User() {
     } //Required by JPA
 
     public User(String username, Long studentNumber, String name, String email, Long phoneNumber, int altPhoneNumber,
-                Role role, Campus preferredCampus, String callSign, int volunteerHours, int driversLicenseLevel, Date driversLicenseExpirationDate,
+                Role role, Campus preferredCampus, String callSign, int volunteerMinutes, int parkingMinutes, int driversLicenseLevel, Date driversLicenseExpirationDate,
                 List<Training> training, List<String> languages, List<Certificate> certificates, Boolean isDeactivated) {
         this.username = username;
         this.studentNumber = studentNumber;
@@ -40,7 +49,8 @@ public class User {
         this.role = role;
         this.preferredCampus = preferredCampus;
         this.callSign = callSign;
-        this.volunteerHours = volunteerHours;
+        this.volunteerMinutes = volunteerMinutes;
+        this.parkingMinutes = parkingMinutes;
         this.driversLicenseLevel = driversLicenseLevel;
         this.driversLicenseExpirationDate = driversLicenseExpirationDate;
         this.training = training;
@@ -169,7 +179,19 @@ public class User {
         return isDeactivated;
     }
 
-    public int getVolunteerHours() { return volunteerHours; }
+    public int getVolunteerMinutes() {
+        return volunteerMinutes;
+    }
 
-    public void setVolunteerHours(int volunteerHours) { this.volunteerHours = volunteerHours; }
+    public void setVolunteerMinutes(int volunteerMinutes) {
+        this.volunteerMinutes = volunteerMinutes;
+    }
+
+    public int getParkingMinutes() {
+        return parkingMinutes;
+    }
+
+    public void setParkingMinutes(int parkingMinutes) {
+        this.parkingMinutes = parkingMinutes;
+    }
 }

@@ -20,7 +20,7 @@
     <!-- Bootstrap core CSS -->
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     <!-- Custom styles for this template -->
@@ -67,9 +67,9 @@
         color: chocolate;
     }
 
-    .datepicker,
-    .table-condensed {
-        width: 300px;
+    .bootstrap-datetimepicker-widget {
+        height: 250px;
+        width: 250px;
     }
 
     #userimage:hover {opacity: 0.7;}
@@ -134,7 +134,7 @@
                 <br><br>
 
                 <div>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
+                    <button type="button" id="addUser" class="btn" data-toggle="modal" data-target="#userModal" style="height: 45px">Add User</button>
                 </div>
                 <br>
 
@@ -228,13 +228,11 @@
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Expires</span>
-                                                    <div class='input-group date' id='licenseExpire'>
-                                                        <div class='input-group date' id='date'>
-                                                            <input type='text' class="form-control input-sm" name="licenseExpire" style="border-width:1px;border-color: #a9b7d1" placeholder="MM/DD/YYYY"/>
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
-                                                        </div>
+                                                    <div class='input-group date' data-provider="datepicker" data-date-format="YYYY/MM/DD" id='licenseExpire'>
+                                                        <input type='text' class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1" placeholder="YYYY/MM/DD"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,7 +394,7 @@
 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 
 <!-- Menu Toggle Script -->
@@ -496,6 +494,10 @@
             });
         });
     });
+
+    $('#addUser').on('click', function () {
+        $('#userModal').find('[id="myModalLabel1"]').html('<b>Add a User</b>').end();
+    })
 
     $('#userModal').on('shown.bs.modal', function () {
         $('#languages').multiselect('rebuild');

@@ -69,7 +69,7 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/timecard"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
+                    <a href="${pageContext.request.contextPath}/timecard_list"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span>Time Cards</a>
                 </li>
                 <li class="sidebar-item">
                     <a href="${pageContext.request.contextPath}/users"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users</a>
@@ -97,7 +97,6 @@
         <div class="container-fluid">
             <div class="col-sm-12 text">
                 <div class="description">
-                    <center><img src="resources/img/logo_made/logo_2.png" class="img-responsive" style="height:100px;width:500px"></center>
                     <div class="row">
                         <div class="col-md-8">
                             <ul class="pagination">

@@ -107,6 +107,21 @@ $(document).ready(function () {
                             message: 'The title can only consist of capital letters and numbers'
                         }
                     }
+                },
+                licenseClass: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Not a valid license class'
+                        }
+                    }
+                },
+                licenseExpire: {
+                    validators: {
+                        date: {
+                            message: 'Not a valid date'
+                        }
+                    }
                 }
             }
         })

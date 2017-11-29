@@ -230,7 +230,7 @@
                                                     <span class="input-group-addon">Expires</span>
                                                     <div class='input-group date' id='licenseExpire'>
                                                         <div class='input-group date' id='date'>
-                                                            <input type='text' class="form-control input-sm" style="border-width:1px;border-color: #a9b7d1"/>
+                                                            <input type='text' class="form-control input-sm" name="licenseExpire" style="border-width:1px;border-color: #a9b7d1" placeholder="MM/DD/YYYY"/>
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>

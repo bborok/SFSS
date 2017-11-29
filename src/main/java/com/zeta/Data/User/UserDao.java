@@ -198,7 +198,7 @@ public class UserDao implements UserData {
     public List<User> getAllUsers() {
         try {
             String sql = "select Username, Name, Email, PhoneNumber, AltPhoneNumber, PreferredCampus, StdNum, Role, " +
-                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, VolunteerMinutes, , ParkingMinutes, " +
+                    "CallSign, DriversLicenseLevel, DriversLicenseExpirationDate, VolunteerMinutes, ParkingMinutes, " +
                     "isDeactivated from User where isDeactivated = 0";
 
             return jdbcTemplate.query(sql, new UserRowMapper());

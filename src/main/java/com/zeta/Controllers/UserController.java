@@ -1,6 +1,7 @@
 package com.zeta.Controllers;
 
 import com.zeta.Data.User.UserData;
+import com.zeta.Models.Certificate;
 import com.zeta.Models.User;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,18 @@ public class UserController {
         }
 
         return Files.readAllBytes(image.toPath());
+    }
+
+    @PostMapping("/addCertificate")
+    public ResponseEntity addCertificateForUser(@RequestBody Certificate certificate, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (userData.addUserCertificate(user, certificate)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
 //    @GetMapping("/{username}")

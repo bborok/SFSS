@@ -319,10 +319,12 @@ public class UserDao implements UserData {
     public boolean addUserCertificate(User user, Certificate certificate) {
         try {
             String sql = "insert into UserCertificate (User, CertificateName, Level, Number, ExpirationDate) " +
-                    "values (?, ?, ?, ?)";
+                    "values (?, ?, ?, ?, ?)";
+
+            java.sql.Date expireDate = new java.sql.Date(certificate.getExpirationDate().getTime());
 
             jdbcTemplate.update(sql, user.getUsername(), certificate.getName(), certificate.getLevel(),
-                    certificate.getNumber(), certificate.getExpirationDate());
+                    certificate.getId(), expireDate);
 
             return true;
 
@@ -369,8 +371,8 @@ public class UserDao implements UserData {
             PreparedStatement addCertificate = con.prepareStatement(sql);
             addCertificate.setString(1, user.getUsername());
             addCertificate.setString(2, certificate.getName());
-            addCertificate.setString(3, certificate.getLevel());
-            addCertificate.setInt(4, certificate.getNumber());
+            addCertificate.setInt(3, certificate.getLevel());
+            addCertificate.setString(4, certificate.getId());
             addCertificate.setDate(5, (Date) certificate.getExpirationDate());
 
             addCertificate.execute();

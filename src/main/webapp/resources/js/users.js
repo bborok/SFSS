@@ -7,6 +7,11 @@ $(document).ready(function () {
         useCurrent: true,
     });
 
+    $('#certExpire').datetimepicker({
+        format: 'YYYY/MM/DD',
+        useCurrent: true,
+    });
+
     $('#languages').multiselect({
         includeSelectAllOption: true,
         maxHeight: 250,
@@ -179,6 +184,89 @@ $(document).ready(function () {
                 },
                 error: function () {
                     alert('Error saving shift to DB');
+                },
+                // dataType: "json",
+                contentType: "application/json"
+            });
+        });
+
+    $('#certForm')
+        .bootstrapValidator({
+            message: 'This value is not valid',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            fields: {
+                certName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Certificate name is required'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z\s]+$/,
+                            message: 'Not a valid certificate name'
+                        }
+                    }
+                },
+                certLevel: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Certificate level must be numeric'
+                        }
+                    }
+                },
+                certID: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Certificate ID is required'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: 'Not a valid id'
+                        }
+                    }
+                },
+                certExpire: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Expiration date is required'
+                        },
+                        date: {
+                            format: 'YYYY/MM/DD',
+                            message: 'Not a valid date'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            e.preventDefault();
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var dateFormat = 'YYYY-MM-DD';
+            var expireDate = $('#certExpire').data("DateTimePicker").date().format(dateFormat);
+
+            var certificate = {
+                "name": $('#certName').val(),
+                "level": $('#certLevel').val(),
+                "id": $('#certID').val(),
+                "expirationDate": expireDate
+            };
+
+            $.ajax({
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                url: api + '/addCertificate',
+                data: JSON.stringify(certificate),
+                success: function () {
+                    alert("Saved successfully");
+                    location.reload();
+                },
+                error: function () {
+                    alert('Error saving certificate to DB');
                 },
                 // dataType: "json",
                 contentType: "application/json"

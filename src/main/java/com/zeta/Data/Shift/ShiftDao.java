@@ -102,7 +102,7 @@ public class ShiftDao implements ShiftData {
     }
 
     /**
-     * Adds a new row to the Shift table.
+     * Updates a shift if a shift matching ID is found. Otherwise, creates a new Shift.
      *
      * @param shift Shift object to save
      * @return True if successful, false otherwise
@@ -110,20 +110,42 @@ public class ShiftDao implements ShiftData {
     @Override
     public boolean saveShift(Shift shift) {
         try {
-            String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql,
-                    shift.getTitle(),
-                    shift.getStart(),
-                    shift.getEnd(),
-                    shift.getUsername(),
-                    shift.getCampus().toString(),
-                    shift.getLocation(),
-                    shift.getNotes(),
-                    shift.getDate(),
-                    shift.getRequiredTraining(),
-                    shift.getIsTimeCardSubmitted()
-            );
+            String sqlCheck = "SELECT COUNT(*) FROM Shift WHERE ID=?";
+            Integer cnt = jdbcTemplate.queryForObject(sqlCheck, Integer.class, shift.getId());
+            if (cnt != null && cnt > 0) {
+                String sql = "UPDATE Shift " +
+                        "SET Name = ?, User = ?, Date = ?, StartTime = ?, EndTime = ?, " +
+                        "Campus = ?, Location = ?, Notes = ?, RequiredTraining = ?, Confirmed = ? " +
+                        "WHERE ID = ?";
+                jdbcTemplate.update(sql,
+                        shift.getTitle(),
+                        shift.getUsername(),
+                        shift.getDate(),
+                        shift.getStart(),
+                        shift.getEnd(),
+                        shift.getCampus().toString(),
+                        shift.getLocation(),
+                        shift.getNotes(),
+                        shift.getRequiredTraining(),
+                        shift.getConfirmationStatus().toString(),
+                        shift.getId()
+                );
+            } else {
+                String sql = "INSERT INTO Shift(Name, StartTime, EndTime, User, Campus, Location, Notes, Date, RequiredTraining, isTimeCardSubmitted) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                jdbcTemplate.update(sql,
+                        shift.getTitle(),
+                        shift.getStart(),
+                        shift.getEnd(),
+                        shift.getUsername(),
+                        shift.getCampus().toString(),
+                        shift.getLocation(),
+                        shift.getNotes(),
+                        shift.getDate(),
+                        shift.getRequiredTraining(),
+                        shift.getIsTimeCardSubmitted()
+                );
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

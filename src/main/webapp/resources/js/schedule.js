@@ -5,6 +5,10 @@ var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
 
+var surreyShiftColor = "#9ccc65";
+var burnabyShiftColor = "#9fa8da";
+var vancouverShiftColor = "#bbdefb";
+
 $(document).ready(function () {
 
     var timePickerOptions = {
@@ -17,6 +21,10 @@ $(document).ready(function () {
     });
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
+
+    $('#burnabyCheckboxText').css('background-color', burnabyShiftColor);
+    $('#surreyCheckboxText').css('background-color', surreyShiftColor);
+    $('#vancouverCheckboxText').css('background-color', vancouverShiftColor);
 
     csrfAndAjaxSetup();
     initCalendar();
@@ -40,7 +48,14 @@ function initCalendar() {
             add_event: {
                 text: 'Add a Shift',
                 click: function () {
-                    resetFormFields();
+                    emptyDateAndTimeInputFields();
+                    $('#date').data("DateTimePicker").date(moment());
+                    $('#date').data("DateTimePicker").minDate(moment().startOf('day'));
+                    $('#startTime').data("DateTimePicker").date(moment());
+                    $('#endTime').data("DateTimePicker").date(moment().add('1', 'hours'));
+
+                    hideAllConditionalButtons();
+                    $('#submitButton').show();
                     $('#createEventModal').modal('show'); //popup modal
                 }
             }
@@ -71,10 +86,10 @@ function initCalendar() {
         },
 
         //Selecting an empty area
-        select: selectEventHandler,
+        select: selectEmptyAreaEventHandler,
 
         //Selecting a scheduled event
-        eventClick: eventClickHandler,
+        eventClick: selectScheduledEventHandler,
 
         navLinks: true, // can click day/week names to navigate views
         weekNumbers: true,
@@ -106,48 +121,73 @@ function initEventHandlers() {
         doSubmit();
     });
 
-    $('.campusFilter').prop("checked", true);// everything is checked
+    $('.campusFilter').prop("checked", true);// everything is checked on page load
+    populateShiftSelectFilter();
 
     $('input:checkbox.allOrNone').on('change', function () {
         calendar.fullCalendar('rerenderEvents');
     });
 
-
     $('input:checkbox.campusFilter').on('change', function () {
-        calendar.fullCalendar('rerenderEvents');
+        populateShiftSelectFilter();
     });
 
     $('#shiftSelect').on('change', function () {
         calendar.fullCalendar('rerenderEvents');
     });
 
-    $(function () {
-        $("input:checked").each(function () {
-            addItemsFromArray(eval("i" + this.id));
-        });
-        $("input:checkbox").change(function () {
-            $("#shiftSelect").html("");
-            $("input:checked").each(function () {
-                addItemsFromArray(eval("i" + this.id));
-            });
-        });
 
-        function addItemsFromArray(arr) {
-            $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
-            $.each(arr, function (i, v) {
-                $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
-            });
+    $('.allOrNone').on('click', function () { //allOrNone is the ALL CAMPUSES Checkbox
+        if ($('.allOrNone').is(':checked')) {
+            $('.campusFilter').prop("checked", true) //Checkmark all CampusFilters
+        } else {
+            $('.campusFilter').prop("checked", false); //Disable all campus filters
         }
+        $('.campusFilter').trigger('change');
     });
 
-    $("#eventCampus").on('change', function () {
-        if ($(this).data('options') === undefined) {
-            /*Taking an array of all options-2 and kind of embedding it on the select1*/
-            $(this).data('options', $('#eventTitle option').clone());
+    // $(function () {
+    //     $("input:checked").each(function () {
+    //         addItemsFromArray(eval("i" + this.id));
+    //     });
+    //     $("input:checkbox").change(function () {
+    //         $("#shiftSelect").html("");
+    //         $("input:checked").each(function () {
+    //             addItemsFromArray(eval("i" + this.id));
+    //         });
+    //     });
+    //
+    //     function addItemsFromArray(arr) {
+    //         $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+    //         $.each(arr, function (i, v) {
+    //             $("#shiftSelect").append('<option value="' + v + '">' + v + '</option>');
+    //         });
+    //     }
+    // });
+
+    //Change the dropdown options when selecting a campus in the Assign/Edit a Shift form.
+    $("#campusSelect").on('change', function () {
+        $('#eventShiftSelect').empty();
+        var selectedCampus = $("#campusSelect").val();
+        if (selectedCampus === null) {
+            $('#eventShiftSelect').append($("<option></option>").val('').attr('disabled', 'disabled').attr('selected', 'selected').text('Please Select a Campus'));
+            return;
         }
-        var id = $(this).val();
-        var options = $(this).data('options').filter('[value=' + id + ']');
-        $('#eventTitle').html(options);
+
+        selectedCampus = selectedCampus.toUpperCase();
+
+        var shiftsToDisplay;
+        if (selectedCampus === 'BURNABY') shiftsToDisplay = iBURNABY;
+        else if (selectedCampus === 'SURREY') shiftsToDisplay = iSURREY;
+        else if (selectedCampus === 'VANCOUVER') shiftsToDisplay = iVANCOUVER;
+        shiftsToDisplay.forEach(function (shift) {
+            $('#eventShiftSelect').append($("<option></option>").val(shift).text(shift));
+        })
+    });
+
+    $("#btnTimecard").off().on('click', function () {
+        $(location).attr('href', contextPath + '/timecard?shift_id=' + $('#shiftID').val() + '&username=' + $('#memberSelect').val());
+        $('#createEventModal').modal('hide');
     });
 
 
@@ -155,11 +195,11 @@ function initEventHandlers() {
 
 var eventRenderHandler = function (event, element) {
     if (event.campus === 'BURNABY') {
-        element.css('background-color', '#9fa8da');
+        element.css('background-color', burnabyShiftColor);
     } else if (event.campus === "SURREY") {
-        element.css('background-color', '#9ccc65');
+        element.css('background-color', surreyShiftColor);
     } else if (event.campus === "VANCOUVER") {
-        element.css('background-color', '#bbdefb');
+        element.css('background-color', vancouverShiftColor);
     }
 
     if (event.confirmationStatus === "NO_RESPONSE") {
@@ -184,96 +224,123 @@ var eventRenderHandler = function (event, element) {
     return filter(event);
 };
 
-var selectEventHandler = function (start, end) {
+var selectEmptyAreaEventHandler = function (start, end) {
+    if (start.isBefore(moment().startOf('day').subtract(1, 'days'))) {
+        $.notify("Cannot create shift in the past.", "info");
+        return;
+    }
+
+    $('#modalTitle').text('Assign a Shift');
+    $('#campusSelect').trigger('change');
     $('#date').data("DateTimePicker").date(start);
     $('#startTime').data("DateTimePicker").date(start);
-    $('#endTime').data("DateTimePicker").date(end);
-    resetFormFields();
+
+    var momentStart = moment(moment(start).format(timeFormat), timeFormat);
+    var momentEnd = moment(moment(end).format(timeFormat), timeFormat);
+    if (momentStart.isSame(momentEnd)) {
+        $('#endTime').data("DateTimePicker").date(moment(end).add('1', 'hours'));
+    } else {
+        $('#endTime').data("DateTimePicker").date(moment(end));
+    }
+    $('#availabilitySelect').val("NO_RESPONSE");
+    conditionallyRenderButtonsAndInputs(start, end, false);
+
+    hideAllConditionalButtons();
+    $('#submitButton').show();
     $('#createEventModal').modal('show'); //popup modal
 };
 
-var eventClickHandler = function (event) {
-    //The field after 'event' matches up with the field name in the AbstractShift and Shift classes
-    $('#modalTitle').html(event.title);
-    $('#modalStart').html(moment(event.start).format('MMM Do h:mm A'));
-    $('#modalEnd').html(moment(event.end).format('MMM Do h:mm A'));
-    $('#modalMember').html(event.username);
-    $('#modalCampus').html(event.campus);
-    $('#modalID').html(event.id);
-    $('#modalDate').html(moment(event.date).format('MMM DD YYYY'));
-    $('#modalLocation').html(event.location);
-    $('#modalNotes').html(event.notes);
-    $('#modalTraining').html(event.requiredTraining);
-    $('#modalTimeCard').html(new Boolean(event.isTimeCardSubmitted).toString());
-    $('#availabilitySelect').val(event.confirmationStatus);
-    $('#modalAvailability').text(_.replace(event.confirmationStatus, '_', ' '));
+var selectScheduledEventHandler = function (event) {
+    $('#date').data("DateTimePicker").minDate(false);
+    $('#modalTitle').text('Edit Shift');
+    $('#shiftID').val(event.id);
+    $('#campusSelect').val(event.campus).trigger('change');
+    $('#eventShiftSelect').val(event.title);
+    $('#date').data("DateTimePicker").date(moment(event.date, dateFormat));
+    $('#startTime').data("DateTimePicker").date(moment(event.start, timeFormat));
+    $('#endTime').data("DateTimePicker").date(moment(event.end, timeFormat));
 
-    $('#fullCalModal').modal();
+    $('#eventLocation').val(event.location);
+    $('#eventRequiredTraining').val(event.requiredTraining);
+    $('#memberSelect').val(event.username);
+    $('#eventNotes').val(event.notes);
+    $('#availabilitySelect').val(event.confirmationStatus);
 
     $('#btnDelete').off().on('click', function (e) {
         e.preventDefault();
         deleteShift(event);
-        $('#fullCalModal').modal('hide');
+        $('#createEventModal').modal('hide');
     });
 
-    $("#btnUpdateAvailability").off().on('click', function () {
-        updateShiftConfirmation(event.id, $("#availabilitySelect").val());
-        $('#fullCalModal').modal('hide');
-    });
-
-    if(event.isTimeCardSubmitted){
-        $('#btnTimecard').hide();
-    }else{
-        $('#btnTimecard').show();
-    }
-
-    $('#btnTimecard').off().on('click', function () {
-        $(location).attr('href', contextPath + '/timecard?shift_id=' + event.id + '&username=' + event.username);
-    });
-
-    var eventStart = moment(event.start).format(dateTimeFormat);
-    var currentDate = moment().format(dateTimeFormat);
-
-    //Enable the availability dropdown if the shift hasn't started yet, otherwise disable it
-    if (moment(eventStart).isAfter(currentDate)) {
-        $("#availabilitySelect").show();
-        $("#btnUpdateAvailability").show();
-        $("#modalAvailability").hide();
-
-    } else {
-        $("#availabilitySelect").hide();
-        $("#btnUpdateAvailability").hide();
-        $("#modalAvailability").show();
-
-    }
+    conditionallyRenderButtonsAndInputs(event.start, event.end, event.isTimeCardSubmitted);
 };
+
+
+function conditionallyRenderButtonsAndInputs(startDateTime, endDateTime, isTimeCardSubmitted) {
+
+    var shiftStartDateTime = moment(startDateTime).format(dateTimeFormat);
+    var shiftEndDateTime = moment(endDateTime).format(dateTimeFormat);
+    var currentDateTime = moment().format(dateTimeFormat);
+    //Conditionally Render
+    if (loggedInUser.role === 'ADMIN' || loggedInUser.role === 'SUPERVISOR' || loggedInUser.role === 'TEAM_LEADER') {
+        showAllConditionalButtons();
+        enableAllInputElementsInForm();
+
+        // //Stop ADMINS, SUPERVISORS AND TEAM_LEADERS from changing the start and end times if the shift has already passed
+        // if (moment(currentDateTime).isAfter(shiftEndDateTime)) {
+        //     $('#date input').prop('disabled', true);
+        //     $('#startTime input').prop('disabled', true);
+        //     $('#endTime input').prop('disabled', true);
+        // }
+
+        $('#createEventModal').modal(); //popup modal
+        return;
+    }
+
+    if (loggedInUser.role === 'VOLUNTEER' || loggedInUser.role === 'MEMBER') {
+        //Start with disabling all forms of input and buttons
+        disableAllInputElementsInForm();
+        hideAllConditionalButtons();
+        //Enable the availability dropdown if the shift hasn't started yet
+        if (moment(currentDateTime).isBefore(shiftStartDateTime)) {
+            $("#availabilitySelect").prop('disabled', false);
+            $("#submitButton").show();
+        }
+        //Render timecard button if the start of the shift has already passed and the timecard has not yet been submitted
+        if (moment(currentDateTime).isAfter(shiftStartDateTime) && isTimeCardSubmitted === false) {
+            $("#btnTimecard").show();
+        }
+    }
+    $('#createEventModal').modal(); //popup modal
+}
+
 
 //Creates a Shift object based on the form input fields and passes it to the saveShift()
 function doSubmit() {
-    var eventTitleElement = $('#eventTitle');
-    $("#createEventModal").modal('hide');
-
     var date = $('#date').data("DateTimePicker").date().format(dateFormat);
     var startTime = $('#startTime').data("DateTimePicker").date().format(timeFormat);
     var endTime = $('#endTime').data("DateTimePicker").date().format(timeFormat);
 
     var shift = {
-        title: eventTitleElement.find(":selected").attr("class"),
+        id: $('#shiftID').val(),
+        title: $('#eventShiftSelect').val(),
         date: date,
         start: convertToDateFormat(date, startTime),
         end: convertToDateFormat(date, endTime),
-        campus: $('#eventCampus').val(),
-        username: $('#eventMember').val(),
+        campus: $('#campusSelect').val(),
+        username: $('#memberSelect').val(),
         location: $('#eventLocation').val(),
         notes: $('#eventNotes').val(),
-        requiredTraining: $('#eventRequiredTraining').val()
+        requiredTraining: $('#eventRequiredTraining').val(),
+        confirmationStatus: $('#availabilitySelect').val()
     };
     saveShift(shift);
+    $("#createEventModal").modal('hide');
 }
 
-function resetFormFields() {
+function emptyDateAndTimeInputFields() {
     $('#eventCampus').val("");
-    $('#eventMember').val("");
+    $('#memberSelect').val("");
     $('#eventRequiredTraining').val("");
 }
 
@@ -316,59 +383,77 @@ function deleteShift(event) {
     });
 }
 
-function updateShiftConfirmation(shiftId, status) {
-    var payload = {
-        shift_id: shiftId,
-        confirmation_status: status
-    };
-    $.ajax({
-        type: 'POST',
-        headers: {
-            Accept: "text/plain"
-        },
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        url: api + '/shift/updateConfirmation',
-        data: $.param(payload),
-        success: function () {
-            $.notify("Updated availability.", "success");
-            calendar.fullCalendar('refetchEvents');
-        },
-        error: function () {
-            $.notify("Error updating availability", "warn");
-        }
-    });
-}
-
 function filter(calEvent) {
-    var vals = [];
+    var filter_selectedCampuses = [];
     $('input:checkbox.campusFilter:checked').each(function () {
-        vals.push($(this).val());
+        filter_selectedCampuses.push($(this).val());
     });
 
-    var vals2 = [];
+    var filter_selectedOption = [];
     $('#shiftSelect option:selected').each(function () {
-        vals2.push($(this).val());
+        filter_selectedOption.push($(this).val());
     });
 
-    $('.allOrNone').on('click', function () { //
-        if ($('.allOrNone').is(':checked')) {
-            $('.campusFilter').prop("checked", true)
-
-        } else {
-            $('.campusFilter').prop("checked", false);
-        }
-    });
-
-    if ($('#shiftSelect').val() === null) {
-        return vals.indexOf(calEvent.campus) !== -1;
-    }
-    if ($('#shiftSelect option:selected').val() === "all") {
-        return vals.indexOf(calEvent.campus) !== -1;
+    if ($('#shiftSelect').val() === null || $('#shiftSelect option:selected').val() === "all") {
+        return filter_selectedCampuses.indexOf(calEvent.campus) !== -1;
     }
 
-    return vals.indexOf(calEvent.campus) !== -1 && vals2.indexOf(calEvent.title) !== -1;
+    return filter_selectedCampuses.indexOf(calEvent.campus) !== -1 && filter_selectedOption.indexOf(calEvent.title) !== -1;
 }
 
 function convertToDateFormat(start, end) {
     return start + ' ' + end;
+}
+
+function showAllConditionalButtons() {
+    $('#btnTimecard').show();
+    $('#btnDelete').show();
+    $('#submitButton').show();
+}
+
+function hideAllConditionalButtons() {
+    $('#btnTimecard').hide();
+    $('#btnDelete').hide();
+    $('#submitButton').hide();
+}
+
+function enableAllInputElementsInForm() {
+    $('#createAppointmentForm input').prop('disabled', false);
+    $('#createAppointmentForm select').prop('disabled', false);
+    $('#createAppointmentForm textarea').prop('disabled', false);
+}
+
+function disableAllInputElementsInForm() {
+    $('#createAppointmentForm input').prop('disabled', true);
+    $('#createAppointmentForm select').prop('disabled', true);
+    $('#createAppointmentForm textarea').prop('disabled', true);
+}
+
+function populateShiftSelectFilter() {
+    $('#shiftSelect').empty();
+    var filter_checkCampuses = [];
+    //Find all the check campus filters and add their values to  an array
+    $('input:checkbox:checked.campusFilter').each(function () {
+        filter_checkCampuses.push($(this).val());
+    });
+
+    var shiftsToDisplay = [];
+    if (filter_checkCampuses.includes('SURREY')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iSURREY);
+    }
+    if (filter_checkCampuses.includes('BURNABY')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iBURNABY);
+
+    }
+    if (filter_checkCampuses.includes('VANCOUVER')) {
+        shiftsToDisplay = _.union(shiftsToDisplay, iVANCOUVER);
+    }
+
+    $('#shiftSelect').append('<option value ="' + 'all' + '">' + 'All Shifts' + '</option>');
+
+    shiftsToDisplay.forEach(function (shift) {
+        $('#shiftSelect').append($("<option></option>").val(shift).text(shift));
+    });
+    calendar.fullCalendar('rerenderEvents');
+
 }

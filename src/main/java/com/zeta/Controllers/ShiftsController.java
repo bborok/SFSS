@@ -47,7 +47,6 @@ public class ShiftsController {
             @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end
     ) {
         List<Shift> shifts;
-
         //Filter the shifts according to the logged in user
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
@@ -63,7 +62,7 @@ public class ShiftsController {
             }
         }
 
-        //Filter by start and end query parameters (if available)
+//        Filter by start and end query parameters (if available)
         shifts = shifts.stream().filter(shift -> shift.getDate().after(start) && shift.getDate().before(end)).collect(Collectors.toList());
         return new ResponseEntity<>(shifts, HttpStatus.OK);
     }

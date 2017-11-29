@@ -141,15 +141,19 @@
                         </label>
                         <br>
                         <label>
-                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">BURNABY
+                            <input class='campusFilter' type="checkbox" value="BURNABY" id="BURNABY" class="others">
+                            <span id="burnabyCheckboxText">BURNABY</span>
                         </label>
                         <br>
                         <label>
-                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">SURREY
+                            <input class='campusFilter' type="checkbox" value="SURREY" id="SURREY" class="others">
+                            <span id="surreyCheckboxText">SURREY</span>
+
                         </label>
                         <br>
                         <label>
-                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">VANCOUVER
+                            <input class='campusFilter' type="checkbox" value="VANCOUVER" id="VANCOUVER" class="others">
+                            <span id="vancouverCheckboxText">VANCOUVER</span>
                         </label>
                         <br>
                     </div>
@@ -217,7 +221,7 @@
                                                 <input type='text' class="form-control input-sm"
                                                        style="border-width:1px;border-color: #a9b7d1"/>
                                                 <span class="input-group-addon"><span
-                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                                        class="glyphicon glyphicon-time"></span></span>
                                             </div>
                                         </div>
 
@@ -227,7 +231,7 @@
                                                 <input type='text' class="form-control input-sm"
                                                        style="border-width:1px;border-color: #a9b7d1"/>
                                                 <span class="input-group-addon"><span
-                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                                        class="glyphicon glyphicon-time"></span></span>
                                             </div>
                                         </div>
 

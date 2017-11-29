@@ -5,6 +5,10 @@ var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var calendar;
 
+var surreyShiftColor = "#9ccc65";
+var burnabyShiftColor = "#9fa8da";
+var vancouverShiftColor = "#bbdefb";
+
 $(document).ready(function () {
 
     var timePickerOptions = {
@@ -18,6 +22,11 @@ $(document).ready(function () {
     $('#date').data("DateTimePicker").minDate(moment());
     $('#startTime').datetimepicker(timePickerOptions);
     $('#endTime').datetimepicker(timePickerOptions);
+
+    $('#burnabyCheckboxText').css('background-color', burnabyShiftColor);
+    $('#surreyCheckboxText').css('background-color', surreyShiftColor);
+    $('#vancouverCheckboxText').css('background-color', vancouverShiftColor);
+
     csrfAndAjaxSetup();
     initCalendar();
     initEventHandlers();
@@ -166,11 +175,11 @@ function initEventHandlers() {
 
 var eventRenderHandler = function (event, element) {
     if (event.campus === 'BURNABY') {
-        element.css('background-color', '#9fa8da');
+        element.css('background-color', burnabyShiftColor);
     } else if (event.campus === "SURREY") {
-        element.css('background-color', '#9ccc65');
+        element.css('background-color', surreyShiftColor);
     } else if (event.campus === "VANCOUVER") {
-        element.css('background-color', '#bbdefb');
+        element.css('background-color', vancouverShiftColor);
     }
 
     if (event.confirmationStatus === "NO_RESPONSE") {

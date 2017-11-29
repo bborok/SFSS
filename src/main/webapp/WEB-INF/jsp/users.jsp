@@ -18,14 +18,12 @@
 
     <title>SFU</title>
     <!-- Bootstrap core CSS -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- Custom styles for this template -->
 
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link href="resources/css/simple-sidebar.css" rel="stylesheet">
-
     <link rel="stylesheet" href="resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources/css/form-elements.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -109,8 +107,6 @@
         User user = (User) session.getAttribute("user");
         pageContext.setAttribute("loggedInUser", user.getUsername());
     %>
-
-<div id="wrapper" class="toggled">
 
     <jsp:include page="partfiles/sidebar.jsp"/>
     <!-- Page Content -->
@@ -276,38 +272,6 @@
                                      width="300">
                             </center>
 
-                            <div id="details" class="modal fade">
-                                <div class="modal-dialog">
-
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span
-                                                    aria-hidden="true">&times;</span>
-                                                <span class="sr-only">close</span></button>
-                                            <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
-                                        </div>
-                                        <br>
-                                        <div align="left" style="padding-left: 15px">
-                                            <b><u>Username: </u></b><c:out value="${user.username}"/><br>
-                                            <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
-                                            <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
-                                            <b><u>Email: </u></b><c:out value="${user.email}"/><br>
-                                            <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
-                                            <hr>
-                                            <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
-                                            <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
-                                            <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
-
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
 
                             <h3>User Profile</h3>
                             <h5>Select User from the list</h5>
@@ -319,7 +283,7 @@
                                     <b>Profile</b>
                                 </p>
                                 <center>
-                                    <img src="/user/image/${user.username}" class="img-responsive img-circle" height="300"
+                                    <img src="/user/image/${user.username}" data-toggle="modal" data-target="#details" class="img-responsive img-circle" height="300"
                                          width="300">
                                 </center>
                                 <h3><c:out value="${user.name}"/></h3>
@@ -336,7 +300,37 @@
                     </div>
                 </div>
 
+                <div id="details" class="modal fade">
+                    <div class="modal-dialog">
 
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span>
+                                    <span class="sr-only">close</span></button>
+                                <h4><b>User Details <span id="modalTitle" class="modal-title"></span></b></h4>
+                            </div>
+                            <br>
+                            <div align="left" style="padding-left: 15px">
+                                <b><u>Username: </u></b><c:out value="${user.username}"/><br>
+                                <b><u>Student Number: </u></b><c:out value="${user.studentNumber}"/><br>
+                                <b><u>Full Name: </u></b><c:out value="${user.name}"/><br>
+                                <b><u>Email: </u></b><c:out value="${user.email}"/><br>
+                                <b><u>Phone Number: </u></b><c:out value="${user.phoneNumber}"/><br>
+                                <hr>
+                                <b><u>Preferred Campus: </u></b><c:out value="${user.preferredCampus}"/><br>
+                                <b><u>Role:  </u></b><c:out value="${user.role}"/><br>
+                                <b><u>Call Sign: </u></b><c:out value="${user.callSign}"/><br>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

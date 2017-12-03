@@ -1,0 +1,13 @@
+We are willing to transfer all rights towards this software and all its components to Simon Fraser University given that the following conditions can be met:
+
+1. The developer of the application can maintain credit towards the creation of this software (Bobae Choi, Amandeep Dhothar, Alex Elesin, Steven Lee, Patrick San Juan, Charlie Tsai, Yolanda Yao).
+
+2. The aforementioned developers are compensated $14 ($2 per person) for the transfer of these rights.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

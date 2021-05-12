@@ -15,7 +15,7 @@
         <spring-data-commons.version>1.13.7.RELEASE</spring-data-commons.version>
         <spring-data-commons-core.version>1.4.1.RELEASE</spring-data-commons-core.version>
         <spring-jdbc.version>4.3.11.RELEASE</spring-jdbc.version>
-        <spring-security-web.version>4.2.3.RELEASE</spring-security-web.version>
+        <spring-security-web.version>5.2.10.RELEASE</spring-security-web.version>
         <spring-security-cas.version>4.2.3.RELEASE</spring-security-cas.version>
         <spring-security-config.version>4.2.3.RELEASE</spring-security-config.version>
         <javax-servlet.version>3.1.0</javax-servlet.version>
